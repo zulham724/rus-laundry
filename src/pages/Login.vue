@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" style="background-color: #fafafa" class="mbl">
+  <q-layout view="hHh lpR fFf" class="mbl" style="background-color: #fafafa">
     <q-page-container class="front">
       <q-page>
         <div class="text-center">
@@ -9,9 +9,17 @@
             class="width: 100%"
           />
         </div>
-        <div style="q-pt-lg border-radius: 20px">
+        <div
+          class="front"
+          style="
+            border-radius: 20px;
+            background-color: #fafafa;
+            margin-top: -25px;
+            position: relative;
+          "
+        >
           <div class="q-mx-lg q-my-sm">
-            <div class="text-bold text-h4" style="">Login</div>
+            <div class="text-bold text-h4" style="padding-top: 40px">Login</div>
             Halo Selamat Datang Kembali
           </div>
 
@@ -45,6 +53,9 @@
                 />
               </q-input>
               <q-btn
+                v-for="n in 1"
+                :key="n"
+                :class="`shadow-${1}`"
                 class="q-mt-lg"
                 no-caps
                 unelevated
@@ -69,27 +80,24 @@
                 Tambah
               </div>
             </q-btn> -->
-              <div class="q-py-md text-weight-thin">Belum punya akun?</div>
-              <q-btn
-                to="/register"
-                no-caps
-                unelevated
-                rounded
-                style="width: 350px; background-color: #ffffff; color: #888888"
-                size="18px"
-              >
-                <div class="ellipsis text-weight-regular">Daftar</div>
-              </q-btn>
+
               <div class="q-py-md text-weight-thin">Atau, lanjutkan dengan</div>
               <q-btn
-                icon="book"
+                v-for="n in 1"
+                :key="n"
+                :class="`shadow-${1}`"
                 no-caps
                 unelevated
                 rounded
                 style="width: 350px; background-color: #ffffff; color: #888888"
                 size="18px"
               >
-                <div class="ellipsis text-weight-medium">
+                <div class="q-mr-lg">
+                  <q-avatar size="30px">
+                    <img src="~/assets/google.png" alt="google" />
+                  </q-avatar>
+                </div>
+                <div class="ellipsis text-weight-medium q-pr-xs">
                   Login Dengan Akun Google
                 </div>
               </q-btn>
