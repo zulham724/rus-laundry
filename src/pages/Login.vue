@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="mbl" style="background-color: #fafafa">
+  <q-layout view="lHh lpR fFf" class="mbl" style="background-color: #fafafa">
     <q-page-container class="front">
       <q-page>
         <div class="text-center">
