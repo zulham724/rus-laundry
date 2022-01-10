@@ -4,7 +4,6 @@
       <q-toolbar>
         <q-btn
           flat
-          dense
           round
           icon="menu"
           aria-label="Menu"

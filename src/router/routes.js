@@ -18,6 +18,26 @@ const routes = [
     component: () => import('pages/Home.vue')
   },
 
+  {
+    path: '/home-kosong',
+    component: () => import('pages/HomeKosong.vue')
+  },
+
+  {
+    path: '/detail-transaksi',
+    component: () => import('pages/DetailTransaksi.vue')
+  },
+
+  {
+    path: '/status-cucian',
+    component: () => import('pages/StatusCucian.vue')
+  },
+
+  {
+    path: '/loading-proses',
+    component: () => import('pages/LoadingProses.vue')
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

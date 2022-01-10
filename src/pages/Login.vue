@@ -3,28 +3,23 @@
     <q-page-container class="front">
       <q-page>
         <div class="text-center">
-          <img
-            src="~/assets/header-login.jpg"
-            alt="login-anim"
-            class="width: 100%"
-          />
+          <img src="~/assets/header-login.jpg" alt="login-anim" />
         </div>
         <div
           class="front"
           style="
-            border-radius: 20px;
+            border-radius: 30px;
             background-color: #fafafa;
-            margin-top: -25px;
+            margin-top: -35px;
             position: relative;
           "
         >
           <div class="q-mx-lg q-my-sm">
-            <div class="text-bold text-h4" style="padding-top: 40px">Login</div>
+            <div class="text-bold text-h4" style="padding-top: 20px">Login</div>
             Halo Selamat Datang Kembali
           </div>
 
           <div class="q-pa-md text-center">
-            <!-- <div class="q-gutter-md" style="max-width: 350px"> -->
             <q-form ref="form">
               <q-input
                 class="q-pb-lg"
@@ -60,8 +55,8 @@
                 no-caps
                 unelevated
                 rounded
-                style="width: 350px; background-color: #49c2c0; color: #ffffff"
-                size="18px"
+                style="width: 90vw; background-color: #49c2c0; color: #ffffff"
+                size="2vh"
               >
                 <div class="ellipsis text-weight-reguler" @click="doLogin()">
                   Login
@@ -81,7 +76,9 @@
               </div>
             </q-btn> -->
 
-              <div class="q-py-md text-weight-thin">Atau, lanjutkan dengan</div>
+              <div class="q-py-md text-weight-thin" style="max-width: 100vw">
+                Atau, lanjutkan dengan
+              </div>
               <q-btn
                 v-for="n in 1"
                 :key="n"
@@ -89,15 +86,18 @@
                 no-caps
                 unelevated
                 rounded
-                style="width: 350px; background-color: #ffffff; color: #888888"
-                size="18px"
+                style="width: 90vw; background-color: #ffffff; color: #888888"
+                size="2vh"
               >
-                <div class="q-mr-lg">
-                  <q-avatar size="30px">
+                <div class="q-mr-md">
+                  <q-avatar size="4vh">
                     <img src="~/assets/google.png" alt="google" />
                   </q-avatar>
                 </div>
-                <div class="ellipsis text-weight-medium q-pr-xs">
+                <div
+                  class="ellipsis text-weight-medium q-pr-xs"
+                  style="font-size: 2vh"
+                >
                   Login Dengan Akun Google
                 </div>
               </q-btn>
