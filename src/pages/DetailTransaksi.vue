@@ -2,288 +2,419 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container style="background-color: #fafafa">
       <q-page>
-        <!-- Header Image -->
-        <div class="text-center bg-transparent" style="margin-left: -34px">
-          <q-img src="~/assets/header-mesincuci.png" class="q-mr-md"> </q-img>
+        <div class="text-center bg-transparent">
+          <!-- Header Image -->
+          <q-img src="~/assets/header-mesin-cuci.svg">
+            <q-toolbar class="bg-transparent">
+              <q-btn flat round size="10px" to="/home">
+                <q-avatar
+                  size="25px"
+                  icon="fas fa-arrow-left"
+                  style="color: #888888"
+                >
+                </q-avatar>
+              </q-btn>
+              <q-toolbar-title
+                class="text-left text-weight-medium"
+                style="color: #888888; font-size: 16px"
+                >Detail Pesanan</q-toolbar-title
+              >
+            </q-toolbar>
+          </q-img>
         </div>
-        <!-- Button Back, No Pesanan, Button Share -->
-        <q-card class="q-my-xs" flat>
-          <q-card-actions class="text-center">
-            <q-btn
-              class="q-ml-xs"
-              ripple="false"
-              flat
-              icon="fas fa-arrow-left"
-              style="color: #888888; width: 5vw"
-              to="/home"
-            >
+        <q-page
+          class="front"
+          style="
+            border-radius: 30px;
+            background-color: white;
+            margin-top: -35px;
+            position: relative;
+          "
+        >
+          <!-- Button Share -->
+          <div class="float-right q-mr-md q-mt-sm">
+            <q-btn round size="15px" ripple flat @click="buttonShare()">
+              <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
             </q-btn>
-            <q-space></q-space>
-            <div
-              class="q-mr-xl text-weight-light"
-              style="font-size: 2vh; font-family: roboto"
-            >
-              NO. PESANAN.211228BH7A4AA
+          </div>
+
+          <!-- No Pesanan  -->
+          <div class="row q-pt-md q-pl-lg">
+            <div class="text-weight-regular" style="color: #c9c9c9">
+              No Pesanan
             </div>
+          </div>
+          <div class="row">
+            <div class="q-pl-lg text-weight-regular" style="color: #313131">
+              211228BH7A4AA
+            </div>
+          </div>
 
-            <q-btn
-              ripple="false"
-              flat
-              class="q-pa-xs q-mr-xs absolute-right"
-              @click="buttonShare()"
-            >
-              <img src="~/assets/icon-share.svg" style="width: 5vw" />
-            </q-btn>
-          </q-card-actions>
-        </q-card>
-        <!-- Progress Pakaian -->
-        <q-card flat style="background-color: #ffffff">
-          <q-card-actions vertical>
-            <q-list
-              class="text-black bordered"
-              style="max-width: 100vw; width: 100%; background-color: #ffffff"
-            >
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/id-card-detail.svg" style="width: 5vh" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh">Hisyam</q-item-section>
-              </q-item>
-
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/icon-telpon.svg" style="width: 5vh" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh"
-                  >087583452474</q-item-section
+          <!-- List Isi -->
+          <q-list
+            separator
+            style="background-color: #ffffff"
+            class="q-my-xs q-mx-md"
+          >
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular"
+                  style="color: #c9c9c9; font-size: 12px"
+                  >Nama Pelanggan</q-item-label
                 >
-              </q-item>
-
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/icon-kalender.svg" style="width: 5vh" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh"
-                  >24,12,2022 - 26,12,2022</q-item-section
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Alif</q-item-label
                 >
-              </q-item>
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section avatar>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img src="~/assets/id-card-detail.svg" style="width: 5vh" />
+                </q-avatar>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular"
+                  style="color: #c9c9c9; font-size: 12px"
+                  >No Telephone</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >087831409898</q-item-label
+                >
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section avatar>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img src="~/assets/icon-telpon.svg" style="width: 5vh" />
+                </q-avatar>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular"
+                  style="color: #c9c9c9; font-size: 12px"
+                  >Estimasi Pesanan</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >2 Hari</q-item-label
+                >
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section avatar>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img src="~/assets/icon-kalender.svg" style="width: 5vh" />
+                </q-avatar>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular"
+                  style="color: #c9c9c9; font-size: 12px"
+                  >Paket</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Reguler kering + setrika</q-item-label
+                >
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section avatar>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img src="~/assets/icon-cuci-detail.svg" style="width: 5vh" />
+                </q-avatar>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular"
+                  style="color: #c9c9c9; font-size: 12px"
+                  >Jenis Pakaian</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Pakaian Halus</q-item-label
+                >
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section avatar>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img src="~/assets/icon-baju.svg" />
+                </q-avatar>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular"
+                  style="color: #c9c9c9; font-size: 12px"
+                  >Berat</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >5 kg</q-item-label
+                >
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section avatar>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img src="~/assets/icon-kilogram.svg" style="width: 5vh" />
+                </q-avatar>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center q-mt-xl">
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Paket Lainnya</q-item-label
+                >
+              </q-item-section>
 
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
+              <!-- Button Paket Lainnya -->
+              <q-item-section avatar class="q-mt-xl">
+                <q-btn round flat>
+                  <q-avatar size="30px" class="bg-transparent">
                     <img
-                      src="~/assets/icon-cuci-detail.svg"
+                      src="~/assets/icon-status-cucian.svg"
                       style="width: 5vh"
                     />
                   </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh"
-                  >Cuci Kilat</q-item-section
+                </q-btn>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Status Cucian</q-item-label
                 >
-              </q-item>
+              </q-item-section>
 
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/icon-payment.svg" style="width: 5vh" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh">Tertunda</q-item-section>
-              </q-item>
+              <!-- Button Status Cucian -->
 
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/icon-baju.svg" style="width: 5vh" />
+              <q-item-section avatar>
+                <q-btn round flat to="/status-cucian">
+                  <q-avatar size="30px" class="bg-transparent">
+                    <img
+                      src="~/assets/icon-status-cucian.svg"
+                      style="width: 5vh"
+                    />
                   </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh"
-                  >Baju dan sarung
-                </q-item-section>
-              </q-item>
-
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/icon-tag-harga.svg" style="width: 5vh" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh">20.000</q-item-section>
-              </q-item>
-
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="~/assets/icon-kilogram.svg" style="width: 5vh" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section style="font-size: 2vh">4kg</q-item-section>
-              </q-item>
-            </q-list>
-          </q-card-actions>
-        </q-card>
-        <!-- Button Status  Cucian -->
-        <q-card class="q-mt-xs text-center" flat bordered>
+                </q-btn>
+              </q-item-section>
+            </q-item>
+            <q-item class="q-my-sm">
+              <q-item-section class="self-center">
+                <q-item-label
+                  class="text-weight-regular q-pt-md"
+                  style="color: #c9c9c9; font-size: 15px"
+                  >Status Pembayaran</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Tertunda</q-item-label
+                >
+              </q-item-section>
+              <q-space></q-space>
+              <q-item-section class="self-center" side>
+                <q-item-label
+                  class="text-weight-regular q-pt-md"
+                  style="color: #c9c9c9; font-size: 15px"
+                  >Harga</q-item-label
+                >
+                <q-item-label
+                  caption
+                  lines="1"
+                  class="text-weight-bold"
+                  style="font-size: 14px"
+                  >Rp 25.000</q-item-label
+                >
+              </q-item-section>
+            </q-item>
+          </q-list>
           <q-btn
-            to="/status-cucian"
-            flat
-            class="text-subtitle2 full-width"
+            @click="buttonConfirm()"
             no-caps
-            style="font-size: 2vh"
+            class="full-width q-mt-sm"
+            style="background-color: #49c2c0; color: #fafafa"
           >
-            Status Cucian
+            <div class="q-py-sm text-weight-regular">Konfirmasi Pesanan</div>
           </q-btn>
-        </q-card>
+
+          <q-dialog v-model="dialogConfirm">
+            <q-card>
+              <q-card-section>
+                <div
+                  class="text-weight-bold text-center"
+                  style="font-size: 16px"
+                >
+                  Konfirmasi pesanan ini?
+                </div>
+              </q-card-section>
+
+              <q-card-section>
+                <div
+                  class="text-weight-light text-center q-mt-none"
+                  style="width: 300px"
+                >
+                  Transaksi akan diproses selesai dan pelanggan harus membayar
+                  sesuai harga yang tertera
+                </div>
+              </q-card-section>
+
+              <q-card-actions class="text-primary" vertical>
+                <q-btn
+                  no-caps
+                  flat
+                  label="Konfirmasi Pesanan"
+                  style="background-color: #49c2c0; color: white"
+                />
+                <q-btn
+                  no-caps
+                  flat
+                  label="Batal"
+                  style="color: #888888"
+                  v-close-popup
+                />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+        </q-page>
         <!-- Button Share Click -->
-        <q-dialog
-          v-model="dialogShare"
-          position="bottom"
-          style="border-radius: 100px 100px 0px 0px"
-        >
-          <q-card class="full-width">
-            <q-card-section class="row items-center no-wrap">
-              <div>
-                <q-card flat class="my-card full-width">
-                  <q-card-section class="full-width">
-                    <div
-                      class="text-subtitle1 text-weight-medium text-left"
-                      style="
-                        font-family: roboto;
-                        font-size: 5vw;
-                        margin-left: -2vh;
-                      "
-                    >
-                      Share Media
-                    </div>
-                    <q-avatar
-                      class="q-pt-sm absolute-right"
-                      size="50px"
-                      style="margin-top: -5px"
-                    >
-                      <q-btn
-                        size="2vh"
-                        v-ripple
-                        flat
-                        icon="far fa-times-circle"
-                        color="grey"
-                        style="background-color: transparent"
-                        v-close-popup
-                      />
-                    </q-avatar>
-                  </q-card-section>
-                  <q-separator size="1px" />
+        <q-dialog v-model="dialogShare" position="bottom">
+          <q-card class="justify-center full-width">
+            <q-card-section class="items-center no-wrap">
+              <q-card flat class="my-card">
+                <div class="row">
                   <div
-                    class="q-pa-sm text-subtitle1"
-                    style="margin-left: -10px; font-size: 4vw"
+                    class="col-8 text-subtitle1 text-weight-medium text-left"
+                    style="font-family: roboto; font-size: 18px"
                   >
-                    Share this link via
+                    Share Media
                   </div>
+                  <!-- Button Close -->
+                  <div class="col-4 text-right">
+                    <q-btn
+                      flat
+                      round
+                      v-ripple
+                      style="background-color: transparent"
+                      v-close-popup
+                    >
+                      <q-avatar
+                        icon="far fa-times-circle"
+                        size="30px"
+                      ></q-avatar>
+                    </q-btn>
+                  </div>
+                </div>
 
-                  <q-card-actions class="justify-center">
+                <q-separator size="1px" />
+                <div
+                  class="q-pa-sm text-subtitle1"
+                  style="margin-left: -10px; font-size: 14px"
+                >
+                  Share this link via
+                </div>
+
+                <div class="row justify-center">
+                  <!-- Button Facebook -->
+                  <q-btn
+                    round
+                    size="20px"
+                    outline
+                    color="primary"
+                    class="q-mx-xs"
+                  >
+                    <q-avatar icon="fab fa-facebook-f" size="30px"></q-avatar>
+                  </q-btn>
+
+                  <!-- Button Instagram -->
+                  <q-btn
+                    round
+                    size="20px"
+                    outline
+                    color="pink-9"
+                    class="q-mx-xs"
+                  >
+                    <q-avatar icon="fab fa-instagram" size="30px"></q-avatar>
+                  </q-btn>
+
+                  <!-- Button WhatsApp -->
+                  <q-btn
+                    round
+                    size="20px"
+                    outline
+                    color="green-8"
+                    class="q-mx-xs"
+                  >
+                    <q-avatar icon="fab fa-whatsapp" size="30px"></q-avatar>
+                  </q-btn>
+
+                  <!-- Button Telegram -->
+                  <q-btn round size="20px" outline color="blue" class="q-mx-xs">
                     <q-avatar
-                      rounded
-                      flat
-                      style="border-size: 15px"
-                      class="q-mx-sm"
-                    >
-                      <!-- <q-btn outlined round flat icon="fab fa-facebook-f" color="blue" /> -->
-                      <q-btn
-                        size="2vh"
-                        outline
-                        round
-                        color="primary"
-                        icon="fab fa-facebook-f"
-                      />
-                    </q-avatar>
+                      icon="fab fa-telegram-plane"
+                      size="30px"
+                    ></q-avatar>
+                  </q-btn>
+                </div>
 
-                    <!-- <q-avatar
-                      rounded
-                      flat
-                      style="border-size: 15px"
-                      class="q-mx-xs"
-                    >
-                      <q-btn
-                        size="2vh"
-                        class="bg-blue"
-                        outline
-                        round
-                        color="white"
-                        icon="fab fa-twitter"
-                        style="background-color: blue"
-                      />
-                    </q-avatar> -->
-
-                    <q-avatar
-                      rounded
-                      flat
-                      style="border-size: 15px"
-                      class="q-mx-sm"
-                    >
-                      <q-btn
-                        size="2vh"
-                        outline
-                        round
-                        color="pink-9"
-                        icon="fab fa-instagram"
-                      />
-                    </q-avatar>
-
-                    <q-avatar
-                      rounded
-                      flat
-                      style="border-size: 15px"
-                      class="q-mx-sm"
-                    >
-                      <q-btn
-                        size="2vh"
-                        outline
-                        round
-                        color="green-8"
-                        icon="fab fa-whatsapp"
-                      />
-                    </q-avatar>
-
-                    <q-avatar
-                      rounded
-                      flat
-                      style="border-size: 15px"
-                      class="q-mx-sm"
-                    >
-                      <q-btn
-                        size="2vh"
-                        outline
-                        round
-                        color="blue"
-                        icon="fab fa-telegram-plane"
-                      />
-                    </q-avatar>
-                  </q-card-actions>
-                  <q-card-actions class="justify-center">
-                    <div class="q-py-sm">Or copy link</div>
-                    <q-input
-                      class="full-width"
-                      outlined
-                      bg-color="transparent"
-                      v-model="link"
-                    >
-                      <q-btn
-                        class="self-center q-px-xl"
-                        label="Copy"
-                        color="deep-purple-13"
-                      />
-                      <template v-slot:prepend>
-                        <q-icon name="fas fa-link" />
-                      </template>
-                    </q-input>
-                  </q-card-actions>
-                </q-card>
-              </div>
+                <!-- Link Share -->
+                <q-card-actions class="justify-center">
+                  <div class="q-py-sm">Or copy link</div>
+                  <q-input
+                    class="full-width justify-center"
+                    outlined
+                    bg-color="transparent"
+                    v-model="link"
+                  >
+                    <q-btn
+                      class="self-center q-px-xl"
+                      label="Copy"
+                      color="deep-purple-13"
+                    />
+                    <template v-slot:prepend>
+                      <q-icon name="fas fa-link" />
+                    </template>
+                  </q-input>
+                </q-card-actions>
+              </q-card>
               <q-space />
             </q-card-section>
           </q-card>
@@ -298,6 +429,7 @@ export default {
   data() {
     return {
       dialogShare: false,
+      dialogConfirm: false,
       link: "example.com/share-link",
     };
   },
@@ -305,6 +437,9 @@ export default {
   methods: {
     buttonShare() {
       this.dialogShare = true;
+    },
+    buttonConfirm() {
+      this.dialogConfirm = true;
     },
   },
 };

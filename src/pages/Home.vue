@@ -56,7 +56,7 @@
                         border-radius: 10px;
                       "
                     >
-                      24 Januari 2022
+                      {{ moment().format("DD MMMM YYYY") }}
                     </div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
             </q-input>
             <q-space></q-space>
             <!-- Icon Filter -->
-            <q-btn flat class="q-mr-sm">
+            <q-btn ripple="true" flat class="q-mr-sm" to="/filter-search">
               <img
                 src="~/assets/icon-filter.svg"
                 alt="icon-filter"
@@ -117,9 +117,9 @@
 
             <q-item-section class="self-center">
               <q-item-label class="text-weight-medium">Vino</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
+              <q-item-label caption lines="1" class="q-mb-sm">{{
+                moment().format("DD MMM YYYY")
+              }}</q-item-label>
             </q-item-section>
 
             <q-item-section>
@@ -533,6 +533,7 @@
 
 <script>
 import { ref } from "vue";
+import moment from "moment";
 
 export default {
   data() {
@@ -541,6 +542,12 @@ export default {
       search: ref(""),
       progress: 0.6,
     };
+  },
+
+  methods: {
+    moment() {
+      return moment();
+    },
   },
 };
 </script>

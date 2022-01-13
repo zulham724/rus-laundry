@@ -55,7 +55,11 @@
                 no-caps
                 unelevated
                 rounded
-                style="width: 90vw; background-color: #49c2c0; color: #ffffff"
+                style="
+                  min-width: 60vw;
+                  background-color: #49c2c0;
+                  color: #ffffff;
+                "
                 size="2vh"
               >
                 <div class="ellipsis text-weight-reguler" @click="doLogin()">
@@ -63,18 +67,17 @@
                 </div>
               </q-btn>
               <!-- {{ Auth.count }}
-            <q-btn
-              class="q-mt-lg"
-              no-caps
-              unelevated
-              rounded
-              style="width: 350px; background-color: #66c2ff; color: #ffffff"
-              size="18px"
-            >
-              <div class="ellipsis text-weight-reguler" @click="increment()">
-                Tambah
-              </div>
-            </q-btn> -->
+              <q-btn
+                @click="increment()"
+                class="q-mt-lg"
+                no-caps
+                unelevated
+                rounded
+                style="width: 350px; background-color: #66c2ff; color: #ffffff"
+                size="18px"
+              >
+                <div class="ellipsis text-weight-reguler">Tambah</div>
+              </q-btn> -->
 
               <div class="q-py-md text-weight-thin" style="max-width: 100vw">
                 Atau, lanjutkan dengan
@@ -86,7 +89,11 @@
                 no-caps
                 unelevated
                 rounded
-                style="width: 90vw; background-color: #ffffff; color: #888888"
+                style="
+                  min-width: 60vw;
+                  background-color: #ffffff;
+                  color: #888888;
+                "
                 size="2vh"
               >
                 <div class="q-mr-md">

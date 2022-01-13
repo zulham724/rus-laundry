@@ -1,122 +1,132 @@
 <template>
-  <q-layout view="lHh lpR fFf" class="mbl" style="background-color: #fafafa">
+  <q-layout view="lHh lpR fFf" class="mbl" style="background-color: #ffffff">
     <q-page-container class="front">
-      <q-page>
-        <!-- Button Back, Status Cucian -->
-        <q-card flat class="q-mb-xs">
-          <q-card-actions>
-            <q-btn
-              ripple="false"
-              flat
+      <q-header>
+        <q-toolbar class="bg-white q-py-md">
+          <q-btn flat round size="10px" to="/detail-transaksi">
+            <q-avatar
+              size="25px"
               icon="fas fa-arrow-left"
-              style="color: #888888; width: 5vw"
-              to="/detail-transaksi"
+              style="color: #888888"
             >
-            </q-btn>
-            <div
-              class="q-mx-md text-subtitle2"
-              style="font-size: 5vw; color: #888888"
-            >
-              Status Cucian
-            </div>
-          </q-card-actions>
-        </q-card>
-        <q-card flat>
-          <q-card-actions vertical>
-            <!-- Estimasi Pemesanan -->
-            <div
-              class="q-mt-sm q-ml-lg"
-              style="text-weight-regular; color: #888888; font-size: 4vw"
-            >
-              Estimasi Pemesanan
-            </div>
-            <br />
-            <div
-              class="q-ml-lg"
-              style="text-weight-regular; color: #e5e5e5; font-size: 4vw; margin-top: -15px"
-            >
-              2x24 Jam
-            </div>
-            <!-- Status Pemesanan -->
-            <div
-              class="q-mt-md q-ml-lg"
-              style="text-weight-regular; color: #888888; font-size: 4vw"
-            >
-              Status Cucian
-            </div>
-            <br />
-            <div
-              class="q-ml-lg"
-              style="text-weight-regular; color: #e5e5e5; font-size: 4vw; margin-top: -15px"
-            >
-              Persiapan
-            </div>
-            <!-- Animasi Proses Cucian -->
-            <div class="text-center">
-              <q-img src="~/assets/animasi-proses-cuci.gif" style="width: 30vh">
-              </q-img>
-            </div>
-            <!-- Animasi Progress Loading  -->
-            <q-linear-progress
-              stripe
-              style="width: 150px; border-radius: 50px; color: #49c26b"
-              class="self-center q-mb-md q-mt-lg"
-              size="10vw"
-              :value="progress"
-            >
-              <div class="absolute-full flex flex-center">
-                <q-badge
-                  style="font-size: 4vw"
-                  class="bg-transparent"
-                  text-color="white "
-                  :label="progress"
-                />
-              </div>
-            </q-linear-progress>
+            </q-avatar>
+          </q-btn>
+          <q-toolbar-title
+            class="text-left text-weight-medium"
+            style="color: #888888; font-size: 16px"
+            >Status Cucian</q-toolbar-title
+          >
+        </q-toolbar>
+      </q-header>
+      <q-separator></q-separator>
+      <q-separator></q-separator>
+      <q-page style="background-color: #ffffff">
+        <div
+          class="text-weight-regular text-center q-pt-lg"
+          style="color: #7fcfdc; font-size: 20px"
+        >
+          Pesanan Butuh Konfirmasi
+        </div>
 
-            <!-- Box Catatan -->
-            <!-- <div class="text-center min-width: 300px q-mx-lg q-mt-md">
-              <q-input
-                style="font-size: 3vw; color: #888888"
-                v-model="text"
-                filled
-                type="textarea"
-                label="Tambahkan Catatan..."
+        <!-- Animasi Proses Cucian -->
+        <div class="text-center">
+          <q-img src="~/assets/animasi-proses-cuci.gif" style="width: 30vh">
+          </q-img>
+        </div>
+        <!-- Animasi Progress Loading  -->
+        <div class="row justify-center">
+          <q-linear-progress
+            stripe
+            style="
+              max-width: 30vw;
+              max-height: 35px;
+              border-radius: 50px;
+              color: #49c26b;
+            "
+            class="q-mb-md q-mt-lg"
+            size="10vw"
+            :value="progress"
+          >
+            <div class="absolute-full flex flex-center">
+              <q-badge
+                style="font-size: 3vw"
+                class="bg-transparent"
+                text-color="white "
+                :label="progress"
               />
-            </div> -->
-          </q-card-actions>
-          <q-card-actions class="q-mt-md q-mx-lg">
+            </div>
+          </q-linear-progress>
+        </div>
+
+        <div class="row absolute-bottom q-pb-md">
+          <div class="col-6 text-center">
             <!-- Button Proses Pesanan -->
             <q-btn
+              @click="prosesLoading()"
               rounded
               no-caps
-              style="color: white; background-color: #49c2c0; font-size: 2vh"
-              class="text-weight-regular float-left"
-              >Proses Pesanan</q-btn
+              style="
+                color: white;
+                background-color: #49c2c0;
+                font-size: 12px;
+                max-width: 50vw;
+              "
+              class="text-weight-regular"
             >
-            <q-space></q-space>
+              <div class="q-pa-sm">Proses Pesanan</div>
+            </q-btn>
+          </div>
+          <div class="col-6 text-center">
             <!-- Button Batalkan Pesanan -->
             <q-btn
               rounded
               no-caps
-              style="color: #313131; background-color: white; font-size: 2vh"
+              style="
+                color: #313131;
+                background-color: white;
+                font-size: 12px;
+                max-width: 50vw;
+              "
               class="text-weight-regular"
-              >Batalkan Pesanan</q-btn
             >
-          </q-card-actions>
-        </q-card>
+              <div class="q-pa-sm">Batalkan Pesanan</div></q-btn
+            >
+          </div>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import { Loading, useQuasar, QSpinnerGears, QBtn } from "quasar";
+import { onBeforeUnmount } from "vue";
+
+function show(options) {
+  Loading.show(options);
+  setTimeout(() => {
+    Loading.hide();
+  }, 3000);
+}
+
 export default {
+  components: {
+    QSpinnerGears,
+    QBtn,
+  },
+
   data() {
     return {
-      progress: 0.6,
+      progress: 0 * 100 + "%",
       text: "",
     };
+  },
+
+  methods: {
+    prosesLoading() {
+      show({ message: "Pesanan Diproses..." });
+      this.$router.push("/laundry-details");
+    },
   },
 };
 </script>
