@@ -1,69 +1,68 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-    <q-page-container style="background-color: #fafafa">
-      <q-page>
-        <!-- header -->
-        <div class="text-center">
-          <q-img src="~/assets/header-home.png" alt="header-home">
-            <!-- Animation of Bird -->
-            <!-- <img
+    <q-header class="bg-transparent">
+      <div class="text-center">
+        <q-img
+          src="~/assets/header-home.png"
+          alt="header-home"
+          class="shadow-1"
+          style="border-radius: 0px 0px 0px 70px; height: 25vh"
+        >
+          <!-- Animation of Bird -->
+          <!-- <img
               src="~/assets/header-bird.gif"
               alt="header-bird"
               class="absolute-left"
               style="height: 15vh"
             /> -->
 
-            <!-- information -->
-            <q-page class="q-mt-lg absolute q-pl-lg" style="max-width: 40vh">
+          <!-- information -->
+          <q-page class="q-mt-lg absolute q-pl-lg" style="max-width: 40vh">
+            <div>
               <div>
-                <div>
-                  <div class="float-left">
-                    <!-- Avatar Person -->
-                    <div>
-                      <q-avatar size="7vh">
-                        <img src="~/assets/Avatar.png" alt="avatar-person" />
-                      </q-avatar>
-                    </div>
+                <div class="float-left">
+                  <!-- Avatar Person -->
+                  <div>
+                    <q-avatar size="7vh">
+                      <img src="~/assets/Avatar.png" alt="avatar-person" />
+                    </q-avatar>
                   </div>
-                  <div class="float-left q-ml-md">
-                    <div
-                      style="
-                        font-size: 20px;
-                        color: #313131;
-                        margin-bottom: -1vh;
-                      "
-                      class="text-subtitle text-bold float-left"
-                    >
-                      Selamat Pagi
-                    </div>
-                    <br />
-                    <!-- Nama User -->
-                    <div
-                      class="text-subtitle1 float-left"
-                      style="color: #313131"
-                    >
-                      IndonesiaLaundry
-                    </div>
-                    <br />
-                    <!-- Date -->
-                    <div
-                      class="text-caption float-left q-px-xs"
-                      style="
-                        font-size: 11px;
-                        min-width: 10vw;
-                        background-color: #ffffff;
-                        color: #888888;
-                        border-radius: 10px;
-                      "
-                    >
-                      {{ moment().format("DD MMMM YYYY") }}
-                    </div>
+                </div>
+                <div class="float-left q-ml-md q-gutter-y-sm">
+                  <div
+                    style="font-size: 20px; color: #313131; margin-bottom: -1vh"
+                    class="text-subtitle text-bold float-left"
+                  >
+                    Selamat Pagi
+                  </div>
+                  <br />
+                  <!-- Nama User -->
+                  <div class="text-subtitle1 float-left" style="color: #313131">
+                    IndonesiaLaundry
+                  </div>
+                  <br />
+                  <!-- Date -->
+                  <div
+                    class="text-caption float-left q-px-xs"
+                    style="
+                      font-size: 11px;
+                      min-width: 10vw;
+                      background-color: #ffffff;
+                      color: #888888;
+                      border-radius: 10px;
+                    "
+                  >
+                    {{ moment().format("DD MMMM YYYY") }}
                   </div>
                 </div>
               </div>
-            </q-page>
-          </q-img>
-        </div>
+            </div>
+          </q-page>
+        </q-img>
+      </div>
+    </q-header>
+    <q-page-container style="background-color: #fafafa">
+      <q-page>
         <q-card flat>
           <q-card-actions class="bg-fafafa">
             <!-- Search -->
@@ -95,365 +94,80 @@
             </q-btn>
           </q-card-actions>
         </q-card>
-        <div class="self-center"></div>
         <!-- List Pesanan -->
-        <q-list
-          bordered
-          separator
-          class="q-mx-md q-my-xs"
-          style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+        <div v-if="orders.length">
+          <q-list
+            bordered
+            separator
+            class="q-mx-md q-my-xs"
+            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+          >
+            <q-item
+              v-for="order in orders"
+              :key="order.id"
+              class="q-my-sm q-mx-md"
+              clickable
+              to="/detail-transaksi"
+            >
+              <q-item-section avatar>
+                <q-avatar
+                  color="primary"
+                  text-color="white"
+                  size="60px"
+                  style="margin-left: -20px"
+                >
+                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">{{
+                  order.customer.name
+                }}</q-item-label>
+                <q-item-label caption lines="1" class="q-mb-sm">
+                  {{
+                    moment(order.created_at).format("lll")
+                  }}</q-item-label
+                >
+              </q-item-section>
+
+              <q-item-section>
+                <q-linear-progress
+                  stripe
+                  style="max-width: 20vw; border-radius: 50px; color: #49c26b"
+                  class="self-center q-mb-md on-right"
+                  size="25px"
+                  :value="progress"
+                >
+                  <div class="absolute-full flex flex-center">
+                    <q-badge
+                      style="font-size: 15px"
+                      class="bg-transparent"
+                      text-color="white "
+                      :label="progress"
+                    />
+                  </div>
+                </q-linear-progress>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <!--Empty Order-->
+        <div
+          v-if="!orders.length"
+          class="text-center absolute-center"
+          style="margin-bottom: 100px"
         >
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Vino</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm">{{
-                moment().format("DD MMM YYYY")
-              }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Arif</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Dea</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Firosyan</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Bryan</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Hisyam</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">Deni Putra</q-item-label>
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium" style="width: 50px"
-                >Suparjo Tejo</q-item-label
-              >
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-          <q-item class="q-my-sm q-mx-md" clickable to="/detail-transaksi">
-            <q-item-section avatar>
-              <q-avatar
-                color="primary"
-                text-color="white"
-                size="60px"
-                style="margin-left: -20px"
-              >
-                <img src="~/assets/avatar-box.png" alt="avatar-box" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium"
-                >Alif Syahputra</q-item-label
-              >
-              <q-item-label caption lines="1" class="q-mb-sm"
-                >11 Jan 2022</q-item-label
-              >
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                stripe
-                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                class="self-center q-mb-md on-right"
-                size="25px"
-                :value="progress"
-              >
-                <div class="absolute-full flex flex-center">
-                  <q-badge
-                    style="font-size: 15px"
-                    class="bg-transparent"
-                    text-color="white "
-                    :label="progress"
-                  />
-                </div>
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-        </q-list>
+          <q-img
+            no-spinner
+            style="width: 160px; height: 160px"
+            src="~/assets/pesanan-kosong.svg"
+          ></q-img>
+          <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
+        </div>
         <!-- Scan Barcode -->
         <q-btn
-          to="/home-kosong"
+          @click="doLogout()"
           class="elevated fixed-bottom-right"
           rounded
           color="#FAFAFA"
@@ -468,65 +182,6 @@
             src="~/assets/barcode-scan.svg"
         /></q-btn>
       </q-page>
-      <!-- Bottom Navigation -->
-      <q-footer
-        class="elevated q-pt-sm"
-        style="border-radius: 20px 20px 0px 0px; background-color: white"
-      >
-        <div class="q-gutter-none" style="max-width: 100%">
-          <q-tabs v-model="tab" dense class="text-black">
-            <q-tab name="home" no-caps
-              ><q-img
-                style="width: 25px; height: 25px"
-                :src="
-                  tab == 'home'
-                    ? require('../assets/transaksi-color.svg')
-                    : require('../assets/icon-transaksi.svg')
-                "
-              ></q-img>
-              <div class="text-caption" style="font-size: 10px">Transaksi</div>
-            </q-tab>
-
-            <q-tab name="pesanan" no-caps
-              ><q-img
-                style="width: 25px; height: 25px"
-                :src="
-                  tab == 'pesanan'
-                    ? require('../assets/pesanan-color.svg')
-                    : require('../assets/icon-pesanan.svg')
-                "
-              ></q-img>
-              <div class="text-caption" style="font-size: 10px">Pesanan</div>
-            </q-tab>
-
-            <q-tab name="penghasilan" no-caps
-              ><q-img
-                style="width: 22px; height: 25px"
-                :src="
-                  tab == 'penghasilan'
-                    ? require('../assets/penghasilan-color.svg')
-                    : require('../assets/icon-penghasilan.svg')
-                "
-              ></q-img>
-              <div class="text-caption" style="font-size: 10px">
-                Penghasilan
-              </div></q-tab
-            >
-
-            <q-tab name="karyawan" no-caps
-              ><q-img
-                style="width: 22px; height: 25px"
-                :src="
-                  tab == 'karyawan'
-                    ? require('../assets/karyawan-color.svg')
-                    : require('../assets/icon-karyawan.svg')
-                "
-              ></q-img>
-              <div class="text-caption" style="font-size: 10px">Karyawan</div>
-            </q-tab>
-          </q-tabs>
-        </div>
-      </q-footer>
     </q-page-container>
   </q-layout>
 </template>
@@ -534,19 +189,38 @@
 <script>
 import { ref } from "vue";
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
       tab: "home",
       search: ref(""),
       progress: 0.6,
+      orders: [],
     };
   },
-
+  mounted() {
+    this.getOrders();
+  },
   methods: {
     moment() {
       return moment();
+    },
+    doLogout() {
+      this.$store.dispatch("Auth/logout").then((res) => {
+        this.$router.push("/login");
+      });
+    },
+    getOrders() {
+      this.$store
+        .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.orders = res.data;
+        });
     },
   },
 };

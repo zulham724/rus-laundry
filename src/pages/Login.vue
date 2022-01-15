@@ -22,6 +22,7 @@
           <div class="q-pa-md text-center">
             <q-form ref="form">
               <q-input
+                :disable="loading"
                 class="q-pb-lg"
                 rounded
                 outlined
@@ -32,6 +33,7 @@
               />
 
               <q-input
+              :disable="loading"
                 rounded
                 outlined
                 v-model="credential.password"
@@ -48,9 +50,9 @@
                 />
               </q-input>
               <q-btn
-                v-for="n in 1"
-                :key="n"
-                :class="`shadow-${1}`"
+              @click="doLogin()"
+                :disable="loading"
+                :class="`shadow-1`"
                 class="q-mt-lg"
                 no-caps
                 unelevated
@@ -62,30 +64,17 @@
                 "
                 size="2vh"
               >
-                <div class="ellipsis text-weight-reguler" @click="doLogin()">
+                <div class="ellipsis text-weight-reguler">
                   Login
                 </div>
               </q-btn>
-              <!-- {{ Auth.count }}
-              <q-btn
-                @click="increment()"
-                class="q-mt-lg"
-                no-caps
-                unelevated
-                rounded
-                style="width: 350px; background-color: #66c2ff; color: #ffffff"
-                size="18px"
-              >
-                <div class="ellipsis text-weight-reguler">Tambah</div>
-              </q-btn> -->
 
               <div class="q-py-md text-weight-thin" style="max-width: 100vw">
                 Atau, lanjutkan dengan
               </div>
               <q-btn
-                v-for="n in 1"
-                :key="n"
-                :class="`shadow-${1}`"
+                :disable="loading"
+                :class="`shadow-1`"
                 no-caps
                 unelevated
                 rounded
@@ -129,6 +118,7 @@
 import { ref } from "vue";
 import { mapState } from "vuex";
 
+
 export default {
   data() {
     return {
@@ -137,31 +127,30 @@ export default {
         password: "",
       },
       isPwd: true,
+      loading: false,
     };
   },
-
-  computed: {
-    ...mapState(["Auth"]),
+  mounted(){
+    
   },
-
   // Untuk fungsi
   methods: {
-    increment() {
-      this.$store.dispatch("Auth/increment");
-    },
-
     doLogin() {
       this.$refs.form.validate().then((success) => {
         if (success) {
           // alert("berhasil");
-
-          this.$store.dispatch("Auth/login", this.credential);
-
-          this.$router.push("/home");
-        } else {
-          alert("gagal");
-          // oh no, user has filled in
-          // at least one invalid value
+          this.loading = true
+          this.$store
+            .dispatch("Auth/login", this.credential)
+            .then((res) => {
+              this.$router.push("/");
+            })
+            .catch((err) => {
+              // this.$q.notify("terjadi kesalahan")
+              console.log(err)
+            }).finally(()=>{
+              this.loading = false
+            })
         }
       });
     },

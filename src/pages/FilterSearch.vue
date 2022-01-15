@@ -3,7 +3,7 @@
     <q-page-container style="background-color: #fafafa">
       <q-header>
         <q-toolbar class="bg-white q-py-md">
-          <q-btn flat round size="10px" to="/home">
+          <q-btn flat round size="10px" @click="$router.back()">
             <q-avatar
               size="25px"
               icon="fas fa-arrow-left"

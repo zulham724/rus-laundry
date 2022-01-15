@@ -1,106 +1,81 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
+    <!-- Bottom Navigation -->
+    <q-footer
+      class="elevated q-pt-sm"
+      style="border-radius: 20px 20px 0px 0px; background-color: white"
+    >
+      <div class="q-gutter-none" style="max-width: 100%">
+        <q-tabs v-model="tab" dense class="text-black">
+          <q-tab name="home" no-caps @click="$router.push('/')"
+            ><q-img
+              no-spinner
+              style="width: 25px; height: 25px"
+              :src="
+                tab == 'home'
+                  ? require('../assets/transaksi-color.svg')
+                  : require('../assets/icon-transaksi.svg')
+              "
+            ></q-img>
+            <div class="text-caption" style="font-size: 10px">Transaksi</div>
+          </q-tab>
+
+          <q-tab name="pesanan" no-caps @click="$router.push('/make-an-order')"
+            ><q-img
+              no-spinner
+              style="width: 25px; height: 25px"
+              :src="
+                tab == 'pesanan'
+                  ? require('../assets/pesanan-color.svg')
+                  : require('../assets/icon-pesanan.svg')
+              "
+            ></q-img>
+            <div class="text-caption" style="font-size: 10px">Pesanan</div>
+          </q-tab>
+
+          <q-tab name="penghasilan" no-caps
+            ><q-img
+              no-spinner
+              style="width: 22px; height: 25px"
+              :src="
+                tab == 'penghasilan'
+                  ? require('../assets/penghasilan-color.svg')
+                  : require('../assets/icon-penghasilan.svg')
+              "
+            ></q-img>
+            <div class="text-caption" style="font-size: 10px">
+              Penghasilan
+            </div></q-tab
+          >
+
+          <q-tab name="karyawan" no-caps
+            ><q-img
+              no-spinner
+              style="width: 22px; height: 25px"
+              :src="
+                tab == 'karyawan'
+                  ? require('../assets/karyawan-color.svg')
+                  : require('../assets/icon-karyawan.svg')
+              "
+            ></q-img>
+            <div class="text-caption" style="font-size: 10px">Karyawan</div>
+          </q-tab>
+        </q-tabs>
+      </div>
+    </q-footer>
   </q-layout>
 </template>
 
 <script>
-import EssentialLink from "components/EssentialLink.vue";
-
-const linksList = [
-  {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
-];
-
-import { defineComponent, ref } from "vue";
-
-export default defineComponent({
+export default {
   name: "MainLayout",
-
-  components: {
-    EssentialLink,
-  },
-
-  setup() {
-    const leftDrawerOpen = ref(false);
-
+  data() {
     return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+      tab: "home",
     };
   },
-});
+};
 </script>

@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" to="/basket">
+        <q-btn flat round size="10px" @click="$router.back()">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
@@ -12,7 +12,7 @@
           >Tambah Paket Baru</q-toolbar-title
         >
         <q-btn
-          to="/confirm-package"
+          @click="store()"
           no-caps
           flat
           color="grey"
@@ -26,6 +26,7 @@
       <q-page>
         <q-card flat class="q-mt-md bg-white text-subtitle2">
           <q-input
+          v-model="package.name"
             class="text-subtitle2"
             bg-color="white"
             filled
@@ -36,6 +37,7 @@
         </q-card>
 
         <q-input
+        v-model="package.price"
           class="q-my-sm text-subtitle2"
           label="Harga"
           filled
@@ -43,35 +45,20 @@
           color="transparent"
         >
           <template v-slot:append>
-            <q-btn-dropdown
+            <q-btn
               no-caps
               style="float: right"
               color="grey"
-              class="bg-transparent no-shadow"
+              class="bg-transparent no-shadow q-mr-sm"
               outline
-              :label="selectedCategory ? selectedCategory.name : 'Pilih'"
-              @click="onMainClick"
-            >
-              <q-list>
-                <q-item
-                  no-caps
-                  clickable
-                  v-close-popup
-                  v-for="category in categories"
-                  :key="category.name"
-                  @click="onItemClick(category)"
-                >
-                  <q-item-section>
-                    <q-item-label>{{ category.name }} </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
+              :label="'/'+service_category.service_unit.name"
+            />
           </template>
         </q-input>
 
         <q-card flat class="q-my-sm bg-white text-subtitle2">
           <q-input
+          v-model="package.process_time"
             class="text-subtitle2"
             bg-color="white"
             filled
@@ -96,11 +83,11 @@
               class="text-subtitle2 text-left q-pa-sm"
               style="color: #888888"
             >
-              Pakaian halus
+              {{ service_category.name }}
             </div>
             <q-space></q-space>
             <div class="text-caption q-pr-md" style="color: grey">
-              kilogram(kg)
+              {{ service_category.service_unit.name }}
             </div>
             <div class="q-px-sm">
               <img
@@ -116,24 +103,35 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  props:["categoryid"],
+  computed:{
+    ...mapState(["Orders"])
+  },
   data() {
     return {
-      onMainClick() {},
-      onItemClick(category) {
-        this.selectedCategory = category;
+      package: {},
+      service_category: {
+        service_unit:{}
       },
-      categories: [
-        {
-          name: "kilogram(kg)",
-        },
-        {
-          name: "Satuan(pcs)",
-        },
-      ],
-      selectedCategory: null,
     };
   },
+  mounted(){
+    this.getCategory();
+  },
+  methods:{
+    getCategory(){
+     this.service_category = this.Orders.order.cart.find(item => item.id == this.categoryid)
+    },
+    store(){
+      this.package.service_category_id = this.categoryid
+      this.$store.dispatch("Services/store", this.package).then(res => {
+        this.$router.push(`/package-list-first/${this.categoryid}`)
+        this.$q.notify("Paket telah ditambahkan")
+      })
+    }
+  }
 };
 </script>
 

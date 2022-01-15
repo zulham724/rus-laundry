@@ -1,28 +1,38 @@
+import store from "src/store";
+import multiguard from 'vue-router-multiguard';
+
+const auth = (to, from, next)=> {
+  let isLoggedIn = store().getters["Auth/isLoggedIn"];
+  console.log(isLoggedIn)
+  if (isLoggedIn) {
+    next();
+  }else{
+    next('/login');
+  }
+ 
+}
 
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    beforeEnter: multiguard([auth]),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      {
+        path: '',
+        component: () => import('pages/Home.vue')
+      },
+      {
+        path: '/home-kosong',
+        component: () => import('pages/HomeKosong.vue')
+      },
+      {
+        path: '/make-an-order',
+        component: () => import('pages/MakeAnOrder.vue'),
+        props: true
+      },
     ]
   },
-
-  {
-    path: '/login',
-    component: () => import('pages/Login.vue')
-  },
-
-  {
-    path: '/home',
-    component: () => import('pages/Home.vue')
-  },
-
-  {
-    path: '/home-kosong',
-    component: () => import('pages/HomeKosong.vue')
-  },
-
   {
     path: '/detail-transaksi',
     component: () => import('pages/DetailTransaksi.vue')
@@ -37,12 +47,10 @@ const routes = [
     path: '/loading-proses',
     component: () => import('pages/LoadingProses.vue')
   },
-
   {
-    path: '/make-an-order',
-    component: () => import('pages/MakeAnOrder.vue')
+    path: '/login',
+    component: () => import('pages/Login.vue')
   },
-
   {
     path: '/pilih-paket-awal',
     component: () => import('src/pages/PilihPaketAwal.vue')
@@ -89,18 +97,21 @@ const routes = [
   },
 
   {
-    path: '/choose-package',
-    component: () => import('src/pages/ChoosePackage.vue')
+    path: '/:categoryid/choose-package',
+    component: () => import('src/pages/ChoosePackage.vue'),
+    props:true
   },
 
   {
-    path: '/add-package',
-    component: () => import('src/pages/AddPackage.vue')
+    path: '/add-package/:categoryid',
+    component: () => import('src/pages/AddPackage.vue'),
+    props:true
   },
 
   {
-    path: '/package-list-first',
-    component: () => import('src/pages/PackageListFirst.vue')
+    path: `/package-list-first/:categoryid`,
+    component: () => import('src/pages/PackageListFirst.vue'),
+    props:true
   },
 
   {

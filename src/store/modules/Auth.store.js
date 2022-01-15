@@ -2,56 +2,64 @@
 import { api } from "src/boot/axios";
 
 const state = {
-    auth: "asd",
-    count: 1
+    token: {},
+    auth: null,
+   
+    
 };
 
-const actions = {
-    increment({commit}) {
-        commit('countIncrement')
+const mutations = {
+    set_token(state, payload) {
+    state.token = payload.token
     },
-    login({commit}, credential) {
-        console.log(credential)
-        let access = {
+    logout(state, payload) {
+        state.token = {}
+    },
+    set_auth(state, payload){
+        state.auth = payload.auth
+    }
+};
+
+
+const actions = {
+    login({ commit }, credential) {
+        const access = {
             grant_type: "password",
-            client_id: "2",
-            client_secret: "N62KQsBzDyc4npIW1pIMkBRygQgRuyyNxas0P3PK",
-            username: credential.username,
-            password: credential.password
-        }
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            ...credential
+        };
         return new Promise((resolve, reject) => {
-            api.post("/oauth/token", access).then(res=>{
+            api.post(`/oauth/token`, access).then((res) => {
                 const token = res.data;
                 api.defaults.headers.common.Accept = "application/json";
-
                 api.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
-
-                api.get('/api/master/user').then((resp) => {
-                    const auth = resp.data;
-                    const payload = {
-                        token: token,
-                        auth: auth                        
-                    };
-                    console.log(payload)
-
-                    // commit("auth_success", payload);
-                    resolve(resp);
+                commit('set_token', {token:token})
+                api.get(`api/slave/user`).then(resp => {
+                    const auth = resp.data
+                    commit('set_auth', {auth:auth})
+                }).finally(()=>{
+                    resolve(res.data)
                 })
-
-                console.log(res)
-                resolve(res)
+            }).catch(err => {
+                reject(err)
             })
+        })
+    },
+    logout({ commit }) {
+        return new Promise((resolve, reject) => {
+            commit("logout");
+            delete api.defaults.headers.common.Authorization;
+            resolve();
         })
     }
 };
 
-const mutations = {
-    countIncrement(state) {
-        state.count++
-    }
+const getters = {
+    isLoggedIn: (state) => !!state.token.access_token,
+    auth: (state) => state.auth,
+    token: (state) => state.token
 };
-
-const getters = {};
 
 export default {
     namespaced: true,

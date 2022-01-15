@@ -29,13 +29,8 @@
             </div>
           </q-btn>
         </div>
-        <q-card flat class="q-mt-md"> </q-card>
-        <div class="text-center" style="margin-top: 80px">
-          <img
-            src="~/assets/paket-kosong-unscreen.gif"
-            style="width: 205px; height: 205px"
-          />
-        </div>
+       
+       
 
         <div class="text-center text-weight-bold q-pa-md">
           Belum ada Pakaian
@@ -43,7 +38,7 @@
 
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
           <q-btn fab round style="width: 60px; height: 60px">
-            <img src="~/assets/cart-pesanan.svg" />
+            <q-img src="~/assets/cart-pesanan.svg" />
           </q-btn>
         </q-page-sticky>
       </q-page>

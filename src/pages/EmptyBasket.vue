@@ -24,13 +24,7 @@
     </q-header>
     <q-page-container>
       <q-page>
-        <div class="text-center q-ma-xl">
-          <img
-            src="~/assets/keranjang-kosong.svg"
-            style="width: 175px; height: 175px; margin-top: 50px"
-          />
-        </div>
-        <div class="text-h6 text-center">Wah Keranjangmu Kosong</div>
+        
       </q-page>
     </q-page-container>
   </q-layout>
