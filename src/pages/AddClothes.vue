@@ -41,11 +41,16 @@
           Belum ada Pakaian
         </div>
 
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
-          <q-btn fab round style="width: 60px; height: 60px">
-            <img src="~/assets/cart-pesanan.svg" />
+        <div class="absolute-bottom">
+          <q-btn no-caps class="full-width q-py-sm">
+            <q-avatar size="30px" class="q-mr-md">
+              <q-img src="~/assets/cart-pesanan.svg"></q-img>
+            </q-avatar>
+            <div class="text-weight-bold" style="color: #888888">
+              Tampilkan menu keranjang
+            </div>
           </q-btn>
-        </q-page-sticky>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>

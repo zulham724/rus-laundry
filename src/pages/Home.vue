@@ -540,7 +540,7 @@ export default {
     return {
       tab: "home",
       search: ref(""),
-      progress: 0.6,
+      progress: 0.6 * 100 + "%",
     };
   },
 

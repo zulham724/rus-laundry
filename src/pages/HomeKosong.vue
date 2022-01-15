@@ -37,13 +37,6 @@
                 </div>
               </div></q-page
             >
-            <!-- Animation of Bird -->
-            <img
-              src="~/assets/header-bird.gif"
-              alt="header-bird"
-              class="absolute-left q-ml-xl"
-              style="max-height: 150px; margin-top: 100px"
-            />
           </q-img>
         </div>
         <!-- Scan Barcode -->
@@ -64,7 +57,7 @@
             src="~/assets/barcode-scan.svg"
         /></q-btn>
 
-        <div class="text-center absolute-bottom" style="margin-bottom: 100px">
+        <div class="text-center q-pt-xl">
           <q-img
             style="width: 160px; height: 160px"
             src="~/assets/pesanan-kosong.svg"

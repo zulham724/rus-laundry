@@ -299,9 +299,10 @@
 
               <q-card-actions class="text-primary" vertical>
                 <q-btn
+                  to="/invoice-page"
                   no-caps
                   flat
-                  label="Konfirmasi Pesanan"
+                  label="Konfirmasi Transaksi"
                   style="background-color: #49c2c0; color: white"
                 />
                 <q-btn

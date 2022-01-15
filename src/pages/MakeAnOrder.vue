@@ -17,46 +17,32 @@
             position: relative;
           "
         >
-          <div class="q-pa-lg text-right">
-            <q-btn flat to="/addclothes">
-              <q-icon>
-                <img src="~/assets/cart-pesanan.svg" />
-              </q-icon>
-            </q-btn>
+          <div
+            class="text-weight-bold q-px-lg q-pt-lg"
+            style="font-size: 26px; color: #888888"
+          >
+            Buat Pesanan
           </div>
-
-          <!-- Button Jenis Pakaian -->
-          <div class="row justify-center">
-            <q-btn
-              :ripple="false"
-              flat
-              style="max-width: 100vw"
-              to="/add-clothes"
-            >
-              <img class="full-width" src="~/assets/jenis-pakaian-card.png" />
-            </q-btn>
-          </div>
-
           <q-form class="q-pa-md">
             <q-input
-              class="q-pa-xs"
+              class="q-pa-xs q-mb-sm"
               outlined
               label="Nama"
               style="color: #bababa; text-weight-regular"
             />
             <q-input
-              class="q-pa-xs"
+              class="q-pa-xs q-mb-sm"
               outlined
-              label="No Telpon"
+              label="No Telephone"
               style="color: #bababa; text-weight-regular"
             />
             <q-input
-              class="q-pa-xs"
+              class="q-pa-xs q-mb-sm"
               outlined
               label="Tanggal Laundry"
               style="color: #bababa; text-weight-regular"
             />
-            <div class="q-pa-xs">
+            <div class="q-pa-xs q-mb-lg">
               <q-input
                 outlined
                 type="textarea"
@@ -67,6 +53,7 @@
           </q-form>
           <div class="text-center">
             <q-btn
+              to="/add-clothes"
               no-caps
               class="q-py-sm"
               style="
@@ -75,7 +62,7 @@
                 width: 90%;
                 border-radius: 10px;
               "
-              label="Buat Pesanan"
+              label="Selanjutnya"
             />
           </div>
         </div>

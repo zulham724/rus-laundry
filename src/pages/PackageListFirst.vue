@@ -9,17 +9,8 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Tambah Paket Baru</q-toolbar-title
+          >Pilih Paket</q-toolbar-title
         >
-        <q-btn
-          to="/package-list-first"
-          no-caps
-          flat
-          color="grey"
-          class="text-right"
-        >
-          <div class="text-weight-medium">Selesai</div>
-        </q-btn>
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
