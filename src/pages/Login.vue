@@ -97,16 +97,7 @@
                   Login Dengan Akun Google
                 </div>
               </q-btn>
-              <!-- <div class="q-py-md text-weight-thin">
-              Belum punya akun?
-              <router-link
-                style="text-decoration: none; color: #66c2ff"
-                to="/register"
-                >Daftar Sekarang</router-link
-              >
-            </div> -->
             </q-form>
-            <!-- </div> -->
           </div>
         </div>
       </q-page>

@@ -77,12 +77,6 @@
             </q-btn-dropdown> -->
           </div>
         </q-card>
-
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
-          <q-btn fab round style="width: 60px; height: 60px">
-            <img src="~/assets/cart-pesanan.svg" />
-          </q-btn>
-        </q-page-sticky>
       </q-page>
     </q-page-container>
   </q-layout>

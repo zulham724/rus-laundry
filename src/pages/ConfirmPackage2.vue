@@ -10,7 +10,7 @@
         </div>
 
         <div class="text-weight-bold text-center" style="font-size: 18px">
-          Paket telah ditambahkan
+          Pesanan Telah Dibuat
         </div>
       </q-page>
     </q-page-container>

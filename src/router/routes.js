@@ -124,6 +124,63 @@ const routes = [
     component: () => import('src/pages/EmptyBasket.vue')
   },
 
+  {
+    path: '/second-basket',
+    component: () => import('src/pages/SecondBasket.vue')
+  },
+
+  {
+    path: '/confirm-package2',
+    component: () => import('src/pages/ConfirmPackage2.vue')
+  },
+
+  {
+    path: '/invoice-page',
+    component: () => import('src/pages/InvoicePage.vue')
+  },
+
+  {
+    path: '/attendance',
+    component: () => import('src/pages/Attendance.vue')
+  },
+
+  {
+    path: '/attendance-details',
+    component: () => import('src/pages/AttendanceDetails.vue')
+  },
+
+  {
+    path: '/employee',
+    component: () => import('src/pages/Employee.vue')
+  },
+
+  {
+    path: '/detail-employee',
+    component: () => import('src/pages/DetailEmployee.vue')
+  },
+
+  {
+    path: '/add-employee',
+    component: () => import('src/pages/AddEmployee.vue')
+  },
+
+  {
+    path: '/edit-employee',
+    component: () => import('src/pages/EditEmployee.vue')
+  },
+
+  {
+    path: '/print-card',
+    component: () => import('src/pages/PrintCard.vue')
+  },
+
+  {
+    path: '/attendance',
+    component: () => import('src/pages/Attendance.vue')
+  },
+
+
+
 
   // Always leave this as last one,
   // but you can also remove it
