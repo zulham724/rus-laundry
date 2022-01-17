@@ -13,8 +13,10 @@
           Pesanan Telah Dibuat
         </div>
 
-        <div class="col-12">
-          <q-btn label="Cetak kode pesanan"/>
+        <div class="col-12 text-center absolute-bottom q-pb-lg">
+          <q-btn dense @click="$router.push('/order-code')" flat label="Cetak kode pesanan"/>
+          <br>
+          <q-btn @click="$router.push('/make-an-order')" label="kembali" flat color="green-5" size="sm"/>
         </div>
       </q-page>
     </q-page-container>

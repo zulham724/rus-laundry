@@ -22,18 +22,18 @@ const mutations = {
         payload.data.package = null
         state.order.charts.push(payload.data)
     },
-    add_paket_in_chart(state, payload){
+    add_paket_in_chart(state, payload) {
         state.order.charts.forEach((item) => {
-            if(item.id == payload.id){
+            if (item.id == payload.id) {
                 item.package = payload.paket
             }
         });
     },
-    remove_order_chart(state, payload){
-       var index = state.order.charts.findIndex(item => item.id == payload.id)
-       if(index > -1){
-           state.order.charts.splice(index, 1)
-       }
+    remove_order_chart(state, payload) {
+        var index = state.order.charts.findIndex(item => item.id == payload.id)
+        if (index > -1) {
+            state.order.charts.splice(index, 1)
+        }
     },
 
     destroy_order(state, payload) {
@@ -96,6 +96,15 @@ const actions = {
                     reject(err);
                 });
         });
+    },
+    getOrder({ commit }) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getorder`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     },
     show({ commit }, orderId) {
         return new Promise((resolve, reject) => {

@@ -1,6 +1,6 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
-    <q-page-container style="background-color: #fafafa">
+    <q-page-container style="background-color: #fafafa" v-if="detail_order">
       <q-page>
         <div class="text-center bg-transparent">
           <!-- Header Image -->
@@ -31,14 +31,52 @@
             position: relative;
           "
         >
-          <!-- Button Share -->
-          <div class="float-right q-mr-md q-mt-sm">
+
+        <div class="row q-pt-md">
+            <div class="col-5">
+              <!-- No Pesanan  -->
+              <div class="q-pl-lg text-weight-regular" style="color: #c9c9c9">
+                No Pesanan
+              </div>
+              <div class="q-pl-lg text-weight-regular" style="color: #313131">
+                {{ detail_order.id }}
+              </div>
+            </div>
+            <div class="col-6 text-right self-center">
+              <q-btn no-caps dense flat>
+                <div
+                  class="text-weight-regular text-center q-px-xs"
+                  style="
+                    font-size: 10px;
+                    color: #fafafa;
+                    background-color: #3ec0e9;
+                    border-radius: 3px 3px 3px 3px;
+                  "
+                >
+                  Cetak kode pesanan
+                </div>
+              </q-btn>
+
+              <!-- Button Share -->
+              <q-btn
+                dense
+                round
+                size="13px"
+                ripple
+                flat
+                @click="buttonShare()"
+              >
+                <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
+              </q-btn>
+            </div>
+          </div>
+          
+          <!-- <div class="float-right q-mr-md q-mt-sm">
             <q-btn round size="15px" ripple flat @click="buttonShare()">
               <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
             </q-btn>
           </div>
 
-          <!-- No Pesanan  -->
           <div class="row q-pt-md q-pl-lg">
             <div class="text-weight-regular" style="color: #c9c9c9">
               No Pesanan
@@ -46,9 +84,9 @@
           </div>
           <div class="row">
             <div class="q-pl-lg text-weight-regular" style="color: #313131">
-              211228BH7A4AA
+              {{ detail_order.id }}
             </div>
-          </div>
+          </div> -->
 
           <!-- List Isi -->
           <q-list
@@ -68,7 +106,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >Alif</q-item-label
+                  >{{ detail_order.customer.name }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -90,7 +128,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >087831409898</q-item-label
+                  >{{ detail_order.customer.contact_number }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -112,7 +150,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >2 Hari</q-item-label
+                  >{{ detail_order.services[0].process_time }} Jam</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -134,7 +172,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >Reguler kering + setrika</q-item-label
+                  >{{ detail_order.services[0].name }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -156,7 +194,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >Pakaian Halus</q-item-label
+                  >{{ detail_order.services[0].category.name }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -178,7 +216,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >5 kg</q-item-label
+                  >{{ detail_order.services[0].pivot.quantity }} {{ detail_order.services[0].category.service_unit.name }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -201,7 +239,7 @@
 
               <!-- Button Paket Lainnya -->
               <q-item-section avatar class="q-mt-xl">
-                <q-btn round flat>
+                <q-btn round flat @click="$router.push(`/${detail_order.id}/laundry-details-other`)">
                   <q-avatar size="30px" class="bg-transparent">
                     <img
                       src="~/assets/icon-status-cucian.svg"
@@ -420,6 +458,43 @@
             </q-card-section>
           </q-card>
         </q-dialog>
+
+        <!-- Kondisi apabila pesanan belum di proses (perlu klik proses pesanan) -->
+
+        <!-- <div class="row absolute-bottom q-pb-md">
+          <div class="col-6 text-center">
+            
+            <q-btn
+              no-caps
+              style="
+                color: white;
+                background-color: #49c2c0;
+                font-size: 14px;
+                max-width: 50vw;
+                border-radius: 5px 5px 5px 5px;
+              "
+              class="text-weight-regular"
+            >
+              <div class="q-py-sm">Proses Pesanan</div>
+            </q-btn>
+          </div>
+          <div class="col-6 text-center">
+            
+            <q-btn
+              no-caps
+              style="
+                color: #313131;
+                background-color: white;
+                font-size: 14px;
+                max-width: 50vw;
+                border-radius: 5px 5px 5px 5px;
+              "
+              class="text-weight-regular"
+            >
+              <div class="q-py-sm">Batalkan Pesanan</div></q-btn
+            >
+          </div>
+        </div> -->
       </q-page>
     </q-page-container>
   </q-layout>
@@ -427,11 +502,13 @@
 
 <script>
 export default {
+  props: ["orderid"],
   data() {
     return {
       dialogShare: false,
       dialogConfirm: false,
       link: "example.com/share-link",
+      detail_order: null,
     };
   },
 
@@ -442,6 +519,14 @@ export default {
     buttonConfirm() {
       this.dialogConfirm = true;
     },
+    getDetailOrder() {
+      this.$store.dispatch("Orders/show", this.orderid).then((res) => {
+        this.detail_order = res.data;
+      });
+    },
+  },
+  mounted() {
+    this.getDetailOrder();
   },
 };
 </script>

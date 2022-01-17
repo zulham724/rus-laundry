@@ -2,14 +2,10 @@
   <q-layout>
     <q-page-container>
       <q-header>
-        <q-toolbar class="bg-white q-py-md">
-          <q-btn flat round size="10px" to="/detail-transaksi">
-            <q-avatar
-              size="25px"
-              icon="fas fa-arrow-left"
-              style="color: #888888"
-            >
-            </q-avatar>
+        <q-toolbar class="bg-white  shadow-1">
+          <q-btn dense no-caps flat style="color: white" to="/detail-transaksi">
+            <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+            </q-icon>
           </q-btn>
           <q-toolbar-title
             class="text-left text-weight-medium"
@@ -18,9 +14,40 @@
           >
         </q-toolbar>
       </q-header>
-      <q-separator></q-separator>
-      <q-separator></q-separator>
+
       <q-page>
+        <div
+          class="q-mx-md q-mt-md text-weight-regular"
+          style="color: #d0caca; font-size: 12px"
+        >
+          Jenis Pakaian
+        </div>
+        <div
+          class="q-mx-md text-weight-regular"
+          style="color: #7fcfdc; font-size: 18px"
+        >
+          Pakaian Halus
+        </div>
+
+        <div
+          class="q-mx-md q-mt-xs text-weight-regular"
+          style="color: #d0caca; font-size: 12px"
+        >
+          Estimasi Pesanan
+        </div>
+        <div
+          class="q-mx-md text-weight-regular"
+          style="color: #7fcfdc; font-size: 18px"
+        >
+          3 jam
+        </div>
+
+        <div
+          class="q-mx-md q-mt-xs text-weight-regular"
+          style="color: #d0caca; font-size: 12px"
+        >
+          Status Cucian
+        </div>
         <div class="row q-mx-md q-mt-md">
           <div class="col-10 q-pt-xs" style="color: #7fcfdc; font-size: 18px">
             Pesanan sedang di cuci
@@ -39,46 +66,6 @@
         <div class="row q-mx-md" style="color: #888888; font-size: 14px">
           {{ moment().format("DD-MM-YYYY HH:mm") }}
         </div>
-        <div class="row q-ml-md">
-          <q-btn
-            flat
-            dense
-            align="left"
-            no-caps
-            style="color: #d0caca"
-            to="/see-more-status-laundry"
-          >
-            <div style="font-size: 12px">Lihat selengkapnya</div>
-          </q-btn>
-        </div>
-
-        <q-list class="q-my-xs q-mx-md">
-          <q-item class="q-my-sm" no-caps>
-            <q-item-section class="self-center q-mt-xl">
-              <q-item-label
-                caption
-                lines="1"
-                class="text-weight-bold"
-                style="font-size: 14px"
-                >Paket Lainnya</q-item-label
-              >
-            </q-item-section>
-
-            <!-- Button Paket Lainnya -->
-            <q-item-section avatar class="q-mt-xl">
-              <q-btn round flat>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img
-                    src="~/assets/icon-status-cucian.svg"
-                    style="width: 5vh"
-                  />
-                </q-avatar>
-              </q-btn>
-            </q-item-section>
-          </q-item>
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-        </q-list>
 
         <!-- Animasi Proses Cucian -->
         <div class="text-center">
@@ -113,6 +100,34 @@
             </div>
           </q-linear-progress>
         </div>
+
+        <q-list class="q-my-xs q-mx-md dense">
+          <q-item class="q-my-sm" no-caps>
+            <q-item-section class="self-center q-mt-xl">
+              <q-item-label
+                caption
+                lines="1"
+                class="text-weight-bold"
+                style="font-size: 14px"
+                >Paket Lainnya</q-item-label
+              >
+            </q-item-section>
+
+            <!-- Button Paket Lainnya -->
+            <q-item-section avatar class="q-mt-xl">
+              <q-btn round flat>
+                <q-avatar size="30px" class="bg-transparent">
+                  <img
+                    src="~/assets/icon-status-cucian.svg"
+                    style="width: 5vh"
+                  />
+                </q-avatar>
+              </q-btn>
+            </q-item-section>
+          </q-item>
+          <q-separator></q-separator>
+          <q-separator></q-separator>
+        </q-list>
       </q-page>
     </q-page-container>
   </q-layout>

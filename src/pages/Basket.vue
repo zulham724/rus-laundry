@@ -48,7 +48,7 @@
                   ></q-icon>
                 </q-btn>
                 <div class="float-right q-pa-sm text-weight-medium text-h5">
-                  {{ category.count }}
+                  {{ category.quantity }}
                 </div>
 
                 <q-btn
@@ -116,7 +116,7 @@
           </q-card>
 
           <div
-            class="col-12 q-pt-lg absolute-bottom"
+            class="col-12 q-pt-lg"
             v-if="this.Orders.order.total_price"
           >
             <q-card class="q-pa-sm shadow-5">
@@ -171,7 +171,7 @@
             </q-card>
             <div class="q-pa-lg">
               <q-btn
-                v-if="!check_package"
+              
                 @click="store()"
                 class="full-width"
                 style="border-radius: 10px"
@@ -204,18 +204,17 @@ export default {
   data() {
     return {
       expanded: false,
-      checkpackage: false,
     };
   },
   methods: {
     tambahkg(index) {
-      this.Orders.order.charts[index].count++;
+      this.Orders.order.charts[index].quantity++;
       this.getPrice();
       // console.log(this.Orders.order.charts[index])
     },
     kurangkg(index) {
-      this.Orders.order.charts[index].count -= 1;
-      if (this.Orders.order.charts[index].count == 0) {
+      this.Orders.order.charts[index].quantity -= 1;
+      if (this.Orders.order.charts[index].quantity == 0) {
         this.$store.commit("Orders/remove_order_chart", {
           id: this.Orders.order.charts[index].id,
         });
@@ -224,25 +223,18 @@ export default {
     },
     getOrderServiceCategory() {
       this.Orders.order.charts = this.Orders.order.charts.map((category) => {
-        if (category.count) {
+        if (category.quantity) {
           return category;
         } else {
-          category.count = 1;
+          category.quantity = 1;
           return category;
-        }
-      });
-    },
-    checkPackage() {
-      this.Orders.order.charts.forEach((category) => {
-        if (!category.package) {
-          this.check_package = true;
         }
       });
     },
     getPrice() {
       this.Orders.order.charts = this.Orders.order.charts.map((category) => {
         if (category.package) {
-          category.total_price = category.count * category.package.price;
+          category.total_price = category.quantity * category.package.price;
         }
         return category;
       });
@@ -254,9 +246,10 @@ export default {
     },
     store() {
       let order = this.Orders.order;
+      // console.log(order)
       this.$store.dispatch("Orders/store", order).then((res) => {
         this.$q.notify("Berhasil");
-        // this.$router.push("/confirm-order");
+        this.$router.push("/confirm-order");
       });
     },
   },

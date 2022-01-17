@@ -107,7 +107,7 @@
               :key="order.id"
               class="q-my-sm q-mx-md"
               clickable
-              to="/detail-transaksi"
+              @click="$router.push(`/detail-transaksi/${order.id}`)"
             >
               <q-item-section avatar>
                 <q-avatar

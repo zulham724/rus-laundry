@@ -16,7 +16,7 @@
         >
           <div class="q-mx-lg q-my-sm">
             <div class="text-bold text-h4" style="padding-top: 20px">
-              Login CV Ardata Media
+              Login
             </div>
             Halo Selamat Datang Kembali
           </div>
@@ -60,7 +60,7 @@
                 unelevated
                 rounded
                 style="
-                  min-width: 60vw;
+                  width: 90%;
                   background-color: #49c2c0;
                   color: #ffffff;
                 "
@@ -69,7 +69,7 @@
                 <div class="ellipsis text-weight-reguler">Login</div>
               </q-btn>
 
-              <div class="q-py-md text-weight-thin" style="max-width: 100vw">
+              <div class="q-py-md text-weight-thin" >
                 Atau, lanjutkan dengan
               </div>
               <q-btn
@@ -79,7 +79,7 @@
                 unelevated
                 rounded
                 style="
-                  min-width: 60vw;
+                  width: 90%;
                   background-color: #ffffff;
                   color: #888888;
                 "
