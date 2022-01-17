@@ -2,7 +2,12 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" @click="$router.back()">
+        <q-btn
+          flat
+          round
+          size="10px"
+          @click="$router.push('/list-type-of-clothes')"
+        >
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
@@ -110,7 +115,10 @@
             </div>
           </q-card>
 
-          <div class="col-12 q-pt-lg absolute-bottom">
+          <div
+            class="col-12 q-pt-lg absolute-bottom"
+            v-if="this.Orders.order.total_price"
+          >
             <q-card class="q-pa-sm shadow-5">
               <q-card-section>
                 <div class="text-caption">Total Harga</div>
@@ -162,7 +170,14 @@
               </q-card-section>
             </q-card>
             <div class="q-pa-lg">
-               <q-btn class="full-width" style="border-radius:10px" color="grey-7" label="Buat Pesanan"/>
+              <q-btn
+                v-if="!check_package"
+                @click="store()"
+                class="full-width"
+                style="border-radius: 10px"
+                color="grey-7"
+                label="Buat Pesanan"
+              />
             </div>
           </div>
         </div>
@@ -189,6 +204,7 @@ export default {
   data() {
     return {
       expanded: false,
+      checkpackage: false,
     };
   },
   methods: {
@@ -216,6 +232,13 @@ export default {
         }
       });
     },
+    checkPackage() {
+      this.Orders.order.charts.forEach((category) => {
+        if (!category.package) {
+          this.check_package = true;
+        }
+      });
+    },
     getPrice() {
       this.Orders.order.charts = this.Orders.order.charts.map((category) => {
         if (category.package) {
@@ -228,6 +251,13 @@ export default {
         total_price += category.total_price;
       });
       this.Orders.order.total_price = total_price;
+    },
+    store() {
+      let order = this.Orders.order;
+      this.$store.dispatch("Orders/store", order).then((res) => {
+        this.$q.notify("Berhasil");
+        // this.$router.push("/confirm-order");
+      });
     },
   },
   mounted() {

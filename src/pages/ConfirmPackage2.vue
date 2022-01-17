@@ -12,6 +12,10 @@
         <div class="text-weight-bold text-center" style="font-size: 18px">
           Pesanan Telah Dibuat
         </div>
+
+        <div class="col-12">
+          <q-btn label="Cetak kode pesanan"/>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>

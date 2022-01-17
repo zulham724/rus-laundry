@@ -15,7 +15,9 @@
           "
         >
           <div class="q-mx-lg q-my-sm">
-            <div class="text-bold text-h4" style="padding-top: 20px">Login</div>
+            <div class="text-bold text-h4" style="padding-top: 20px">
+              Login CV Ardata Media
+            </div>
             Halo Selamat Datang Kembali
           </div>
 
@@ -33,7 +35,7 @@
               />
 
               <q-input
-              :disable="loading"
+                :disable="loading"
                 rounded
                 outlined
                 v-model="credential.password"
@@ -50,7 +52,7 @@
                 />
               </q-input>
               <q-btn
-              @click="doLogin()"
+                @click="doLogin()"
                 :disable="loading"
                 :class="`shadow-1`"
                 class="q-mt-lg"
@@ -64,9 +66,7 @@
                 "
                 size="2vh"
               >
-                <div class="ellipsis text-weight-reguler">
-                  Login
-                </div>
+                <div class="ellipsis text-weight-reguler">Login</div>
               </q-btn>
 
               <div class="q-py-md text-weight-thin" style="max-width: 100vw">
@@ -109,7 +109,6 @@
 import { ref } from "vue";
 import { mapState } from "vuex";
 
-
 export default {
   data() {
     return {
@@ -121,16 +120,14 @@ export default {
       loading: false,
     };
   },
-  mounted(){
-    
-  },
+  mounted() {},
   // Untuk fungsi
   methods: {
     doLogin() {
       this.$refs.form.validate().then((success) => {
         if (success) {
           // alert("berhasil");
-          this.loading = true
+          this.loading = true;
           this.$store
             .dispatch("Auth/login", this.credential)
             .then((res) => {
@@ -138,10 +135,11 @@ export default {
             })
             .catch((err) => {
               // this.$q.notify("terjadi kesalahan")
-              console.log(err)
-            }).finally(()=>{
-              this.loading = false
+              console.log(err);
             })
+            .finally(() => {
+              this.loading = false;
+            });
         }
       });
     },

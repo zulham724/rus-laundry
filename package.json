@@ -1,7 +1,7 @@
 {
-  "name": "laundry-apps",
+  "name": "rus-laundry",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
+  "description": "",
   "productName": "Quasar App",
   "author": "BryanAlthafano <xacpro@gmail.com>",
   "private": true,
@@ -37,5 +37,6 @@
     "node": ">= 12.22.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  }
+  },
+  "keywords": []
 }
