@@ -1,35 +1,73 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-page-container>
-        <q-page>
-            <div class="text-center" style="background-image: linear-gradient(to top left, #179CE7, #A3F2F1)">
-            <img src="~/assets/bg-add-item.svg" style="width:357px;height:293px;">
-            </div>
+      <q-page>
+        <div
+          class="text-center"
+          style="
+            height: 270px;
+            background-image: linear-gradient(to top left, #179ce7, #a3f2f1);
+          "
+        >
+          <q-img
+            src="~/assets/bg-add-item.svg"
+            class="fixed-top mbl-child"
 
-            <div class="q-pb-lg"
+          />
+        </div>
+
+        <div
+          class="q-pb-lg"
           style="
             border-radius: 20px 20px 0 0;
             background-color: #fafafa;
             margin-top: -30px;
             position: relative;
-          ">
-            <div class="text-weight-bold text-h6 q-pt-xl q-pl-md q-pb-md">
-                Kategori
-            </div>
-                  <div class="text-center">
-                    <q-btn flat class="" style="width:165px; height:203px">
-                        <img src="~/assets/card-pakaian.svg">
-                    </q-btn>
+          "
+        >
+          <div
+            class="text-weight-bold text-weight-bold q-pt-lg q-pl-md q-pb-md"
+            style="font-size: 24px"
+          >
+            Kategori
+          </div>
 
-                    <q-btn flat class="q-ml-md" style="width:165px; height:203px">
-                        <img src="~/assets/card-paket-item.svg">
-                    </q-btn>
-                  </div>
+          <div class="row">
+            <div class="col-6 text-center">
+              <q-btn :ripple="true" dense flat style="border-radius: 10px 10px 10px 10px" to="/add-clothes">
+                <q-img
+                  src="~/assets/card-pakaian.svg"
+                  style="
+                    width: 150px;
+                    height: 200px;
+                    border-radius: 10px 10px 10px 10px;
+                  "
+                />
+              </q-btn>
             </div>
-            <div class="absolute-bottom" style="margin-bottom: -30px">
-                <q-img style="height:290px" src="~/assets/bg-gelombang-bawah.svg"></q-img>
+            <div class="col-6 text-center">
+              <q-btn :ripple="true" dense flat style="border-radius: 10px 10px 10px 10px" to="/empty-package">
+                <q-img
+                  src="~/assets/card-paket-item.svg"
+                  style="
+                    width: 150px;
+                    height: 200px;
+                    border-radius: 10px 10px 10px 10px;
+                  "
+                />
+              </q-btn>
             </div>
-        </q-page>
+          </div>
+          <q-img
+            style="
+              height: 200px;
+
+            "
+            class="fixed-bottom front mbl-child"
+            src="~/assets/bg-gelombang-bawah.svg"
+          ></q-img>
+        </div>
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
@@ -39,12 +77,9 @@ export default {
   data() {
     return {
       tab: "kategori",
-    }
+    };
   },
-
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

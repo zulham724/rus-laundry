@@ -18,7 +18,7 @@
           color="grey"
           class="text-right"
         >
-          <div class="text-weight-medium">Selesai</div>
+          <div class="text-weight-medium">Tambah</div>
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -97,6 +97,38 @@
             </div>
           </q-card-actions>
         </q-card>
+
+        <q-dialog v-model="dialogTambahPaket">
+            <q-card>
+              <q-card-section>
+                <div
+                  class="text-weight-bold text-left"
+                  style="font-size: 16px"
+                >
+                  Tambah pakaian baru?
+                </div>
+
+                <div
+                  class="text-weight-light text-left q-mt-none"
+                  style="width: 300px; font-size: 12px"
+                >
+                  yakin ingin membuat jenis pakaian baru?
+                </div>
+              </q-card-section>
+
+              <q-card-actions class="text-primary" vertical>
+                <div class="col-9"></div>
+                <div class="col-3 text-right"><q-btn
+                class="text-white"
+                  to="/input-new-clothes"
+                  no-caps
+                  flat
+                  label="Oke"
+                  style="width:30px;background-color: #49c2c0; color: white"
+                /></div>
+                </q-card-actions>
+            </q-card>
+          </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -111,6 +143,7 @@ export default {
   },
   data() {
     return {
+      dialogTambahPaket: false,
       package: {},
       service_category: {
         service_unit:{}
@@ -121,6 +154,9 @@ export default {
     this.getCategory();
   },
   methods:{
+    buttonAddPackage() {
+      this.dialogTambahPaket = true;
+    },
     getCategory(){
      this.service_category = this.Orders.order.cart.find(item => item.id == this.categoryid)
     },

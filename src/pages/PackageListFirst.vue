@@ -33,7 +33,23 @@
                     </template>
                   </q-input>
                 </div>
-                <div class="col-6"></div>
+                <div class="col-6">
+                  <div class="col-6">
+                <div class="row justify-end">
+                  <div class="col-6">
+                    <q-select
+                      flat
+                      label-color="black"
+                      dense
+                      option-label="name"
+                      label="Filter"
+                      color=""
+                      class="bg-transparent no-shadow"
+                    />
+                  </div>
+                </div>
+              </div>
+                </div>
               </div>
             </q-card-section>
           </q-card>
@@ -97,7 +113,7 @@
             <div
               class="text-subtitl2"
               style="color: white"
-              
+
             >
               Tambah Paket
             </div>

@@ -1,6 +1,6 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-    <q-header>
+  <q-layout>
+      <q-header>
       <q-toolbar class="bg-white q-py-md">
         <q-btn flat round size="10px" to="/add-item">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
@@ -9,14 +9,14 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Jenis Pakaian</q-toolbar-title
+          >Pilih Paket</q-toolbar-title
         >
       </q-toolbar>
     </q-header>
-    <q-page-container style="background-color: #fafafa">
-      <q-page>
 
-        <q-card flat class="q-mt-sm">
+    <q-page-container style="background-color: #fafafa">
+        <q-page>
+            <q-card flat class="q-mt-sm">
           <div
             class="q-px-md q-py-sm text-weight-regular"
             style="color: #888888; font-size: 16px"
@@ -31,7 +31,7 @@
                   rounded
                   outlined
                   v-model="search"
-                  placeholder="Cari Pakaian"
+                  placeholder="Cari Paket"
                 >
               <q-icon
                 name="search"
@@ -60,37 +60,38 @@
 
           </div>
         </q-card>
-       <div class="text-center q-pt-md">
-          <q-img style="height:250px;width:250px" src="~/assets/paket-kosong-unscreen.gif" />
+
+        <div class="text-center q-pt-md">
+          <q-img style="height:250px;width:250px" src="~/assets/empty_package.svg" />
        </div>
 
-        <div class="text-center text-weight-bold q-pa-md">
-          Belum ada Pakaian
+       <div class="text-center text-weight-bold q-pa-md">
+          Belum ada kategori
         </div>
 
         <div class="absolute-bottom" >
-          <q-btn no-caps class="full-width q-py-sm" style="background-color:#49C2C0" @click="buttonAddClothes()">
+          <q-btn no-caps class="full-width q-py-sm" style="background-color:#49C2C0" @click="buttonAddPackage()">
             <div class="text-weight-regular" style="color:white;">
-              Tambah Pakaian
+              Tambah Paket
             </div>
           </q-btn>
         </div>
 
-        <q-dialog v-model="dialogTambahPakaian">
+        <q-dialog v-model="dialogTambahPaket">
             <q-card>
               <q-card-section>
                 <div
                   class="text-weight-bold text-left"
                   style="font-size: 16px"
                 >
-                  Tambah pakaian baru?
+                  Tambah paket baru?
                 </div>
 
                 <div
                   class="text-weight-light text-left q-mt-none"
                   style="width: 300px; font-size: 12px"
                 >
-                  yakin ingin membuat jenis pakaian baru?
+                  Yakin ingin membuat jenis paket baru?
                 </div>
               </q-card-section>
 
@@ -98,7 +99,7 @@
                 <div class="col-9"></div>
                 <div class="col-3 text-right"><q-btn
                 class="text-white"
-                  to="/input-new-clothes"
+                  to="/add-package"
                   no-caps
                   flat
                   label="Oke"
@@ -107,7 +108,7 @@
                 </q-card-actions>
             </q-card>
           </q-dialog>
-      </q-page>
+        </q-page>
     </q-page-container>
   </q-layout>
 </template>
@@ -116,19 +117,22 @@
 import { ref } from "vue";
 
 export default {
-  data() {
-    return {
-      dialogTambahPakaian: false,
-      search: ref(""),
-    }
-  },
+    data() {
+        return {
+            dialogTambahPaket: false,
+            search: ref(""),
+        }
+    },
 
-  methods: {
-    buttonAddClothes() {
-      this.dialogTambahPakaian = true;
-    }
-  },
-};
+    methods: {
+        buttonAddPackage() {
+            this.dialogTambahPaket = true;
+        }
+    },
+}
 </script>
 
-<style></style>
+<style>
+
+</style>
+

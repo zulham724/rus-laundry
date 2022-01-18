@@ -1,5 +1,4 @@
-<template>
-  <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
+<template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header class="bg-transparent">
       <div class="text-center">
         <q-img
@@ -61,7 +60,7 @@
         </q-img>
       </div>
     </q-header>
-    <q-page-container style="background-color: #fafafa">
+
       <q-page>
         <q-card flat>
           <q-card-actions class="bg-fafafa">
@@ -166,7 +165,20 @@
           <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
         </div>
         <!-- Scan Barcode -->
-        <q-btn
+
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+      @click="doLogout()"
+        class="q-pa-md"
+        fab
+        color="#FAFAFA"
+        elevated
+      >
+        <q-img src="~/assets/barcode-scan.svg" style="width: 30px; height: 30px"/>
+      </q-btn>
+    </q-page-sticky>
+
+        <!-- <q-btn
           @click="doLogout()"
           class="elevated fixed-bottom-right"
           rounded
@@ -180,10 +192,9 @@
           ><q-img
             style="width: 30px; height: 30px"
             src="~/assets/barcode-scan.svg"
-        /></q-btn>
+        /></q-btn> -->
+
       </q-page>
-    </q-page-container>
-  </q-layout>
 </template>
 
 <script>

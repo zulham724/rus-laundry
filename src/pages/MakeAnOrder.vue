@@ -5,7 +5,13 @@
         <div class="row" style="height: 300px; width: 100vw">
           <q-img
             class="fixed"
-            style="width: 100vw"
+            style="
+              height: 200px;
+              max-width: var(--page-width);
+              margin-left: auto;
+              margin-right: auto;
+            "
+
             src="~/assets/bg-buat-pesanan.svg"
           />
         </div>
@@ -15,7 +21,7 @@
           style="
             border-radius: 30px 0 0 0;
             background-color: #fafafa;
-            margin-top: -70px;
+            margin-top: -130px;
             position: relative;
           "
         >
@@ -70,7 +76,7 @@
                   </q-item>
                 </template>
               </q-select>
-           
+
               <q-input
                :disable="cek_customer"
                 dense

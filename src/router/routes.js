@@ -38,6 +38,18 @@ const routes = [{
                 component: () =>
                     import ("pages/add-item.vue")
             },
+
+            {
+                path: "/income",
+                component: () =>
+                    import ("pages/income.vue")
+            },
+
+            {
+                path: "/employee",
+                component: () =>
+                    import ("pages/Employee.vue")
+            },
         ]
     },
     {
@@ -66,6 +78,13 @@ const routes = [{
     },
 
     {
+        path: "/success-attendance",
+        component: () =>
+            import ("pages/success-attendance.vue")
+    },
+
+
+    {
         path: "/login",
         component: () =>
             import ("pages/Login.vue")
@@ -86,12 +105,6 @@ const routes = [{
         path: "/filter-search",
         component: () =>
             import ("src/pages/FilterSearch.vue")
-    },
-
-    {
-        path: "/income",
-        component: () =>
-            import ("src/pages/income.vue")
     },
 
     {
@@ -157,12 +170,16 @@ const routes = [{
             import ("src/pages/ConfirmPackage.vue")
     },
 
-    
-
     {
         path: "/empty-basket",
         component: () =>
             import ("src/pages/EmptyBasket.vue")
+    },
+
+    {
+        path: "/customer",
+        component: () =>
+            import ("src/pages/Customer.vue")
     },
 
     {
@@ -193,12 +210,6 @@ const routes = [{
         path: "/attendance-details",
         component: () =>
             import ("src/pages/AttendanceDetails.vue")
-    },
-
-    {
-        path: "/employee",
-        component: () =>
-            import ("src/pages/Employee.vue")
     },
 
     {
@@ -236,6 +247,12 @@ const routes = [{
         component: () =>
             import ("src/pages/LaundryDetailsOther.vue"),
         props: true
+    },
+
+    {
+        path: "/empty-package",
+        component: () =>
+            import ("src/pages/EmptyPackage.vue")
     },
 
     // Always leave this as last one,

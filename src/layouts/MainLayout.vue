@@ -51,7 +51,7 @@
               </div>
             </q-tab>
 
-          <q-tab name="penghasilan" no-caps
+          <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
             ><q-img
               no-spinner
               style="width: 18px; height: 20px"
@@ -66,7 +66,7 @@
             </div></q-tab
           >
 
-          <q-tab name="karyawan" no-caps
+          <q-tab name="karyawan" no-caps  @click="$router.push('/employee')"
             ><q-img
               no-spinner
               style="width: 18px; height: 20px"
