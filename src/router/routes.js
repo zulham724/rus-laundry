@@ -60,9 +60,10 @@ const routes = [{
     },
 
     {
-        path: "/status-cucian",
+        path: `/status-cucian/:orderid`,
         component: () =>
-            import ("pages/StatusCucian.vue")
+            import ("pages/StatusCucian.vue"),
+        props: true
     },
 
     {
@@ -151,14 +152,14 @@ const routes = [{
     },
 
     {
-        path: "/add-package/:categoryid",
+        path: "/add-package",
         component: () =>
             import ("src/pages/AddPackage.vue"),
         props: true
     },
 
     {
-        path: `/package-list-first/:categoryid`,
+        path: `/package-list-first`,
         component: () =>
             import ("src/pages/PackageListFirst.vue"),
         props: true
@@ -213,9 +214,16 @@ const routes = [{
     },
 
     {
-        path: "/detail-employee",
+        path: "/detail-employee/:employeeid",
         component: () =>
-            import ("src/pages/DetailEmployee.vue")
+            import ("src/pages/DetailEmployee.vue"),
+        props: true
+    },
+
+    {
+        path: "/detail-customer",
+        component: () =>
+            import ("src/pages/CustomerDetail.vue")
     },
 
     {
@@ -225,15 +233,17 @@ const routes = [{
     },
 
     {
-        path: "/edit-employee",
+        path: `/:employeeid/edit-employee`,
         component: () =>
-            import ("src/pages/EditEmployee.vue")
+            import ("src/pages/EditEmployee.vue"),
+        props: true
     },
 
     {
-        path: "/print-card",
+        path: "/:employeeid/print-card",
         component: () =>
-            import ("src/pages/PrintCard.vue")
+            import ("src/pages/PrintCard.vue"),
+        props: true
     },
 
     {

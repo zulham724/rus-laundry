@@ -16,33 +16,46 @@
     </q-header>
     <q-page-container>
       <q-page>
-        <div class="text-center">
-          <q-avatar class="q-ma-xl" size="150px">
-            <q-file>
+        <q-form ref="form">
+          <div class="text-center">
+            <q-avatar class="q-ma-xl" size="150px">
               <img src="~/assets/empty-avatar.svg" />
-            </q-file>
-          </q-avatar>
-        </div>
+            </q-avatar>
+          </div>
 
-        <q-input class="q-mx-lg q-py-sm" rounded outlined label="Nama" />
-        <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" />
-        <q-input
-          class="q-mx-lg q-py-sm"
-          rounded
-          outlined
-          label="No Telephone"
-        />
-        <q-input
-          class="q-mx-lg q-py-sm"
-          rounded
-          outlined
-          label="Alamat Email"
-        />
+          <q-input
+            class="q-mx-lg q-py-md"
+            rounded
+            outlined
+            label="Nama"
+            v-model="employee.name"
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+          />
+          <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" />
+          <q-input
+            v-model="employee.contact_number"
+            class="q-mx-lg q-py-md"
+            rounded
+            outlined
+            type="number"
+            label="No Telephone"
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+          />
+          <q-input
+            v-model="employee.email"
+            class="q-mx-lg q-py-md"
+            rounded
+            outlined
+            type="email"
+            label="Alamat Email"
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+          />
+        </q-form>
       </q-page>
 
       <q-footer>
         <q-btn
-          @click="buttonAdd()"
+          @click=" this.dialogAdd = true;"
           class="q-py-md"
           no-caps
           style="width: 100%; background-color: #49c2c0"
@@ -76,7 +89,7 @@
               </div>
               <div class="col-3 text-left q-pr-sm">
                 <q-btn
-                  to="/detail-employee"
+                 @click="store()"
                   class="shadow-1"
                   no-caps
                   flat
@@ -97,13 +110,21 @@ export default {
   data() {
     return {
       dialogAdd: false,
+      employee: {},
     };
   },
 
   methods: {
-    buttonAdd() {
-      this.dialogAdd = true;
-    },
+   store(){
+     this.$refs.form.validate().then((success) => {
+       if(success){
+        this.$store.dispatch("Employee/store", this.employee).then(res => {
+          this.$router.push('/employee')
+          this.$q.notify("Berhasil")
+        })
+       }
+     })
+   }
   },
 };
 </script>

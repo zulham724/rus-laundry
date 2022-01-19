@@ -10,6 +10,7 @@
           "
         >
           <q-img
+          no-spinner
             src="~/assets/bg-add-item.svg"
             class="fixed-top mbl-child"
 
@@ -34,8 +35,9 @@
 
           <div class="row">
             <div class="col-6 text-center">
-              <q-btn :ripple="true" dense flat style="border-radius: 10px 10px 10px 10px" to="/add-clothes">
+              <q-btn :ripple="true" dense flat style="border-radius: 10px 10px 10px 10px" @click="$router.push('/add-clothes')">
                 <q-img
+                no-spinner
                   src="~/assets/card-pakaian.svg"
                   style="
                     width: 150px;
@@ -46,8 +48,9 @@
               </q-btn>
             </div>
             <div class="col-6 text-center">
-              <q-btn :ripple="true" dense flat style="border-radius: 10px 10px 10px 10px" to="/empty-package">
+              <q-btn :ripple="true" dense flat style="border-radius: 10px 10px 10px 10px" @click="$router.push('/package-list-first')">
                 <q-img
+                no-spinner
                   src="~/assets/card-paket-item.svg"
                   style="
                     width: 150px;
@@ -59,6 +62,7 @@
             </div>
           </div>
           <q-img
+          no-spinner
             style="
               height: 200px;
 

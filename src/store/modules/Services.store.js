@@ -9,7 +9,7 @@ const mutations = {
 };
 
 const actions = {
-    store({ commit }, packageData){
+    store({ commit }, packageData) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/service`, packageData).then(res => {
                 resolve(res)
@@ -18,9 +18,18 @@ const actions = {
             })
         })
     },
-    index({ commit }, categoryId){
+    index({ commit }) {
         return new Promise((resolve, reject) => {
-            api.get(`/api/slave/services/${categoryId}`).then(res => {
+            api.get(`/api/slave/services`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    destroy({ commit }, packages) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/deleteservices`, packages).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)
@@ -29,10 +38,10 @@ const actions = {
     }
 };
 
-const getters ={};
+const getters = {};
 
 export default {
-    namespaced:true,
+    namespaced: true,
     state,
     mutations,
     actions,

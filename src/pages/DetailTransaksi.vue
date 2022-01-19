@@ -6,7 +6,7 @@
           <!-- Header Image -->
           <q-img src="~/assets/header-mesin-cuci.svg">
             <q-toolbar class="bg-transparent">
-              <q-btn flat round size="10px" to="/home">
+              <q-btn flat round size="10px" to="/">
                 <q-avatar
                   size="25px"
                   icon="fas fa-arrow-left"
@@ -31,8 +31,7 @@
             position: relative;
           "
         >
-
-        <div class="row q-pt-md">
+          <div class="row q-pt-md">
             <div class="col-5">
               <!-- No Pesanan  -->
               <div class="q-pl-lg text-weight-regular" style="color: #c9c9c9">
@@ -58,19 +57,12 @@
               </q-btn>
 
               <!-- Button Share -->
-              <q-btn
-                dense
-                round
-                size="13px"
-                ripple
-                flat
-                @click="buttonShare()"
-              >
+              <q-btn dense round size="13px" ripple flat @click="buttonShare()">
                 <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
               </q-btn>
             </div>
           </div>
-          
+
           <!-- <div class="float-right q-mr-md q-mt-sm">
             <q-btn round size="15px" ripple flat @click="buttonShare()">
               <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
@@ -216,7 +208,10 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >{{ detail_order.services[0].pivot.quantity }} {{ detail_order.services[0].category.service_unit.name }}</q-item-label
+                  >{{ detail_order.services[0].pivot.quantity }}
+                  {{
+                    detail_order.services[0].category.service_unit.name
+                  }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -239,7 +234,13 @@
 
               <!-- Button Paket Lainnya -->
               <q-item-section avatar class="q-mt-xl">
-                <q-btn round flat @click="$router.push(`/${detail_order.id}/laundry-details-other`)">
+                <q-btn
+                  round
+                  flat
+                  @click="
+                    $router.push(`/${detail_order.id}/laundry-details-other`)
+                  "
+                >
                   <q-avatar size="30px" class="bg-transparent">
                     <img
                       src="~/assets/icon-status-cucian.svg"
@@ -263,7 +264,11 @@
               <!-- Button Status Cucian -->
 
               <q-item-section avatar>
-                <q-btn round flat to="/status-cucian">
+                <q-btn
+                  round
+                  flat
+                  @click="$router.push(`/status-cucian/${detail_order.id}`)"
+                >
                   <q-avatar size="30px" class="bg-transparent">
                     <img
                       src="~/assets/icon-status-cucian.svg"
@@ -285,7 +290,7 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >Tertunda</q-item-label
+                  >{{ detail_order.status.name }}</q-item-label
                 >
               </q-item-section>
               <q-space></q-space>
@@ -300,15 +305,21 @@
                   lines="1"
                   class="text-weight-bold"
                   style="font-size: 14px"
-                  >Rp 25.000</q-item-label
                 >
+                {{ 
+                  new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(detail_order.total_sum)
+                 }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
           <q-btn
             @click="buttonConfirm()"
             no-caps
-            class="full-width q-mt-sm"
+            class="full-width absolute-bottom"
             style="background-color: #49c2c0; color: #fafafa"
           >
             <div class="q-py-sm text-weight-regular">Konfirmasi Pesanan</div>

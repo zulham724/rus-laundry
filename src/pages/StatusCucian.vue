@@ -3,7 +3,7 @@
     <q-page-container class="front">
       <q-header>
         <q-toolbar class="bg-white q-py-md">
-          <q-btn flat round size="10px" to="/detail-transaksi">
+          <q-btn flat round size="10px" @click="$router.push(`/detail-transaksi/${orderid}`)">
             <q-avatar
               size="25px"
               icon="fas fa-arrow-left"
@@ -110,6 +110,7 @@ function show(options) {
 }
 
 export default {
+  props:["orderid"],
   components: {
     QSpinnerGears,
     QBtn,

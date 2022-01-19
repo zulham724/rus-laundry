@@ -4,6 +4,7 @@
       <q-page>
         <div class="row" style="height: 300px; width: 100vw">
           <q-img
+          no-spinner
             class="fixed"
             style="
               height: 200px;
@@ -11,7 +12,6 @@
               margin-left: auto;
               margin-right: auto;
             "
-
             src="~/assets/bg-buat-pesanan.svg"
           />
         </div>
@@ -53,13 +53,13 @@
 
             <q-form ref="form">
               <q-select
+                @new-value="setCustomer"
                 class="q-pa-xs"
                 outlined
                 dense
                 emit-value
                 v-model="customer"
-               @update:model-value="cekCustomer()"
-               @input-value="setCustomer"
+                @update:model-value="cekCustomer()"
                 use-input
                 input-debounce="0"
                 label="Nama Pelanggan"
@@ -78,7 +78,7 @@
               </q-select>
 
               <q-input
-               :disable="cek_customer"
+                :disable="cek_customer"
                 dense
                 v-model="order.contact_number"
                 class="q-pa-xs"
@@ -87,7 +87,6 @@
                 style="color: #bababa; text-weight-regular"
               />
               <q-input
-                :disable="cek_customer"
                 dense
                 v-model="order.date"
                 class="q-pa-xs"
@@ -168,14 +167,17 @@ export default {
     };
   },
   methods: {
-    setCustomer(val){
-     let name = val
-      this.cek_customer = false
-      console.log(name)
-    },
+    setCustomer(val, done) {
+      let customer_name = val;
+      this.customer = customer_name;
+      this.cek_customer = false;
+      this.order.contact_number = null;
+      done(val)
+    },  
     saveOrder() {
-      this.$store.commit("Orders/set_order", { order: this.order });
-      this.$router.push("/list-type-of-clothes");
+      console.log(this.customer)
+      // this.$store.commit("Orders/set_order", { order: this.order });
+      // this.$router.push("/list-type-of-clothes");
     },
     getCustomers() {
       this.$store
@@ -185,6 +187,7 @@ export default {
             return {
               name: item.name,
               id: item.id,
+              contact_number: item.contact_number,
             };
           });
         });
@@ -199,7 +202,8 @@ export default {
 
       update(() => {
         const needle = val.toLowerCase();
-        this.customers = this.customers_temp.filter((v) => v.name.toLowerCase().indexOf(needle) > -1
+        this.customers = this.customers_temp.filter(
+          (v) => v.name.toLowerCase().indexOf(needle) > -1
         );
       });
     },
@@ -224,17 +228,16 @@ export default {
       update(() => {
         const needle = val.toLowerCase();
         this.employees = this.employees_temp.filter(
-          (v) => v.name.substring.toLowerCase().indexOf(needle) > -1
+          (v) => v.name.toLowerCase().indexOf(needle) > -1
         );
       });
     },
-    cekCustomer(){
-      if(this.customer.id){
-        this.cek_customer = true
+    cekCustomer() {
+      if (this.customer.id) {
+        this.cek_customer = true;
+        this.order.contact_number = this.customer.contact_number;
       }
-      console.log(this.cek_customer)
-      this.$forceUpdate()
-    }
+    },
   },
   mounted() {
     this.getCustomers();

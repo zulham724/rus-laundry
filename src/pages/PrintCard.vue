@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #ffffff">
     <q-header>
       <q-toolbar class="bg-white shadow-3">
-        <q-btn no-caps flat style="color: white" to="/detail-employee">
+        <q-btn no-caps flat style="color: white" @click="$router.push(`/detail-employee/${employee.id}`)">
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
@@ -15,7 +15,7 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page>
+      <q-page v-if="employee">
         <q-card flat class="q-mt-lg bg-white" style="">
           <div class="row">
             <div class="col-4">
@@ -33,7 +33,7 @@
                     color: white;
                   "
                 >
-                  Manager
+                  Karyawan
                 </div>
               </div>
               <div
@@ -43,7 +43,7 @@
                 Nomor ID
               </div>
               <div class="q-ml-md text-weight-medium" style="color: #756a6a">
-                997435814
+                {{ employee.id }}
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
             class="q-ml-md text-subtitle2 text-weight-medium"
             style="color: #756a6a"
           >
-            Firosyan Ammar
+            {{ employee.name }}
           </div>
 
           <div
@@ -70,7 +70,7 @@
             class="q-ml-md text-subtitle2 text-weight-medium"
             style="color: #756a6a"
           >
-            08123412331
+            {{ employee.contact_number }}
           </div>
 
           <div
@@ -83,7 +83,7 @@
             class="q-ml-md text-subtitl text-weight-medium"
             style="color: #756a6a"
           >
-            ceper_gimang@gmail.com
+            {{ employee.email }}
           </div>
 
           <div
@@ -160,9 +160,11 @@
 
 <script>
 export default {
+  props:["employeeid"],
   data() {
     return {
       dialogPrintCard: false,
+      employee: null,
     };
   },
 
@@ -170,7 +172,15 @@ export default {
     buttonPrintCard() {
       this.dialogPrintCard = true;
     },
+    getEmployee(){
+      this.$store.dispatch('Employee/show', this.employeeid).then(res => {
+        this.employee = res.data
+      })
+    },
   },
+  mounted(){
+    this.getEmployee()
+  }
 };
 </script>
 

@@ -1,57 +1,84 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-      <q-page style="background-color: #fafafa">
+  <q-page style="background-color: #fafafa">
+    <div style="height: 220px">
+      <div
+        class="fixed mbl-child"
+        style="
+          width: 100%;
+          height: 100%;
+          background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
+        "
+      >
         <div
-          style="
-            height: 220px;
-            background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
-          "
+          class="text-weight-regular text-center q-pt-xl"
+          style="color: white; font-size: 18px"
         >
-          <div class="text-weight-regular text-center q-pt-xl" style="color: white; font-size: 18px">Saldo Masuk Hari ini</div>
-          <div class="text-weight-bold text-center" style="color: white; font-size: 38px">Rp.10.000.000</div>
+          Saldo Masuk Hari ini
         </div>
-
         <div
-          class="q-pb-lg "
-          style="
-            border-radius: 30px 30px 0 0;
-            background-color: #fafafa;
-            margin-top: -30px;
-            position: relative;
-          "
+          class="text-weight-bold text-center"
+          style="color: white; font-size: 38px"
         >
-        <q-tabs
-            active-color="white"
-            active-bg-color="light-blue-4"
-            v-model="tab"
-            no-caps
-            class="q-px-md text-weight-regular"
-            style="color: #756a6a;  font-size: 14px; "
-          >
-            <q-tab
-              name="hari"
-              label="Hari ini"
-              style="border-radius: 0px 0px 15px 15px"
-            />
-            <q-tab
-              name="minggu"
-              label="Minggu ini"
-              style="border-radius: 0px 0px 15px 15px"
-            />
-            <q-tab
-              name="bulan"
-              label="Bulan ini"
-              style="border-radius: 0px 0px 15px 15px"
-            />
-            <q-tab
-              name="custom"
-              label=" Custom"
-              style="border-radius: 0px 0px 15px 15px"
-            />
-          </q-tabs>
+          Rp.10.000.000
+        </div>
+      </div>
+    </div>
 
-          <div class="row text-left q-pl-md text-weight-regular" style="font-size: 20px; color: #756A6A">Transaksi</div>
-          <!-- List Pesanan -->
-        <div v-if="orders.length">
+    <div
+      class="q-pb-lg"
+      style="
+        border-radius: 30px 30px 0 0;
+        background-color: #fafafa;
+        margin-top: -30px;
+        position: relative;
+      "
+    >
+      <q-tabs
+        stretch
+        id="thing_to_stick"
+        active-color="white"
+        active-bg-color="light-blue-4"
+        v-model="tab"
+        no-caps
+        class="text-weight-regular"
+        style="
+          color: #756a6a;
+          font-size: 14px;
+          border-radius: 30px 30px 0 0;
+          background-color: #fafafa;
+        "
+      >
+        <q-tab
+          name="hari"
+          label="Hari ini"
+          style="border-radius: 0px 0px 15px 15px"
+        />
+        <q-tab
+          name="minggu"
+          label="Minggu ini"
+          style="border-radius: 0px 0px 15px 15px"
+        />
+        <q-tab
+          name="bulan"
+          label="Bulan ini"
+          style="border-radius: 0px 0px 15px 15px"
+        />
+        <q-tab
+          name="custom"
+          label=" Custom"
+          style="border-radius: 0px 0px 15px 15px"
+        />
+      </q-tabs>
+
+      <div
+        class="row text-left q-pl-md q-pt-sm text-weight-regular"
+        style="font-size: 20px; color: #756a6a"
+      >
+        Transaksi
+      </div>
+      <!-- List Pesanan -->
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="hari">
           <q-list
             bordered
             separator
@@ -81,21 +108,187 @@
                   order.customer.name
                 }}</q-item-label>
                 <q-item-label caption lines="1" class="q-mb-sm">
-                  {{
-                    moment(order.created_at).format("lll")
-                  }}</q-item-label
+                  {{ moment(order.created_at).format("lll") }}</q-item-label
                 >
               </q-item-section>
 
-              <q-item-section class="text-weight-regular" side style="color: #54D240; font-size: 12px">
+              <q-item-section
+                class="text-weight-regular"
+                side
+                style="color: #54d240; font-size: 12px"
+              >
                 +100.000
               </q-item-section>
             </q-item>
           </q-list>
-        </div>
+        </q-tab-panel>
+        <q-tab-panel name="minggu">
+          <q-list
+            bordered
+            separator
+            class="q-mx-md q-my-xs"
+            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+          >
+            <q-item
+              v-for="order in orders"
+              :key="order.id"
+              class="q-my-sm q-mx-md"
+              clickable
+              @click="$router.push(`/detail-transaksi/${order.id}`)"
+            >
+              <q-item-section avatar>
+                <q-avatar
+                  color="primary"
+                  text-color="white"
+                  size="60px"
+                  style="margin-left: -20px"
+                >
+                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                </q-avatar>
+              </q-item-section>
 
-        </div>
-      </q-page>
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">{{
+                  order.customer.name
+                }}</q-item-label>
+                <q-item-label caption lines="1" class="q-mb-sm">
+                  {{ moment(order.created_at).format("lll") }}</q-item-label
+                >
+              </q-item-section>
+
+              <q-item-section
+                class="text-weight-regular"
+                side
+                style="color: #54d240; font-size: 12px"
+              >
+                +100.000
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-tab-panel>
+        <q-tab-panel name="bulan">
+          <q-list
+            bordered
+            separator
+            class="q-mx-md q-my-xs"
+            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+          >
+            <q-item
+              v-for="order in orders"
+              :key="order.id"
+              class="q-my-sm q-mx-md"
+              clickable
+              @click="$router.push(`/detail-transaksi/${order.id}`)"
+            >
+              <q-item-section avatar>
+                <q-avatar
+                  color="primary"
+                  text-color="white"
+                  size="60px"
+                  style="margin-left: -20px"
+                >
+                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">{{
+                  order.customer.name
+                }}</q-item-label>
+                <q-item-label caption lines="1" class="q-mb-sm">
+                  {{ moment(order.created_at).format("lll") }}</q-item-label
+                >
+              </q-item-section>
+
+              <q-item-section
+                class="text-weight-regular"
+                side
+                style="color: #54d240; font-size: 12px"
+              >
+                +100.000
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-tab-panel>
+        <q-tab-panel name="custom">
+          <div class="row justify-between q-ma-md">
+            <div
+              class="text-left text-weight-regular self-center"
+              style="font-size: 12px; color: #888888"
+            >
+              Custom Tanggal
+            </div>
+            
+            <q-btn :ripple="true" dense no-caps outline class="q-px-sm" style="width: 100px; ">
+            <div class="text-left" style="color: #888888">Harian</div> <q-space/>
+            <q-icon name="fas fa-chevron-down" size="15px"></q-icon>
+
+            <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="date" range>
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+            </q-btn>
+            
+            <!-- <q-select
+              style="width: 130px"
+              outlined
+              dense
+              label="Harian"
+              color="grey"
+              class="bg-transparent no-shadow"
+            ></q-select> -->
+
+          </div>
+          <q-list
+            bordered
+            separator
+            class="q-mx-md q-my-xs"
+            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+          >
+            <q-item
+              v-for="order in orders"
+              :key="order.id"
+              class="q-my-sm q-mx-md"
+              clickable
+              @click="$router.push(`/detail-transaksi/${order.id}`)"
+            >
+              <q-item-section avatar>
+                <q-avatar
+                  color="primary"
+                  text-color="white"
+                  size="60px"
+                  style="margin-left: -20px"
+                >
+                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">{{
+                  order.customer.name
+                }}</q-item-label>
+                <q-item-label caption lines="1" class="q-mb-sm">
+                  {{ moment(order.created_at).format("lll") }}</q-item-label
+                >
+              </q-item-section>
+
+              <q-item-section
+                class="text-weight-regular"
+                side
+                style="color: #54d240; font-size: 12px"
+              >
+                +100.000
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
+
+  </q-page>
 </template>
 
 <script>
@@ -109,8 +302,9 @@ export default {
   },
 
   data() {
-    return {
-      tab: "hari",
+    return {      
+      date: ref('2022/01/19'),
+      tab: "custom",
       orders: [],
     };
   },
@@ -135,4 +329,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#thing_to_stick {
+  position: sticky;
+  top: 0px;
+  z-index: 999;
+}
+</style>

@@ -62,8 +62,8 @@
     </q-header>
 
       <q-page>
-        <q-card flat>
-          <q-card-actions class="bg-fafafa">
+        <q-card flat >
+          <q-card-actions class="bg-white">
             <!-- Search -->
             <q-input
               dense
@@ -94,7 +94,7 @@
           </q-card-actions>
         </q-card>
         <!-- List Pesanan -->
-        <div v-if="orders.length">
+        <div v-if="orders.length">        
           <q-list
             bordered
             separator
@@ -109,6 +109,7 @@
               @click="$router.push(`/detail-transaksi/${order.id}`)"
             >
               <q-item-section avatar>
+                
                 <q-avatar
                   color="primary"
                   text-color="white"
@@ -210,7 +211,7 @@ export default {
     return {
       tab: "home",
       search: ref(""),
-      progress: 0.6,
+      progress: 0.6 * 100 + '%',
       orders: [],
     };
   },

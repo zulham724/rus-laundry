@@ -6,13 +6,13 @@ const state = {
 
 const mutations = {
 
-    add_cart_item(state, payload){
+    add_cart_item(state, payload) {
         state.cart.push(payload)
     }
 };
 
 const actions = {
-    index({ commit }){
+    index({ commit }) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/servicecategories`).then(res => {
                 resolve(res)
@@ -24,6 +24,16 @@ const actions = {
     store({ commit }, formData) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/servicecategories`, formData).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    destroy({ commit }, categories) {
+
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/deletecategories`, categories).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)

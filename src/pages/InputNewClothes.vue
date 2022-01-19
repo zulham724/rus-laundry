@@ -111,10 +111,11 @@ export default {
         service_unit_id: this.selectedUnit.id
       }
       this.$store.dispatch("ServiceCategories/store", payload).then(res => {
-        this.$router.push('/list-type-of-clothes')
+        this.$router.push('/add-clothes')
         this.$q.notify("Berhasil menambah jenis pakaian")
       })
-    }
+    },
+    
   },
 };
 </script>

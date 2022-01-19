@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" to="/basket">
+        <q-btn flat round size="10px" @click="$router.back()">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
@@ -11,6 +11,14 @@
           style="color: #888888; font-size: 16px"
           >Pilih Paket</q-toolbar-title
         >
+
+        <q-btn
+          class="float-right"
+          text-color="grey-8"
+          :label="chooseMode ? 'Batal' : 'Pilih'"
+          flat
+          @click="chooseMode = !chooseMode"
+        />
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
@@ -23,6 +31,7 @@
                   <q-input
                     dense
                     v-model="search"
+                    @update:model-value="filterPaket(search)"
                     outlined
                     rounded
                     type="search"
@@ -35,20 +44,20 @@
                 </div>
                 <div class="col-6">
                   <div class="col-6">
-                <div class="row justify-end">
-                  <div class="col-6">
-                    <q-select
-                      flat
-                      label-color="black"
-                      dense
-                      option-label="name"
-                      label="Filter"
-                      color=""
-                      class="bg-transparent no-shadow"
-                    />
+                    <div class="row justify-end">
+                      <div class="col-6">
+                        <q-select
+                          flat
+                          label-color="black"
+                          dense
+                          option-label="name"
+                          label="Filter"
+                          color=""
+                          class="bg-transparent no-shadow"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
                 </div>
               </div>
             </q-card-section>
@@ -91,7 +100,27 @@
             <q-separator></q-separator>
           </q-list>
         </q-btn-dropdown> -->
-        <div v-if="packages.length"></div>
+        <div v-if="packages.length">
+          <q-list class="q-pt-md">
+            <q-item
+              class="q-my-sm bg-white"
+              v-for="(paket, p) in packages"
+              :key="p"
+            >
+              <q-item-section>
+                <q-item-label>
+                  {{ paket.name }}
+                </q-item-label>
+                <q-item-label caption>
+                  {{ paket.category.service_unit.name }}
+                </q-item-label>
+              </q-item-section>
+              <q-item-section side v-if="chooseMode">
+                <q-checkbox v-model="packages[p].checked" />
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
         <div v-else>
           <div class="text-center q-ma-lg">
             <img
@@ -101,39 +130,66 @@
             <div class="text-h6" style="margin-top: -40px">Belum ada paket</div>
           </div>
         </div>
-        <div>
+        <div class="absolute-bottom" v-if="!chooseMode">
           <q-btn
             :ripple="{ color: 'orange' }"
             @click="dialog_addPackage = true"
             flat
             no-caps
-            class="full-width fixed-bottom"
+            class="full-width"
             style="background-color: #49c2c0"
           >
-            <div
-              class="text-subtitl2"
-              style="color: white"
-
-            >
-              Tambah Paket
-            </div>
+            <div class="text-subtitl2" style="color: white">Tambah Paket</div>
             <q-dialog v-model="dialog_addPackage" persistent>
               <q-card>
                 <q-card-section class="row justify-start">
-                  <div class="text-subtitle1"
-                    >Tambah paket baru?</div>
-                    <div class="text-caption">
-                      yakin ingin menambah paket baru?
-                    </div>
+                  <div class="text-subtitle1">Tambah paket baru?</div>
+                  <div class="text-caption">
+                    yakin ingin menambah paket baru?
+                  </div>
                 </q-card-section>
 
                 <q-card-actions align="between" class="text-bold">
                   <q-btn flat label="Batal" color="primary" v-close-popup />
                   <q-btn
-                  @click="$router.push(`/add-package/${categoryid}`)"
+                    @click="$router.push(`/add-package`)"
                     flat
                     label="Tambah"
                     color="primary"
+                    v-close-popup
+                  />
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
+          </q-btn>
+        </div>
+        <div class="absolute-bottom" v-else>
+          <q-btn
+            :ripple="{ color: 'orange' }"
+            @click="dialog_deletePackage = true"
+            flat
+            no-caps
+            class="full-width"
+            style="background-color: #D72929"
+          >
+            <div class="text-subtitl2" style="color: white">Hapus Paket</div>
+            <q-dialog v-model="dialog_deletePackage" persistent>
+              <q-card>
+                <q-card-section class="row justify-start">
+                  <div class="text-subtitle1">Hapus paket</div>
+                  <div class="text-caption">
+                    yakin ingin menghapus paket?
+                  </div>
+                </q-card-section>
+
+                <q-card-actions align="between" class="text-bold">
+                  <q-btn :disable="loading" flat label="Batal" color="primary" v-close-popup />
+                  <q-btn
+                    :disable="loading"
+                    @click="deletePackage()"
+                    flat
+                    label="Hapus"
+                    color="red"
                     v-close-popup
                   />
                 </q-card-actions>
@@ -153,19 +209,48 @@ export default {
     return {
       search: null,
       packages: [],
+      packages_temp: [],
       dialog_addPackage: false,
+      dialog_deletePackage: false,
+      chooseMode: false,
+      loading: false
     };
   },
-  methods:{
-    getPackages(){
-      this.$store.dispatch("Services/index", this.categoryid).then(res => {
-        this.packages = res.data
+  methods: {
+    getPackages() {
+      this.$store.dispatch("Services/index").then((res) => {
+        this.packages = this.packages_temp = res.data.map((item) => {
+          item.checked = false
+          return item
+        });
+      });
+    },
+    update(value){
+      if(value == ""){
+        this.packages = this.packages_temp
+      }
+
+      const needle = value.toLowerCase()
+      this.packages = this.packages_temp.filter((v) => v.name.toLowerCase().indexOf(needle) > -1)
+    },
+    filterPaket(val){
+      this.update(val)
+    },
+    deletePackage(){
+      this.loading = true
+      let package_choosed = this.packages.filter((item) => item.checked).map(item=>item.id)
+     
+      this.$store.dispatch("Services/destroy", package_choosed).then(res => {
+        this.packages = this.packages.filter((item) => !item.checked)
+        this.$q.notify("Berhasil")
+      }).finally(() => {
+        this.loading = false
       })
     }
   },
-  mounted(){
-    this.getPackages()
-  }
+  mounted() {
+    this.getPackages();
+  },
 };
 </script>
 

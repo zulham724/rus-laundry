@@ -12,6 +12,7 @@
           border-radius: 10px 10px 10px 10px;
         "
         outlined
+        @update:model-value="filterEmployee(search)"
         v-model="search"
         placeholder="Cari berdasarkan nama, email"
       >
@@ -43,6 +44,18 @@
       </div>
     </q-btn>
 
+    <q-btn no-caps flat class="full-width bg-white q-mt-sm" @click="$router.push('/customer')">
+      <div
+        class="col-10 text-left text-weight-medium q-pl-sm"
+        style="color: #756a6a; font-size: 10px"
+      >
+        Daftar Pelanggan
+      </div>
+      <div class="col-2 text-right">
+        <q-icon name="fas fa-chevron-right" size="15px"></q-icon>
+      </div>
+    </q-btn>
+
     <div class="row q-mt-md">
       <div class="col-8"></div>
       <div class="col-4 text-center">
@@ -50,14 +63,15 @@
           Jumlah Karyawan
         </div>
         <div class="text-weight-medium" style="color: #756a6a; font-size: 15px">
-          20
+          {{ employees.length }}
         </div>
       </div>
     </div>
 
-    <div class="row q-mt-md" @click="cardClick()">
-      <div class="col-6 text-center">
+    <div class="row q-mt-md">
+      <div class="col-6 text-center q-mt-lg" v-for="employee in employees" :key="employee.id">
         <div
+          @click="$router.push(`/detail-employee/${employee.id}`);"
           class="q-mx-lg bg-white text-center q-pa-md shadow-3"
           style="border-radius: 5px 5px 5px 5px"
         >
@@ -65,7 +79,7 @@
             <q-img src="~/assets/Avatar.png"></q-img>
           </q-avatar>
           <div class="text-weight-medium" style="font-size: 8px">
-            Muhammad Hisyam
+            {{ employee.name }}
           </div>
           <div
             class="text-weight-medium q-mx-sm"
@@ -79,64 +93,30 @@
             </div>
           </div>
           <div
+            v-if="employee.contact_number"
             class="text-weight-medium"
             style="font-size: 8px; color: #888888"
           >
-            081321123999
+            {{ employee.contact_number }}
           </div>
           <div
-            class="text-weight-medium"
-            style="font-size: 7px; color: #9ca4e4"
-          >
-            hisyam@gmail.com
-          </div>
-          <div
-            class="text-weight-medium text-right q-pt-sm"
-            style="font-size: 8px; color: #888888"
-          >
-            Id : 561563863268
-          </div>
-        </div>
-      </div>
-      <div class="col-6 text-center">
-        <div
-          class="q-mx-lg bg-white text-center q-pa-md shadow-3"
-          style="border-radius: 5px 5px 5px 5px"
-        >
-          <q-avatar size="60px">
-            <q-img src="~/assets/Avatar.png"></q-img>
-          </q-avatar>
-          <div class="text-weight-medium" style="font-size: 8px">
-            Muhammad Alif
-          </div>
-          <div
-            class="text-weight-medium q-mx-sm"
-            style="border-radius: 5px 5px 5px 5px; background-color: #eaecfc"
-          >
-            <div
-              class="text-center q-ma-xs"
-              style="font-size: 8px; color: #888888"
-            >
-              Karyawan
-            </div>
-          </div>
-          <div
+            v-else
             class="text-weight-medium"
             style="font-size: 8px; color: #888888"
           >
-            0813569851
+            Belum punya nomor hp
           </div>
           <div
             class="text-weight-medium"
             style="font-size: 7px; color: #9ca4e4"
           >
-            alif@gmail.com
+            {{ employee.email }}
           </div>
           <div
             class="text-weight-medium text-right q-pt-sm"
             style="font-size: 8px; color: #888888"
           >
-            Id : 561563863268
+            Id : {{ employee.id }}
           </div>
         </div>
       </div>
@@ -155,20 +135,40 @@
 
 <script>
 import { ref } from "vue";
-
+import { mapState } from 'vuex';
 export default {
+  computed:{
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
-      search: ref(""),
-
+      search: "",
+      employees: [],
+      employee_temp: [],
     };
   },
 
   methods: {
-    cardClick() {
-      this.$router.push("/detail-employee");
+    getEmployees(){
+      this.$store.dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id).then(res =>{
+        this.employees = this.employee_temp = res.data
+      })
     },
+    update(value){
+      if(value == ""){
+        this.employees = this.employee_temp
+      }
+
+      const needle = value.toLowerCase();
+      this.employees = this.employee_temp.filter((v)=> v.name.toLowerCase().indexOf(needle) > -1)
+    },
+    filterEmployee(val){
+      this.update(val)
+    }
   },
+  mounted(){
+    this.getEmployees()
+  }
 };
 </script>
 

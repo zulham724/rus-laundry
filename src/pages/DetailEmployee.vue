@@ -11,7 +11,7 @@
           style="color: #888888; font-size: 16px"
           >Info Karyawan</q-toolbar-title
         >
-        <q-btn no-caps flat color="black" @click="buttonDelete()">
+        <q-btn no-caps flat color="black" @click="this.dialogDelete = true;">
           <div class="text-weight-bold">Hapus</div>
         </q-btn>
 
@@ -40,6 +40,7 @@
                 </div>
                 <div class="col-3 text-left q-pr-sm">
                   <q-btn
+                    @click="deleteEmployee()"
                     class="shadow-1"
                     no-caps
                     flat
@@ -54,10 +55,10 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page class="q-mt-xl">
+      <q-page class="q-mt-xl" v-if="employee">
         <div class="text-center">
           <q-avatar size="150px">
-            <q-img src="~/assets/Avatar.png"></q-img>
+            <img :src="`${$storageUrl}/${employee.avatar}`"/>
           </q-avatar>
         </div>
 
@@ -71,7 +72,7 @@
           class="row q-mx-lg text-weight-regular"
           style="font-size: 18px; color: #888888"
         >
-          Firosyan ammar sopyan
+          {{ employee.name }}
         </div>
         <div
           class="row q-mx-lg q-mt-xs text-weight-regular"
@@ -95,7 +96,7 @@
           class="row q-mx-lg text-weight-regular"
           style="font-size: 18px; color: #888888"
         >
-          081356789654
+          {{ employee.contact_number }}
         </div>
         <div
           class="row q-mx-lg q-mt-xs text-weight-regular"
@@ -107,7 +108,7 @@
           class="row q-mx-lg text-weight-regular"
           style="font-size: 18px; color: #888888"
         >
-          firos@gmail.com
+          {{ employee.email }}
         </div>
         <div
           class="row q-mx-lg q-mt-xs text-weight-regular"
@@ -119,11 +120,11 @@
           class="row q-mx-lg text-weight-regular"
           style="font-size: 18px; color: #888888"
         >
-          1531836813861
+          {{ employee.id }}
         </div>
 
         <q-btn
-          @click="buttonPrintCard()"
+          @click="$router.push(`/${employee.id}/print-card`)"
           class="shadow-2 absolute-bottom-right q-mb-lg q-mr-md bg-white"
           no-caps
           style="border-radius: 10px 10px 10px 10px"
@@ -135,7 +136,7 @@
       </q-page>
 
       <q-footer>
-        <q-btn
+        <q-btn @click="$router.push(`/${employee.id}/edit-employee`)"
           class="q-py-md"
           no-caps
           style="width: 100%; background-color: #49c2c0; color: #fafafa"
@@ -149,21 +150,34 @@
 
 <script>
 export default {
+  props:["employeeid"],
   data() {
     return {
       dialogDelete: false,
+      employee: null,
     };
   },
 
   methods: {
-    buttonDelete() {
-      this.dialogDelete = true;
+    getEmployee(){
+      this.$store.dispatch('Employee/show', this.employeeid).then(res => {
+        this.employee = res.data
+      })
+    },
+    deleteEmployee() {
+      this.$store.dispatch("Employee/destroy", this.employee.id).then(res => {
+        this.$router.push(`/employee`)
+        this.$q.notify("Berhasil")
+      })
     },
 
     buttonPrintCard() {
       this.$router.push("/print-card");
     },
   },
+  mounted(){
+    this.getEmployee()
+  }
 };
 </script>
 
