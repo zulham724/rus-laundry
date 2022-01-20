@@ -19,7 +19,7 @@
         <q-form ref="form">
           <div class="text-center">
             <q-avatar class="q-ma-xl" size="150px">
-              <img src="~/assets/empty-avatar.svg" />
+              <q-img no-spinner src="~/assets/empty-avatar.svg" />
             </q-avatar>
           </div>
 

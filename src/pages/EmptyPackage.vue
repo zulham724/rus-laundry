@@ -62,7 +62,7 @@
         </q-card>
 
         <div class="text-center q-pt-md">
-          <q-img style="height:250px;width:250px" src="~/assets/empty_package.svg" />
+          <q-img no-spinner style="height:250px;width:250px" src="~/assets/empty_package.svg" />
        </div>
 
        <div class="text-center text-weight-bold q-pa-md">

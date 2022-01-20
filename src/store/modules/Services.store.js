@@ -35,6 +35,15 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    getServicesByCategory({ commit }, categoryId) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getservices/${categoryId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 };
 

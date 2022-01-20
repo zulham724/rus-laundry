@@ -123,7 +123,7 @@
         </div>
         <div v-else>
           <div class="text-center q-ma-lg">
-            <img
+            <q-img no-spinner
               src="~/assets/empty_package.svg"
               style="width: 70%; margin-top: 20px"
             />
@@ -226,6 +226,7 @@ export default {
       });
     },
     update(value){
+     
       if(value == ""){
         this.packages = this.packages_temp
       }
@@ -234,6 +235,7 @@ export default {
       this.packages = this.packages_temp.filter((v) => v.name.toLowerCase().indexOf(needle) > -1)
     },
     filterPaket(val){
+       
       this.update(val)
     },
     deletePackage(){

@@ -78,7 +78,7 @@
             <div v-if="this.Orders.order.charts[c].package">
               <div>
                 <q-card class="no-shadow">
-                  <q-card-section>
+                  <q-card-section @click="$router.push(`/${category.id}/choose-package`)">
                     <div class="text-caption">
                       {{ this.Orders.order.charts[c].package.name }}
                     </div>

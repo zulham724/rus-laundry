@@ -79,6 +79,7 @@
         <div v-if="!categories.length">
           <div class="text-center" style="margin-top: 80px">
             <q-img
+            no-spinner
               src="~/assets/paket-kosong-unscreen.gif"
               style="width: 205px; height: 205px"
             />
@@ -87,7 +88,7 @@
         <!-- <q-page-sticky position="bottom" :offset="[18, 18]"> -->
         <q-btn class="full-width q-pt-sm fixed-bottom" to="/basket">
           <q-avatar>
-            <img src="~/assets/cart-pesanan.svg" style="width: 50%" />
+            <q-img no-spinner src="~/assets/cart-pesanan.svg" style="width: 50%" />
             <q-badge color="orange" floating>{{
               Orders.order.charts.length
             }}</q-badge>
@@ -145,6 +146,7 @@ export default {
       });
     },
     addCart(item) {
+     
       this.$store.commit("Orders/add_order_cart", { data: item });
       this.notif = true;
       this.categories = this.categories.map((category) => {

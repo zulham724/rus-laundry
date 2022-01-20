@@ -2,9 +2,9 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-page-container style="background-color: #fafafa">
       <q-page>
-        <div class="row" style="height: 300px; width: 100vw">
+        <div class="row" style="height: 300px; width: 100vw; background-image: linear-gradient(to top left, #85D9DE, #70C7E2, #4CA6E5);">
           <q-img
-          no-spinner
+            no-spinner
             class="fixed"
             style="
               height: 200px;
@@ -25,25 +25,6 @@
             position: relative;
           "
         >
-          <!-- <div class="q-pa-lg text-right">
-            <q-btn flat to="/list-type-of-clothess">
-              <q-icon>
-                <img src="~/assets/cart-pesanan.svg" />
-              </q-icon>
-            </q-btn>
-          </div> -->
-
-          <!-- Button Jenis Pakaian -->
-          <!-- <div class="row justify-center">
-            <q-btn
-              :ripple="false"
-              flat
-              style="max-width: 100vw"
-              to="/list-type-of-clothes"
-            >
-              <img class="full-width" src="~/assets/jenis-pakaian-card.png" />
-            </q-btn>
-          </div> -->
           <div class="q-pa-lg">
             <div class="col-12">
               <div class="text-h6 text-bold" style="color: #888888">
@@ -52,35 +33,21 @@
             </div>
 
             <q-form ref="form">
-              <q-select
-                @new-value="setCustomer"
-                class="q-pa-xs"
-                outlined
+              <q-input
+                readonly
                 dense
-                emit-value
-                v-model="customer"
-                @update:model-value="cekCustomer()"
-                use-input
-                input-debounce="0"
-                label="Nama Pelanggan"
-                option-label="name"
-                :options="customers"
-                @filter="filterCustomer"
-                behavior="menu"
-              >
-                <template v-slot:no-option>
-                  <q-item>
-                    <q-item-section class="text-grey">
-                      No results
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
+                @click="dialogListCustomer = true"
+                class="q-pa-xs"
+                v-model="customer.name"
+                outlined
+                label="Nama pelanggan"
+                style="color: #bababa; text-weight-regular"
+              />
 
               <q-input
                 :disable="cek_customer"
                 dense
-                v-model="order.contact_number"
+                v-model="customer.contact_number"
                 class="q-pa-xs"
                 outlined
                 label="No Telpon"
@@ -94,27 +61,18 @@
                 outlined
                 style="color: #bababa; text-weight-regular"
               />
-              <q-select
-                class="q-pa-xs"
-                outlined
+
+              <q-input
+                readonly
                 dense
-                v-model="employee"
-                use-input
-                input-debounce="0"
-                label="Nama Pelayan"
-                option-label="name"
-                :options="employees"
-                @filter="filterEmployee"
-                behavior="menu"
-              >
-                <template v-slot:no-option>
-                  <q-item>
-                    <q-item-section class="text-grey">
-                      No results
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
+                @click="dialogListEmployee = true"
+                class="q-pa-xs"
+                v-model="employee.name"
+                outlined
+                label="Nama karyawan"
+                style="color: #bababa; text-weight-regular"
+              />
+
               <div class="q-pa-xs">
                 <q-input
                   dense
@@ -142,6 +100,184 @@
             </div>
           </div>
         </div>
+
+        <!--Dialog Customers-->
+        <q-dialog v-model="dialogListCustomer" position="right">
+          <q-card style="width: 350px">
+            <q-card-section>
+              <q-input
+                label="Cari"
+                class="full-width text-weight-regular"
+                type="search"
+                outlined
+                v-model="search"
+                dense
+                @update:model-value="filterCustomer(search)"
+              />
+              <div class="q-pt-sm">
+                <div class="text-caption">Daftar pelanggan</div>
+                <div class="q-pt-sm">
+                  <q-list v-if="customers.length">
+                    <q-item v-for="customer in customers" :key="customer.id">
+                      <q-item-section avatar>
+                        <q-avatar size="sm" color="grey-5">
+                          {{ customer.name[0].toUpperCase() }}
+                        </q-avatar>
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>
+                          {{ customer.name }}
+                        </q-item-label>
+                        <q-item-label caption>
+                          {{ customer.contact_number }}
+                        </q-item-label>
+                      </q-item-section>
+                      <q-item-section side>
+                        <q-btn
+                          v-close-popup
+                          flat
+                          label="Pilih"
+                          color="grey-7"
+                          @click="setCustomer(customer)"
+                        />
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                  <div v-else>
+                    <div class="row">
+                      <q-btn
+                        v-close-popup
+                        @click="dialogAddCustomer = true"
+                        color="green-6"
+                        label="Tambah baru"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+
+        <q-dialog v-model="dialogAddCustomer" position="right">
+          <q-card style="width: 350px">
+            <q-card-section class="items-center no-wrap">
+              <div class="text-subtitle1">Tambah pelanggan baru</div>
+              <div class="q-pa-md">
+                <q-form ref="form">
+                  <q-input
+                    label="Nama"
+                    outlined
+                    dense
+                    v-model="newCustomer.name"
+                    lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) || 'Please type something',
+                    ]"
+                  />
+
+                  <q-input
+                    label="Nomor Hp"
+                    outlined
+                    dense
+                    v-model="newCustomer.contact_number"
+                    lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) || 'Please type something',
+                    ]"
+                  />
+
+                  <q-input
+                    label="Email"
+                    type="email"
+                    outlined
+                    dense
+                    v-model="newCustomer.email"
+                    lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) || 'Please type something',
+                    ]"
+                  />
+
+                  <q-input
+                    label="Alamat"
+                    outlined
+                    dense
+                    v-model="newCustomer.home_address"
+                    lazy-rules
+                    :rules="[
+                      (val) =>
+                        (val && val.length > 0) || 'Please type something',
+                    ]"
+                  />
+
+                  <q-btn
+                    v-close-popup
+                    @click="storeCustomer()"
+                    color="green-6"
+                    label="Tambah"
+                  />
+                </q-form>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+
+        <!--Dialog Employees-->
+        <q-dialog v-model="dialogListEmployee" position="left">
+          <q-card style="width: 350px">
+            <q-card-section>
+              <q-input
+                label="Cari"
+                class="full-width text-weight-regular"
+                type="search"
+                outlined
+                v-model="search"
+                dense
+                @update:model-value="filterEmployee(search)"
+              />
+              <div class="q-pt-sm">
+                <div class="text-caption">Daftar karyawan</div>
+                <div class="q-pt-sm">
+                  <q-list v-if="employees.length">
+                    <q-item v-for="employee in employees" :key="employee.id">
+                      <q-item-section avatar>
+                        <q-avatar size="sm" color="grey-5">
+                          {{ employee.name[0].toUpperCase() }}
+                        </q-avatar>
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>
+                          {{ employee.name }}
+                        </q-item-label>
+                        <q-item-label caption>
+                          {{ employee.contact_number }}
+                        </q-item-label>
+                      </q-item-section>
+                      <q-item-section side>
+                        <q-btn
+                          v-close-popup
+                          flat
+                          label="Pilih"
+                          color="grey-7"
+                          @click="setEmployee(employee)"
+                        />
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                  <div v-else>
+                    <div class="row text-subtitle1 text-grey-8">
+                      Tidak ditemukan
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -149,6 +285,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { debounce } from "quasar";
 export default {
   computed: {
     ...mapState(["Auth"]),
@@ -157,27 +294,33 @@ export default {
     return {
       tab: "pesanan",
       order: {},
+      dialogListCustomer: false,
+      dialogListEmployee: false,
+      dialogAddCustomer: false,
+      search: "",
       customers: [],
       customers_temp: [],
-      customer: null,
+      customer: {}, // output {}
+      newCustomer: {}, // string text
       employees: [],
       employees_temp: [],
-      employee: null,
+      employee: {},
       cek_customer: false,
     };
   },
   methods: {
-    setCustomer(val, done) {
-      let customer_name = val;
-      this.customer = customer_name;
-      this.cek_customer = false;
-      this.order.contact_number = null;
-      done(val)
-    },  
+    setCustomer(customer) {
+      this.customer = customer;
+      this.cek_customer = true;
+    },
+    setEmployee(employee) {
+      this.employee = employee;
+    },
     saveOrder() {
-      console.log(this.customer)
-      // this.$store.commit("Orders/set_order", { order: this.order });
-      // this.$router.push("/list-type-of-clothes");
+      this.order.customer_id = this.customer.id
+      this.order.employee_id = this.employee.id
+      this.$store.commit("Orders/set_order", { order: this.order });
+      this.$router.push("/list-type-of-clothes");
     },
     getCustomers() {
       this.$store
@@ -192,23 +335,21 @@ export default {
           });
         });
     },
-    filterCustomer(val, update) {
-      if (val === "") {
-        update(() => {
-          this.customers = this.customers_temp;
-        });
-        return;
+    updateCustomer(value) {
+      if (value === "") {
+        this.customers = this.customers_temp;
       }
 
-      update(() => {
-        const needle = val.toLowerCase();
-        this.customers = this.customers_temp.filter(
-          (v) => v.name.toLowerCase().indexOf(needle) > -1
-        );
-      });
+      const needle = value.toLowerCase();
+      this.customers = this.customers_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
     },
-    getEmployee() {
-      this.$store.dispatch("Employee/getEmployeesByShop").then((res) => {
+    filterCustomer(val) {
+      this.updateCustomer(val);
+    },
+    getEmployees() {
+      this.$store.dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id).then((res) => {
         this.employees = this.employees_temp = res.data.map((item) => {
           return {
             name: item.name,
@@ -217,30 +358,30 @@ export default {
         });
       });
     },
-    filterEmployee(val, update) {
+    updateEmployee(val) {
       if (val === "") {
-        update(() => {
-          this.employees = this.employees_temp;
-        });
-        return;
+        this.employees = this.employees_temp;
       }
 
-      update(() => {
-        const needle = val.toLowerCase();
-        this.employees = this.employees_temp.filter(
-          (v) => v.name.toLowerCase().indexOf(needle) > -1
-        );
-      });
+      const needle = val.toLowerCase();
+      this.employees = this.employees_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
     },
-    cekCustomer() {
-      if (this.customer.id) {
-        this.cek_customer = true;
-        this.order.contact_number = this.customer.contact_number;
-      }
+    filterEmployee(value) {
+      this.updateEmployee(value);
+    },
+    storeCustomer() {
+      this.$store.dispatch("Customer/store", this.newCustomer).then((res) => {
+        this.customer = this.newCustomer;
+        this.getCustomers();
+      });
     },
   },
   mounted() {
+    this.filterCustomer = debounce(this.filterCustomer, 1000);
     this.getCustomers();
+    this.getEmployees();
   },
 };
 </script>

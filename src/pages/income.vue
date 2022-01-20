@@ -79,7 +79,40 @@
       <!-- List Pesanan -->
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="hari">
+          <!-- Skeleton -->
+          <div v-if="isLoad">
+            <q-item
+              v-for="n in 9"
+              :key="n"
+              class="q-my-sm q-mx-md"
+              style="
+                border-radius: 10px 10px 10px 10px;
+                background-color: #fafafa;
+              "
+            >
+              <q-item-section avatar >
+                <q-skeleton size="60px" type="QAvatar"/>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">
+                  <q-skeleton type="text" height="20px"/>
+                </q-item-label>
+                <q-item-label>
+                  <q-skeleton type="text" width="15vw"/>
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="self-center on-right">
+                  <q-skeleton width="50px" type="text" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+
           <q-list
+            v-else-if="isLoad == false && orders.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
@@ -99,7 +132,11 @@
                   size="60px"
                   style="margin-left: -20px"
                 >
-                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                  <q-img
+                    src="~/assets/avatar-box.png"
+                    alt="avatar-box"
+                    no-spinner
+                  />
                 </q-avatar>
               </q-item-section>
 
@@ -123,7 +160,40 @@
           </q-list>
         </q-tab-panel>
         <q-tab-panel name="minggu">
+          <!-- Skeleton -->
+          <div v-if="isLoad">
+            <q-item
+              v-for="n in 9"
+              :key="n"
+              class="q-my-sm q-mx-md"
+              style="
+                border-radius: 10px 10px 10px 10px;
+                background-color: #fafafa;
+              "
+            >
+              <q-item-section avatar >
+                <q-skeleton size="60px" type="QAvatar"/>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">
+                  <q-skeleton type="text" height="20px"/>
+                </q-item-label>
+                <q-item-label>
+                  <q-skeleton type="text" width="15vw"/>
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="self-center on-right">
+                  <q-skeleton width="50px" type="text" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+
           <q-list
+            v-else-if="isLoad == false && orders.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
@@ -143,7 +213,11 @@
                   size="60px"
                   style="margin-left: -20px"
                 >
-                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                  <q-img
+                    src="~/assets/avatar-box.png"
+                    alt="avatar-box"
+                    no-spinner
+                  />
                 </q-avatar>
               </q-item-section>
 
@@ -167,7 +241,40 @@
           </q-list>
         </q-tab-panel>
         <q-tab-panel name="bulan">
+          <!-- Skeleton -->
+          <div v-if="isLoad">
+            <q-item
+              v-for="n in 9"
+              :key="n"
+              class="q-my-sm q-mx-md"
+              style="
+                border-radius: 10px 10px 10px 10px;
+                background-color: #fafafa;
+              "
+            >
+              <q-item-section avatar >
+                <q-skeleton size="60px" type="QAvatar"/>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">
+                  <q-skeleton type="text" height="20px"/>
+                </q-item-label>
+                <q-item-label>
+                  <q-skeleton type="text" width="15vw"/>
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="self-center on-right">
+                  <q-skeleton width="50px" type="text" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+
           <q-list
+            v-else-if="isLoad == false && orders.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
@@ -187,7 +294,11 @@
                   size="60px"
                   style="margin-left: -20px"
                 >
-                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                  <q-img
+                    src="~/assets/avatar-box.png"
+                    alt="avatar-box"
+                    no-spinner
+                  />
                 </q-avatar>
               </q-item-section>
 
@@ -218,20 +329,33 @@
             >
               Custom Tanggal
             </div>
-            
-            <q-btn :ripple="true" dense no-caps outline class="q-px-sm" style="width: 100px; ">
-            <div class="text-left" style="color: #888888">Harian</div> <q-space/>
-            <q-icon name="fas fa-chevron-down" size="15px"></q-icon>
 
-            <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="date" range>
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
+            <q-btn
+              :ripple="true"
+              dense
+              no-caps
+              outline
+              class="q-px-sm"
+              style="width: 100px"
+            >
+              <div class="text-left" style="color: #888888">Harian</div>
+              <q-space />
+              <q-icon name="fas fa-chevron-down" size="15px"></q-icon>
+
+              <q-popup-proxy
+                ref="qDateProxy"
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="date" range>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </q-btn>
-            
+
             <!-- <q-select
               style="width: 130px"
               outlined
@@ -240,9 +364,42 @@
               color="grey"
               class="bg-transparent no-shadow"
             ></q-select> -->
-
           </div>
+
+          <!-- Skeleton -->
+          <div v-if="isLoad" class="q-mx-md q-my-xs">
+            <q-item
+              v-for="n in 9"
+              :key="n"
+              class="q-my-sm q-mx-md"
+              style="
+                border-radius: 10px 10px 10px 10px;
+                background-color: #fafafa;
+              "
+            >
+              <q-item-section avatar >
+                <q-skeleton size="60px" type="QAvatar"/>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">
+                  <q-skeleton type="text" height="20px"/>
+                </q-item-label>
+                <q-item-label>
+                  <q-skeleton type="text" width="15vw"/>
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="self-center on-right">
+                  <q-skeleton width="50px" type="text" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+
           <q-list
+            v-else-if="isLoad == false && orders.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
@@ -262,7 +419,11 @@
                   size="60px"
                   style="margin-left: -20px"
                 >
-                  <img src="~/assets/avatar-box.png" alt="avatar-box" />
+                  <q-img
+                    src="~/assets/avatar-box.png"
+                    alt="avatar-box"
+                    no-spinner
+                  />
                 </q-avatar>
               </q-item-section>
 
@@ -287,7 +448,6 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
-
   </q-page>
 </template>
 
@@ -302,10 +462,11 @@ export default {
   },
 
   data() {
-    return {      
-      date: ref('2022/01/19'),
-      tab: "custom",
+    return {
+      date: ref("2022/01/19"),
+      tab: "hari",
       orders: [],
+      isLoad: false,
     };
   },
 
@@ -319,10 +480,17 @@ export default {
     },
 
     getOrders() {
+      this.isLoad = true;
       this.$store
         .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
         .then((res) => {
           this.orders = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.isLoad = false;
         });
     },
   },

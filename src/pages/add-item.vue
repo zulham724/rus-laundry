@@ -65,7 +65,6 @@
           no-spinner
             style="
               height: 200px;
-
             "
             class="fixed-bottom front mbl-child"
             src="~/assets/bg-gelombang-bawah.svg"

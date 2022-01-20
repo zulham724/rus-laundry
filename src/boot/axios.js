@@ -15,16 +15,28 @@ export default boot(({ app, router, store }) => {
     app.config.globalProperties.$axios = axios
         // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
         //       so you won't necessarily have to import axios in each vue file
-
     app.config.globalProperties.$api = api
     app.config.globalProperties.$storageUrl = STORAGE_URL
         // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
         //       so you can easily perform requests against your app's API
+
+    // membuat default header pada axios setiap baru buka aplikasi
     const token = store.getters["Auth/token"];
     if (token.access_token) {
         api.defaults.headers.common.Accept = "application/json";
         api.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
     }
+    //-------------------------------------------------------------
+
+    // simulasi delay pada request axios
+    api.interceptors.request.use((config) => {
+            if (config.delayed) {
+                return new Promise(resolve => setTimeout(() => resolve(config), 3000));
+            } else {
+                return config;
+            }
+        })
+        //----------------------------------
 
 })
 

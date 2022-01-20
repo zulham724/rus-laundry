@@ -25,7 +25,8 @@
         <div class="row q-mt-xs bg-white">
           <div class="col-3 bg-white">
             <div class="row justify-center">
-              <img
+              <q-img
+              no-spinner
                 src="~/assets/confirm-package-unscreen.gif"
                 style="width: 130px; height: 130px"
               />

@@ -191,7 +191,7 @@ export default {
   },
   methods: {
     getPackages() {
-      this.$store.dispatch("Services/index", this.categoryid).then((res) => {
+      this.$store.dispatch("Services/getServicesByCategory", this.categoryid).then((res) => {
         this.packages = res.data;
       });
     },

@@ -1,0 +1,31 @@
++ Menambah jenis pakaian {rian}
++ Menambah paket {rian}
++ Menambah karyawan {rian}
++ Mengedit karyawan(untuk gambar belum) {rian}
++ Menghapus karyawan {rian}
++ Menampilkan List karyawan {rian}
++ Menampilkan data karyawan {rian}
++ Mencari jenis pakaian berdasarkan nama {rian}
++ Mencari paket berdasarkan nama {rian}
++ Mencari karyawan berdsarkan nama {rian}
+
++ buat semua gambar no-spinner {bryan}
++ Menambah Pesanan {rian}
+- Detail Pesanan
+- Progress Pesanan
+- Scan Pesanan
+- Scan absen
+- Rekap absen
+- Menambah pelanggan
++ Menampilkan List pelanggan {iqbal}
+- Menampilkan data pelanggan
+- Mengedit pelanggan
+- Menghapus pelanggan
++ membuat skeleton di list pesanan halaman home {bryan}
++ memberi background color di div yang ada gambar nya supaya ketika gambar belum muncul background nya tidak putih {bryan}
+- diberi q pull refresh di semua halaman yang ada list item nya {bryan}
++ diberi skeleton di halaman income {bryan}
+- persentase pekerjaan di list order pesanan masih statis
+
+
+

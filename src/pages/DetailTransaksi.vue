@@ -4,7 +4,7 @@
       <q-page>
         <div class="text-center bg-transparent">
           <!-- Header Image -->
-          <q-img src="~/assets/header-mesin-cuci.svg">
+          <q-img src="~/assets/header-mesin-cuci.svg" no-spinner>
             <q-toolbar class="bg-transparent">
               <q-btn flat round size="10px" to="/">
                 <q-avatar
@@ -25,301 +25,342 @@
         <q-page
           class="front"
           style="
-            border-radius: 30px;
+            
             background-color: white;
             margin-top: -35px;
             position: relative;
           "
         >
-          <div class="row q-pt-md">
-            <div class="col-5">
-              <!-- No Pesanan  -->
-              <div class="q-pl-lg text-weight-regular" style="color: #c9c9c9">
-                No Pesanan
-              </div>
-              <div class="q-pl-lg text-weight-regular" style="color: #313131">
-                {{ detail_order.id }}
-              </div>
-            </div>
-            <div class="col-6 text-right self-center">
-              <q-btn no-caps dense flat>
-                <div
-                  class="text-weight-regular text-center q-px-xs"
-                  style="
-                    font-size: 10px;
-                    color: #fafafa;
-                    background-color: #3ec0e9;
-                    border-radius: 3px 3px 3px 3px;
-                  "
-                >
-                  Cetak kode pesanan
-                </div>
-              </q-btn>
-
-              <!-- Button Share -->
-              <q-btn dense round size="13px" ripple flat @click="buttonShare()">
-                <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
-              </q-btn>
-            </div>
-          </div>
-
-          <!-- <div class="float-right q-mr-md q-mt-sm">
-            <q-btn round size="15px" ripple flat @click="buttonShare()">
-              <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
-            </q-btn>
-          </div>
-
-          <div class="row q-pt-md q-pl-lg">
-            <div class="text-weight-regular" style="color: #c9c9c9">
-              No Pesanan
-            </div>
-          </div>
-          <div class="row">
-            <div class="q-pl-lg text-weight-regular" style="color: #313131">
-              {{ detail_order.id }}
-            </div>
-          </div> -->
-
-          <!-- List Isi -->
-          <q-list
-            separator
-            style="background-color: #ffffff"
-            class="q-my-xs q-mx-md"
+          <q-carousel
+            style="border-radius: 20px 20px 0px 0px; height: 100%"
+            v-model="slide"
+            transition-prev="jump-right"
+            transition-next="jump-left"
+            swipeable
+            animated
+            control-color="white"
+            prev-icon="arrow_left"
+            next-icon="arrow_right"
+            navigation-icon="radio_button_unchecked"
+            navigation
+            padding
+            arrows
+            class="bg-white text-white shadow-1 rounded-borders"
           >
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular"
-                  style="color: #c9c9c9; font-size: 12px"
-                  >Nama Pelanggan</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.customer.name }}</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section avatar>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img src="~/assets/id-card-detail.svg" style="width: 5vh" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular"
-                  style="color: #c9c9c9; font-size: 12px"
-                  >No Telephone</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.customer.contact_number }}</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section avatar>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img src="~/assets/icon-telpon.svg" style="width: 5vh" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular"
-                  style="color: #c9c9c9; font-size: 12px"
-                  >Estimasi Pesanan</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.services[0].process_time }} Jam</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section avatar>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img src="~/assets/icon-kalender.svg" style="width: 5vh" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular"
-                  style="color: #c9c9c9; font-size: 12px"
-                  >Paket</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.services[0].name }}</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section avatar>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img src="~/assets/icon-cuci-detail.svg" style="width: 5vh" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular"
-                  style="color: #c9c9c9; font-size: 12px"
-                  >Jenis Pakaian</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.services[0].category.name }}</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section avatar>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img src="~/assets/icon-baju.svg" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular"
-                  style="color: #c9c9c9; font-size: 12px"
-                  >Berat</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.services[0].pivot.quantity }}
-                  {{
-                    detail_order.services[0].category.service_unit.name
-                  }}</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section avatar>
-                <q-avatar size="30px" class="bg-transparent">
-                  <img src="~/assets/icon-kilogram.svg" style="width: 5vh" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center q-mt-xl">
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >Paket Lainnya</q-item-label
-                >
-              </q-item-section>
+            <q-carousel-slide name="style" class="">
+              <div class="row q-pt-md">
+                <div class="col-5">
+                  <!-- No Pesanan  -->
+                  <div
+                    class="q-pl-lg text-weight-regular"
+                    style="color: #c9c9c9"
+                  >
+                    No Pesanan
+                  </div>
+                  <div
+                    class="q-pl-lg text-weight-regular"
+                    style="color: #313131"
+                  >
+                    {{ detail_order.id }}
+                  </div>
+                </div>
+                <div class="col-6 text-right self-center">
+                  <q-btn no-caps dense flat>
+                    <div
+                      class="text-weight-regular text-center q-px-xs"
+                      style="
+                        font-size: 10px;
+                        color: #fafafa;
+                        background-color: #3ec0e9;
+                        border-radius: 3px 3px 3px 3px;
+                      "
+                    >
+                      Cetak kode pesanan
+                    </div>
+                  </q-btn>
 
-              <!-- Button Paket Lainnya -->
-              <q-item-section avatar class="q-mt-xl">
-                <q-btn
-                  round
-                  flat
-                  @click="
-                    $router.push(`/${detail_order.id}/laundry-details-other`)
-                  "
-                >
-                  <q-avatar size="30px" class="bg-transparent">
-                    <img
-                      src="~/assets/icon-status-cucian.svg"
-                      style="width: 5vh"
-                    />
-                  </q-avatar>
-                </q-btn>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >Status Cucian</q-item-label
-                >
-              </q-item-section>
+                  <!-- Button Share -->
+                  <q-btn
+                    dense
+                    round
+                    size="13px"
+                    ripple
+                    flat
+                    @click="buttonShare()"
+                  >
+                    <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
+                  </q-btn>
+                </div>
+              </div>
 
-              <!-- Button Status Cucian -->
+              <!-- List Isi -->
+              <q-list
+                separator
+                style="background-color: #ffffff"
+                class="full-width"
+              >
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
+                      >Nama Pelanggan</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{ detail_order.customer.name }}</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar>
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img
+                        src="~/assets/id-card-detail.svg"
+                        style="width: 5vh"
+                        no-spinner
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
+                      >No Telephone</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{ detail_order.customer.contact_number }}</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar>
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img
+                        src="~/assets/icon-telpon.svg"
+                        style="width: 5vh"
+                        no-spinner
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
+                      >Estimasi Pesanan</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{
+                        detail_order.services[0].process_time
+                      }}
+                      Jam</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar>
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img
+                        src="~/assets/icon-kalender.svg"
+                        style="width: 5vh"
+                        no-spinner
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
+                      >Paket</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{ detail_order.services[0].name }}</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar>
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img
+                        src="~/assets/icon-cuci-detail.svg"
+                        style="width: 5vh"
+                        no-spinner
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
+                      >Jenis Pakaian</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{
+                        detail_order.services[0].category.name
+                      }}</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar>
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img src="~/assets/icon-baju.svg" no-spinner />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
+                      >Berat</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{ detail_order.services[0].pivot.quantity }}
+                      {{
+                        detail_order.services[0].category.service_unit.name
+                      }}</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar>
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img
+                        src="~/assets/icon-kilogram.svg"
+                        style="width: 5vh"
+                        no-spinner
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center q-mt-xl">
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >Paket Lainnya</q-item-label
+                    >
+                  </q-item-section>
 
-              <q-item-section avatar>
-                <q-btn
-                  round
-                  flat
-                  @click="$router.push(`/status-cucian/${detail_order.id}`)"
-                >
-                  <q-avatar size="30px" class="bg-transparent">
-                    <img
-                      src="~/assets/icon-status-cucian.svg"
-                      style="width: 5vh"
-                    />
-                  </q-avatar>
-                </q-btn>
-              </q-item-section>
-            </q-item>
-            <q-item class="q-my-sm">
-              <q-item-section class="self-center">
-                <q-item-label
-                  class="text-weight-regular q-pt-md"
-                  style="color: #c9c9c9; font-size: 15px"
-                  >Status Pembayaran</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                  >{{ detail_order.status.name }}</q-item-label
-                >
-              </q-item-section>
-              <q-space></q-space>
-              <q-item-section class="self-center" side>
-                <q-item-label
-                  class="text-weight-regular q-pt-md"
-                  style="color: #c9c9c9; font-size: 15px"
-                  >Harga</q-item-label
-                >
-                <q-item-label
-                  caption
-                  lines="1"
-                  class="text-weight-bold"
-                  style="font-size: 14px"
-                >
-                {{ 
-                  new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(detail_order.total_sum)
-                 }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+                  <q-item-section avatar class="q-mt-xl">
+                    <q-btn
+                      round
+                      flat
+                      @click="
+                        $router.push(
+                          `/${detail_order.id}/laundry-details-other`
+                        )
+                      "
+                    >
+                      <q-avatar size="30px" class="bg-transparent">
+                        <q-img
+                          src="~/assets/icon-status-cucian.svg"
+                          style="width: 5vh"
+                          no-spinner
+                        />
+                      </q-avatar>
+                    </q-btn>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >Status Cucian</q-item-label
+                    >
+                  </q-item-section>
+
+                  <q-item-section avatar>
+                    <q-btn
+                      round
+                      flat
+                      @click="$router.push(`/status-cucian/${detail_order.id}`)"
+                    >
+                      <q-avatar size="30px" class="bg-transparent">
+                        <q-img
+                          src="~/assets/icon-status-cucian.svg"
+                          style="width: 5vh"
+                          no-spinner
+                        />
+                      </q-avatar>
+                    </q-btn>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular q-pt-md"
+                      style="color: #c9c9c9; font-size: 15px"
+                      >Status Pembayaran</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      >{{ detail_order.status.name }}</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section class="self-center" side>
+                    <q-item-label
+                      class="text-weight-regular q-pt-md"
+                      style="color: #c9c9c9; font-size: 15px"
+                      >Harga</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                    >
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(detail_order.total_sum)
+                      }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-carousel-slide>
+          </q-carousel>
           <q-btn
             @click="buttonConfirm()"
             no-caps
-            class="full-width absolute-bottom"
+            class="full-width fixed-bottom"
             style="background-color: #49c2c0; color: #fafafa"
           >
             <div class="q-py-sm text-weight-regular">Konfirmasi Pesanan</div>
@@ -516,6 +557,7 @@ export default {
   props: ["orderid"],
   data() {
     return {
+      slide: "style",
       dialogShare: false,
       dialogConfirm: false,
       link: "example.com/share-link",

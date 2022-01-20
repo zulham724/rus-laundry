@@ -17,8 +17,25 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    store({ commit }, customer) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/customer`, customer).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    show({ comit }, customerid) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/customer/${customerid}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
-
 };
 
 const getters = {};

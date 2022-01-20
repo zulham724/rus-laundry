@@ -25,7 +25,7 @@
     <q-page-container>
       <q-page>
           <div class="text-center q-mt-xl">
-            <img src="~/assets/keranjang-kosong.svg" style="width:204px;height:226px">
+            <q-img no-spinner src="~/assets/keranjang-kosong.svg" style="width:204px;height:226px"/>
           </div>
           <div class="text-center text-weight-bold text-body1 q-mt-md"> 
               Wah Keranjang Kamu Kosong

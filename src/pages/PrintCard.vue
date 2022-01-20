@@ -20,7 +20,7 @@
           <div class="row">
             <div class="col-4">
               <q-avatar class="q-pl-sm" size="80px">
-                <img src="~/assets/Avatar.png" />
+                <q-img src="~/assets/Avatar.png" no-spinner/>
               </q-avatar>
             </div>
             <div class="col-8">
@@ -94,12 +94,12 @@
           </div>
 
           <div class="text-center q-mt-sm">
-            <img src="~/assets/qr-card-print.svg" />
+            <q-img src="~/assets/qr-card-print.svg" no-spinner/>
           </div>
         </q-card>
         <div class="row">
           <div class="col-12 text-center absolute" style="margin-top: -30px">
-            <q-img src="~/assets/bg-card.svg" />
+            <q-img src="~/assets/bg-card.svg" no-spinner/>
           </div>
         </div>
       </q-page>

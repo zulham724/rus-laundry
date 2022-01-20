@@ -58,7 +58,7 @@
       <q-page class="q-mt-xl" v-if="employee">
         <div class="text-center">
           <q-avatar size="150px">
-            <img :src="`${$storageUrl}/${employee.avatar}`"/>
+            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner/>
           </q-avatar>
         </div>
 

@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white shadow-2">
-        <q-btn to="/employee" no-caps class="q-pa-md" flat style="color: white">
+        <q-btn to="/employee" no-caps class="q-pa-md" flat style="color: white" >
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
@@ -23,9 +23,9 @@
               <q-input
                 dense
                 rounded
-                class=" text-weight-regular q-ml-lg"
+                class="text-weight-regular q-pl-lg"
                 type="search"
-                style="color: #bababa; font-size: 15px;width:100%"
+                style="color: #bababa; font-size: 15px; width: 70%"
                 outlined
                 placeholder="Cari Nama pelanggan..."
               >
@@ -55,23 +55,27 @@
 
           <q-list class="bg-white">
             <q-item
-              v-for="n in 9"
-              :key="n"
+              @click="$router.push(`/detail-customer/${customer.id}`)"
+              clickable
+              v-for="(customer, c) in customers"
+              :key="c"
               class="row bg-white shadow-2 q-mx-lg q-mb-md"
               style="height: 65px; border-radius: 5px"
             >
               <q-item-section avatar>
                 <q-avatar square size="">
-                  <img src="~/assets/ava-list-customer.svg" />
+                  <q-img src="~/assets/ava-list-customer.svg" no-spinner/>
                 </q-avatar>
               </q-item-section>
               <q-item-section class="text-body1">
-                <q-item-label>Muh Ali Ridho</q-item-label>
-                <q-item-label caption>081223131321</q-item-label>
+                <q-item-label>{{ customer.name }}</q-item-label>
+                <q-item-label caption
+                  >{{ customer.contact_number }}
+                </q-item-label>
               </q-item-section>
 
               <q-item-section side>
-                <q-checkbox />
+                <q-checkbox v-model="customers[c].checked" />
               </q-item-section>
             </q-item>
           </q-list>
@@ -82,12 +86,34 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
-    return {};
+    return {
+      customers: [],
+      customers_temp: [],
+    };
+  },
+  methods: {
+    getCustomer() {
+      this.$store
+        .dispatch("Customer/getCustomersByShop", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.customers = this.customers_temp = res.data.map((item) => {
+            item.checked = false;
+            return item;
+          });
+        });
+    },
+  },
+  mounted() {
+    this.getCustomer();
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -2,8 +2,8 @@
   <q-layout view="lHh lpR fFf" class="mbl" style="background-color: #fafafa">
     <q-page-container class="front">
       <q-page>
-        <div class="text-center">
-          <img src="~/assets/header-login.jpg" alt="login-anim" />
+        <div class="text-center" style="background-image: linear-gradient(to bottom right, #67BFF0, #B6E5FB);">
+          <q-img no-spinner src="~/assets/header-login.jpg" alt="login-anim" />
         </div>
         <div
           class="front"
@@ -87,7 +87,7 @@
               >
                 <div class="q-mr-md">
                   <q-avatar size="4vh">
-                    <img src="~/assets/google.png" alt="google" />
+                    <q-img no-spinner src="~/assets/google.png" alt="google" />
                   </q-avatar>
                 </div>
                 <div

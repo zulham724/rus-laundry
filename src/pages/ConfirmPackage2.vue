@@ -4,6 +4,7 @@
       <q-page>
         <div class="text-center q-pt-lg">
           <q-img
+          no-spinner
             src="~/assets/confirm-package-unscreen.gif"
             style="width: 80vw"
           />

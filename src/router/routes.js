@@ -221,9 +221,10 @@ const routes = [{
     },
 
     {
-        path: "/detail-customer",
+        path: "/detail-customer/:customerid",
         component: () =>
-            import ("src/pages/CustomerDetail.vue")
+            import ("src/pages/CustomerDetail.vue"),
+        props: true
     },
 
     {

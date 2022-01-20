@@ -3,20 +3,18 @@
     <div class="row bg-white q-px-md q-py-lg">
       <!-- Search -->
       <q-input
+        class="full-width"
         dense
-        class="full-width text-weight-regular"
-        type="search"
-        style="
-          color: #bababa;
-          font-size: 15px;
-          border-radius: 10px 10px 10px 10px;
-        "
-        outlined
-        @update:model-value="filterEmployee(search)"
         v-model="search"
-        placeholder="Cari berdasarkan nama, email"
+        @update:model-value="filterEmployee(search)"
+        outlined
+        rounded
+        type="search"
+        label="Cari"
       >
-        <q-icon name="search" class="self-center" size="30px" color="grey" />
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
       </q-input>
     </div>
 
@@ -44,7 +42,12 @@
       </div>
     </q-btn>
 
-    <q-btn no-caps flat class="full-width bg-white q-mt-sm" @click="$router.push('/customer')">
+    <q-btn
+      no-caps
+      flat
+      class="full-width bg-white q-mt-sm"
+      @click="$router.push('/customer')"
+    >
       <div
         class="col-10 text-left text-weight-medium q-pl-sm"
         style="color: #756a6a; font-size: 10px"
@@ -69,14 +72,18 @@
     </div>
 
     <div class="row q-mt-md">
-      <div class="col-6 text-center q-mt-lg" v-for="employee in employees" :key="employee.id">
+      <div
+        class="col-6 text-center q-mt-lg"
+        v-for="employee in employees"
+        :key="employee.id"
+      >
         <div
-          @click="$router.push(`/detail-employee/${employee.id}`);"
+          @click="$router.push(`/detail-employee/${employee.id}`)"
           class="q-mx-lg bg-white text-center q-pa-md shadow-3"
           style="border-radius: 5px 5px 5px 5px"
         >
           <q-avatar size="60px">
-            <q-img src="~/assets/Avatar.png"></q-img>
+            <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar>
           <div class="text-weight-medium" style="font-size: 8px">
             {{ employee.name }}
@@ -127,7 +134,7 @@
         fab
         style="background-image: linear-gradient(to top left, #f6d365, #fda085)"
       >
-        <q-img src="~/assets/button-bawah-employee.svg" />
+        <q-img no-spinner src="~/assets/button-bawah-employee.svg" />
       </q-btn>
     </q-page-sticky>
   </q-page>
@@ -135,40 +142,47 @@
 
 <script>
 import { ref } from "vue";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
-  computed:{
+  computed: {
     ...mapState(["Auth"]),
   },
   data() {
     return {
       search: "",
       employees: [],
-      employee_temp: [],
+      employees_temp: [],
     };
   },
 
   methods: {
-    getEmployees(){
-      this.$store.dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id).then(res =>{
-        this.employees = this.employee_temp = res.data
-      })
+    getEmployees() {
+      this.$store
+        .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.employees = this.employees_temp = res.data.map((item) => {
+            return item;
+          });
+        });
     },
-    update(value){
-      if(value == ""){
-        this.employees = this.employee_temp
+    update(value) {
+      console.log(value);
+      if (value == "") {
+        this.employees = this.employees_temp;
       }
 
       const needle = value.toLowerCase();
-      this.employees = this.employee_temp.filter((v)=> v.name.toLowerCase().indexOf(needle) > -1)
+      this.employees = this.employees_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
     },
-    filterEmployee(val){
-      this.update(val)
-    }
+    filterEmployee(val) {
+      this.update(val);
+    },
   },
-  mounted(){
-    this.getEmployees()
-  }
+  mounted() {
+    this.getEmployees();
+  },
 };
 </script>
 

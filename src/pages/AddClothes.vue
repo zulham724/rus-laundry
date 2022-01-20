@@ -91,6 +91,7 @@
         <div v-else>
           <div class="text-center q-pt-md">
             <q-img
+            no-spinner
               style="height: 250px; width: 250px"
               src="~/assets/paket-kosong-unscreen.gif"
             />

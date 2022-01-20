@@ -1,7 +1,11 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </q-page-container>
     <!-- Bottom Navigation -->
     <q-footer
@@ -20,7 +24,9 @@
                   : require('../assets/icon-transaksi.svg')
               "
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">Transaksi</div>
+            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+              Transaksi
+            </div>
           </q-tab>
 
           <q-tab name="pesanan" no-caps @click="$router.push('/make-an-order')"
@@ -33,23 +39,25 @@
                   : require('../assets/icon-pesanan.svg')
               "
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">Pesanan</div>
+            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+              Pesanan
+            </div>
           </q-tab>
 
           <q-tab name="kategori" no-caps @click="$router.push('/add-item')"
-              ><q-img
+            ><q-img
               no-spinner
-                style="width: 20px; height: 20px"
-                :src="
-                  tab == 'kategori'
-                    ? require('../assets/tambah-color.svg')
-                    : require('../assets/icon-tambah.svg')
-                "
-              ></q-img>
-              <div class="text-weight-light q-mt-xs" style="font-size: 8px">
-                Kategori
-              </div>
-            </q-tab>
+              style="width: 20px; height: 20px"
+              :src="
+                tab == 'kategori'
+                  ? require('../assets/tambah-color.svg')
+                  : require('../assets/icon-tambah.svg')
+              "
+            ></q-img>
+            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+              Kategori
+            </div>
+          </q-tab>
 
           <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
             ><q-img
@@ -66,7 +74,7 @@
             </div></q-tab
           >
 
-          <q-tab name="karyawan" no-caps  @click="$router.push('/employee')"
+          <q-tab name="karyawan" no-caps @click="$router.push('/employee')"
             ><q-img
               no-spinner
               style="width: 18px; height: 20px"
@@ -76,7 +84,9 @@
                   : require('../assets/icon-karyawan.svg')
               "
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">Karyawan</div>
+            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+              Karyawan
+            </div>
           </q-tab>
         </q-tabs>
       </div>

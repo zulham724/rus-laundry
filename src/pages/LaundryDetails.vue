@@ -69,7 +69,7 @@
 
         <!-- Animasi Proses Cucian -->
         <div class="text-center">
-          <q-img src="~/assets/animasi-proses-cuci.gif" style="width: 30vh">
+          <q-img src="~/assets/animasi-proses-cuci.gif" style="width: 30vh" no-spinner>
           </q-img>
         </div>
         <!-- Estimasi Waktu -->
@@ -117,9 +117,10 @@
             <q-item-section avatar class="q-mt-xl">
               <q-btn round flat>
                 <q-avatar size="30px" class="bg-transparent">
-                  <img
+                  <q-img
                     src="~/assets/icon-status-cucian.svg"
                     style="width: 5vh"
+                    no-spinner
                   />
                 </q-avatar>
               </q-btn>

@@ -27,7 +27,7 @@
             {{ order.id }}
           </div>
           <div class="text-center q-pt-md q-pb-sm">
-            <img src="~/assets/qr-card-print.svg" />
+            <vue-qr :text="order.id.toString()" :callback="getData"  :qid="order.id"></vue-qr>
           </div>
           <div class="text-caption q-pl-md q-pt-md text-grey">
             Nama Pelanggan
@@ -48,6 +48,7 @@
         </div>
         <div class="text-center q-pa-sm">
           <q-btn
+            @click="resetOrder()"
             no-caps
             class="bg-grey-9"
             dense
@@ -62,10 +63,15 @@
 </template>
 
 <script>
+import vueQr from 'vue-qr/src/packages/vue-qr.vue';
 export default {
+  components:{
+    vueQr,
+  },
   data() {
     return {
       order: null,
+
     };
   },
   methods: {
@@ -75,6 +81,13 @@ export default {
         console.log(this.order);
       });
     },
+    getData(dataUrl, id){
+      console.log(dataUrl, id)
+    },
+    resetOrder(){
+      this.$store.commit("Orders/delete_order");
+      this.$router.push("/make-an-order")
+    }
   },
   mounted() {
     this.getOrder();
