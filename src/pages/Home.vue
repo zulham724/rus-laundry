@@ -1,66 +1,68 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-header class="bg-transparent">
-    <div
-      class="text-center"
-      style="
-        border-radius: 0px 0px 0px 70px;
-        background-image: linear-gradient(
-          to top left,
-          #ffbb98,
-          #ffecc1,
-          #b4e6ea
-        );
-      "
-    >
-      <q-img
-        no-spinner
-        src="~/assets/header-home.png"
-        alt="header-home"
-        class="shadow-1"
-        style="border-radius: 0px 0px 0px 70px; height: 25vh"
+    <q-pull-to-refresh @refresh="refresh">
+      <div
+        class="text-center"
+        style="
+          border-radius: 0px 0px 0px 70px;
+          background-image: linear-gradient(
+            to top left,
+            #ffbb98,
+            #ffecc1,
+            #b4e6ea
+          );
+        "
       >
-        <!-- information -->
-        <q-page class="q-mt-lg absolute q-pl-lg" style="max-width: 40vh">
-          <div class="float-left">
-            <!-- Avatar Person -->
-            <div>
-              <q-avatar size="7vh">
-                <img src="~/assets/Avatar.png" alt="avatar-person" />
-              </q-avatar>
+        <q-img
+          no-spinner
+          src="~/assets/header-home.png"
+          alt="header-home"
+          class="shadow-1"
+          style="border-radius: 0px 0px 0px 70px; height: 25vh"
+        >
+          <!-- information -->
+          <q-page class="q-mt-lg absolute q-pl-lg" style="max-width: 40vh">
+            <div class="float-left">
+              <!-- Avatar Person -->
+              <div>
+                <q-avatar size="7vh">
+                  <img src="~/assets/Avatar.png" alt="avatar-person" />
+                </q-avatar>
+              </div>
             </div>
-          </div>
-          <div class="float-left q-ml-md q-gutter-y-xs">
-            <div
-              style="font-size: 20px; color: #313131; margin-bottom: -1vh"
-              class="text-subtitle text-bold float-left"
-            >
-              Selamat Pagi
+            <div class="float-left q-ml-md q-gutter-y-xs">
+              <div
+                style="font-size: 20px; color: #313131; margin-bottom: -1vh"
+                class="text-subtitle text-bold float-left"
+              >
+                Selamat Pagi
+              </div>
+              <br />
+              <!-- Nama User -->
+              <div class="text-subtitle1 float-left" style="color: #313131">
+                IndonesiaLaundry
+              </div>
+              <br />
+              <!-- Date -->
+              <div
+                class="text-caption float-left q-px-xs"
+                style="
+                  font-size: 11px;
+                  min-width: 10vw;
+                  background-color: #ffffff;
+                  color: #888888;
+                  border-radius: 10px;
+                "
+              >
+                {{ moment().format("DD MMMM YYYY") }}
+              </div>
             </div>
-            <br />
-            <!-- Nama User -->
-            <div class="text-subtitle1 float-left" style="color: #313131">
-              IndonesiaLaundry
-            </div>
-            <br />
-            <!-- Date -->
-            <div
-              class="text-caption float-left q-px-xs"
-              style="
-                font-size: 11px;
-                min-width: 10vw;
-                background-color: #ffffff;
-                color: #888888;
-                border-radius: 10px;
-              "
-            >
-              {{ moment().format("DD MMMM YYYY") }}
-            </div>
-          </div>
-        </q-page>
-      </q-img>
-    </div>
+          </q-page>
+        </q-img>
+      </div>
+    </q-pull-to-refresh>
   </q-header>
-<q-pull-to-refresh @refresh="refresh">
+
   <q-page>
     <q-card flat>
       <q-card-actions class="bg-white">
@@ -69,13 +71,12 @@
           dense
           class="q-ml-sm"
           type="search"
-          style="width: 200px; color: black; font-size: 15px"
           rounded
           outlined
           v-model="search"
-          placeholder="Cari Pesanan"
+          label="Cari Pesanan"
         >
-          <q-icon name="search" class="self-center" size="30px" color="grey" />
+          <q-icon name="search" @click="searchTransaksi()" class="self-center" size="30px" color="grey" />
         </q-input>
         <q-space></q-space>
         <!-- Icon Filter -->
@@ -123,7 +124,7 @@
     </div>
 
     <!-- List Pesanan -->
-    <div v-else-if="isLoad == false && orders.length">
+    <div v-else-if="isLoad == false && orders">
       <q-list
         bordered
         separator
@@ -131,7 +132,7 @@
         style="background-color: #fff; border-radius: 20px 20px 20px 20px"
       >
         <q-item
-          v-for="order in orders"
+          v-for="order in orders.data"
           :key="order.id"
           class="q-my-sm q-mx-md"
           clickable
@@ -153,9 +154,9 @@
           </q-item-section>
 
           <q-item-section class="self-center">
-            <q-item-label class="text-weight-medium">{{
-              order.customer.name
-            }}</q-item-label>
+            <q-item-label class="text-weight-medium"
+              >{{ order.id }} {{ order.customer.name }}</q-item-label
+            >
             <q-item-label caption lines="1" class="q-mb-sm">
               {{ moment(order.created_at).format("lll") }}</q-item-label
             >
@@ -167,7 +168,7 @@
               style="max-width: 20vw; border-radius: 50px; color: #49c26b"
               class="self-center q-mb-md on-right"
               size="25px"
-              :value="order.percentage"
+              :value="order.percentage/100"
             >
               <div class="absolute-full flex flex-center">
                 <q-badge
@@ -199,7 +200,7 @@
 
     <!-- Scan Barcode -->
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn @click="doLogout()" class="q-pa-md" fab color="#FAFAFA" elevated>
+      <q-btn class="q-pa-md" fab color="#FAFAFA" elevated>
         <q-img
           src="~/assets/barcode-scan.svg"
           style="width: 30px; height: 30px"
@@ -223,7 +224,6 @@
             src="~/assets/barcode-scan.svg"
         /></q-btn> -->
   </q-page>
-  </q-pull-to-refresh>
 </template>
 
 <script>
@@ -232,15 +232,18 @@ import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
+  name: "HomePage",
+  keepalive: true,
   computed: {
     ...mapState(["Auth"]),
   },
   data() {
     return {
       tab: "home",
-      search: ref(""),
+      search: "",
       progress: 0.6 * 100 + "%",
-      orders: [],
+      orders: {},
+      orders_temp: {},
       isLoad: false,
     };
   },
@@ -257,25 +260,34 @@ export default {
       });
     },
     getOrders() {
-      this.isLoad = true;
-      this.$store
-        .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.orders = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.isLoad = false;
-        });
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.orders = this.orders_temp = res.data;
+           
+            resolve(res.data);
+          })
+          .catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
     },
-    refresh (done) {
-        setTimeout(() => {
-          items.value.push({}, {}, {}, {}, {}, {}, {})
-          done()
-        }, 1000)
-      },
+    refresh(done) {
+      this.getOrders().then((res) => {
+        if (done) done();
+      });
+    },
+    searchTransaksi(){
+      this.$store.dispatch("Orders/searchOrders", {value: this.search}).then(res => {
+        this.orders = res.data
+      })
+    }
   },
 };
 </script>

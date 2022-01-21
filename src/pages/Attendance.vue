@@ -2,9 +2,8 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" to="/make-an-order">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
-          </q-avatar>
+        <q-btn flat dense @click="$router.back()">
+          <q-icon name="fas fa-arrow-left" style="color: #888888"> </q-icon>
         </q-btn>
         <q-toolbar-title
           class="text-left text-weight-medium"

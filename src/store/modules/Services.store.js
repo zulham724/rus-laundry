@@ -44,7 +44,17 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    updateStatus({ commit }, orderService) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/updateStatusService`, orderService).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
+
 };
 
 const getters = {};

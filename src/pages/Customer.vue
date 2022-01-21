@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white shadow-2">
-        <q-btn to="/employee" no-caps class="q-pa-md" flat style="color: white" >
+        <q-btn no-caps class="q-pa-md" flat style="color: white" @click="$router.back()">
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
@@ -22,6 +22,8 @@
             <div>
               <q-input
                 dense
+                v-model="search"
+                @update:model-value="filterCustomer(search)"
                 rounded
                 class="text-weight-regular q-pl-lg"
                 type="search"
@@ -46,7 +48,7 @@
                 no-caps
                 flat
               >
-                <div class="text-caption" style="font-size: 10px">
+                <div class="text-caption" style="font-size: 10px" @click="update">
                   Pilih Semua
                 </div>
               </q-btn>
@@ -94,6 +96,7 @@ export default {
   },
   data() {
     return {
+      search: "",
       customers: [],
       customers_temp: [],
     };
@@ -108,6 +111,21 @@ export default {
             return item;
           });
         });
+
+    },
+    update(value) {
+      console.log(value);
+      if (value == "") {
+        this.customers = this.customers_temp;
+      }
+
+      const needle = value.toLowerCase();
+      this.customers = this.customers_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
+    },
+    filterCustomer(val) {
+      this.update(val);
     },
   },
   mounted() {

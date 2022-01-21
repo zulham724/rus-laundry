@@ -77,6 +77,7 @@
 
 <script>
 export default {
+  name:'AddItemPage',
   data() {
     return {
       tab: "kategori",

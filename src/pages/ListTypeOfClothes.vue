@@ -23,6 +23,7 @@
                   <q-input
                     dense
                     v-model="search"
+                    @update:model-value="filterCategory(search)"
                     outlined
                     rounded
                     type="search"
@@ -129,13 +130,14 @@ export default {
     return {
       search: null,
       categories: [],
+      categories_temp: [],
       notif: false,
     };
   },
   methods: {
     getCategoriesByShop() {
       this.$store.dispatch("ServiceCategories/index").then((res) => {
-        this.categories = res.data.map((category) => {
+        this.categories = this.categories_temp = res.data.map((category) => {
           this.Orders.order.charts.forEach((item2) => {
             if (category.id == item2.id) {
               category.added = true;
@@ -158,6 +160,18 @@ export default {
         return category;
       });
     },
+    update(val){
+      if(val == ""){
+        this.categories = this.categories_temp
+      }
+
+      const needle = val.toLowerCase();
+      this.categories = this.categories_temp.filter((v)=> v.name.toLowerCase().indexOf(needle) > -1)
+      
+    },
+    filterCategory(value){
+      this.update(value)
+    }
   },
   mounted() {
     this.getCategoriesByShop();

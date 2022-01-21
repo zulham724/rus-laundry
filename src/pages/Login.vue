@@ -110,6 +110,7 @@ import { ref } from "vue";
 import { mapState } from "vuex";
 
 export default {
+  name:'LoginPage',
   data() {
     return {
       credential: {

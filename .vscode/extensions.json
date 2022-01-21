@@ -1,6 +1,7 @@
 {
   "recommendations": [
-    "hookyqr.beautify"
+    "hookyqr.beautify",
+    "akamud.vscode-theme-onedark"
   ],
   "unwantedRecommendations": [
     "dbaeumer.jshint",

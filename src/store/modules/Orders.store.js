@@ -171,6 +171,25 @@ const actions = {
                 reject(err)
             })
         })
+    },
+
+    getStatus({ commit }, dataOrder) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/getOrderServiceStatus`, dataOrder).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    searchOrders({ commit }, value) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/searchOrders`, value).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 };
 

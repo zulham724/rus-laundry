@@ -9,23 +9,58 @@
 + Mencari paket berdasarkan nama {rian}
 + Mencari karyawan berdsarkan nama {rian}
 
++ detail pelanggan {iqbal}
++ search pada halaman list pelanggan {iqbal}
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
-- Detail Pesanan
-- Progress Pesanan
++ Detail Pesanan {rian}
++ Presentase order di halaman home
 - Scan Pesanan
 - Scan absen
 - Rekap absen
 - Menambah pelanggan
 + Menampilkan List pelanggan {iqbal}
-- Menampilkan data pelanggan
++ Menampilkan data pelanggan {iqbal}
 - Mengedit pelanggan
 - Menghapus pelanggan
 + membuat skeleton di list pesanan halaman home {bryan}
 + memberi background color di div yang ada gambar nya supaya ketika gambar belum muncul background nya tidak putih {bryan}
-- diberi q pull refresh di semua halaman yang ada list item nya {bryan}
+- diberi q pull refresh di semua halaman yang ada list item nya {bryan} (customer, customerdetail)
 + diberi skeleton di halaman income {bryan}
 - persentase pekerjaan di list order pesanan masih statis
-
+- list pesanan di halaman beranda di buat paginate (backend) dan infinite scroll
++ halaman pengguna diberi skeleton {aryo}
++ halaman pengguna diberi pull refresh {aryo}
++ halaman list jenis pakaian di beri skeleton {aryo}
++ halaman list jenis pakaian di beri pull refresh {aryo}
++ halaman list paket di beri skeleton {aryo}
++ halaman list paket di beri pull refresh {aryo}
++ halaman tambah jenis pakaian tombol tambah di buat fixed {rian}
+- halaman list jenis pakaian diberi slide item untuk edit
++ halaman paket tombol tambah di buat fixed {rian}
+- halaman list paket diberi slide item untuk edit
++ halaman list jenis pakaian bisa untuk cari berdasarkan nama dan satuan {rian}
++ halaman list paket bisa untuk cari berdasarkan nama dan satuan {rian}
+- halaman list jenis pakaian bisa untuk fiter terbaru terlama, abjad
+- halaman list paket bisa untuk filter terbaru terlama, abjad
+- halaman income menu tiap harian mingguan bulanan dan custom belum benar
++ halaman home bisa untuk mencari berdasarkan nama pelanggan, id pesanan   {rian}
+- halaman home bisa untuk filter pesanan terbaru terlama, abjad nama pengguna
+- tombol back di halaman absen belum benar
+- config.xml diberi tambahan permission calendar dan camera 
+- buat boot untuk check permission 
+- buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru 
+- halaman home pada component header dibuat menyesuaikan jam pagi siang sore dan malam 
+- halaman detail pesanan kondisi if untuk memunculkan tampilan setelah request hanya berlaku di list saja, header tetap muncul sebelum request, jadi load time page lebih cepat
+- halaman income dibuat backend nya pagination dan diberi infinity scroll
+- pada saat menambahkan pesanan masukan pengingat kalender di H-1 pesanan selesai
+- di halaman income diberi grafik statistik 
+- di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
+- di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket
+- di halaman pelanggan bisa melakukan pencarian
+- di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua
+- kata 'pesanan' di navigasi bawah bagian buat pesanan di ganti 'buat pesanan'
+- tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma
+-
 
 

@@ -2,11 +2,11 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container style="background-color: #fafafa" v-if="detail_order">
       <q-page>
-        <div class="text-center bg-transparent">
+        <div class="text-center bg-transparent" style="height:200px">
           <!-- Header Image -->
-          <q-img src="~/assets/header-mesin-cuci.svg" no-spinner>
+          <q-img src="~/assets/header-mesin-cuci.svg" style="height:200px" class="fixed-top mbl-child" no-spinner>
             <q-toolbar class="bg-transparent">
-              <q-btn flat round size="10px" to="/">
+              <q-btn :ripple="true" flat round size="sm" @click="$router.push('/')">
                 <q-avatar
                   size="25px"
                   icon="fas fa-arrow-left"
@@ -24,47 +24,42 @@
         </div>
         <q-page
           class="front"
-          style="
-            
-            background-color: white;
-            margin-top: -35px;
-            position: relative;
-          "
+          style="background-color: white; margin-top: -35px; position: relative; border-radius: 50px 50px 0px 0px; "
         >
           <q-carousel
-            style="border-radius: 20px 20px 0px 0px; height: 100%"
+            style="height: 100%"
             v-model="slide"
             transition-prev="jump-right"
             transition-next="jump-left"
             swipeable
             animated
-            control-color="white"
-            prev-icon="arrow_left"
-            next-icon="arrow_right"
-            navigation-icon="radio_button_unchecked"
+            control-type="regular"
+            control-color="blue"  
+           navigation-active-icon="local_laundry_service"
+            navigation-position="top"
             navigation
-            padding
-            arrows
-            class="bg-white text-white shadow-1 rounded-borders"
+            class="bg-transparent text-white shadow-4 rounded-borders q-pa-none"
+            
           >
-            <q-carousel-slide name="style" class="">
-              <div class="row q-pt-md">
-                <div class="col-5">
+            <q-carousel-slide :name="`slide-${service.id}`" v-for="service in detail_order.services" :key="service.id">
+              <div class="row q-pt-xl justify-start ">
+                <div class="col-6">
                   <!-- No Pesanan  -->
                   <div
-                    class="q-pl-lg text-weight-regular"
+                    class="q-pl-md text-weight-regular"
                     style="color: #c9c9c9"
                   >
                     No Pesanan
                   </div>
                   <div
-                    class="q-pl-lg text-weight-regular"
+                    class="q-pl-md text-weight-regular"
                     style="color: #313131"
                   >
                     {{ detail_order.id }}
                   </div>
                 </div>
-                <div class="col-6 text-right self-center">
+                <div class="col-6">
+                  <div class="row justify-end">
                   <q-btn no-caps dense flat>
                     <div
                       class="text-weight-regular text-center q-px-xs"
@@ -88,8 +83,9 @@
                     flat
                     @click="buttonShare()"
                   >
-                    <q-avatar size="20px" icon="fas fa-share-alt"></q-avatar>
+                    <q-icon size="20px" color="grey-8" name="fas fa-share-alt"></q-icon>
                   </q-btn>
+                  </div>
                 </div>
               </div>
 
@@ -164,7 +160,7 @@
                       class="text-weight-bold"
                       style="font-size: 14px"
                       >{{
-                        detail_order.services[0].process_time
+                       service.process_time
                       }}
                       Jam</q-item-label
                     >
@@ -192,7 +188,7 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ detail_order.services[0].name }}</q-item-label
+                      >{{ service.name }}</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -219,7 +215,7 @@
                       class="text-weight-bold"
                       style="font-size: 14px"
                       >{{
-                        detail_order.services[0].category.name
+                        service.category.name
                       }}</q-item-label
                     >
                   </q-item-section>
@@ -305,7 +301,7 @@
                     <q-btn
                       round
                       flat
-                      @click="$router.push(`/status-cucian/${detail_order.id}`)"
+                      @click="$router.push(`/${detail_order.id}/status-cucian/${service.id}`)"
                     >
                       <q-avatar size="30px" class="bg-transparent">
                         <q-img
@@ -360,8 +356,8 @@
           <q-btn
             @click="buttonConfirm()"
             no-caps
-            class="full-width fixed-bottom"
-            style="background-color: #49c2c0; color: #fafafa"
+            class="fixed-bottom mbl-child"
+            style="background-color: #49c2c0; color: #fafafa; width:100%;"
           >
             <div class="q-py-sm text-weight-regular">Konfirmasi Pesanan</div>
           </q-btn>
@@ -557,7 +553,7 @@ export default {
   props: ["orderid"],
   data() {
     return {
-      slide: "style",
+      slide: null,
       dialogShare: false,
       dialogConfirm: false,
       link: "example.com/share-link",
@@ -575,6 +571,7 @@ export default {
     getDetailOrder() {
       this.$store.dispatch("Orders/show", this.orderid).then((res) => {
         this.detail_order = res.data;
+        this.slide = `slide-${res.data.services[0].id}`
       });
     },
   },

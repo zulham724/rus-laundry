@@ -2,7 +2,7 @@
   <q-layout>
     <q-header>
       <q-toolbar class="bg-white shadow-1">
-        <q-btn to="/employee" no-caps class="q-pa-md" flat style="color: white">
+        <q-btn no-caps class="q-pa-md" flat style="color: white" @click="$router.back()">
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>

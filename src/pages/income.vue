@@ -1,28 +1,30 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-page style="background-color: #fafafa">
-    <div style="height: 220px">
-      <div
-        class="fixed mbl-child"
-        style="
-          width: 100%;
-          height: 100%;
-          background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
-        "
-      >
+    <q-pull-to-refresh @refresh="refresh">
+      <div style="height: 220px">
         <div
-          class="text-weight-regular text-center q-pt-xl"
-          style="color: white; font-size: 18px"
+          class="fixed mbl-child"
+          style="
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
+          "
         >
-          Saldo Masuk Hari ini
-        </div>
-        <div
-          class="text-weight-bold text-center"
-          style="color: white; font-size: 38px"
-        >
-          Rp.10.000.000
+          <div
+            class="text-weight-regular text-center q-pt-xl"
+            style="color: white; font-size: 18px"
+          >
+            Saldo Masuk Hari ini
+          </div>
+          <div
+            class="text-weight-bold text-center"
+            style="color: white; font-size: 38px"
+          >
+            Rp.10.000.000
+          </div>
         </div>
       </div>
-    </div>
+    </q-pull-to-refresh>
 
     <div
       class="q-pb-lg"
@@ -90,16 +92,16 @@
                 background-color: #fafafa;
               "
             >
-              <q-item-section avatar >
-                <q-skeleton size="60px" type="QAvatar"/>
+              <q-item-section avatar>
+                <q-skeleton size="60px" type="QAvatar" />
               </q-item-section>
 
               <q-item-section class="self-center">
                 <q-item-label class="text-weight-medium">
-                  <q-skeleton type="text" height="20px"/>
+                  <q-skeleton type="text" height="20px" />
                 </q-item-label>
                 <q-item-label>
-                  <q-skeleton type="text" width="15vw"/>
+                  <q-skeleton type="text" width="15vw" />
                 </q-item-label>
               </q-item-section>
 
@@ -171,16 +173,16 @@
                 background-color: #fafafa;
               "
             >
-              <q-item-section avatar >
-                <q-skeleton size="60px" type="QAvatar"/>
+              <q-item-section avatar>
+                <q-skeleton size="60px" type="QAvatar" />
               </q-item-section>
 
               <q-item-section class="self-center">
                 <q-item-label class="text-weight-medium">
-                  <q-skeleton type="text" height="20px"/>
+                  <q-skeleton type="text" height="20px" />
                 </q-item-label>
                 <q-item-label>
-                  <q-skeleton type="text" width="15vw"/>
+                  <q-skeleton type="text" width="15vw" />
                 </q-item-label>
               </q-item-section>
 
@@ -252,16 +254,16 @@
                 background-color: #fafafa;
               "
             >
-              <q-item-section avatar >
-                <q-skeleton size="60px" type="QAvatar"/>
+              <q-item-section avatar>
+                <q-skeleton size="60px" type="QAvatar" />
               </q-item-section>
 
               <q-item-section class="self-center">
                 <q-item-label class="text-weight-medium">
-                  <q-skeleton type="text" height="20px"/>
+                  <q-skeleton type="text" height="20px" />
                 </q-item-label>
                 <q-item-label>
-                  <q-skeleton type="text" width="15vw"/>
+                  <q-skeleton type="text" width="15vw" />
                 </q-item-label>
               </q-item-section>
 
@@ -377,16 +379,16 @@
                 background-color: #fafafa;
               "
             >
-              <q-item-section avatar >
-                <q-skeleton size="60px" type="QAvatar"/>
+              <q-item-section avatar>
+                <q-skeleton size="60px" type="QAvatar" />
               </q-item-section>
 
               <q-item-section class="self-center">
                 <q-item-label class="text-weight-medium">
-                  <q-skeleton type="text" height="20px"/>
+                  <q-skeleton type="text" height="20px" />
                 </q-item-label>
                 <q-item-label>
-                  <q-skeleton type="text" width="15vw"/>
+                  <q-skeleton type="text" width="15vw" />
                 </q-item-label>
               </q-item-section>
 
@@ -457,6 +459,7 @@ import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
+  name: 'IncomePage',
   computed: {
     ...mapState(["Auth"]),
   },
@@ -467,6 +470,7 @@ export default {
       tab: "hari",
       orders: [],
       isLoad: false,
+      items: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     };
   },
 
@@ -480,18 +484,27 @@ export default {
     },
 
     getOrders() {
-      this.isLoad = true;
-      this.$store
-        .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.orders = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.isLoad = false;
-        });
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.orders = res.data;
+            resolve(res.data);
+          })
+          .catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
+    },
+    refresh(done) {
+      this.getOrders().then((res) => {
+        if (done) done();
+      });
     },
   },
 };

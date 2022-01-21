@@ -3,7 +3,7 @@ import multiguard from "vue-router-multiguard";
 
 const auth = (to, from, next) => {
     let isLoggedIn = store().getters["Auth/isLoggedIn"];
-    console.log(isLoggedIn);
+    // console.log(isLoggedIn);
     if (isLoggedIn) {
         next();
     } else {
@@ -19,7 +19,8 @@ const routes = [{
         children: [{
                 path: "",
                 component: () =>
-                    import ("pages/Home.vue")
+                    import ("pages/Home.vue"),
+                keepalive: true
             },
             {
                 path: "/home-kosong",
@@ -60,7 +61,7 @@ const routes = [{
     },
 
     {
-        path: `/status-cucian/:orderid`,
+        path: `/:orderid/status-cucian/:serviceid`,
         component: () =>
             import ("pages/StatusCucian.vue"),
         props: true
@@ -264,6 +265,12 @@ const routes = [{
         path: "/empty-package",
         component: () =>
             import ("src/pages/EmptyPackage.vue")
+    },
+
+    {
+        path: "/share-invoice",
+        component: () =>
+            import ("src/pages/ShareInvoice.vue")
     },
 
     // Always leave this as last one,

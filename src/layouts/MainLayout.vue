@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <keep-alive>
+        <keep-alive :include="include">
           <component :is="Component" />
         </keep-alive>
       </router-view>
@@ -85,7 +85,7 @@
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
-              Karyawan
+              Pengguna
             </div>
           </q-tab>
         </q-tabs>
@@ -94,13 +94,16 @@
   </q-layout>
 </template>
 
-<script>
+<script></script>
 export default {
   name: "MainLayout",
   data() {
     return {
       tab: "home",
+      include: ['HomePage','AddItemPage','IncomePage']
     };
   },
+  mounted(){
+  }
 };
 </script>
