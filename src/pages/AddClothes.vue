@@ -71,7 +71,7 @@
           </q-card>
 
           <!-- Skeleton -->
-          <div v-if="isLoad">
+          <div v-if="isLoad" >
             <q-list class="q-pt-md">
               <q-item v-for="c in 10" :key="c" class="q-my-sm bg-white">
                 <q-item-section>
@@ -125,14 +125,14 @@
             </div>
           </div>
 
-          <div class="fixed-bottom" v-if="!chooseMode">
+          <div class="fixed-bottom" v-if="!chooseMode" style="z-index:1;">
             <q-btn
               no-caps
               class="full-width q-py-sm"
-              style="background-color: #49c2c0"
+              style="background-color: #49c2c0;"
               @click="buttonAddClothes()"
             >
-              <div class="text-weight-regular" style="color: white; ">
+              <div class="text-weight-regular" style="color: white;">
                 Tambah Pakaian 
               </div>
             </q-btn>

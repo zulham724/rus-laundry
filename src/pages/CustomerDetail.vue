@@ -133,9 +133,13 @@ export default {
         this.orders_temp = this.customer.order
       });
     },
-  
-
- 
+    update() {
+      let id = this.customer.id
+      this.$store.dispatch("Customer/update", this.customer).then(res => {
+        this.$router.push(`/detail-customer/${id}`)
+        this.$q.notify("Berhasil")
+      })
+    }
 },
   mounted() {
     this.getCustomer();

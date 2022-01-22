@@ -1,3 +1,4 @@
+
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
@@ -94,7 +95,7 @@
   </q-layout>
 </template>
 
-<script></script>
+<script>
 export default {
   name: "MainLayout",
   data() {

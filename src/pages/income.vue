@@ -163,7 +163,7 @@
         </q-tab-panel>
         <q-tab-panel name="minggu">
           <!-- Skeleton -->
-          <div v-if="isLoad">
+          <div v-if="isLoad"></div>
             <q-item
               v-for="n in 9"
               :key="n"

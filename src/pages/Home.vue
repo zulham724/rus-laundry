@@ -76,9 +76,16 @@
           v-model="search"
           label="Cari Pesanan"
         >
-          <q-icon name="search" @click="searchTransaksi()" class="self-center" size="30px" color="grey" />
+          <q-icon
+            name="search"
+            @click="searchTransaksi()"
+            class="self-center"
+            size="30px"
+            color="grey"
+          />
         </q-input>
         <q-space></q-space>
+        <q-btn label="test print" @click="print()"></q-btn>
         <!-- Icon Filter -->
         <q-btn ripple="true" flat class="q-mr-sm" to="/filter-search">
           <img
@@ -168,7 +175,7 @@
               style="max-width: 20vw; border-radius: 50px; color: #49c26b"
               class="self-center q-mb-md on-right"
               size="25px"
-              :value="order.percentage/100"
+              :value="order.percentage / 100"
             >
               <div class="absolute-full flex flex-center">
                 <q-badge
@@ -254,6 +261,23 @@ export default {
     moment() {
       return moment();
     },
+    print() {
+      if (this.$q.platform.is.android) {
+        window.BTPrinter.printText(
+          function (data) {
+            console.log("Success");
+            console.log(data);
+          },
+          function (err) {
+            console.log("Error");
+            console.log(err);
+          },
+          "Firos Bupati sidoarjo"
+        );
+      } else {
+        this.$q.notify("Hanya bisa di android");
+      }
+    },
     doLogout() {
       this.$store.dispatch("Auth/logout").then((res) => {
         this.$router.push("/login");
@@ -266,7 +290,7 @@ export default {
           .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
           .then((res) => {
             this.orders = this.orders_temp = res.data;
-           
+
             resolve(res.data);
           })
           .catch((err) => {
@@ -283,11 +307,13 @@ export default {
         if (done) done();
       });
     },
-    searchTransaksi(){
-      this.$store.dispatch("Orders/searchOrders", {value: this.search}).then(res => {
-        this.orders = res.data
-      })
-    }
+    searchTransaksi() {
+      this.$store
+        .dispatch("Orders/searchOrders", { value: this.search })
+        .then((res) => {
+          this.orders = res.data;
+        });
+    },
   },
 };
 </script>

@@ -11,6 +11,11 @@
 
 + detail pelanggan {iqbal}
 + search pada halaman list pelanggan {iqbal}
++ Menampilkan List pelanggan {iqbal}
++ Menampilkan data pelanggan {iqbal}
++ tombol back di halaman absen belum benar {iqbal}
+
+
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
 + Detail Pesanan {rian}
@@ -19,8 +24,6 @@
 - Scan absen
 - Rekap absen
 - Menambah pelanggan
-+ Menampilkan List pelanggan {iqbal}
-+ Menampilkan data pelanggan {iqbal}
 - Mengedit pelanggan
 - Menghapus pelanggan
 + membuat skeleton di list pesanan halaman home {bryan}
@@ -46,7 +49,6 @@
 - halaman income menu tiap harian mingguan bulanan dan custom belum benar
 + halaman home bisa untuk mencari berdasarkan nama pelanggan, id pesanan   {rian}
 - halaman home bisa untuk filter pesanan terbaru terlama, abjad nama pengguna
-- tombol back di halaman absen belum benar
 - config.xml diberi tambahan permission calendar dan camera 
 - buat boot untuk check permission 
 - buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru 
