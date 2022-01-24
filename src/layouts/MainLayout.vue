@@ -41,7 +41,7 @@
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
-              Pesanan
+              Buat Pesanan
             </div>
           </q-tab>
 

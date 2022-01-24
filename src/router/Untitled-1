@@ -1,0 +1,23 @@
+{
+    components:{
+
+    },
+    computed:{
+        total(){
+            return 1+1
+        }
+    },
+    data(){
+        return{
+            total:2
+        }
+    },
+    mounted(){
+        this.getEmployees()
+    },
+    methods:{
+        getEmployees(){
+            //
+        }
+    }
+}

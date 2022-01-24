@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-6">
                   <div class="row justify-end">
-                  <q-btn no-caps dense flat>
+                  <q-btn no-caps dense flat @click="$router.push('/order-code')">
                     <div
                       class="text-weight-regular text-center q-px-xs"
                       style="
@@ -574,6 +574,7 @@ export default {
         this.slide = `slide-${res.data.services[0].id}`
       });
     },
+    
   },
   mounted() {
     this.getDetailOrder();

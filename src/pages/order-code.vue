@@ -21,11 +21,7 @@
           Merubah Status Pesanan
         </div>
 
-        <div
-          class="bg-grey-1 shadow-7"
-          style="border-radius: 5px;"
-          ref="order"
-        >
+        <div class="bg-grey-1 shadow-7" style="border-radius: 5px" ref="order" id="order">
           <div class="text-grey text-caption q-pl-md q-pt-sm">No Pesanan</div>
           <div class="text-subtitle1 q-pl-md">
             {{ order.id }}
@@ -72,6 +68,7 @@
 import vueQr from "vue-qr/src/packages/vue-qr.vue";
 import * as htmlToImage from "html-to-image";
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+
 export default {
   components: {
     vueQr,
@@ -91,10 +88,20 @@ export default {
     getData(dataUrl, id) {
       console.log(dataUrl, id);
     },
+    printDiv(divName) {
+      var printContents = document.getElementById(divName).innerHTML;
+      var originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+
+      window.print();
+
+      document.body.innerHTML = originalContents;
+    },
     resetOrder() {
       // this.$store.commit("Orders/delete_order");
       // this.$router.push("/make-an-order");
-        // this.print()
+      // this.print()
       if (this.$q.platform.is.android) {
         window.BTPrinter.connect(
           (data) => {
@@ -109,13 +116,19 @@ export default {
           "RPP02N"
         );
       } else {
+        this.printDiv('order')
         this.$q.notify("Hanya bisa di android");
       }
     },
     print() {
       htmlToImage
-        .toJpeg(this.$refs.order, { quality: 1, backgroundColor: "#FFFFFF", height: 500, width: 350 })
-        .then( (dataUrl) => {
+        .toJpeg(this.$refs.order, {
+          quality: 1,
+          backgroundColor: "#FFFFFF",
+          height: 500,
+          width: 350,
+        })
+        .then((dataUrl) => {
           // let res = this.imageToDataUri(dataUrl,300,300)
           // console.log(dataUrl)
           window.BTPrinter.printBase64(

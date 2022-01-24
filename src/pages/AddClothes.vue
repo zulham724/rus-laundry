@@ -57,11 +57,14 @@
                         flat
                         label-color="black"
                         dense
-                        options="time_p"
+                        emit-value
+                        v-model="val"
+                        :options="options"
                         option-label="name"
                         label="Filter"
                         color=""
                         class="bg-transparent no-shadow"
+                        @update:model-value="orderBy"
                       />
                     </div>
                   </div>
@@ -243,11 +246,12 @@ export default {
       dialogTambahPakaian: false,
       dialogHapusPakaian: false,
       search: "",
-      time_period: ["Terbaru", "Terlama"],
+      options: ["Terbaru", "Terlama", "A-Z", "Z-A"],
       categories: [],
       categories_temp: [],
       chooseMode: false,
       isLoad: false,
+      val: null,
     };
   },
 
@@ -312,6 +316,27 @@ export default {
         if (done) done();
       });
     },
+    orderBy(val){
+      if(val == "Terbaru"){
+       this.categories.sort((a,b) => {
+        return new Date(b.created_at) - new Date(a.created_at)
+        })
+
+      }else if(val == "Terlama"){
+        this.categories.sort((a,b) => {
+        return new Date(a.created_at) - new Date(b.created_at)
+        })
+
+      }else if(val == "A-Z"){
+        this.categories.sort((a,b)=>{
+          return a.name.localeCompare(b.name)
+        })
+      }else if(val == "Z-A"){
+       this.categories.sort((a,b)=>{
+          return b.name.localeCompare(a.name)
+        })
+      }
+    }
   },
   mounted() {
     this.filterCategory = debounce(this.filterCategory, 1000);

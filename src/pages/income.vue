@@ -163,7 +163,7 @@
         </q-tab-panel>
         <q-tab-panel name="minggu">
           <!-- Skeleton -->
-          <div v-if="isLoad"></div>
+          <div v-if="isLoad">
             <q-item
               v-for="n in 9"
               :key="n"
@@ -193,9 +193,8 @@
               </q-item-section>
             </q-item>
           </div>
-
+        <div v-else-if="isLoad == false && orders.length">
           <q-list
-            v-else-if="isLoad == false && orders.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
@@ -241,6 +240,7 @@
               </q-item-section>
             </q-item>
           </q-list>
+        </div>
         </q-tab-panel>
         <q-tab-panel name="bulan">
           <!-- Skeleton -->
@@ -322,6 +322,7 @@
               </q-item-section>
             </q-item>
           </q-list>
+        
         </q-tab-panel>
         <q-tab-panel name="custom">
           <div class="row justify-between q-ma-md">
@@ -450,6 +451,7 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
+    
   </q-page>
 </template>
 

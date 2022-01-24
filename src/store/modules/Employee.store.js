@@ -62,6 +62,15 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    attendance({ commit }, employeeId) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/attendance`, { id: employeeId }).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 
 };

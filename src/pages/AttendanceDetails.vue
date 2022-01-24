@@ -155,6 +155,7 @@
 import moment from "moment";
 
 export default {
+  props:["employeeid"],
   data() {
     return {
       value: 81,
@@ -164,6 +165,7 @@ export default {
   },
 
   methods: {
+    
     moment() {
       return moment();
     },

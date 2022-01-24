@@ -1,3 +1,9 @@
+status description: 
+- pending
+p proses
++ complete
+
+
 + Menambah jenis pakaian {rian}
 + Menambah paket {rian}
 + Menambah karyawan {rian}
@@ -14,21 +20,20 @@
 + Menampilkan List pelanggan {iqbal}
 + Menampilkan data pelanggan {iqbal}
 + tombol back di halaman absen belum benar {iqbal}
++ kata 'pesanan' di navigasi bawah bagian buat pesanan di ganti 'buat pesanan' {iqbal}
 
 
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
 + Detail Pesanan {rian}
 + Presentase order di halaman home
-- Scan Pesanan
-- Scan absen
++ Scan Pesanan {rian}
++ Scan absen   {rian}
 - Rekap absen
 - Menambah pelanggan
 - Mengedit pelanggan
-- Menghapus pelanggan
 + membuat skeleton di list pesanan halaman home {bryan}
 + memberi background color di div yang ada gambar nya supaya ketika gambar belum muncul background nya tidak putih {bryan}
-- diberi q pull refresh di semua halaman yang ada list item nya {bryan} (customer, customerdetail)
 + diberi skeleton di halaman income {bryan}
 - persentase pekerjaan di list order pesanan masih statis
 - list pesanan di halaman beranda di buat paginate (backend) dan infinite scroll
@@ -38,14 +43,18 @@
 + halaman list jenis pakaian di beri pull refresh {aryo}
 + halaman list paket di beri skeleton {aryo}
 + halaman list paket di beri pull refresh {aryo}
++ halaman list customer di beri skeleton {aryo}
++ halaman list customer di beri pull refresh {aryo}
++ halaman list customerDetail di beri skeleton {aryo}
++ halaman list customerDetail di beri pull refresh {aryo}
 + halaman tambah jenis pakaian tombol tambah di buat fixed {rian}
 - halaman list jenis pakaian diberi slide item untuk edit
 + halaman paket tombol tambah di buat fixed {rian}
 - halaman list paket diberi slide item untuk edit
 + halaman list jenis pakaian bisa untuk cari berdasarkan nama dan satuan {rian}
 + halaman list paket bisa untuk cari berdasarkan nama dan satuan {rian}
-- halaman list jenis pakaian bisa untuk fiter terbaru terlama, abjad
-- halaman list paket bisa untuk filter terbaru terlama, abjad
++ halaman list jenis pakaian bisa untuk fiter terbaru terlama, abjad {rian}
++ halaman list paket bisa untuk filter terbaru terlama, abjad {pak azwar}
 - halaman income menu tiap harian mingguan bulanan dan custom belum benar
 + halaman home bisa untuk mencari berdasarkan nama pelanggan, id pesanan   {rian}
 - halaman home bisa untuk filter pesanan terbaru terlama, abjad nama pengguna
@@ -59,10 +68,9 @@
 - di halaman income diberi grafik statistik 
 - di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
 - di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket
-- di halaman pelanggan bisa melakukan pencarian
++ di halaman pelanggan bisa melakukan pencarian
 - di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua
-- kata 'pesanan' di navigasi bawah bagian buat pesanan di ganti 'buat pesanan'
-- tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma
--
++ tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma {aryo}
+- di halaman cetak invoice buat cetak lewat web menggunakan fungsi print biasa, ada bug tinggi kertas terlalu panjang
 
 

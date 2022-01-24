@@ -11,7 +11,6 @@
           style="color: #888888; font-size: 16px"
           >Pilih Paket</q-toolbar-title
         >
-
         <q-btn
           class="float-right"
           text-color="grey-8"
@@ -45,16 +44,17 @@
                   </div>
                   <div class="col-6">
                     <div class="col-6">
-                      <div class="row justify-end"> 
+                      <div class="row justify-end">
                         <div class="col-6">
                           <q-select
                             flat
                             label-color="black"
                             dense
-                            option-label="name"
                             label="Filter"
-                            color=""
                             class="bg-transparent no-shadow"
+                            :options="filterOptions"
+                            v-model="selectedFilterOption"
+                            @update:model-value="doFilter"
                           />
                         </div>
                       </div>
@@ -111,7 +111,7 @@
                     <q-skeleton type="text" />
                   </q-item-label>
                   <q-item-label caption>
-                    <q-skeleton type="text" width="50px"/>
+                    <q-skeleton type="text" width="50px" />
                   </q-item-label>
                 </q-item-section>
                 <q-item-section side v-if="chooseMode">
@@ -121,8 +121,8 @@
             </q-list>
           </div>
 
-          <div v-else-if="(isLoad == false && packages.length)">
-            <q-list class="q-pt-md">
+          <div v-else-if="isLoad == false && packages.length">
+            <q-list class="q-pt-md q-mb-xl">
               <q-item
                 class="q-my-sm bg-white"
                 v-for="(paket, p) in packages"
@@ -145,14 +145,17 @@
 
           <div v-else>
             <div class="text-center q-ma-lg">
-              <q-img no-spinner
+              <q-img
+                no-spinner
                 src="~/assets/empty_package.svg"
                 style="width: 70%; margin-top: 20px"
               />
-              <div class="text-h6" style="margin-top: -40px">Belum ada paket</div>
+              <div class="text-h6" style="margin-top: -40px">
+                Belum ada paket
+              </div>
             </div>
           </div>
-          <div class="absolute-bottom" v-if="!chooseMode">
+          <div class="fixed-bottom" v-if="!chooseMode" style="z-index:1;">
             <q-btn
               :ripple="{ color: 'orange' }"
               @click="dialog_addPackage = true"
@@ -192,20 +195,24 @@
               flat
               no-caps
               class="full-width"
-              style="background-color: #D72929"
+              style="background-color: #d72929"
             >
               <div class="text-subtitl2" style="color: white">Hapus Paket</div>
               <q-dialog v-model="dialog_deletePackage" persistent>
                 <q-card>
                   <q-card-section class="row justify-start">
                     <div class="text-subtitle1">Hapus paket</div>
-                    <div class="text-caption">
-                      yakin ingin menghapus paket?
-                    </div>
+                    <div class="text-caption">yakin ingin menghapus paket?</div>
                   </q-card-section>
 
                   <q-card-actions align="between" class="text-bold">
-                    <q-btn :disable="loading" flat label="Batal" color="primary" v-close-popup />
+                    <q-btn
+                      :disable="loading"
+                      flat
+                      label="Batal"
+                      color="primary"
+                      v-close-popup
+                    />
                     <q-btn
                       :disable="loading"
                       @click="deletePackage()"
@@ -238,20 +245,39 @@ export default {
       chooseMode: false,
       loading: false,
       isLoad: false,
+      filterOptions: ["Terbaru", "Terlama", "A-Z", "Z-A"],
+      selectedFilterOption: null,
     };
   },
   methods: {
+    doFilter(val) {
+      if (val == "Terbaru") {
+        this.packages.sort((a, b) => {
+          return new Date(a.created_at) - new Date(b.created_at);
+        });
+      } else if (val == "Terlama") {
+        this.packages.sort((a, b) => {
+          return new Date(b.created_at) - new Date(a.created_at);
+        });
+      } else if (val == "A-Z") {
+        this.packages.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (val == "Z-A") {
+        this.packages.sort((a, b) => b.name.localeCompare(a.name));
+      }
+    },
     getPackages() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
-        this.$store.dispatch("Services/index").then((res) => {
-        this.packages = this.packages_temp = res.data.map((item) => {
-          item.checked = false
-          return item
-        });
-        resolve(res.data);
-      })
-      .catch((err) => {
+        this.$store
+          .dispatch("Services/index")
+          .then((res) => {
+            this.packages = this.packages_temp = res.data.map((item) => {
+              item.checked = false;
+              return item;
+            });
+            resolve(res.data);
+          })
+          .catch((err) => {
             reject(err);
             // console.log(err);
           })
@@ -260,37 +286,41 @@ export default {
           });
       });
     },
-    update(value){
-     
-      if(value == ""){
-        this.packages = this.packages_temp
+    update(value) {
+      if (value == "") {
+        this.packages = this.packages_temp;
       }
 
-      const needle = value.toLowerCase()
-      this.packages = this.packages_temp.filter((v) => v.name.toLowerCase().indexOf(needle) > -1)
+      const needle = value.toLowerCase();
+      this.packages = this.packages_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
     },
-    filterPaket(val){
-       
-      this.update(val)
+    filterPaket(val) {
+      this.update(val);
     },
-    deletePackage(){
-      this.loading = true
-      let package_choosed = this.packages.filter((item) => item.checked).map(item=>item.id)
-     
-      this.$store.dispatch("Services/destroy", package_choosed).then(res => {
-        this.packages = this.packages.filter((item) => !item.checked)
-        this.$q.notify("Berhasil")
-      }).finally(() => {
-        this.loading = false
-      })
+    deletePackage() {
+      this.loading = true;
+      let package_choosed = this.packages
+        .filter((item) => item.checked)
+        .map((item) => item.id);
+
+      this.$store
+        .dispatch("Services/destroy", package_choosed)
+        .then((res) => {
+          this.packages = this.packages.filter((item) => !item.checked);
+          this.$q.notify("Berhasil");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
 
-  refresh(done) {
+    refresh(done) {
       this.getPackages().then((res) => {
         if (done) done();
       });
     },
-
   },
   mounted() {
     this.getPackages();

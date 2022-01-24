@@ -209,9 +209,10 @@ const routes = [{
     },
 
     {
-        path: "/attendance-details",
+        path: "/attendance-details/:employeeid",
         component: () =>
-            import ("src/pages/AttendanceDetails.vue")
+            import ("src/pages/AttendanceDetails.vue"),
+        props: true
     },
 
     {

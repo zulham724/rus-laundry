@@ -21,43 +21,59 @@
           style="border-radius: 0px 0px 0px 70px; height: 25vh"
         >
           <!-- information -->
-          <q-page class="q-mt-lg absolute q-pl-lg" style="max-width: 40vh">
-            <div class="float-left">
-              <!-- Avatar Person -->
-              <div>
-                <q-avatar size="7vh">
-                  <img src="~/assets/Avatar.png" alt="avatar-person" />
-                </q-avatar>
+          <div class="row bg-transparent" style="width: 100vw">
+            <div class="col-8">
+              <div class="float-left">
+                <!-- Avatar Person -->
+                <div>
+                  <q-avatar size="7vh">
+                    <img src="~/assets/Avatar.png" alt="avatar-person" />
+                  </q-avatar>
+                </div>
+              </div>
+              <div class="float-left q-ml-md q-gutter-y-xs">
+                <div
+                  style="font-size: 20px; color: #313131; margin-bottom: -1vh"
+                  class="text-subtitle text-bold float-left"
+                >
+                  Selamat Pagi
+                </div>
+                <br />
+                <!-- Nama User -->
+                <div class="text-subtitle1 float-left" style="color: #313131">
+                  IndonesiaLaundry
+                </div>
+                <br />
+                <!-- Date -->
+                <div
+                  class="text-caption float-left q-px-xs"
+                  style="
+                    font-size: 11px;
+                    min-width: 10vw;
+                    background-color: #ffffff;
+                    color: #888888;
+                    border-radius: 10px;
+                  "
+                >
+                  {{ moment().format("DD MMMM YYYY") }}
+                </div>
               </div>
             </div>
-            <div class="float-left q-ml-md q-gutter-y-xs">
-              <div
-                style="font-size: 20px; color: #313131; margin-bottom: -1vh"
-                class="text-subtitle text-bold float-left"
-              >
-                Selamat Pagi
-              </div>
-              <br />
-              <!-- Nama User -->
-              <div class="text-subtitle1 float-left" style="color: #313131">
-                IndonesiaLaundry
-              </div>
-              <br />
-              <!-- Date -->
-              <div
-                class="text-caption float-left q-px-xs"
-                style="
-                  font-size: 11px;
-                  min-width: 10vw;
-                  background-color: #ffffff;
-                  color: #888888;
-                  border-radius: 10px;
-                "
-              >
-                {{ moment().format("DD MMMM YYYY") }}
+            <div class="col-4">
+              <div class="full-width justify-end">
+                <q-btn
+                  @click="doLogout()"
+                  flat
+                  ripple
+                  no-caps
+                  dense
+                  style="color: #000000; z-index: 2"
+                  icon-right="fas fa-sign-out-alt"
+                  label="Keluar"
+                />
               </div>
             </div>
-          </q-page>
+          </div>
         </q-img>
       </div>
     </q-pull-to-refresh>
@@ -85,7 +101,6 @@
           />
         </q-input>
         <q-space></q-space>
-        <q-btn label="test print" @click="print()"></q-btn>
         <!-- Icon Filter -->
         <q-btn ripple="true" flat class="q-mr-sm" to="/filter-search">
           <img
@@ -133,61 +148,64 @@
     <!-- List Pesanan -->
     <div v-else-if="isLoad == false && orders">
       <q-list
+        ref="scrollTargetRef"
         bordered
         separator
         class="q-mx-md q-my-xs"
         style="background-color: #fff; border-radius: 20px 20px 20px 20px"
       >
-        <q-item
-          v-for="order in orders.data"
-          :key="order.id"
-          class="q-my-sm q-mx-md"
-          clickable
-          @click="$router.push(`/detail-transaksi/${order.id}`)"
-        >
-          <q-item-section avatar>
-            <q-avatar
-              color="primary"
-              text-color="white"
-              size="60px"
-              style="margin-left: -20px"
-            >
-              <q-img
-                no-spinner
-                src="~/assets/avatar-box.png"
-                alt="avatar-box"
-              />
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section class="self-center">
-            <q-item-label class="text-weight-medium"
-              >{{ order.id }} {{ order.customer.name }}</q-item-label
-            >
-            <q-item-label caption lines="1" class="q-mb-sm">
-              {{ moment(order.created_at).format("lll") }}</q-item-label
-            >
-          </q-item-section>
-
-          <q-item-section>
-            <q-linear-progress
-              stripe
-              style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-              class="self-center q-mb-md on-right"
-              size="25px"
-              :value="order.percentage / 100"
-            >
-              <div class="absolute-full flex flex-center">
-                <q-badge
-                  style="font-size: 15px"
-                  class="bg-transparent"
-                  text-color="white "
-                  :label="`${order.percentage}%`"
+       
+          <q-item
+            v-for="order in orders.data"
+            :key="order.id"
+            class="q-my-sm q-mx-md"
+            clickable
+            @click="$router.push(`/detail-transaksi/${order.id}`)"
+          >
+            <q-item-section avatar>
+              <q-avatar
+                color="primary"
+                text-color="white"
+                size="60px"
+                style="margin-left: -20px"
+              >
+                <q-img
+                  no-spinner
+                  src="~/assets/avatar-box.png"
+                  alt="avatar-box"
                 />
-              </div>
-            </q-linear-progress>
-          </q-item-section>
-        </q-item>
+              </q-avatar>
+            </q-item-section>
+
+            <q-item-section class="self-center">
+              <q-item-label class="text-weight-medium"
+                >{{ order.id }} {{ order.customer.name }}</q-item-label
+              >
+              <q-item-label caption lines="1" class="q-mb-sm">
+                {{ moment(order.created_at).format("lll") }}</q-item-label
+              >
+            </q-item-section>
+
+            <q-item-section>
+              <q-linear-progress
+                stripe
+                style="max-width: 20vw; border-radius: 50px; color: #49c26b"
+                class="self-center q-mb-md on-right"
+                size="25px"
+                :value="order.percentage / 100"
+              >
+                <div class="absolute-full flex flex-center">
+                  <q-badge
+                    style="font-size: 15px"
+                    class="bg-transparent"
+                    text-color="white "
+                    :label="`${order.percentage}%`"
+                  />
+                </div>
+              </q-linear-progress>
+            </q-item-section>
+          </q-item>
+       
       </q-list>
     </div>
 
@@ -207,7 +225,13 @@
 
     <!-- Scan Barcode -->
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn class="q-pa-md" fab color="#FAFAFA" elevated>
+      <q-btn
+        class="q-pa-md"
+        fab
+        color="#FAFAFA"
+        elevated
+        @click="doScanOrder()"
+      >
         <q-img
           src="~/assets/barcode-scan.svg"
           style="width: 30px; height: 30px"
@@ -314,6 +338,34 @@ export default {
           this.orders = res.data;
         });
     },
+    doScanOrder() {
+      cordova.plugins.barcodeScanner.scan(
+        (result) => {
+          this.$store
+            .dispatch("Orders/show", parseInt(result.text))
+            .then((res) => {
+              this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
+            });
+        },
+        (error) => {
+          alert("Scanning failed: " + error);
+        },
+        {
+          preferFrontCamera: false, // iOS and Android
+          showFlipCameraButton: true, // iOS and Android
+          showTorchButton: true, // iOS and Android
+          torchOn: false, // Android, launch with the torch switched on (if available)
+          saveHistory: true, // Android, save scan history (default false)
+          prompt: "Place a barcode inside the scan area", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations: true, // iOS
+          disableSuccessBeep: false, // iOS and Android
+        }
+      );
+    },
+    
   },
 };
 </script>

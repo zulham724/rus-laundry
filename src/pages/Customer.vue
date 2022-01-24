@@ -2,7 +2,13 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white shadow-2">
-        <q-btn no-caps class="q-pa-md" flat style="color: white" @click="$router.back()">
+        <q-btn
+          no-caps
+          class="q-pa-md"
+          flat
+          style="color: white"
+          @click="$router.back()"
+        >
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
@@ -44,12 +50,17 @@
               <div class="col-9"></div>
               <div class="col-3">
                 <q-btn
+                dense
                   class="self-right"
                   style="color: #888888; margin-bottom: -30px; height: 10px"
                   no-caps
                   flat
                 >
-                  <div class="text-caption" style="font-size: 10px" @click="update">
+                  <div
+                    class="text-caption"
+                    style="font-size: 10px"
+                    @click="update"
+                  >
                     Pilih Semua
                   </div>
                 </q-btn>
@@ -60,27 +71,25 @@
             <div v-if="isLoad">
               <q-list class="bg-white">
                 <q-item
-                  @click="$router.push(`/detail-customer/${customer.id}`)"
-                  clickable
-                  v-for="(customer, c) in customers"
-                  :key="c"
+                  v-for="n in 8"
+                  :key="n"
                   class="row bg-white shadow-2 q-mx-lg q-mb-md"
                   style="height: 65px; border-radius: 5px"
                 >
                   <q-item-section avatar>
-                      <q-skeleton type="avatar" size="100px" />
+                    <q-skeleton type="avatar" size="45px" />
                   </q-item-section>
                   <q-item-section class="text-body1">
-                    <q-skeleton type="text"/>
+                    <q-skeleton type="text" />
                     <q-item-label caption>
-                <q-skeleton type="text"/>
+                      <q-skeleton type="text" />
                     </q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
             </div>
 
-            <div v-else-if="(isLoad == false && customers.length)">
+            <div v-else-if="isLoad == false && customers.length">
               <q-list class="bg-white">
                 <q-item
                   @click="$router.push(`/detail-customer/${customer.id}`)"
@@ -92,7 +101,7 @@
                 >
                   <q-item-section avatar>
                     <q-avatar square size="">
-                      <q-img src="~/assets/ava-list-customer.svg" no-spinner/>
+                      <q-img src="~/assets/ava-list-customer.svg" no-spinner />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section class="text-body1">
@@ -133,16 +142,17 @@ export default {
   methods: {
     getCustomer() {
       return new Promise((resolve, reject) => {
-      this.isLoad = true;
-      this.$store.dispatch("Customer/getCustomersByShop", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.customers = this.customers_temp = res.data.map((item) => {
-            item.checked = false;
-            return item;
-          });
-          resolve(res.data);
-        })
-        .catch((err) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Customer/getCustomersByShop", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.customers = this.customers_temp = res.data.map((item) => {
+              item.checked = false;
+              return item;
+            });
+            resolve(res.data);
+          })
+          .catch((err) => {
             reject(err);
             // console.log(err);
           })
@@ -166,12 +176,19 @@ export default {
       this.update(val);
     },
 
-  refresh(done) {
-      this.getPackages().then((res) => {
+    checklis(){
+      this.customers=this.customers.filter(checkcustomer);
+function checkcustomer(customer){
+if (customer) {
+	console.log(customer)
+}}
+    },
+
+    refresh(done) {
+      this.getCustomer().then((res) => {
         if (done) done();
       });
     },
-
   },
   mounted() {
     this.getCustomer();

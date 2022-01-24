@@ -25,7 +25,7 @@
           <div class="col-3 bg-white">
             <div class="row justify-center">
               <q-img
-              no-spinner
+                no-spinner
                 src="~/assets/confirm-package-unscreen.gif"
                 style="width: 130px; height: 130px"
               />
@@ -71,7 +71,12 @@
           Karyawan lain
         </div>
 
-        <div class="q-mt-xs row bg-white">
+        <div
+          @click="$router.push(`/attendance-details/${employee.id}`)"
+          class="q-mt-xs row bg-white"
+          v-for="employee in employees"
+          :key="employee.id"
+        >
           <div class="col-3 self-center q-py-md q-pl-lg">
             <q-avatar style="background-color: #f9f9f9">
               <q-icon color="grey" name="far fa-user" />
@@ -82,38 +87,47 @@
               class="text-weight-medium"
               style="color: #888888; font-size: 15px"
             >
-              Sudarmo Atmojo
+              {{ employee.name }}
             </div>
           </div>
         </div>
 
-        <div class="q-mt-xs row bg-white">
-          <div class="col-3 self-center q-py-md q-pl-lg">
-            <q-avatar style="background-color: #f9f9f9">
-              <q-icon color="grey" name="far fa-user" />
-            </q-avatar>
-          </div>
-          <div class="col-9 self-center">
-            <div
-              class="text-weight-medium"
-              style="color: #888888; font-size: 15px"
-            >
-              Sudarmo Atmojo
-            </div>
-          </div>
-        </div>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import {mapState} from "vuex";
 export default {
+  computed:{
+    ...mapState(["Auth"])
+  },
+
+  data() {
+    return {
+      employees: [],
+      employees_temp: [],
+    };
+  },
+  mounted() {
+    this.getEmployees();
+    // alert("halo");
+    // console.log(this.Auth.auth.shop.id)
+  },
   methods: {
     buttonDetailAbsen() {
       this.$router.push("/attendance-details");
     },
+    getEmployees() {
+      this.$store
+        .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.employees = this.employees_temp = res.data
+        });
+    },
   },
+  
 };
 </script>
 

@@ -14,13 +14,19 @@
   "license": "Apache-2.0",
   "cordova": {
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ],
     "plugins": {
-      "cordova-plugin-btprinter": {}
+      "cordova-plugin-btprinter": {},
+      "cordova-plugin-qr-barcode-scanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     }
   },
   "devDependencies": {
-    "cordova-plugin-btprinter": "github:CesarBalzer/Cordova-Plugin-BTPrinter"
+    "cordova-browser": "^6.0.0",
+    "cordova-plugin-btprinter": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
+    "cordova-plugin-qr-barcode-scanner": "^8.0.3"
   }
 }
