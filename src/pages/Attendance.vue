@@ -14,104 +14,163 @@
     </q-header>
     <q-page-container style="background-color: #e5e5e5">
       <q-page>
-        <div
-          flat
-          class="bg-white q-px-md q-mt-sm shadow-1"
-          style="color: #888888"
-        >
-          Status
-        </div>
-        <div class="row q-mt-xs bg-white">
-          <div class="col-3 bg-white">
-            <div class="row justify-center">
-              <q-img
-                no-spinner
-                src="~/assets/confirm-package-unscreen.gif"
-                style="width: 130px; height: 130px"
-              />
-            </div>
+        <q-pull-to-refresh @refresh="refresh">
+          <div
+            flat
+            class="bg-white q-px-md q-mt-sm shadow-1"
+            style="color: #888888"
+          >
+            Status
           </div>
-          <div class="col-4 bg-white q-px-md self-center">
-            <!-- Sudah Absen -->
-            <div class="text-weight-medium" style="color: #888888">
-              Anda Sudah Absen Hari Ini
+          <div class="row q-mt-xs bg-white">
+            <div class="col-4 bg-white">
+              <div class="row justify-center">
+                <!-- <q-img
+                  no-spinner
+                  src="~/assets/confirm-package-unscreen.gif"
+                  style="width: 130px; height: 130px"
+                /> -->
+
+                <q-circular-progress
+                  show-value
+                  class="text-black text-bold q-ma-md"
+                  :value="((telah_absen / total_karyawan) * 100).toFixed(0)"
+                  size="130px"
+                  track-color="red-7"
+                  color="green"
+                >
+                  <div class="text-center" style="font-size: 20px">
+                    {{ ((telah_absen / total_karyawan) * 100).toFixed(0) }}
+
+                    %
+                  </div>
+                </q-circular-progress>
+              </div>
             </div>
-            <!-- Belum Absen -->
-            <!-- <div class="text-weight-medium" style="color: #888888">
+            <div class="col-4 bg-white q-px-md self-center">
+              <!-- Skeleton -->
+              <div
+                v-if="isLoad2 && !telah_absen"
+                class="text-weight-medium"
+                style="color: #888888"
+              >
+                <q-skeleton type="text" />
+              </div>
+
+              <div v-else>
+                <!-- Sudah Absen -->
+                <div
+                  v-if="!telah_absen"
+                  class="text-weight-medium"
+                  style="color: #888888"
+                >
+                  Tidak ada karyawan yang absen
+                </div>
+                <div v-else class="text-weight-medium" style="color: #888888">
+                  {{ telah_absen }} dari {{ total_karyawan }} karyawan telah
+                  absen
+                </div>
+              </div>
+              <!-- Belum Absen -->
+              <!-- <div class="text-weight-medium" style="color: #888888">
               Anda Belum Absen Hari Ini
             </div> -->
+            </div>
+            <div class="col-5 bg-white"></div>
           </div>
-          <div class="col-5 bg-white"></div>
-        </div>
-        <div class="q-my-xs">
-          <q-btn
-            no-caps
+          <div class="q-my-xs">
+            <q-btn
+              no-caps
+              flat
+              class="bg-white"
+              style="width: 100%"
+              @click="buttonDetailAbsen()"
+            >
+              <div
+                class="col-10 text-weight-medium text-left"
+                style="color: #888888"
+              >
+                Lihat detail absen anda
+              </div>
+
+              <div class="col-2 text-right">
+                <q-icon name="fas fa-chevron-right" size="15px"></q-icon>
+              </div>
+            </q-btn>
+          </div>
+          <div
             flat
-            class="bg-white"
-            style="width: 100%"
-            @click="buttonDetailAbsen()"
+            class="bg-white q-px-md q-mt-sm text-weight-medium"
+            style="color: #888888"
           >
-            <div
-              class="col-10 text-weight-medium text-left"
-              style="color: #888888"
-            >
-              Lihat Detail Absen Anda
-            </div>
-
-            <div class="col-2 text-right">
-              <q-icon name="fas fa-chevron-right" size="15px"></q-icon>
-            </div>
-          </q-btn>
-        </div>
-        <div
-          flat
-          class="bg-white q-px-md q-mt-sm text-weight-medium"
-          style="color: #888888"
-        >
-          Karyawan lain
-        </div>
-
-        <div
-          @click="$router.push(`/attendance-details/${employee.id}`)"
-          class="q-mt-xs row bg-white"
-          v-for="employee in employees"
-          :key="employee.id"
-        >
-          <div class="col-3 self-center q-py-md q-pl-lg">
-            <q-avatar style="background-color: #f9f9f9">
-              <q-icon color="grey" name="far fa-user" />
-            </q-avatar>
+            Karyawan lain
           </div>
-          <div class="col-9 self-center">
-            <div
-              class="text-weight-medium"
-              style="color: #888888; font-size: 15px"
-            >
-              {{ employee.name }}
+
+          <!-- Skeleton -->
+          <div v-if="isLoad">
+            <div class="q-mt-xs row bg-white" v-for="a in 8" :key="a">
+              <div class="col-3 self-center q-py-md q-pl-lg">
+                <q-skeleton type="QAvatar" />
+              </div>
+              <div class="col-9 self-center">
+                <div
+                  class="text-weight-medium"
+                  style="color: #888888; font-size: 15px"
+                >
+                  <q-skeleton type="text" class="q-mr-lg" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
+          <div
+            v-else
+            @click="$router.push(`/attendance-details/${employee.id}`)"
+            class="q-mt-xs row bg-white"
+            v-for="employee in employees"
+            :key="employee.id"
+          >
+            <div class="col-3 self-center q-py-md q-pl-lg">
+              <q-avatar style="background-color: #f9f9f9">
+                <q-icon color="grey" name="far fa-user" />
+              </q-avatar>
+            </div>
+            <div class="col-9 self-center">
+              <div
+                class="text-weight-medium"
+                style="color: #888888; font-size: 15px"
+              >
+                {{ employee.name }}
+              </div>
+            </div>
+          </div>
+        </q-pull-to-refresh>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
-  computed:{
-    ...mapState(["Auth"])
+  computed: {
+    ...mapState(["Auth"]),
   },
 
   data() {
     return {
       employees: [],
       employees_temp: [],
+      isLoad: false,
+      total_karyawan: 0,
+      telah_absen: 0,
+      isLoad2: false,
+      dates: [],
     };
   },
   mounted() {
     this.getEmployees();
+    this.getMonthlyAttendanceReport1();
     // alert("halo");
     // console.log(this.Auth.auth.shop.id)
   },
@@ -120,14 +179,39 @@ export default {
       this.$router.push("/attendance-details");
     },
     getEmployees() {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.employees = this.employees_temp = res.data;
+            resolve(res.data);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
+    },
+    getMonthlyAttendanceReport1() {
+      this.isLoad2 = true;
       this.$store
-        .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
+        .dispatch("Attendance/monthlyAttendanceReport1", this.Auth.auth.shop.id)
         .then((res) => {
-          this.employees = this.employees_temp = res.data
+          this.telah_absen = res.data.telah_absen;
+          this.total_karyawan = res.data.total_karyawan;
+          // console.log(res.data.telah_absen);
+        })
+        .finally(() => {
+          this.isLoad2 = false;
         });
     },
+
+    refresh(done) {
+      this.getEmployees().then((res) => {
+        if (done) done();
+      });
+    },
   },
-  
 };
 </script>
 

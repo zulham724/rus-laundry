@@ -16,36 +16,36 @@
       <q-page-container class="front">
         <q-page class="q-pa-md">
           <div class="column">
-            <q-skeleton type="text" style="width: 150px"/>
-            <q-skeleton type="QInput" style="height: 40px"/>
+            <q-skeleton type="text" style="width: 150px" />
+            <q-skeleton type="QInput" style="height: 40px" />
           </div>
           <div class="column">
-            <q-skeleton type="text" style="width: 150px"/>
-            <q-skeleton type="QInput" style="height: 40px"/>
+            <q-skeleton type="text" style="width: 150px" />
+            <q-skeleton type="QInput" style="height: 40px" />
           </div>
           <div class="row justify-between q-pt-md">
             <q-skeleton style="width: 70px; height: 40px" type="text" />
             <q-skeleton style="width: 180px; height: 40px" type="QInput" />
           </div>
         </q-page>
-        <q-page style="margin-top:-325px">
+        <q-page style="margin-top: -325px">
           <q-list class="bg-white">
-                <q-item
-                  v-for="n in 8"
-                  :key="n"
-                  class="row bg-white shadow-2 q-mx-md q-my-md "
-                  style="height: 55px; border-radius: 5px"
-                >
-                  <q-item-section avatar>
-                    <q-skeleton type="avatar" size="40px" />
-                  </q-item-section>
-                  <q-item-section class="text-body1">
-                    <q-skeleton type="text" />
-                    <q-item-label caption>
-                      <q-skeleton type="text" />
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
+            <q-item
+              v-for="n in 8"
+              :key="n"
+              class="row bg-white shadow-2 q-mx-md q-my-md"
+              style="height: 55px; border-radius: 5px"
+            >
+              <q-item-section avatar>
+                <q-skeleton type="avatar" size="40px" />
+              </q-item-section>
+              <q-item-section class="text-body1">
+                <q-skeleton type="text" />
+                <q-item-label caption>
+                  <q-skeleton type="text" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-page>
       </q-page-container>

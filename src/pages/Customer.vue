@@ -50,7 +50,7 @@
               <div class="col-9"></div>
               <div class="col-3">
                 <q-btn
-                dense
+                  dense
                   class="self-right"
                   style="color: #888888; margin-bottom: -30px; height: 10px"
                   no-caps
@@ -176,12 +176,13 @@ export default {
       this.update(val);
     },
 
-    checklis(){
-      this.customers=this.customers.filter(checkcustomer);
-function checkcustomer(customer){
-if (customer) {
-	console.log(customer)
-}}
+    checklis() {
+      this.customers = this.customers.filter(checkcustomer);
+      function checkcustomer(customer) {
+        if (customer) {
+          console.log(customer);
+        }
+      }
     },
 
     refresh(done) {
