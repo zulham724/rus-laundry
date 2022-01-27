@@ -24,13 +24,12 @@
           </div>
           <div class="row q-mt-xs bg-white">
             <div class="col-4 bg-white">
-              <div class="row justify-center">
-                <!-- <q-img
-                  no-spinner
-                  src="~/assets/confirm-package-unscreen.gif"
-                  style="width: 130px; height: 130px"
-                /> -->
+              <!-- Skeleton -->
+              <div v-if="isLoad" class="row justify-center q-my-lg q-mx-md">
+                <q-skeleton type="circle" size="90px" />
+              </div>
 
+              <div v-else class="row justify-center">
                 <q-circular-progress
                   show-value
                   class="text-black text-bold q-ma-md"
@@ -50,7 +49,7 @@
             <div class="col-4 bg-white q-px-md self-center">
               <!-- Skeleton -->
               <div
-                v-if="isLoad2 && !telah_absen"
+                v-if="isLoad"
                 class="text-weight-medium"
                 style="color: #888888"
               >
@@ -71,10 +70,6 @@
                   absen
                 </div>
               </div>
-              <!-- Belum Absen -->
-              <!-- <div class="text-weight-medium" style="color: #888888">
-              Anda Belum Absen Hari Ini
-            </div> -->
             </div>
             <div class="col-5 bg-white"></div>
           </div>
@@ -164,7 +159,6 @@ export default {
       isLoad: false,
       total_karyawan: 0,
       telah_absen: 0,
-      isLoad2: false,
       dates: [],
     };
   },
@@ -193,21 +187,29 @@ export default {
       });
     },
     getMonthlyAttendanceReport1() {
-      this.isLoad2 = true;
-      this.$store
-        .dispatch("Attendance/monthlyAttendanceReport1", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.telah_absen = res.data.telah_absen;
-          this.total_karyawan = res.data.total_karyawan;
-          // console.log(res.data.telah_absen);
-        })
-        .finally(() => {
-          this.isLoad2 = false;
-        });
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch(
+            "Attendance/monthlyAttendanceReport1",
+            this.Auth.auth.shop.id
+          )
+          .then((res) => {
+            this.telah_absen = res.data.telah_absen;
+            this.total_karyawan = res.data.total_karyawan;
+            // console.log(res.data.telah_absen);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
     },
 
     refresh(done) {
       this.getEmployees().then((res) => {
+        if (done) done();
+      });
+      this.getMonthlyAttendanceReport1().then((res) => {
         if (done) done();
       });
     },

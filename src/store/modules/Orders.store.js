@@ -1,4 +1,6 @@
-import { api } from "boot/axios";
+import {
+    api
+} from "boot/axios";
 
 const state = {
     data: [],
@@ -46,13 +48,49 @@ const mutations = {
 };
 
 const actions = {
-    getOrdersByShop({ commit }, shopId) {
+    getOrdersShopByDay({
+        commit
+    }, shopId) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getorderbyday/${shopId}`).then((res) => {
+
+                resolve(res);
+            })
+        });
+    },
+    getOrdersShopByWeek({
+        commit
+    }, shopId) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getorderbyweek/${shopId}`).then((res) => {
+
+                resolve(res);
+            })
+        });
+    },
+    getOrdersShopByMonth({
+        commit
+    }, shopId) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`/api/slave/getorderbymonth/${shopId}`)
+                .then((res) => {
+                    resolve(res);
+                })
+        });
+    },
+
+    getOrdersByShop({
+        commit
+    }, shopId) {
         return new Promise((resolve, reject) => {
             api
                 .get(`/api/slave/shop/${shopId}/getOrdersByShop`)
                 .then((res) => {
                     const data = res.data;
-                    commit('set_orders', { data: data });
+                    commit('set_orders', {
+                        data: data
+                    });
                     resolve(res)
                 })
                 .catch((err) => {
@@ -60,7 +98,9 @@ const actions = {
                 });
         });
     },
-    getOrdersReportByShop({ commit }, shopId) {
+    getOrdersReportByShop({
+        commit
+    }, shopId) {
         return new Promise((resolve, reject) => {
             api
                 .get(`/api/slave/shop/${shopId}/getOrdersReportByShop`)
@@ -72,7 +112,9 @@ const actions = {
                 });
         });
     },
-    index({ commit }) {
+    index({
+        commit
+    }) {
         return new Promise((resolve, reject) => {
             api
                 .get(`/api/slave/order`)
@@ -84,12 +126,16 @@ const actions = {
                 });
         });
     },
-    store({ commit }, formData) {
+    store({
+        commit
+    }, formData) {
         return new Promise((resolve, reject) => {
             api
                 .post(`/api/slave/order`, formData)
                 .then((res) => {
-                    commit('add_order', { data: res.data })
+                    commit('add_order', {
+                        data: res.data
+                    })
                     resolve(res);
                 })
                 .catch((err) => {
@@ -97,7 +143,9 @@ const actions = {
                 });
         });
     },
-    getOrder({ commit }) {
+    getOrder({
+        commit
+    }) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/getorder`).then(res => {
                 resolve(res)
@@ -106,7 +154,9 @@ const actions = {
             })
         })
     },
-    show({ commit }, orderId) {
+    show({
+        commit
+    }, orderId) {
         return new Promise((resolve, reject) => {
             api
                 .get(`/api/slave/order/${orderId}`)
@@ -118,7 +168,9 @@ const actions = {
                 });
         });
     },
-    update({ commit }, payload) {
+    update({
+        commit
+    }, payload) {
         return new Promise((resolve, reject) => {
             const acces = {
                 _method: "update",
@@ -134,7 +186,9 @@ const actions = {
                 });
         });
     },
-    delete({ commit }, orderId) {
+    delete({
+        commit
+    }, orderId) {
         return new Promise((resolve, reject) => {
             const acces = {
                 _method: "delete",
@@ -142,7 +196,9 @@ const actions = {
             api
                 .post(`/api/slave/order/${orderId}`, acces)
                 .then((res) => {
-                    commit('destroy_order', { id: orderId })
+                    commit('destroy_order', {
+                        id: orderId
+                    })
                     resolve(res);
                 })
                 .catch((err) => {
@@ -150,7 +206,9 @@ const actions = {
                 });
         });
     },
-    filterReport({ commit }, payload) {
+    filterReport({
+        commit
+    }, payload) {
         return new Promise((resolve, reject) => {
             api
                 .post(`/api/slave/shop/order/report`, payload)
@@ -163,9 +221,13 @@ const actions = {
         });
     },
 
-    searchOrders({ commit }, orderId) {
+    searchOrders({
+        commit
+    }, orderId) {
         return new Promise((resolve, reject) => {
-            api.post(`/api/slave/shop/order/search`, { id: orderId }).then(res => {
+            api.post(`/api/slave/shop/order/search`, {
+                id: orderId
+            }).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)
@@ -173,7 +235,9 @@ const actions = {
         })
     },
 
-    getStatus({ commit }, dataOrder) {
+    getStatus({
+        commit
+    }, dataOrder) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/getOrderServiceStatus`, dataOrder).then(res => {
                 resolve(res)
@@ -182,7 +246,9 @@ const actions = {
             })
         })
     },
-    searchOrders({ commit }, value) {
+    searchOrders({
+        commit
+    }, value) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/searchOrders`, value).then(res => {
                 resolve(res)

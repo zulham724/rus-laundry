@@ -19,9 +19,7 @@
           <div
             class="text-weight-bold text-center"
             style="color: white; font-size: 38px"
-          >
-            Rp.10.000.000
-          </div>
+          ></div>
         </div>
       </div>
     </q-pull-to-refresh>
@@ -80,7 +78,7 @@
       </div>
       <!-- List Pesanan -->
       <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="hari">
+        <q-tab-panel name="hari" >
           <!-- Skeleton -->
           <div v-if="isLoad">
             <q-item
@@ -114,18 +112,18 @@
           </div>
 
           <q-list
-            v-else-if="isLoad == false && orders.length"
+            v-else-if="isLoad == false && ordersByDays.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
             style="background-color: #fff; border-radius: 20px 20px 20px 20px"
           >
             <q-item
-              v-for="order in orders"
-              :key="order.id"
+              v-for="ordersByDay in ordersByDays"
+              :key="ordersByDay.id"
               class="q-my-sm q-mx-md"
               clickable
-              @click="$router.push(`/detail-transaksi/${order.id}`)"
+              @click="$router.push(`/detail-transaksi/${ordersByDay.id}`)"
             >
               <q-item-section avatar>
                 <q-avatar
@@ -144,10 +142,10 @@
 
               <q-item-section class="self-center">
                 <q-item-label class="text-weight-medium">{{
-                  order.customer.name
+                  ordersByDay.customer.name
                 }}</q-item-label>
                 <q-item-label caption lines="1" class="q-mb-sm">
-                  {{ moment(order.created_at).format("lll") }}</q-item-label
+                  {{ moment(ordersByDay.created_at).format("LL") }}</q-item-label
                 >
               </q-item-section>
 
@@ -156,7 +154,7 @@
                 side
                 style="color: #54d240; font-size: 12px"
               >
-                +100.000
+                +{{ ordersByMonth.total_sum}}
               </q-item-section>
             </q-item>
           </q-list>
@@ -193,54 +191,54 @@
               </q-item-section>
             </q-item>
           </div>
-        <div v-else-if="isLoad == false && orders.length">
-          <q-list
-            bordered
-            separator
-            class="q-mx-md q-my-xs"
-            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
-          >
-            <q-item
-              v-for="order in orders"
-              :key="order.id"
-              class="q-my-sm q-mx-md"
-              clickable
-              @click="$router.push(`/detail-transaksi/${order.id}`)"
+          <div v-else-if="isLoad == false && ordersByWeeks.length">
+            <q-list
+              bordered
+              separator
+              class="q-mx-md q-my-xs"
+              style="background-color: #fff; border-radius: 20px 20px 20px 20px"
             >
-              <q-item-section avatar>
-                <q-avatar
-                  color="primary"
-                  text-color="white"
-                  size="60px"
-                  style="margin-left: -20px"
-                >
-                  <q-img
-                    src="~/assets/avatar-box.png"
-                    alt="avatar-box"
-                    no-spinner
-                  />
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section class="self-center">
-                <q-item-label class="text-weight-medium">{{
-                  order.customer.name
-                }}</q-item-label>
-                <q-item-label caption lines="1" class="q-mb-sm">
-                  {{ moment(order.created_at).format("lll") }}</q-item-label
-                >
-              </q-item-section>
-
-              <q-item-section
-                class="text-weight-regular"
-                side
-                style="color: #54d240; font-size: 12px"
+              <q-item
+                v-for="ordersByWeek in ordersByWeeks"
+                :key="ordersByWeek.id"
+                class="q-my-sm q-mx-md"
+                clickable
+                @click="$router.push(`/detail-transaksi/${ordersByWeeks.id}`)"
               >
-                +100.000
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </div>
+                <q-item-section avatar>
+                  <q-avatar
+                    color="primary"
+                    text-color="white"
+                    size="60px"
+                    style="margin-left: -20px"
+                  >
+                    <q-img
+                      src="~/assets/avatar-box.png"
+                      alt="avatar-box"
+                      no-spinner
+                    />
+                  </q-avatar>
+                </q-item-section>
+
+                <q-item-section class="self-center">
+                  <q-item-label class="text-weight-medium">{{
+                    ordersByWeek.customer.name
+                  }}</q-item-label>
+                  <q-item-label caption lines="1" class="q-mb-sm">
+                    {{ moment(ordersByWeek.created_at).format("lll") }}</q-item-label
+                  >
+                </q-item-section>
+
+                <q-item-section
+                  class="text-weight-regular"
+                  side
+                  style="color: #54d240; font-size: 12px"
+                >
+                  +{{ ordersByMonth.total_sum}}
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
         </q-tab-panel>
         <q-tab-panel name="bulan">
           <!-- Skeleton -->
@@ -276,18 +274,18 @@
           </div>
 
           <q-list
-            v-else-if="isLoad == false && orders.length"
+            v-else-if="isLoad == false && ordersByMonths.length"
             bordered
             separator
             class="q-mx-md q-my-xs"
             style="background-color: #fff; border-radius: 20px 20px 20px 20px"
           >
             <q-item
-              v-for="order in orders"
-              :key="order.id"
+              v-for="ordersByMonth in ordersByMonths"
+              :key="ordersByMonth.id"
               class="q-my-sm q-mx-md"
               clickable
-              @click="$router.push(`/detail-transaksi/${order.id}`)"
+              @click="$router.push(`/detail-transaksi/${ordersByMonth.id}`)"
             >
               <q-item-section avatar>
                 <q-avatar
@@ -306,10 +304,10 @@
 
               <q-item-section class="self-center">
                 <q-item-label class="text-weight-medium">{{
-                  order.customer.name
+                  ordersByMonth.customer.name
                 }}</q-item-label>
                 <q-item-label caption lines="1" class="q-mb-sm">
-                  {{ moment(order.created_at).format("lll") }}</q-item-label
+                  {{ moment(ordersByMonth.created_at).format("LL") }}</q-item-label
                 >
               </q-item-section>
 
@@ -318,11 +316,10 @@
                 side
                 style="color: #54d240; font-size: 12px"
               >
-                +100.000
+                +{{ ordersByMonth.total_sum}}
               </q-item-section>
             </q-item>
           </q-list>
-        
         </q-tab-panel>
         <q-tab-panel name="custom">
           <div class="row justify-between q-ma-md">
@@ -402,14 +399,14 @@
           </div>
 
           <q-list
-            v-else-if="isLoad == false && orders.length"
+            v-else-if="isLoad == false && orders"
             bordered
             separator
             class="q-mx-md q-my-xs"
             style="background-color: #fff; border-radius: 20px 20px 20px 20px"
           >
             <q-item
-              v-for="order in orders"
+              v-for="order in orders.data"
               :key="order.id"
               class="q-my-sm q-mx-md"
               clickable
@@ -431,11 +428,11 @@
               </q-item-section>
 
               <q-item-section class="self-center">
-                <q-item-label class="text-weight-medium">{{
-                  order.customer.name
-                }}</q-item-label>
+                <q-item-label class="text-weight-medium">
+                  {{ order.customer.name }}</q-item-label
+                >
                 <q-item-label caption lines="1" class="q-mb-sm">
-                  {{ moment(order.created_at).format("lll") }}</q-item-label
+                  {{ moment(order.updated_at).format("LL") }}</q-item-label
                 >
               </q-item-section>
 
@@ -444,14 +441,13 @@
                 side
                 style="color: #54d240; font-size: 12px"
               >
-                +100.000
+                +{{order.total_sum}}
               </q-item-section>
             </q-item>
           </q-list>
         </q-tab-panel>
       </q-tab-panels>
     </div>
-    
   </q-page>
 </template>
 
@@ -461,7 +457,7 @@ import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
-  name: 'IncomePage',
+  name: "IncomePage",
   computed: {
     ...mapState(["Auth"]),
   },
@@ -471,20 +467,26 @@ export default {
       date: ref("2022/01/19"),
       tab: "hari",
       orders: [],
+      orders_temp: [],
       isLoad: false,
       items: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+      ordersByDays: [],
+      ordersByWeeks: [],
+      ordersByMonths: [],
     };
   },
 
   mounted() {
     this.getOrders();
+    this.getOrdersShopByDay();
+    this.getOrdersShopByWeek();
+    this.getOrdersShopByMonth();
   },
 
   methods: {
     moment() {
       return moment();
     },
-
     getOrders() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
@@ -493,6 +495,26 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
+            console.log("Data keseluruhan", res.data);
+          })
+          .catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
+    },    
+    getOrdersShopByDay() {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Orders/getOrdersShopByDay", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.ordersByDays = res.data;
+            resolve(res.data);
+            console.log("Data Harian", res.data);
           })
           .catch((err) => {
             reject(err);
@@ -503,6 +525,47 @@ export default {
           });
       });
     },
+    getOrdersShopByWeek() {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Orders/getOrdersShopByWeek", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.ordersByWeeks = res.data;
+            resolve(res.data);
+            console.log("Data Mingguan", res.data);
+          })
+          .catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
+    },
+     getOrdersShopByMonth() {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Orders/getOrdersShopByMonth", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.ordersByMonths = res.data;
+            resolve(res.data);
+            console.log("Data Bulanan", res.data);
+          })
+          .catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
+    },
+
+    
+
     refresh(done) {
       this.getOrders().then((res) => {
         if (done) done();

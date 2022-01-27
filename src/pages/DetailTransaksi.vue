@@ -6,7 +6,7 @@
           <!-- Header Image -->
           <q-img src="~/assets/header-mesin-cuci.svg" style="height:200px" class="fixed-top mbl-child" no-spinner>
             <q-toolbar class="bg-transparent">
-              <q-btn :ripple="true" flat round size="sm" @click="$router.push('/')">
+              <q-btn :ripple="true" flat round size="sm" @click="$router.back()">
                 <q-avatar
                   size="25px"
                   icon="fas fa-arrow-left"

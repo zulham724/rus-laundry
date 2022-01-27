@@ -163,8 +163,7 @@ export default {
       } 
         // console.log(service_status_id)
         const payload = {
-          orderid: this.order.id,
-          service_id: this.order.services[0].id,
+          id: this.order.service_status.id,
           service_status_id: service_status_id
         }
       this.$store.dispatch("Services/updateStatus", payload).then(res => {
@@ -179,3 +178,4 @@ export default {
 </script>
 
 <style></style>
+{{  }}

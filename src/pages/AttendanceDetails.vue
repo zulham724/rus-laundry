@@ -21,7 +21,69 @@
     <q-page-container>
       <q-page class="q-mt-xs">
         <q-pull-to-refresh @refresh="init">
-          <div class="row q-pt-md">
+          <!-- Skeleton -->
+          <div v-if="isLoad" class="row q-pt-md q-pl-sm">
+            <!-- Circle skeleton -->
+            <div class="col-5 q-py-md q-px-md">
+              <q-skeleton type="circle" size="130px"></q-skeleton>
+            </div>
+            <div class="col-7 q-pt-md q-pl-md">
+              <!-- Text grafik persentase skeleton -->
+              <div class="text-weight-bold q-px-md">
+                <q-skeleton type="text" />
+              </div>
+              <div class="q-pl-lg q-pt-md">
+                <!-- Text skeleton Jumlah hadir -->
+                <div
+                  class="text-weight-bold"
+                  style="color: #c0b9b9; font-size: 12px"
+                >
+                  <q-skeleton type="text" width="120px" />
+                </div>
+                <div class="row">
+                  <div class="row full-width">
+                    <!-- Circle red skeleton -->
+                    <div class="col-1">
+                      <q-skeleton type="circle" size="15px" />
+                    </div>
+                    <!-- Text persentase skeleton -->
+                    <div class="col-2 text-left q-pl-xs">
+                      <q-skeleton type="text" width="30px" />
+                    </div>
+                    <!-- Text day skeleton -->
+                    <div class="col-5 q-pl-xl">
+                      <q-skeleton type="text" width="40px" />
+                    </div>
+                  </div>
+                </div>
+                <!-- Text skeleton Jumlah hadir -->
+                <div
+                  class="text-weight-bold"
+                  style="color: #c0b9b9; font-size: 12px"
+                >
+                  <q-skeleton type="text" width="80px" />
+                </div>
+                <div class="row">
+                  <div class="row full-width">
+                    <!-- Circle green skeleton -->
+                    <div class="col-1">
+                      <q-skeleton type="circle" size="15px" />
+                    </div>
+                    <!-- Text persentase skeleton -->
+                    <div class="col-2 text-left q-pl-xs">
+                      <q-skeleton type="text" width="30px" />
+                    </div>
+                    <!-- Text day skeleton -->
+                    <div class="col-5 q-pl-xl">
+                      <q-skeleton type="text" width="40px" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-else class="row q-pt-md">
             <div class="col-5 q-pl-sm">
               <q-circular-progress
                 show-value
@@ -205,6 +267,7 @@ export default {
       model: "2022/01/14",
       dates: [],
       isLoad: false,
+      isLoad2: false,
     };
   },
   mounted() {
