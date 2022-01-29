@@ -1,10 +1,10 @@
 {
   "recommendations": [
-    "hookyqr.beautify",
+    // "hookyqr.beautify",
     "akamud.vscode-theme-onedark"
   ],
   "unwantedRecommendations": [
-    "dbaeumer.jshint",
-    "ms-vscode.vscode-typescript-tslint-plugin"
+    // "dbaeumer.jshint",
+    // "ms-vscode.vscode-typescript-tslint-plugin"
   ]
 }

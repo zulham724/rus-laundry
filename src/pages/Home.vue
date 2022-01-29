@@ -32,16 +32,19 @@
                 </div>
               </div>
               <div class="float-left q-ml-md q-gutter-y-xs">
-                <div
-                  style="font-size: 20px; color: #313131; margin-bottom: -1vh"
-                  class="text-subtitle text-bold float-left"
-                >
-                  Selamat Pagi
+                <div>
+                  <div
+                    style="font-size: 20px; color: #313131; margin-bottom: -1vh"
+                    class="text-subtitle text-bold float-left"
+                  >
+                    Selamat Pagi
+                  </div>
                 </div>
+
                 <br />
                 <!-- Nama User -->
                 <div class="text-subtitle1 float-left" style="color: #313131">
-                  IndonesiaLaundry
+                  {{ Auth.auth.shop.name }}
                 </div>
                 <br />
                 <!-- Date -->
@@ -80,35 +83,40 @@
   </q-header>
 
   <q-page>
-    <q-card flat>
+    <q-card flat class="row q-pa-sm col-12">
       <q-card-actions class="bg-white">
-        <!-- Search -->
-        <q-input
-          dense
-          class="q-ml-sm"
-          type="search"
-          rounded
-          outlined
-          v-model="search"
-          label="Cari Pesanan"
-        >
-          <q-icon
-            name="search"
-            @click="searchTransaksi()"
-            class="self-center"
-            size="30px"
-            color="grey"
-          />
-        </q-input>
-        <q-space></q-space>
+        <div class="col-6">
+          <!-- Search -->
+          <q-input
+            dense
+            type="search"
+            style="width: 50vw"
+            rounded
+            outlined
+            v-model="search"
+            label="Cari Pesanan"
+          >
+            <q-icon
+              name="search"
+              @click="searchTransaksi()"
+              class="self-center"
+              size="30px"
+              color="grey"
+            />
+          </q-input>
+        </div>
+        <div class="col-6">
+          <div class="row justify-end">
+            <q-btn ripple="true" flat to="/filter-search">
+              <img
+                src="~/assets/icon-filter.svg"
+                alt="icon-filter"
+                style="size: 30vh"
+              />
+            </q-btn>
+          </div>
+        </div>
         <!-- Icon Filter -->
-        <q-btn ripple="true" flat class="q-mr-sm" to="/filter-search">
-          <img
-            src="~/assets/icon-filter.svg"
-            alt="icon-filter"
-            style="size: 30vh"
-          />
-        </q-btn>
       </q-card-actions>
     </q-card>
 
@@ -147,14 +155,18 @@
 
     <!-- List Pesanan -->
     <div v-else-if="isLoad == false && orders">
-      <q-list
-        ref="scrollTargetRef"
-        bordered
-        separator
-        class="q-mx-md q-my-xs"
-        style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+      <q-infinite-scroll
+        @load="onLoadRef"
+        :offset="250"
+        :scroll-target="scrollTargetRef"
       >
-       
+        <q-list
+          ref="scrollTargetRef"
+          bordered
+          separator
+          class="q-mx-md q-my-xs"
+          style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+        >
           <q-item
             v-for="order in orders.data"
             :key="order.id"
@@ -205,8 +217,8 @@
               </q-linear-progress>
             </q-item-section>
           </q-item>
-       
-      </q-list>
+        </q-list>
+      </q-infinite-scroll>
     </div>
 
     <!--Empty Order-->
@@ -238,22 +250,6 @@
         />
       </q-btn>
     </q-page-sticky>
-
-    <!-- <q-btn
-          @click="doLogout()"
-          class="elevated fixed-bottom-right"
-          rounded
-          color="#FAFAFA"
-          style="
-            width: 60px;
-            height: 60px;
-            margin-bottom: 80px;
-            margin-right: 20px;
-          "
-          ><q-img
-            style="width: 30px; height: 30px"
-            src="~/assets/barcode-scan.svg"
-        /></q-btn> -->
   </q-page>
 </template>
 
@@ -280,6 +276,8 @@ export default {
   },
   mounted() {
     this.getOrders();
+
+    // pairingTimes();
   },
   methods: {
     moment() {
@@ -365,7 +363,28 @@ export default {
         }
       );
     },
-    
+    onLoadRef(index, done) {
+      if (this.orders.next_page_url) {
+        this.$store.dispatch("Orders/next").then((res) => {
+          this.orders = {
+            ...res.data,
+            data: [...this.orders.data, ...res.data.data],
+          };
+          done();
+        });
+      } else {
+        done();
+      }
+    },
+    // pairingTimes() {
+    //       let waktuSekarang = moment().format("HH:mm");
+    //       let waktuPagi = moment("123", "hmm").format("HH:mm");
+    //       console.log(waktuSekarang);
+    //       let pagi = moment(attendance.in_at).format("DD-MM-YYYY");
+    //       if (date1 == date2) {
+    //         date.status = true;
+    //       }
+    // },
   },
 };
 </script>

@@ -1,5 +1,5 @@
-const API_URL = "http://127.0.0.1:8000";
-const STORAGE_URL = "http://127.0.0.1:8000/storage";
+const API_URL = "http://localhost:8000";
+const STORAGE_URL = "http://localhost:8000/storage";
 // const API_URL = "https://phpstack-469989-2210106.cloudwaysapps.com";
 // const STORAGE_URL = "https://phpstack-469989-2210106.cloudwaysapps.com/storage";
 

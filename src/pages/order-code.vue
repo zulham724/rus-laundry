@@ -50,7 +50,7 @@
         </div>
         <div class="text-center q-pa-sm">
           <q-btn
-            @click="resetOrder()"
+            @click="printOrder()"
             no-caps
             class="bg-grey-9"
             dense
@@ -98,7 +98,7 @@ export default {
 
       document.body.innerHTML = originalContents;
     },
-    resetOrder() {
+    printOrder() {
       // this.$store.commit("Orders/delete_order");
       // this.$router.push("/make-an-order");
       // this.print()

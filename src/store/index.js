@@ -13,20 +13,20 @@ import createPersistedState from "vuex-persistedstate";
  * with the Store instance.
  */
 
-export default store(function (/* { ssrContext } */) {
-  const Store = createStore({
-    modules,
+export default store(function( /* { ssrContext } */ ) {
+    const Store = createStore({
+        modules,
 
-    // enable strict mode (adds overhead!)
-    // for dev mode and --debug builds only
-    strict: false,
+        // enable strict mode (adds overhead!)
+        // for dev mode and --debug builds only
+        strict: false,
 
-    plugins: [
-      createPersistedState({
-        paths: ["Auth", "Orders"],
-      }),
-    ],
-  })
+        plugins: [
+            createPersistedState({
+                paths: ["Auth", "Orders", "Printer"],
+            }),
+        ],
+    })
 
-  return Store
+    return Store
 })

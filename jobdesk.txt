@@ -21,12 +21,13 @@ p proses
 + Menampilkan data pelanggan {iqbal}
 + tombol back di halaman absen belum benar {iqbal}
 + kata 'pesanan' di navigasi bawah bagian buat pesanan di ganti 'buat pesanan' {iqbal}
++ di halaman pelanggan bisa melakukan pencarian {iqbal}
 
 
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
 + Detail Pesanan {rian}
-+ Presentase order di halaman home
++ Presentase order di halaman home {rian}
 + Scan Pesanan {rian}
 + Scan absen   {rian}
 - Rekap absen
@@ -36,7 +37,7 @@ p proses
 + memberi background color di div yang ada gambar nya supaya ketika gambar belum muncul background nya tidak putih {bryan}
 + diberi skeleton di halaman income {bryan}
 - persentase pekerjaan di list order pesanan masih statis
-- list pesanan di halaman beranda di buat paginate (backend) dan infinite scroll
++ list pesanan di halaman beranda di buat paginate (backend) dan infinite scroll {rian}
 + halaman pengguna diberi skeleton {aryo}
 + halaman pengguna diberi pull refresh {aryo}
 + halaman list jenis pakaian di beri skeleton {aryo}
@@ -68,9 +69,7 @@ p proses
 - di halaman income diberi grafik statistik 
 - di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
 - di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket
-+ di halaman pelanggan bisa melakukan pencarian
-- di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua
+p di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua
 + tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma {aryo}
 - di halaman cetak invoice buat cetak lewat web menggunakan fungsi print biasa, ada bug tinggi kertas terlalu panjang
-
 

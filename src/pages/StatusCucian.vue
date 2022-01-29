@@ -14,7 +14,7 @@
               icon="fas fa-arrow-left"
               style="color: #888888"
             >
-            </q-avatar>
+            </q-avatar>{{  }}
           </q-btn>
           <q-toolbar-title
             class="text-left text-weight-medium"
@@ -178,4 +178,3 @@ export default {
 </script>
 
 <style></style>
-{{  }}

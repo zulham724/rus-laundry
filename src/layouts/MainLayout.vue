@@ -29,6 +29,21 @@
               Transaksi
             </div>
           </q-tab>
+          
+          <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
+            ><q-img
+              no-spinner
+              style="width: 18px; height: 20px"
+              :src="
+                tab == 'penghasilan'
+                  ? require('../assets/penghasilan-color.svg')
+                  : require('../assets/icon-penghasilan.svg')
+              "
+            ></q-img>
+            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+              Penghasilan
+            </div>
+            </q-tab>
 
           <q-tab name="pesanan" no-caps @click="$router.push('/make-an-order')"
             ><q-img
@@ -48,45 +63,30 @@
           <q-tab name="kategori" no-caps @click="$router.push('/add-item')"
             ><q-img
               no-spinner
-              style="width: 20px; height: 20px"
+              style="width: 22px; height: 18px"
               :src="
                 tab == 'kategori'
-                  ? require('../assets/tambah-color.svg')
-                  : require('../assets/icon-tambah.svg')
+                  ? require('../assets/icon-komunitas-color.svg')
+                  : require('../assets/icon-komunitas.svg')
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
-              Kategori
+              Komunitas
             </div>
           </q-tab>
 
-          <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
-            ><q-img
-              no-spinner
-              style="width: 18px; height: 20px"
-              :src="
-                tab == 'penghasilan'
-                  ? require('../assets/penghasilan-color.svg')
-                  : require('../assets/icon-penghasilan.svg')
-              "
-            ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
-              Penghasilan
-            </div></q-tab
-          >
-
-          <q-tab name="karyawan" no-caps @click="$router.push('/employee')"
+          <q-tab name="karyawan" no-caps @click="$router.push('/menu')"
             ><q-img
               no-spinner
               style="width: 18px; height: 20px"
               :src="
                 tab == 'karyawan'
-                  ? require('../assets/karyawan-color.svg')
-                  : require('../assets/icon-karyawan.svg')
+                  ? require('../assets/menu-color.svg')
+                  : require('../assets/icon-menu.svg')
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
-              Pengguna
+              Menu
             </div>
           </q-tab>
         </q-tabs>

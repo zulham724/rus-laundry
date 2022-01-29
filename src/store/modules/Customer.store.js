@@ -27,6 +27,17 @@ const actions = {
             })
         })
     },
+    
+    destroy({ comit }, customer) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/deletecustomers`, customer.id).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(res)
+            })
+        })
+    },
+
     show({ comit }, customerid) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/customer/${customerid}`).then(res => {

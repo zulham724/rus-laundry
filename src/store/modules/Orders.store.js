@@ -45,6 +45,13 @@ const mutations = {
         }
     },
 
+    next(state, payload) {
+        state.data = {
+            ...payload.data,
+            data: [...state.data.data, ...payload.data.data]
+        }
+    },
+
 };
 
 const actions = {
@@ -53,8 +60,9 @@ const actions = {
     }, shopId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/getorderbyday/${shopId}`).then((res) => {
-
                 resolve(res);
+            }).catch(err => {
+                reject(err)
             })
         });
     },
@@ -65,6 +73,8 @@ const actions = {
             api.get(`/api/slave/getorderbyweek/${shopId}`).then((res) => {
 
                 resolve(res);
+            }).catch(err => {
+                reject(err)
             })
         });
     },
@@ -76,10 +86,20 @@ const actions = {
                 .get(`/api/slave/getorderbymonth/${shopId}`)
                 .then((res) => {
                     resolve(res);
+                }).catch(err => {
+                    reject(err)
                 })
         });
     },
-
+    updateStatus({ commit }, orderStatus) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/updateorderstatus`, orderStatus).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     getOrdersByShop({
         commit
     }, shopId) {
@@ -220,21 +240,6 @@ const actions = {
                 });
         });
     },
-
-    searchOrders({
-        commit
-    }, orderId) {
-        return new Promise((resolve, reject) => {
-            api.post(`/api/slave/shop/order/search`, {
-                id: orderId
-            }).then(res => {
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
-        })
-    },
-
     getStatus({
         commit
     }, dataOrder) {
@@ -256,7 +261,45 @@ const actions = {
                 reject(err)
             })
         })
-    }
+    },
+    next({ commit, state }) {
+        return new Promise((resolve, reject) => {
+            api.get(`${state.data.next_page_url}`).then(res => {
+                commit("next", { data: res.data })
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    countProfitOrdersByDay({ commit }, shopId) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getCountProfitOrdersByDay/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    countProfitOrdersByWeek({ commit }, shopId) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getCountProfitOrdersByWeek/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    countProfitOrdersByMonth({ commit }, shopId) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getCountProfitOrdersByMonth/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+
 };
 
 const getters = {};

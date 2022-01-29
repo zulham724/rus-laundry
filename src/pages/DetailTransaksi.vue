@@ -6,7 +6,7 @@
           <!-- Header Image -->
           <q-img src="~/assets/header-mesin-cuci.svg" style="height:200px" class="fixed-top mbl-child" no-spinner>
             <q-toolbar class="bg-transparent">
-              <q-btn :ripple="true" flat round size="sm" @click="$router.back()">
+              <q-btn :ripple="true" flat round size="sm" @click="$router.push('/')">
                 <q-avatar
                   size="25px"
                   icon="fas fa-arrow-left"
@@ -354,6 +354,7 @@
             </q-carousel-slide>
           </q-carousel>
           <q-btn
+          v-if="detail_order.percentage == 100"
             @click="buttonConfirm()"
             no-caps
             class="fixed-bottom mbl-child"
@@ -385,7 +386,7 @@
 
               <q-card-actions class="text-primary" vertical>
                 <q-btn
-                  to="/invoice-page"
+                  @click="updateStatusOrder()"
                   no-caps
                   flat
                   label="Konfirmasi Transaksi"
@@ -572,6 +573,7 @@ export default {
       this.$store.dispatch("Orders/show", this.orderid).then((res) => {
         this.detail_order = res.data;
         this.slide = `slide-${res.data.services[0].id}`
+        console.log("haoiiii", res.data)
       });
     },
     
