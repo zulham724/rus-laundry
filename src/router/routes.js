@@ -18,6 +18,7 @@ const routes = [{
         beforeEnter: multiguard([auth]),
         children: [{
                 path: "",
+                name: "home",
                 component: () =>
                     import ("pages/Home.vue"),
                 keepalive: true,
@@ -29,6 +30,7 @@ const routes = [{
             },
             {
                 path: "/make-an-order",
+                name: "pesanan",
                 component: () =>
                     import ("pages/MakeAnOrder.vue"),
                 props: true,
@@ -42,6 +44,7 @@ const routes = [{
 
             {
                 path: "/income",
+                name: "penghasilan",
                 component: () =>
                     import ("pages/income.vue"),
             },
@@ -54,27 +57,27 @@ const routes = [{
 
             {
                 path: "/menu",
+                name: "menu",
                 component: () =>
                     import ("pages/Menu.vue"),
             },
         ],
     },
+    {
+        path: "/community",
+        component: () =>
+            import ("layouts/SubLayout.vue"),
+        children: [{
+            path: "",
+            component: import ('pages/Post.vue')
+        }]
+    },
 
-    // {
-    //     path: "/komunitas",
-    //     component: () =>
-    //         import ("layouts/KomunitasNav.vue"),
-    //     children: [{
-    //         path: "/komunitas",
-    //         component: () =>
-    //             import ("pages/Post.vue")
-    //     }],
-    // },
 
     {
-        path: "/post",
+        path: "/comment-of-post",
         component: () =>
-            import ("pages/Post.vue")
+            import ("pages/CommentOfPost.vue")
     },
 
     {
@@ -314,6 +317,25 @@ const routes = [{
         component: () =>
             import ("src/pages/Media.vue"),
     },
+
+    {
+        path: "/take-camera",
+        component: () =>
+            import ("src/pages/TakeCamera.vue"),
+    },
+
+    {
+        path: "/take-video",
+        component: () =>
+            import ("src/pages/TakeVideo.vue"),
+    },
+
+    {
+        path: "/myprofile",
+        component: () =>
+            import ("src/pages/myprofile.vue"),
+    },
+
 
     // Always leave this as last one,
     // but you can also remove it

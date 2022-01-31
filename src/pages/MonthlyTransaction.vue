@@ -29,6 +29,11 @@
       </q-item>
     </div>
 
+     <div v-else-if="!isLoad && !orders.length">
+      <div class="text-subtitle1 text-center">Belum ada transaksi bulan ini</div>
+    </div>
+
+
     <q-list
       v-else-if="isLoad == false && orders"
       bordered
@@ -92,7 +97,7 @@ export default {
       orders_temp: [],
       isLoad: false,
       items: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-      
+
     };
   },
   mounted() {

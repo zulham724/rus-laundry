@@ -67,6 +67,22 @@
               </div>
             </div>
 
+            <div class="fixed-bottom">
+              <div class="row">
+                <div class="col-9">
+                  <div>1 item terpilih</div>
+                </div>
+                <div class="col-3">
+                  <div>
+                    <q-btn
+                      style="background: red; color: white"
+                      label="Hapus"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Skeleton -->
             <div v-if="isLoad">
               <q-list class="bg-white">
@@ -139,6 +155,7 @@ export default {
       isLoad: false,
     };
   },
+
   methods: {
     getCustomer() {
       return new Promise((resolve, reject) => {
@@ -174,8 +191,7 @@ export default {
     },
     filterCustomer(val) {
       this.update(val);
-    },
-
+    },bu
     checklis() {
       this.customers = this.customers.filter(checkcustomer);
       function checkcustomer(customer) {

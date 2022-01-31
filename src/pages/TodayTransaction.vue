@@ -29,6 +29,10 @@
       </q-item>
     </div>
 
+    <div v-else-if="!isLoad && !orders.length">
+      <div class="text-subtitle1 text-center">Belum ada transaksi hari ini</div>
+    </div>
+
     <q-list
       v-else-if="isLoad == false && orders"
       bordered
@@ -70,12 +74,6 @@
         </q-item-section>
       </q-item>
     </q-list>
-
-    <div v-else-if="!isLoad && !orders.length">
-      <div class="text-subtitle1 text-center">
-        Belum ada transaksi hari ini
-      </div>
-    </div>
   </div>
 </template>
 

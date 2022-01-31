@@ -73,11 +73,11 @@
           label="Bulan ini"
           style="border-radius: 0px 0px 15px 15px"
         />
-        <q-tab
+        <!--<q-tab
           name="custom"
           label=" Custom"
           style="border-radius: 0px 0px 15px 15px"
-        />
+        />-->
       </q-tabs>
 
       <div

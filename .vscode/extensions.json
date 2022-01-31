@@ -1,7 +1,8 @@
 {
   "recommendations": [
-    // "hookyqr.beautify",
-    "akamud.vscode-theme-onedark"
+    "akamud.vscode-theme-onedark",
+    "octref.vetur",
+    "zignd.html-css-class-completion"
   ],
   "unwantedRecommendations": [
     // "dbaeumer.jshint",

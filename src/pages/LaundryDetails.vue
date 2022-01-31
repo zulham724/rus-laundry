@@ -3,7 +3,7 @@
     <q-page-container>
       <q-header>
         <q-toolbar class="bg-white  shadow-1">
-          <q-btn dense no-caps flat style="color: white" to="/detail-transaksi">
+          <q-btn dense no-caps flat style="color: white" @click="$router.push('/detail-transaksi')">
             <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
             </q-icon>
           </q-btn>

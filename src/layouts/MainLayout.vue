@@ -29,7 +29,7 @@
               Transaksi
             </div>
           </q-tab>
-          
+
           <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
             ><q-img
               no-spinner
@@ -75,7 +75,7 @@
             </div>
           </q-tab>
 
-          <q-tab name="karyawan" no-caps @click="$router.push('/menu')"
+          <q-tab name="menu" no-caps @click="$router.push('/menu')"
             ><q-img
               no-spinner
               style="width: 18px; height: 20px"
@@ -100,11 +100,12 @@ export default {
   name: "MainLayout",
   data() {
     return {
-      tab: "home",
+      tab: this.$route.name,
       include: ['HomePage','AddItemPage','IncomePage']
     };
   },
   mounted(){
+  console.log(this.$route)
   }
 };
 </script>

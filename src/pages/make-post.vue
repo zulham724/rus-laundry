@@ -98,52 +98,108 @@
               >
             </div>
             <q-separator />
+            <q-list class="text-weight-medium">
+              <q-item tag="label" v-ripple>
+                <q-item-section>
+                  <q-item-label>Share ke WhatsApp</q-item-label>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-toggle v-model="value2" color="light-green-13" />
+                </q-item-section>
+              </q-item>
+
+              <q-item tag="label" v-ripple>
+                <q-item-section>
+                  <q-item-label>Jadwalkan untuk nanti</q-item-label>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-toggle v-model="value1" color="light-green-13" />
+                </q-item-section>
+              </q-item>
+
+              <q-item
+                tag="label"
+                @click="open('bottom')"
+                v-model="value1"
+                v-ripple
+              >
+                <q-item-section>
+                  <q-item-label>Hari Ini 06:57</q-item-label>
+                </q-item-section>
+                <q-item-section avatar class="q-mr-md">
+                  <q-icon size="15px" name="fas fa-chevron-right" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+            <q-dialog v-model="dialog" :position="position">
+              <q-card>
+                <q-date
+                  style="width: 100%; height: 20%"
+                  v-model="date"
+                  minimal
+                />
+              </q-card>
+            </q-dialog>
           </div>
         </div>
-        <q-list class="text-weight-medium">
-          <q-item tag="label" v-ripple>
-            <q-item-section>
-              <q-item-label>Share ke WhatsApp</q-item-label>
-            </q-item-section>
-            <q-item-section avatar>
-              <q-toggle v-model="value2" color="blue" />
-            </q-item-section>
-          </q-item>
-
-          <q-item tag="label" v-ripple>
-            <q-item-section>
-              <q-item-label>Jadwalkan untuk nanti</q-item-label>
-            </q-item-section>
-            <q-item-section avatar>
-              <q-toggle v-model="value1" color="green" />
-            </q-item-section>
-          </q-item>
-
-          <q-item tag="label" v-ripple>
-            <q-item-section>
-              <q-item-label>Hari Ini 06:57</q-item-label>
-            </q-item-section>
-            <q-item-section avatar class="q-mr-md">
-              <q-icon size="15px" name="fas fa-chevron-right" />
-            </q-item-section>
-          </q-item>
-        </q-list>
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+          <q-fab
+            icon="fas fa-plus"
+            external-label
+            vertical-actions-align="left"
+            direction="up"
+            color="teal"
+          >
+            <q-fab-action
+              external-label
+              label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
+              style="color: #dc2baa"
+              label-position="left"
+              class="shadow-1"
+              @click="onClick"
+              icon="perm_media"
+              label="Media"
+            />
+            <q-fab-action
+              external-label
+              label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
+              style="color: #dc2baa"
+              label-position="left"
+              class="shadow-1"
+              @click="onClick"
+              icon="photo_camera"
+              label="Kamera"
+            />
+          </q-fab>
+        </q-page-sticky>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-export default {
-    data(){
-        return{
-            value1: ref(''),
-            value2: ref('')
+import { ref } from "vue";
 
-        }
-    }
+export default {
+  data() {
+    const dialog = ref(false);
+    const position = ref("bottom");
+    return {
+      value1: ref(false),
+      value2: ref(false),
+      dialog,
+      date: ref("2019/02/01"),
+      position,
+      open(pos) {
+        position.value = pos;
+        dialog.value = true;
+      },
+    };
+  },
+  methods: {
+    onClick() {},
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
