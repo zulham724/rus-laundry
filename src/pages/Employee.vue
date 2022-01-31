@@ -135,7 +135,7 @@
               <q-img no-spinner src="~/assets/Avatar.png"></q-img>
             </q-avatar>
             <div class="text-weight-medium" style="font-size: 8px">
-              {{ employee.name}}
+              {{ employee.name }}
             </div>
             <div
               class="text-weight-medium q-mx-sm"
@@ -200,7 +200,7 @@
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Turn on Wifi" color="primary" v-close-popup />
+          <q-btn flat label="Absen Keluar" color="primary" @click="attendanceOutEmployee()" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -265,11 +265,42 @@ export default {
         if (done) done();
       });
     },
-    attendanceInEmployee(){
+    attendanceInEmployee() {
+      cordova.plugins.barcodeScanner.scan(
+        (result) => {
+          this.$store
+            .dispatch("Employee/attendanceIn", parseInt(result.text))
+            .then((res) => {
+              this.$router.push(`/employee`);
+              this.$q.notify("Berhasil Absen");
+            })
+            .catch((err) => {
+              this.dialogAttendance = true;
+            });
+        },
+        (error) => {
+          alert("Scanning failed: " + error);
+        },
+        {
+          preferFrontCamera: false, // iOS and Android
+          showFlipCameraButton: true, // iOS and Android
+          showTorchButton: true, // iOS and Android
+          torchOn: false, // Android, launch with the torch switched on (if available)
+          saveHistory: true, // Android, save scan history (default false)
+          prompt: "Place a barcode inside the scan area", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations: true, // iOS
+          disableSuccessBeep: false, // iOS and Android
+        }
+      );
+    },
+    attendanceOutEmployee(){
        cordova.plugins.barcodeScanner.scan(
        (result)=> {
       
-        this.$store.dispatch("Employee/attendance", parseInt(result.text)).then(res => {
+        this.$store.dispatch("Employee/attendanceOut", parseInt(result.text)).then(res => {
           this.$router.push(`/employee`)
           this.$q.notify("Berhasil Absen")
         }).catch(err => {

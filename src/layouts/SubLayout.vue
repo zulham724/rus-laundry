@@ -54,7 +54,7 @@
             </div>
           </q-tab>
 
-          <q-tab name="menu" no-caps
+          <q-tab name="menu" no-caps @click="$router.push('/')"
             ><q-img
               no-spinner
               style="width: 18px; height: 18px"

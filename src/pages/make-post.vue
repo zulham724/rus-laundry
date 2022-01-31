@@ -81,12 +81,44 @@
         <div class="row">
           <div class="q-pb-xl" style="height: 200px; width: 100%">
             <q-input
+              :disable="loading"
               class="q-px-md"
               placeholder="Apa yang kamu pikirkan hari ini"
               borderless
+              v-model="post.body"
               style="width: 100%"
               autogrow
             />
+            <div class="row">
+              <div v-for="(file, f) in images" :key="file.name" class="q-pa-md">
+                <q-img
+                  v-if="file.src"
+                  :src="file.src"
+                  width="100px"
+                  height="100px"
+                >
+                  <q-btn
+                    style="position: absolute; bottom: 0; right: 0; z-index: 1;"
+                    color="red"
+                    flat
+                    dense
+                    class="all-pointer-events"
+                    icon="close"
+                    @click="removeImage(f)"
+                  />
+                </q-img>
+              </div>
+            </div>
+            <q-file
+              v-show="false"
+              dense
+              filled
+              ref="selectfiles"
+              @update:model-value="previewImages"
+              multiple
+              bg-color="transparent"
+            >
+            </q-file>
             <div>
               <q-btn
                 dense
@@ -99,7 +131,7 @@
             </div>
             <q-separator />
             <q-list class="text-weight-medium">
-              <q-item tag="label" v-ripple>
+              <q-item tag="label" v-ripple :disable="loding">
                 <q-item-section>
                   <q-item-label>Share ke WhatsApp</q-item-label>
                 </q-item-section>
@@ -131,7 +163,7 @@
                 </q-item-section>
               </q-item>
             </q-list>
-            <q-dialog v-model="dialog" :position="position">
+            <q-dialog v-model="dialog" position="bottom">
               <q-card>
                 <q-date
                   style="width: 100%; height: 20%"
@@ -156,7 +188,7 @@
               style="color: #dc2baa"
               label-position="left"
               class="shadow-1"
-              @click="onClick"
+              @click="openMedia()"
               icon="perm_media"
               label="Media"
             />
@@ -166,7 +198,7 @@
               style="color: #dc2baa"
               label-position="left"
               class="shadow-1"
-              @click="onClick"
+              @click="cek()"
               icon="photo_camera"
               label="Kamera"
             />
@@ -178,26 +210,72 @@
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
   data() {
-    const dialog = ref(false);
-    const position = ref("bottom");
     return {
-      value1: ref(false),
-      value2: ref(false),
-      dialog,
-      date: ref("2019/02/01"),
-      position,
-      open(pos) {
-        position.value = pos;
-        dialog.value = true;
-      },
+      value1: false,
+      value2: false,
+      dialog: false,
+      date: "2019/02/01",
+      loading: false,
+      images: [],
+      isMultipleFile: true,
+      post:{},
     };
   },
   methods: {
-    onClick() {},
+    cek() {
+      this.files.map((item) => {
+        item.visible = "ada";
+      });
+      this.$forceUpdate();
+      console.log(this.files);
+    },
+    toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () =>
+          resolve({
+            ...file,
+            src: reader.result,
+          });
+        reader.onerror = (error) => reject(error);
+      });
+    },
+    openMedia() {
+      // console.log(this.$refs.media)
+      this.$refs.selectfiles.pickFiles();
+    },
+    async previewImages(files) {
+      console.log(files);
+      // 1. convert masing2 files jadi base64
+      let array = [];
+      await files.forEach((file, f) => {
+        array[f] = this.toBase64(file);
+      });
+
+      Promise.all(array).then((res) => {
+        this.images = res;
+      });
+    },
+    removeImage(index) {
+      this.images.splice(index, 1);
+      
+    },
+    store() {
+      let formData = new FormData();
+      formData.append("files", this.images);
+      formData.append("author_id", 0);
+      formData.append("tittle", "LAUNDRY POST");
+      formData.append("slug", "POSTED");
+      formData.append("body", this.post.body);
+      formData.append("status", "PUBLISHED");
+      formData.append("featured", 0);
+      this.$store.dispatch("Post/store", formData).then((res) => {
+        this.$q.notify("Tunggu sebentar")
+      });
+    },
   },
 };
 </script>

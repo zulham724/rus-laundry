@@ -55,31 +55,10 @@
                   style="color: #888888; margin-bottom: -30px; height: 10px"
                   no-caps
                   flat
+                  :label="selectall ? 'Batal' : 'Pilih Semua'"
+                  @click="selectAll()"  
                 >
-                  <div
-                    class="text-caption"
-                    style="font-size: 10px"
-                    @click="update"
-                  >
-                    Pilih Semua
-                  </div>
                 </q-btn>
-              </div>
-            </div>
-
-            <div class="fixed-bottom">
-              <div class="row">
-                <div class="col-9">
-                  <div>1 item terpilih</div>
-                </div>
-                <div class="col-3">
-                  <div>
-                    <q-btn
-                      style="background: red; color: white"
-                      label="Hapus"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -128,10 +107,30 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-checkbox v-model="customers[c].checked" />
+                    <q-checkbox v-model="customers[c].checked" @click="deletebutton = !deletebutton" />
                   </q-item-section>
                 </q-item>
               </q-list>
+            </div>
+
+            <div class="fixed-button">
+              <q-card v-if="deletebutton">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col-6">
+                      <div>1 item terpilih</div>
+                    </div>
+                    <div class="col-6">
+                      <div class="row justify-end">
+                        <q-btn
+                          style="background: red; color: white"
+                          label="Hapus"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
             </div>
           </div>
         </q-page>
@@ -153,6 +152,8 @@ export default {
       customers: [],
       customers_temp: [],
       isLoad: false,
+      selectall: false,
+      deletebutton: false,
     };
   },
 
@@ -191,8 +192,20 @@ export default {
     },
     filterCustomer(val) {
       this.update(val);
-    },bu
-    checklis() {
+    },
+    
+    selectAll() {
+      this.customers.forEach((item) => {
+          if (this.selectall) {
+          item.checked = false;
+        } else if (!this.selectall) {
+        item.checked = true
+        }
+      })
+       this.selectall = !this.selectall;
+    },
+    
+    checklist() {
       this.customers = this.customers.filter(checkcustomer);
       function checkcustomer(customer) {
         if (customer) {

@@ -23,7 +23,7 @@
             <div class="text-right text-weight-medium text-body1  q-pt-md q-pr-lg" style="color:#919193">
             Cabang Kudus
             </div>
-            <div class="bg-red row"> tes</div>
+            <div class=" row"> tes</div>
         </q-page>
     </q-page-container>
   </q-layout>

@@ -15,7 +15,7 @@
       </q-toolbar>
     </q-header>
       <q-page>
-          q-list
+          
       </q-page>
   </q-layout>
 </template>

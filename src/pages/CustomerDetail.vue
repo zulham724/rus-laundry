@@ -12,7 +12,7 @@
     </q-header>
 
     <q-pull-to-refresh @refresh="refresh">
-      <q-page class="q-pa-md" v-if="customer">
+      <q-page class="q-pa-md " v-if="customer">
         <div class="column">
           <div class="text-caption text-grey-8">Nama Pelanggan</div>
           <q-input dense rounded outlined :label="customer.name">

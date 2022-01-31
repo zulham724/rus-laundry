@@ -573,9 +573,12 @@ export default {
       this.$store.dispatch("Orders/show", this.orderid).then((res) => {
         this.detail_order = res.data;
         this.slide = `slide-${res.data.services[0].id}`
-        console.log("haoiiii", res.data)
+        // console.log("haoiiii", res.data)
       });
     },
+    updateStatusOrder(){
+      alert('tess')
+    }
     
   },
   mounted() {

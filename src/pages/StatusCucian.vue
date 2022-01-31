@@ -35,7 +35,7 @@
         <div class="col-12">
           <div class="text-caption text-grey-6">Estimasi pesanan</div>
           <div class="text-subtitle1" style="color:#7FCFDC">
-            {{ order.services[0].process_time }}
+            {{ order.services[0].process_time }} Jam
           </div>
         </div>
         <div class="col-12">

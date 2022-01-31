@@ -60,7 +60,7 @@
             </div>
           </q-tab>
 
-          <q-tab name="kategori" no-caps @click="$router.push('/add-item')"
+          <q-tab name="kategori" no-caps @click="$router.push('/community')"
             ><q-img
               no-spinner
               style="width: 22px; height: 18px"
@@ -105,7 +105,6 @@ export default {
     };
   },
   mounted(){
-  console.log(this.$route)
   }
 };
 </script>

@@ -168,7 +168,7 @@
               <q-dialog v-model="dialog_addPackage" persistent>
                 <q-card>
                   <q-card-section class="row justify-start">
-                    <div class="text-subtitle1">Tambah paket baru?</div>
+                    <div class="text-subtitle1 text-bold">Tambah paket baru?</div>
                     <div class="text-caption">
                       yakin ingin menambah paket baru?
                     </div>
@@ -188,7 +188,7 @@
               </q-dialog>
             </q-btn>
           </div>
-          <div class="absolute-bottom" v-else>
+          <div class="fixed-bottom" v-else>
             <q-btn
               :ripple="{ color: 'orange' }"
               @click="dialog_deletePackage = true"
@@ -200,8 +200,8 @@
               <div class="text-subtitl2" style="color: white">Hapus Paket</div>
               <q-dialog v-model="dialog_deletePackage" persistent>
                 <q-card>
-                  <q-card-section class="row justify-start">
-                    <div class="text-subtitle1">Hapus paket</div>
+                  <q-card-section class=" justify-start">
+                    <div class="text-subtitle1 text-bold">Hapus paket?</div>
                     <div class="text-caption">yakin ingin menghapus paket?</div>
                   </q-card-section>
 

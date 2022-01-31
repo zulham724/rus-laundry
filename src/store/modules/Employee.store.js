@@ -63,9 +63,18 @@ const actions = {
             })
         })
     },
-    attendance({ commit }, employeeId) {
+    attendanceIn({ commit }, employeeId) {
         return new Promise((resolve, reject) => {
-            api.post(`/api/slave/attendance`, { id: employeeId }).then(res => {
+            api.post(`/api/slave/attendances`, { id: employeeId }).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    attendanceOut({ commit }, employeeId) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/attendance/out`, { id: employeeId }).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)

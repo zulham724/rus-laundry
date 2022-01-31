@@ -62,20 +62,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-4">
-              <div class="full-width justify-end">
-                <q-btn
-                  @click="doLogout()"
-                  flat
-                  ripple
-                  no-caps
-                  dense
-                  style="color: #000000; z-index: 2"
-                  icon-right="fas fa-sign-out-alt"
-                  label="Keluar"
-                />
-              </div>
-            </div>
+            
           </div>
         </q-img>
       </div>
@@ -83,8 +70,8 @@
   </q-header>
 
   <q-page>
-    <q-card flat class="row q-pa-sm col-12">
-      <q-card-actions class="bg-white">
+    <q-card flat class="q-pa-sm col-12">
+      <q-card-section class="bg-white">
         <div class="col-6">
           <!-- Search -->
           <q-input
@@ -111,13 +98,13 @@
               <img
                 src="~/assets/icon-filter.svg"
                 alt="icon-filter"
-                style="size: 30vh"
+                style="height: 20px"
               />
             </q-btn>
           </div>
         </div>
         <!-- Icon Filter -->
-      </q-card-actions>
+      </q-card-section>
     </q-card>
 
     <!-- Skeleton -->

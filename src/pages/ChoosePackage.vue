@@ -206,7 +206,7 @@ export default {
       });
     },
     addPackage() {
-      this.dialogAddPackage = true;
+      // this.dialogAddPackage = true;
       
       this.packages.forEach((paket) => {
         if (paket.choosed) {

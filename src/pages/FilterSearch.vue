@@ -189,7 +189,7 @@
         </q-list>
 
         <!-- Button Reset dan Selesai -->
-        <div class="row q-mt-lg">
+        <div class="row q-pa-md">
           <div class="col-6 text-center">
             <q-btn rounded no-caps style="width: 30vw">
               <div style="color: #313131">Reset</div>
