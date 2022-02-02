@@ -6,7 +6,9 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-const { configure } = require('quasar/wrappers');
+const {
+    configure
+} = require('quasar/wrappers');
 
 module.exports = configure(function(ctx) {
     return {
@@ -20,7 +22,7 @@ module.exports = configure(function(ctx) {
         // --> boot files are part of "main.js"
         // https://quasar.dev/quasar-cli/boot-files
         boot: [
-            'axios', 'deviceReady', 'vuehtmltopaper', 'loadComponents'
+            'axios', 'deviceReady', 'vuehtmltopaper', 'loadComponents', 'vueplyr'
         ],
 
         // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

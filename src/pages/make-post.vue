@@ -11,7 +11,7 @@
           style="color: #5a5656; font-size: 16px"
           >Buat Postingan</q-toolbar-title
         >
-        <q-btn no-caps flat color="grey" class="text-right">
+        <q-btn no-caps flat color="grey" @click="store()" class="text-right">
           <div class="text-weight-medium text-subtitle2" style="color: #5a5656">
             Posting
           </div>
@@ -80,6 +80,7 @@
         </div>
         <div class="row">
           <div class="q-pb-xl" style="height: 200px; width: 100%">
+            <q-form ref="form">
             <q-input
               :disable="loading"
               class="q-px-md"
@@ -88,25 +89,43 @@
               v-model="post.body"
               style="width: 100%"
               autogrow
+              :rules="[ val => val && val.length > 0 || 'Silahkan masukan sesuatu']"
             />
+            </q-form>
             <div class="row">
-              <div v-for="(file, f) in images" :key="file.name" class="q-pa-md">
-                <q-img
-                  v-if="file.src"
-                  :src="file.src"
-                  width="100px"
-                  height="100px"
-                >
-                  <q-btn
-                    style="position: absolute; bottom: 0; right: 0; z-index: 1;"
-                    color="red"
-                    flat
-                    dense
-                    class="all-pointer-events"
-                    icon="close"
-                    @click="removeImage(f)"
-                  />
-                </q-img>
+              <div v-for="(file, f) in images_videos" :key="f" class="q-pa-md">
+                <div v-if="file.type.includes('image')">
+                  <q-img :src="file.src" width="100px" height="100px">
+                    <q-btn
+                      style="
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        z-index: 1;
+                      "
+                      color="red"
+                      flat
+                      dense
+                      class="all-pointer-events"
+                      icon="close"
+                      @click="removeImage(f)"
+                    />
+                  </q-img>
+                </div>
+                <div v-else-if="file.type.includes('video')">
+                  <vue-plyr :options="{ ratio: '1:1' }">
+                    <video
+                      preload="metadata"
+                      :src="`${file.src}#t=0.1}`"
+                      style="
+                        margin-left: auto;
+                        margin-right: auto;
+                        display: block;
+                        height: 50vw;
+                      "
+                    ></video>
+                  </vue-plyr>
+                </div>
               </div>
             </div>
             <q-file
@@ -131,7 +150,7 @@
             </div>
             <q-separator />
             <q-list class="text-weight-medium">
-              <q-item tag="label" v-ripple :disable="loding">
+              <q-item tag="label" v-ripple :disable="loading">
                 <q-item-section>
                   <q-item-label>Share ke WhatsApp</q-item-label>
                 </q-item-section>
@@ -140,7 +159,7 @@
                 </q-item-section>
               </q-item>
 
-              <q-item tag="label" v-ripple>
+              <q-item tag="label" v-ripple :disable="loading">
                 <q-item-section>
                   <q-item-label>Jadwalkan untuk nanti</q-item-label>
                 </q-item-section>
@@ -154,6 +173,7 @@
                 @click="open('bottom')"
                 v-model="value1"
                 v-ripple
+                :disable="loading"
               >
                 <q-item-section>
                   <q-item-label>Hari Ini 06:57</q-item-label>
@@ -218,9 +238,10 @@ export default {
       dialog: false,
       date: "2019/02/01",
       loading: false,
-      images: [],
+      images_videos: [],
+      files: [],
       isMultipleFile: true,
-      post:{},
+      post: {},
     };
   },
   methods: {
@@ -237,7 +258,7 @@ export default {
         reader.readAsDataURL(file);
         reader.onload = () =>
           resolve({
-            ...file,
+            type: file.type,
             src: reader.result,
           });
         reader.onerror = (error) => reject(error);
@@ -248,33 +269,39 @@ export default {
       this.$refs.selectfiles.pickFiles();
     },
     async previewImages(files) {
-      console.log(files);
       // 1. convert masing2 files jadi base64
+      this.files = files;
       let array = [];
       await files.forEach((file, f) => {
         array[f] = this.toBase64(file);
       });
 
       Promise.all(array).then((res) => {
-        this.images = res;
+        this.images_videos = res;
+        console.log(this.images_videos);
       });
     },
     removeImage(index) {
-      this.images.splice(index, 1);
-      
+      this.images_videos.splice(index, 1);
     },
     store() {
-      let formData = new FormData();
-      formData.append("files", this.images);
-      formData.append("author_id", 0);
-      formData.append("tittle", "LAUNDRY POST");
-      formData.append("slug", "POSTED");
-      formData.append("body", this.post.body);
-      formData.append("status", "PUBLISHED");
-      formData.append("featured", 0);
-      this.$store.dispatch("Post/store", formData).then((res) => {
-        this.$q.notify("Tunggu sebentar")
-      });
+      this.$refs.form.validate((success) =>{
+        if(success){
+          let formData = new FormData();
+          this.files.forEach((file) => {
+            // console.log(typeof image, image);
+            formData.append("files[]", file);
+          });
+          formData.append("tittle", "LAUNDRY POST");
+          formData.append("body", this.post.body);
+          formData.append("status", "PUBLISHED");
+          formData.append("featured", 0);
+          this.$store.dispatch("Post/store", formData).then((res) => {
+            this.$router.push('/community');
+            this.$q.notify("Berhasil");
+          });
+        }
+      })
     },
   },
 };

@@ -37,6 +37,19 @@ const actions = {
             })
         })
     },
+    destroy({ commit }, customerid){
+        let access = {
+            _method: 'delete',
+            id: customerid
+        }
+        return new Promise((resolve,reject) =>{
+            api.post(`/api/slave/customer/${access.id}`, access).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
 
     show({ comit }, customerid) {
         return new Promise((resolve, reject) => {

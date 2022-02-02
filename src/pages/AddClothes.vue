@@ -1,6 +1,5 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-
     <q-header>
       <q-toolbar class="bg-white q-py-md">
         <q-btn flat round size="10px" to="/add-item">
@@ -74,7 +73,7 @@
           </q-card>
 
           <!-- Skeleton -->
-          <div v-if="isLoad" >
+          <div v-if="isLoad">
             <q-list class="q-pt-md">
               <q-item v-for="c in 10" :key="c" class="q-my-sm bg-white">
                 <q-item-section>
@@ -82,7 +81,7 @@
                     <q-skeleton type="text" />
                   </q-item-label>
                   <q-item-label caption>
-                    <q-skeleton type="text" width="50px"/>
+                    <q-skeleton type="text" width="50px" />
                   </q-item-label>
                 </q-item-section>
                 <q-item-section side v-if="chooseMode">
@@ -92,8 +91,30 @@
             </q-list>
           </div>
 
-          <div v-else-if="(isLoad == false && categories.length)">
+          <div v-else-if="isLoad == false && categories.length">
             <q-list class="q-pt-md">
+              <q-item class="q-my-sm bg-white">
+                <q-slide-item @left="onLeft" @right="onRight">
+                  <template v-slot:right>
+                    <q-icon name="alarm" />
+                  </template>
+
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-avatar>
+                        <img
+                          src="https://cdn.quasar.dev/img/avatar3.jpg"
+                          draggable="false"
+                        />
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>Only right action</q-item-section>
+                  </q-item>
+                </q-slide-item>
+              </q-item>
+
+              <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+
               <q-item
                 v-for="(category, c) in categories"
                 :key="c"
@@ -128,15 +149,15 @@
             </div>
           </div>
 
-          <div class="fixed-bottom" v-if="!chooseMode" style="z-index:1;">
+          <div class="fixed-bottom" v-if="!chooseMode" style="z-index: 1">
             <q-btn
               no-caps
               class="full-width q-py-sm"
-              style="background-color: #49c2c0;"
+              style="background-color: #49c2c0"
               @click="buttonAddClothes()"
             >
-              <div class="text-weight-regular" style="color: white;">
-                Tambah Pakaian 
+              <div class="text-weight-regular" style="color: white">
+                Tambah Pakaian
               </div>
             </q-btn>
           </div>
@@ -234,12 +255,14 @@
         </q-pull-to-refresh>
       </q-page>
     </q-page-container>
-
   </q-layout>
 </template>
 
 <script>
 import { debounce } from "quasar";
+import { useQuasar } from 'quasar'
+import { onBeforeUnmount } from 'vue'
+
 export default {
   data() {
     return {
@@ -262,14 +285,16 @@ export default {
     getClothes() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
-        this.$store.dispatch("ServiceCategories/index").then((res) => {
-          this.categories = this.categories_temp = res.data.map((item) => {
-            item.checkCategory = false;
-            return item;
-          });
-          resolve(res.data);
-        })
-        .catch((err) => {
+        this.$store
+          .dispatch("ServiceCategories/index")
+          .then((res) => {
+            this.categories = this.categories_temp = res.data.map((item) => {
+              item.checkCategory = false;
+              return item;
+            });
+            resolve(res.data);
+          })
+          .catch((err) => {
             reject(err);
             // console.log(err);
           })
@@ -287,10 +312,10 @@ export default {
       this.categories = this.categories_temp.filter(
         (v) => v.name.toLowerCase().indexOf(needle) > -1
       );
-      if(!this.categories.length){
-         this.categories = this.categories_temp.filter(
-        (v) => v.service_unit.name.toLowerCase().indexOf(needle) > -1
-      );
+      if (!this.categories.length) {
+        this.categories = this.categories_temp.filter(
+          (v) => v.service_unit.name.toLowerCase().indexOf(needle) > -1
+        );
       }
     },
     filterCategory(val) {
@@ -316,27 +341,25 @@ export default {
         if (done) done();
       });
     },
-    orderBy(val){
-      if(val == "Terbaru"){
-       this.categories.sort((a,b) => {
-        return new Date(b.created_at) - new Date(a.created_at)
-        })
-
-      }else if(val == "Terlama"){
-        this.categories.sort((a,b) => {
-        return new Date(a.created_at) - new Date(b.created_at)
-        })
-
-      }else if(val == "A-Z"){
-        this.categories.sort((a,b)=>{
-          return a.name.localeCompare(b.name)
-        })
-      }else if(val == "Z-A"){
-       this.categories.sort((a,b)=>{
-          return b.name.localeCompare(a.name)
-        })
+    orderBy(val) {
+      if (val == "Terbaru") {
+        this.categories.sort((a, b) => {
+          return new Date(b.created_at) - new Date(a.created_at);
+        });
+      } else if (val == "Terlama") {
+        this.categories.sort((a, b) => {
+          return new Date(a.created_at) - new Date(b.created_at);
+        });
+      } else if (val == "A-Z") {
+        this.categories.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+      } else if (val == "Z-A") {
+        this.categories.sort((a, b) => {
+          return b.name.localeCompare(a.name);
+        });
       }
-    }
+    },
   },
   mounted() {
     this.filterCategory = debounce(this.filterCategory, 1000);

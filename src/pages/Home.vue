@@ -14,9 +14,10 @@
         "
       >
         <q-img
+          v-if="d >= 0 && d <= 10"
           no-spinner
           src="~/assets/header-home.png"
-          alt="header-home"
+          alt="header-home-pagi"
           class="shadow-1"
           style="border-radius: 0px 0px 0px 70px; height: 25vh"
         >
@@ -62,22 +63,127 @@
                 </div>
               </div>
             </div>
-            
           </div>
         </q-img>
+
+        <q-img
+          v-else-if="d >= 11 && d <= 17"
+          no-spinner
+          src="~/assets/siang.png"
+          alt="header-home-siang"
+          class="shadow-1"
+          style="border-radius: 0px 0px 0px 70px; height: 25vh"
+        >
+          <!-- information -->
+          <div class="row bg-transparent" style="width: 100vw">
+            <div class="col-8">
+              <div class="float-left">
+                <!-- Avatar Person -->
+                <div>
+                  <q-avatar size="7vh">
+                    <img src="~/assets/Avatar.png" alt="avatar-person" />
+                  </q-avatar>
+                </div>
+              </div>
+              <div class="float-left q-ml-md q-gutter-y-xs">
+                <div>
+                  <div
+                    style="font-size: 20px; color: #313131; margin-bottom: -1vh"
+                    class="text-subtitle text-bold float-left"
+                  >
+                    Selamat Siang
+                  </div>
+                </div>
+
+                <br />
+                <!-- Nama User -->
+                <div class="text-subtitle1 float-left" style="color: #313131">
+                  {{ Auth.auth.shop.name }}
+                </div>
+                <br />
+                <!-- Date -->
+                <div
+                  class="text-caption float-left q-px-xs"
+                  style="
+                    font-size: 11px;
+                    min-width: 10vw;
+                    background-color: #ffffff;
+                    color: #888888;
+                    border-radius: 10px;
+                  "
+                >
+                  {{ moment().format("DD MMMM YYYY") }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </q-img>
+
+        <q-img
+          v-else-if="d >= 18 && d <= 23"
+          no-spinner
+          src="~/assets/malam.png"
+          alt="header-home-malam"
+          class="shadow-1"
+          style="border-radius: 0px 0px 0px 70px; height: 25vh"
+        >
+          <!-- information -->
+          <div class="row bg-transparent" style="width: 100vw">
+            <div class="col-8">
+              <div class="float-left">
+                <!-- Avatar Person -->
+                <div>
+                  <q-avatar size="7vh">
+                    <img src="~/assets/Avatar.png" alt="avatar-person" />
+                  </q-avatar>
+                </div>
+              </div>
+              <div class="float-left q-ml-md q-gutter-y-xs">
+                <div>
+                  <div
+                    style="font-size: 20px; color: #313131; margin-bottom: -1vh"
+                    class="text-subtitle text-bold float-left"
+                  >
+                    Selamat Malam
+                  </div>
+                </div>
+
+                <br />
+                <!-- Nama User -->
+                <div class="text-subtitle1 float-left" style="color: #313131">
+                  {{ Auth.auth.shop.name }}
+                </div>
+                <br />
+                <!-- Date -->
+                <div
+                  class="text-caption float-left q-px-xs"
+                  style="
+                    font-size: 11px;
+                    min-width: 10vw;
+                    background-color: #ffffff;
+                    color: #888888;
+                    border-radius: 10px;
+                  "
+                >
+                  {{ moment().format("DD MMMM YYYY") }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </q-img>
+        
       </div>
     </q-pull-to-refresh>
   </q-header>
 
   <q-page>
-    <q-card flat class="q-pa-sm col-12">
-      <q-card-section class="bg-white">
+    <q-card flat class="q-pa-sm">
+      <q-card-section class="row bg-white">
         <div class="col-6">
           <!-- Search -->
           <q-input
             dense
             type="search"
-            style="width: 50vw"
             rounded
             outlined
             v-model="search"
@@ -259,10 +365,12 @@ export default {
       orders: {},
       orders_temp: {},
       isLoad: false,
+      d:null,
     };
   },
   mounted() {
     this.getOrders();
+    this.timeChecker();
 
     // pairingTimes();
   },
@@ -316,6 +424,10 @@ export default {
         if (done) done();
       });
     },
+    timeChecker() {
+      this.d = new Date().getHours();
+      // console.log(this.d.getHours() > 10 && this.d.getHours() < 17)
+    },
     searchTransaksi() {
       this.$store
         .dispatch("Orders/searchOrders", { value: this.search })
@@ -350,6 +462,7 @@ export default {
         }
       );
     },
+
     onLoadRef(index, done) {
       if (this.orders.next_page_url) {
         this.$store.dispatch("Orders/next").then((res) => {

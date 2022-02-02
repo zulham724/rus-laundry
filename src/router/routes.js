@@ -73,6 +73,11 @@ const routes = [{
         }]
     },
 
+    {
+        path: "/notification",
+        component: () =>
+            import ("pages/Notification.vue")
+    },
 
     {
         path: "/comment-of-post",
@@ -328,6 +333,66 @@ const routes = [{
         path: "/take-video",
         component: () =>
             import ("src/pages/TakeVideo.vue"),
+    },
+
+    {
+        path: "/edit",
+        component: () =>
+            import ("src/pages/Edit.vue"),
+    },
+
+    {
+        path: "/edit-profile",
+        component: () =>
+            import ("src/pages/EditProfile.vue"),
+    },
+
+    {
+        path: "/followers",
+        component: () =>
+            import ("src/pages/Followers.vue"),
+    },
+
+    {
+        path: "/following",
+        component: () =>
+            import ("src/pages/Following.vue"),
+    },
+
+    {
+        path: "/search-detail-person",
+        component: () =>
+            import ("src/pages/SearchDetailPerson.vue"),
+    },
+
+    {
+        path: "/search-detail-tagar",
+        component: () =>
+            import ("src/pages/SearchDetailTagar.vue"),
+    },
+
+    {
+        path: "/report-post",
+        component: () =>
+            import ("src/pages/ReportPost.vue"),
+    },
+
+    {
+        path: "/description-report-post",
+        component: () =>
+            import ("src/pages/DescriptionReportPost.vue"),
+    },
+
+    {
+        path: "/report-account",
+        component: () =>
+            import ("src/pages/ReportAccount.vue"),
+    },
+
+    {
+        path: "/description-report-account",
+        component: () =>
+            import ("src/pages/DescriptionReportAccount.vue"),
     },
 
     {

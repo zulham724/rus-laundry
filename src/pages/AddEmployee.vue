@@ -2,7 +2,13 @@
   <q-layout>
     <q-header>
       <q-toolbar class="bg-white shadow-1">
-        <q-btn no-caps class="q-pa-md" flat style="color: white" @click="$router.back()">
+        <q-btn
+          no-caps
+          class="q-pa-md"
+          flat
+          style="color: white"
+          @click="$router.back()"
+        >
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
@@ -29,7 +35,9 @@
             outlined
             label="Nama"
             v-model="employee.name"
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
           />
           <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" />
           <q-input
@@ -39,7 +47,9 @@
             outlined
             type="number"
             label="No Telephone"
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
           />
           <q-input
             v-model="employee.email"
@@ -48,14 +58,16 @@
             outlined
             type="email"
             label="Alamat Email"
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
           />
         </q-form>
       </q-page>
 
       <q-footer>
         <q-btn
-          @click=" this.dialogAdd = true;"
+          @click="this.dialogAdd = true"
           class="q-py-md"
           no-caps
           style="width: 100%; background-color: #49c2c0"
@@ -68,7 +80,7 @@
         <q-card style="width: 300px">
           <q-card-section>
             <div class="text-weight-bold text-left" style="font-size: 15px">
-              Tambah data
+              Tambah data?
             </div>
             <div class="text-weight-light text-left" style="font-size: 10px">
               yakin ingin menambah data?
@@ -89,7 +101,7 @@
               </div>
               <div class="col-3 text-left q-pr-sm">
                 <q-btn
-                 @click="store()"
+                  @click="store()"
                   class="shadow-1"
                   no-caps
                   flat
@@ -115,16 +127,16 @@ export default {
   },
 
   methods: {
-   store(){
-     this.$refs.form.validate().then((success) => {
-       if(success){
-        this.$store.dispatch("Employee/store", this.employee).then(res => {
-          this.$router.push('/employee')
-          this.$q.notify("Berhasil")
-        })
-       }
-     })
-   }
+    store() {
+      this.$refs.form.validate().then((success) => {
+        if (success) {
+          this.$store.dispatch("Employee/store", this.employee).then((res) => {
+            this.$router.push("/employee");
+            this.$q.notify("Berhasil");
+          });
+        }
+      });
+    },
   },
 };
 </script>

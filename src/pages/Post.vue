@@ -31,7 +31,7 @@
           </q-btn>
         </div>
         <div class="col-1 text-center self-center">
-          <q-btn dense round flat>
+          <q-btn dense round flat @click="$router.push('/notification')">
             <q-icon
               name="far fa-bell"
               sizes="20px"
@@ -71,8 +71,8 @@
     <q-page-container>
       <q-page class="q-mt-sm bg-white">
         <!-- Postingan -->
-        <div v-for="n in 5" :key="n" class="q-ma-md q-py-md">
-          <div class="row">
+        <div v-for="post in posts.data" :key="post.id" class="q-py-md">
+          <div class="row q-px-md">
             <div class="col-2">
               <!-- Image profile -->
               <q-avatar size="60px" style="background-color: #888888">
@@ -85,14 +85,14 @@
                 class="text-weight-medium"
                 style="color: #3a3838; font-size: 20px"
               >
-                IndonesiaLaundry
+                {{ post.author_id.name }}
               </div>
               <!-- Waktu posting -->
               <div
                 class="text-weight-medium"
                 style="color: #b1b1b1; font-size: 12px"
               >
-                2 hari
+                {{ moment(post.created_at).locale("id").fromNow() }}
               </div>
             </div>
             <div class="col-2 text-right">
@@ -104,33 +104,61 @@
           </div>
 
           <!-- Isi post -->
-          <div class="row">
+          <div class="row q-px-md">
             <div
               class="q-py-sm text-weight-medium text-justify"
               style="font-size: 15px; color: #5a5656"
             >
               <div>
                 <span v-if="!readMoreActivated"
-                  >{{ longText.slice(0, 130) }}
+                  >{{ post.body.slice(0, 130) }}
                 </span>
                 <a
                   style="color: #b1b1b1; font-size: 12px"
                   class="cursor-pointer text-weight-light"
-                  v-if="!readMoreActivated"
+                  v-if="post.body.length > 130"
                   @click="activateReadMore"
                 >
                   ..selengkapnya
                 </a>
-                <span v-if="readMoreActivated" v-html="longText"></span>
+                <span v-if="readMoreActivated" v-html="post.body"></span>
               </div>
             </div>
           </div>
           <!-- Isi video/foto -->
-          <div class="row bg-blue full-width q-my-xs" style="height: auto">
-            <q-img
-              no-spinner
-              src="https://source.unsplash.com/random/600x400/?laundry"
-            />
+          <div class="full-width full-height q-py-xs">
+            <div v-if="post.files.length">
+              <q-carousel
+                v-model="slide"
+                transition-prev="scale"
+                transition-next="scale"
+                swipeable
+                animated
+                control-color="blue"
+                :navigation="post.files.length > 1"
+                padding
+                arrows
+              >
+                <q-carousel-slide
+                class="q-my-md"
+                  v-for="(file, f) in post.files"
+                  :key="file.id"
+                  :name="f"
+                 style="padding:0px; margin:0px"
+                >
+                  <vue-plyr v-if="file.filetype.includes('video')">
+                    <video :src="storageUrl + `/` + file.src"></video>
+                  </vue-plyr>
+
+                  <q-img
+                    v-else-if="file.filetype.includes('image')"
+                    :src="storageUrl + `/` + file.src"
+                    style="width:100%; height:100%"
+                  >
+                  </q-img>
+                </q-carousel-slide>
+              </q-carousel>
+            </div>
           </div>
 
           <!-- Button like, comment, show -->
@@ -147,7 +175,7 @@
                 class="text-weight-medium self-center"
                 style="color: #b1b1b1; font-size: 15px"
               >
-                2000
+                {{ post.likes_count }}
               </div>
             </div>
             <div class="row col-3 self-center">
@@ -162,7 +190,7 @@
                 class="text-weight-medium self-center"
                 style="color: #b1b1b1; font-size: 15px"
               >
-                100
+                {{ post.comments_count }}
               </div>
             </div>
             <div class="row col-3 self-center">
@@ -177,22 +205,23 @@
                 class="text-weight-medium self-center"
                 style="color: #b1b1b1; font-size: 15px"
               >
-                100
+                {{ post.readers_count }}
               </div>
             </div>
           </div>
 
           <!-- Button show comment -->
           <div
-          @click="$router.push('/comment-of-post')"
+            v-if="post.comments_count > 0"
+            @click="$router.push('/comment-of-post')"
             class="text-weight-regular"
             style="color: #b1b1b1; font-size: 10px"
           >
-            Lihat 200 komentar
+            Lihat {{ post.comments_count }} komentar
           </div>
 
           <!-- Show comment  -->
-          <div class="row self-center">
+          <div class="row self-center q-px-md">
             <div
               class="text-weight-regular self-center"
               style="font-size: 12px; color: #3a3838"
@@ -294,27 +323,36 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "PostPage",
   include: ["PostPage"],
   data() {
     return {
       tab: "postingan",
+      posts: {},
       search: "",
+      slide: 0,
       dialogOption: false,
       readMoreActivated: false,
-      longText:  `Cara membersihkan pakaian dari minyakss dan kotoran membandel. bisa
-            simak video yang saya bagikan. Masukkan pakaian kotor dan detergen ke dalam tabung mesin cuci.
-Isi tabung dengan air bersuhu sesuai kebutuhan. Untuk menentukan volume air yang sesuai, mengaculah pada buku manual mesin cuci.
-Jalankan siklus pencucian. `,
+      storageUrl: STORAGE_URL,
     };
   },
+  mounted() {
+    this.getAllPosts();
+  },
   methods: {
+    moment,
     buttonOption() {
       this.dialogOption = true;
     },
     activateReadMore() {
       this.readMoreActivated = true;
+    },
+    getAllPosts() {
+      this.$store.dispatch("Post/index").then((res) => {
+        this.posts = res.data;
+      });
     },
   },
 };

@@ -56,7 +56,7 @@
                   no-caps
                   flat
                   :label="selectall ? 'Batal' : 'Pilih Semua'"
-                  @click="selectAll()"  
+                  @click="selectAll()"
                 >
                 </q-btn>
               </div>
@@ -107,7 +107,10 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-checkbox v-model="customers[c].checked" @click="deletebutton = !deletebutton" />
+                    <q-checkbox
+                      v-model="customers[c].checked"
+                      @click="dialogDelete()"
+                    />
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -124,6 +127,7 @@
                       <div class="row justify-end">
                         <q-btn
                           style="background: red; color: white"
+                          @click="deleteCustomers()"
                           label="Hapus"
                         />
                       </div>
@@ -180,36 +184,58 @@ export default {
       });
     },
     update(value) {
-      console.log(value);
+      // console.log(value);
       if (value == "") {
         this.customers = this.customers_temp;
       }
-
-      const needle = value.toLowerCase();
-      this.customers = this.customers_temp.filter(
-        (v) => v.name.toLowerCase().indexOf(needle) > -1
-      );
     },
     filterCustomer(val) {
       this.update(val);
     },
-    
+
+     deleteCustomers() {
+      let customers = this.customers.filter((item) => item.checked).map((item) => item.checked)
+
+      this.$store
+        .dispatch("Customer/destroy", customers)
+        .then((res) => {
+          this.customers = this.customers.filter(
+            (item) => !item.checked
+          );
+          this.$q.notify("Berhasil");
+        });
+    },
+
     selectAll() {
       this.customers.forEach((item) => {
-          if (this.selectall) {
+        if (this.selectall) {
           item.checked = false;
+          this.deletebutton = false
         } else if (!this.selectall) {
-        item.checked = true
-        }
-      })
-       this.selectall = !this.selectall;
+          item.checked = true;
+          this.deletebutton = true
+        } 
+  
+      });
+      this.selectall = !this.selectall;
+
     },
-    
+    dialogDelete(){
+      let check = this.customers.filter((item) => item.checked).length
+      if(check > 0){
+        this.deletebutton = true
+      }else{
+        this.deletebutton = false
+      }
+    },
     checklist() {
       this.customers = this.customers.filter(checkcustomer);
-      function checkcustomer(customer) {
+      function checkcustomer (customer){
         if (customer) {
-          console.log(customer);
+        } else if (!item.checked) {
+          deletebutton = true;
+        } else if (item.checked) {
+          deletebutton = false;
         }
       }
     },
