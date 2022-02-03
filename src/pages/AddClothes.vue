@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Jenis Pakaian</q-toolbar-title     
+          >Pilih Jenis Pakaian</q-toolbar-title
         >
         <q-btn
           class="float-right"
@@ -252,8 +252,6 @@ import { onBeforeUnmount } from "vue";
 import Acl from "src/pages/AddClothesList.vue";
 
 export default {
-  
-
   components: {
     "add-clothes-list": Acl,
   },
@@ -268,6 +266,7 @@ export default {
       chooseMode: false,
       isLoad: false,
       val: null,
+      clothes: null,
     };
   },
 
@@ -311,6 +310,16 @@ export default {
         );
       }
     },
+    updateName() {
+      let id = this.clothes.id;
+      this.$store
+        .dispatch("ServiceCategories/updateName", this.clothes)
+        .then((res) => {
+          this.$router.push("/clothes/${id}");
+          this.$q.notify("Berhasil");
+        });
+    },
+
     filterCategory(val) {
       this.update(val);
     },

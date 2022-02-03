@@ -41,7 +41,7 @@
         </div>
 
         <!-- Skeleton -->
-        <div v-if="isLoad==true">
+        <div v-if="isLoad == true">
           <q-card flat class="q-mt-sm full-width" v-for="n in 10" :key="n">
             <q-card-section>
               <div class="row">
@@ -120,7 +120,12 @@
           </div>
         </div>
         <!-- <q-page-sticky position="bottom" :offset="[18, 18]"> -->
-        <q-btn no-caps class="full-width q-pt-sm fixed-bottom bg-white" to="/basket" style="z-index: 999">
+        <q-btn
+          no-caps
+          class="full-width q-pt-sm fixed-bottom bg-white"
+          to="/basket"
+          style="z-index: 999"
+        >
           <q-avatar>
             <q-img
               no-spinner
@@ -176,16 +181,21 @@ export default {
     getCategoriesByShop() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
-        this.$store.dispatch("ServiceCategories/index").then((res) => {
-          this.categories = this.categories_temp = res.data.map((category) => {
-            this.Orders.order.charts.forEach((item2) => {
-              if (category.id == item2.id) {
-                category.added = true;
+        this.$store
+          .dispatch("ServiceCategories/index")
+          .then((res) => {
+            this.categories = this.categories_temp = res.data.map(
+              (category) => {
+                this.Orders.order.charts.forEach((item2) => {
+                  if (category.id == item2.id) {
+                    category.added = true;
+                  }
+                });
+                return category;
               }
-            });
-            return category;
-          });
-        }).catch((err) => {
+            );
+          })
+          .catch((err) => {
             reject(err);
             // console.log(err);
           })
@@ -216,6 +226,7 @@ export default {
         (v) => v.name.toLowerCase().indexOf(needle) > -1
       );
     },
+
     filterCategory(value) {
       this.update(value);
     },

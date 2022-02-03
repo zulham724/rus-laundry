@@ -16,7 +16,7 @@
                 round
                 color="black"
                 icon="close"
-                @click="buttonBack"
+                @click="buttonBack && updateName"
                 size="40%"
               />
               <!-- <q-icon name="close"  @click="text = '' && buttonBack" size="80%" /> -->
@@ -151,6 +151,13 @@ export default {
           return b.name.localeCompare(a.name);
         });
       }
+    },
+    updateName() {
+      let id = this.clothes.id;
+      this.$store.dispatch("ServiceCategories", this.clothes).then((res) => {
+        this.$router.push("/detail-clothes/${id}");
+        this.$q.notify("Berhasil");
+      });
     },
     // onRight({ reset }) {
     //   this.$q.notify("Right action triggered. Resetting in 100 second.");

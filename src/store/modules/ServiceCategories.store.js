@@ -40,7 +40,15 @@ const actions = {
             })
         })
     },
-    
+    updateName({commit}, clothes) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/updateclothesname`, clothes).then(res => {
+                resolve(res)
+            }).catch(err =>{
+                reject(err)
+            })
+        })
+    }
 
 
 };
