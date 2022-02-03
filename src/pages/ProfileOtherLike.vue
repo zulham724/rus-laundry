@@ -9,7 +9,7 @@
           flat
           style="color: white"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #9b27f1">
+          <q-icon size="25px" name="fas fa-arrow-left" style="color: #9B27F1">
           </q-icon>
         </q-btn>
 
@@ -20,19 +20,14 @@
         >
         <!-- <q-space>  </q-space> -->
         <!-- Button option -->
-        <q-btn no-caps outline dense style="color: #898585">
-          <div
-            class="text-weight-medium q-px-sm"
-            style="color: #898585; font-size: 13px"
-          >
-            Edit profil
-          </div>
+        <q-btn dense flat round @click="buttonOption()">
+          <q-icon name="fas fa-ellipsis-v" size="16px" color="black"></q-icon>
         </q-btn>
       </q-toolbar>
     </q-header>
     <q-page-container>
       <q-page class="">
-        <div class="q-pa-md q-mb-lg">
+        <div class="q-pa-md">
           <div class="row">
             <div class="col-4 text-left">
               <q-avatar size="80px" style="background-color: #888888">
@@ -44,13 +39,17 @@
                 class="text-weight-medium text-right"
                 style="color: #919193; font-size: 15px"
               >
-                Cabang Kudus
+                Latihan Laundry
               </div>
               <div
                 class="row col-12 q-px-sm q-pt-md"
                 style="
                   border-radius: 20px 0px 20px 0px;
-                  background-color: #f5f7f9;
+                  background-image: linear-gradient(
+                    to top right,
+                    #ffffff,
+                    #f5f7f9
+                  );
                   width: auto;
                 "
               >
@@ -98,12 +97,36 @@
           >
             Laundry Indonesia layanan laundry paling jos gandos
           </div>
+          <!-- Button Follow -->
+          <div class="q-pt-sm">
+            <q-btn
+              dense
+              flat
+              no-caps
+              style="
+                background-image: linear-gradient(
+                  to top right,
+                  #ff9ac5,
+                  #7900ff
+                );
+                border-radius: 5px;
+                background-color: #7900ff;
+              "
+            >
+              <div
+                class="text-weight-medium q-px-lg"
+                style="font-size: 12px; color: white"
+              >
+                Ikuti
+              </div>
+            </q-btn>
+          </div>
         </div>
         <q-separator></q-separator>
 
-        <div>
+        <!-- Postingan -->
+        <!-- <div>
           <q-infinite-scroll @load="onLoad" :offset="250">
-            <!-- Postingan -->
             <q-intersection
               :ref="`intersection_${post.id}`"
               v-for="post in posts.data"
@@ -117,6 +140,11 @@
               ></item-post-component>
             </q-intersection>
           </q-infinite-scroll>
+        </div> -->
+
+        <div class="row text-center justify-center">
+            <q-img no-spinner src="~/assets/animasi-proses-cuci.gif" style="width: 200px"></q-img>
+            <div class="q-pt-md text-weight-medium" style="color:#3A3838; font-size: 15px">Video yang disukai pengguna ini bersifat private</div>
         </div>
 
         <q-dialog v-model="dialogOption" position="bottom">
@@ -129,156 +157,55 @@
                 <q-separator size="5px"></q-separator>
               </div>
             </q-card-section>
-            <!-- Button Edit -->
+            <!-- Button report akun -->
             <q-card-actions class="q-pt-md">
               <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-pen"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Edit postingan
-                  </div>
+                <div
+                  class="row full-width q-py-sm text-weight-regular"
+                  style="font-size: 20px; color: #3a3838"
+                >
+                  Laporkan akun ini
                 </div>
               </q-btn>
             </q-card-actions>
 
-            <!-- Button Share -->
-            <q-card-actions class="q-pt-md">
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-share-alt"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Bagikan postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Delete -->
+            <!-- Button Share akun -->
             <q-card-actions>
               <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-exclamation-triangle"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Hapus postingan
-                  </div>
+                <div
+                  class="row full-width q-py-sm text-weight-regular"
+                  style="font-size: 20px; color: #3a3838"
+                >
+                  Bagikan akun ini
                 </div>
               </q-btn>
             </q-card-actions>
 
-            <!-- Button Arsip Post -->
+            <!-- Button Blokir akun -->
             <q-card-actions>
               <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-archive"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Arsipkan postingan
-                  </div>
+                <div
+                  class="row full-width q-py-sm text-weight-regular"
+                  style="font-size: 20px; color: #3a3838"
+                >
+                  Blokir akun ini
                 </div>
               </q-btn>
             </q-card-actions>
 
-            <!-- Button Nonaktifkan Comment -->
+            <!-- Button Bisukan notifikasi akun -->
             <q-card-actions>
               <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-archive"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Nonaktifkan komentar
-                  </div>
+                <div
+                  class="row full-width q-py-sm text-weight-regular"
+                  style="font-size: 20px; color: #3a3838"
+                >
+                  Bisukan notifikasi dari akun ini
                 </div>
               </q-btn>
             </q-card-actions>
           </q-card>
         </q-dialog>
-
-        <q-page-sticky position="bottom-right" :offset="[18, 60]">
-          <q-fab
-            icon="fas fa-plus"
-            external-label
-            vertical-actions-align="left"
-            direction="up"
-            style="
-              background-image: linear-gradient(to right top, #ff9ac5, #7900ff);
-              color: white;
-            "
-          >
-            <q-fab-action
-              external-label
-              label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
-              style="color: #dc2baa; background-color: white"
-              label-position="left"
-              class="shadow-1"
-              @click="openMedia()"
-              icon="perm_media"
-              label="Media"
-            />
-            <q-fab-action
-              external-label
-              label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
-              style="color: #dc2baa; background-color: white"
-              label-position="left"
-              class="shadow-1"
-              @click="cek()"
-              icon="photo_camera"
-              label="Kamera"
-            />
-          </q-fab>
-        </q-page-sticky>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -289,13 +216,13 @@ import { mapState } from "vuex";
 import PostCardComponent from "src/components/post/PostCardComponent.vue";
 
 export default {
-  name: "MyProfilePage",
-  include: ["MyProfilePage"],
+  name: "ProfileOtherLikePage",
+  include: ["ProfileOtherLikePage"],
   components: {
     "item-post-component": PostCardComponent,
   },
 
-  computed: {
+  computed:{
     ...mapState(["Post"]),
   },
 
@@ -310,7 +237,7 @@ export default {
     this.getAllPosts();
   },
 
-  created() {
+  created(){
     if (!this.Post.posts.data) this.$store.dispatch("Post/index");
   },
 
@@ -338,12 +265,10 @@ export default {
       console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
       // alert(post.size.height)
     },
-    onLoad(index, done) {
-      this.Post.posts.next_page_url
-        ? this.$store.dispatch("Post/next").then((res) => {
-            done();
-          })
-        : done();
+    onLoad(index, done){
+      this.Post.posts.next_page_url ? this.$store.dispatch("Post/next").then(res => {
+        done()
+      }) : done();
     },
   },
 };

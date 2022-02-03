@@ -41,7 +41,7 @@
         </div>
         <div class="col-1 text-center q-pr-xs self-center">
           <q-avatar size="35px" style="background-color: #888888">
-            <q-img src="~/assets/Avatar.png"></q-img>
+            <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar>
         </div>
       </div>
@@ -70,290 +70,77 @@
     </q-header>
     <q-page-container>
       <q-page class="q-mt-sm bg-white">
-        <!-- Postingan -->
-        <div v-for="post in posts.data" :key="post.id" class="q-py-md">
-          <div class="row q-px-md">
-            <div class="col-2">
-              <!-- Image profile -->
-              <q-avatar size="60px" style="background-color: #888888">
-                <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-              </q-avatar>
-            </div>
-            <div class="col-8 q-pl-md">
-              <!-- Nama Profile -->
-              <div
-                class="text-weight-medium"
-                style="color: #3a3838; font-size: 20px"
-              >
-                {{ post.author_id.name }}
-              </div>
-              <!-- Waktu posting -->
-              <div
-                class="text-weight-medium"
-                style="color: #b1b1b1; font-size: 12px"
-              >
-                {{ moment(post.created_at).locale("id").fromNow() }}
-              </div>
-            </div>
-            <div class="col-2 text-right">
-              <!-- Button option -->
-              <q-btn dense flat round @click="buttonOption()">
-                <q-icon name="fas fa-ellipsis-v" size="16px"></q-icon>
-              </q-btn>
-            </div>
-          </div>
-
-          <!-- Isi post -->
-          <div class="row q-px-md">
-            <div
-              class="q-py-sm text-weight-medium text-justify"
-              style="font-size: 15px; color: #5a5656"
-            >
-              <div>
-                <span v-if="!readMoreActivated"
-                  >{{ post.body.slice(0, 130) }}
-                </span>
-                <a
-                  style="color: #b1b1b1; font-size: 12px"
-                  class="cursor-pointer text-weight-light"
-                  v-if="post.body.length > 130"
-                  @click="activateReadMore"
-                >
-                  ..selengkapnya
-                </a>
-                <span v-if="readMoreActivated" v-html="post.body"></span>
-              </div>
-            </div>
-          </div>
-          <!-- Isi video/foto -->
-          <div class="full-width full-height q-py-xs">
-            <div v-if="post.files.length">
-              <q-carousel
-                v-model="slide"
-                transition-prev="scale"
-                transition-next="scale"
-                swipeable
-                animated
-                control-color="blue"
-                :navigation="post.files.length > 1"
-                padding
-                arrows
-              >
-                <q-carousel-slide
-                class="q-my-md"
-                  v-for="(file, f) in post.files"
-                  :key="file.id"
-                  :name="f"
-                 style="padding:0px; margin:0px"
-                >
-                  <vue-plyr v-if="file.filetype.includes('video')">
-                    <video :src="storageUrl + `/` + file.src"></video>
-                  </vue-plyr>
-
-                  <q-img
-                    v-else-if="file.filetype.includes('image')"
-                    :src="storageUrl + `/` + file.src"
-                    style="width:100%; height:100%"
-                  >
-                  </q-img>
-                </q-carousel-slide>
-              </q-carousel>
-            </div>
-          </div>
-
-          <!-- Button like, comment, show -->
-          <div class="row">
-            <div class="row col-3 self-center">
-              <q-btn dense round flat size="18px">
-                <q-Icon
-                  name="far fa-heart"
-                  size="25px"
-                  style="color: #b1b1b1"
-                ></q-Icon>
-              </q-btn>
-              <div
-                class="text-weight-medium self-center"
-                style="color: #b1b1b1; font-size: 15px"
-              >
-                {{ post.likes_count }}
-              </div>
-            </div>
-            <div class="row col-3 self-center">
-              <q-btn dense round flat size="18px">
-                <q-Icon
-                  name="far fa-comments"
-                  size="25px"
-                  style="color: #b1b1b1"
-                ></q-Icon>
-              </q-btn>
-              <div
-                class="text-weight-medium self-center"
-                style="color: #b1b1b1; font-size: 15px"
-              >
-                {{ post.comments_count }}
-              </div>
-            </div>
-            <div class="row col-3 self-center">
-              <q-btn dense round flat size="18px">
-                <q-Icon
-                  name="far fa-eye"
-                  size="25px"
-                  style="color: #b1b1b1"
-                ></q-Icon>
-              </q-btn>
-              <div
-                class="text-weight-medium self-center"
-                style="color: #b1b1b1; font-size: 15px"
-              >
-                {{ post.readers_count }}
-              </div>
-            </div>
-          </div>
-
-          <!-- Button show comment -->
-          <div
-            v-if="post.comments_count > 0"
-            @click="$router.push('/comment-of-post')"
-            class="text-weight-regular"
-            style="color: #b1b1b1; font-size: 10px"
+        <q-infinite-scroll @load="onLoad" :offset="250">
+          <!-- Postingan -->
+          <q-intersection
+            :ref="`intersection_${post.id}`"
+            v-for="post in Post.posts.data"
+            :key="post.id"
+            :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
           >
-            Lihat {{ post.comments_count }} komentar
-          </div>
-
-          <!-- Show comment  -->
-          <div class="row self-center q-px-md">
-            <div
-              class="text-weight-regular self-center"
-              style="font-size: 12px; color: #3a3838"
-            >
-              kios_laundry
-            </div>
-            <div
-              class="text-weight-regular self-center q-pl-sm"
-              style="color: #b1b1b1; font-size: 10px"
-            >
-              Kenapa kok pake vanish?...
-            </div>
-          </div>
-        </div>
-
-        <q-dialog v-model="dialogOption" position="bottom">
-          <q-card class="justify-center full-width">
-            <q-card-section>
-              <div
-                class="justify-center full-width text-center q-px-xl"
-                style="display: block; border-radius: 10px; align: center"
-              >
-                <q-separator size="5px"></q-separator>
-              </div>
-            </q-card-section>
-            <!-- Button Share -->
-            <q-card-actions class="q-pt-md">
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-share-alt"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Bagikan postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Report -->
-            <q-card-actions>
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-exclamation-triangle"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Laporkan postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Hide Post -->
-            <q-card-actions>
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="far fa-eye-slash"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Sembunyikan postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
+            <item-post-component
+              v-on:update-height="updateHeight(post)"
+              :post="post"
+              :style="`position:relative;height:100%`"
+            ></item-post-component>
+          </q-intersection>
+        </q-infinite-scroll>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import moment from "moment";
+import { mapState } from "vuex";
+import PostCardComponent from "src/components/post/PostCardComponent.vue";
 export default {
   name: "PostPage",
   include: ["PostPage"],
+  components: {
+    "item-post-component": PostCardComponent, 
+  },
+  computed:{
+    ...mapState(["Post"]),
+  },
   data() {
     return {
       tab: "postingan",
       posts: {},
       search: "",
-      slide: 0,
-      dialogOption: false,
-      readMoreActivated: false,
-      storageUrl: STORAGE_URL,
     };
   },
   mounted() {
     this.getAllPosts();
   },
+  created(){
+    if (!this.Post.posts.data) this.$store.dispatch("Post/index");
+  },
   methods: {
-    moment,
-    buttonOption() {
-      this.dialogOption = true;
-    },
-    activateReadMore() {
-      this.readMoreActivated = true;
-    },
     getAllPosts() {
       this.$store.dispatch("Post/index").then((res) => {
         this.posts = res.data;
       });
     },
+    getItemPostHeight(post) {
+      return `${
+        post.size ? `${post.size.height}` : post.files.length ? "30vh" : "30vh"
+      }`;
+    },
+    updateHeight(post) {
+      // this.$refs["intersection_"+post.id].$el.style.minHeight=post.size.height;
+      console.log(post.size.height);
+      this.$refs["intersection_" + post.id][0].$el.style.minHeight =
+        post.size.height + "px";
+      // let $ref=this.$refs["intersection_"+post.id];
+      // console.log($ref)
+      console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
+      // alert(post.size.height)
+    },
+    onLoad(index, done){
+      this.Post.posts.next_page_url ? this.$store.dispatch("Post/next").then(res => {
+        done()
+      }) : done();
+    }
   },
 };
 </script>

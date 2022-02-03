@@ -153,9 +153,7 @@ const actions = {
             api
                 .post(`/api/slave/order`, formData)
                 .then((res) => {
-                    commit('add_order', {
-                        data: res.data
-                    })
+                    
                     resolve(res);
                 })
                 .catch((err) => {

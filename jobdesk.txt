@@ -22,7 +22,9 @@ p proses
 + tombol back di halaman absen belum benar {iqbal}
 + kata 'pesanan' di navigasi bawah bagian buat pesanan di ganti 'buat pesanan' {iqbal}
 + di halaman pelanggan bisa melakukan pencarian {iqbal}
-
++ di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua {iqbal}
++ Mengedit pelanggan {iqbal}
++ Menambah pelanggan {iqbal}
 
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
@@ -31,12 +33,10 @@ p proses
 + Scan Pesanan {rian}
 + Scan absen   {rian}
 - Rekap absen
-- Menambah pelanggan
-- Mengedit pelanggan
 + membuat skeleton di list pesanan halaman home {bryan}
 + memberi background color di div yang ada gambar nya supaya ketika gambar belum muncul background nya tidak putih {bryan}
 + diberi skeleton di halaman income {bryan}
-- persentase pekerjaan di list order pesanan masih statis
++ persentase pekerjaan di list order pesanan masih statis {rian}
 + list pesanan di halaman beranda di buat paginate (backend) dan infinite scroll {rian}
 + halaman pengguna diberi skeleton {aryo}
 + halaman pengguna diberi pull refresh {aryo}
@@ -49,7 +49,7 @@ p proses
 + halaman list customerDetail di beri skeleton {aryo}
 + halaman list customerDetail di beri pull refresh {aryo}
 + halaman tambah jenis pakaian tombol tambah di buat fixed {rian}
-- halaman list jenis pakaian diberi slide item untuk edit
+p halaman list jenis pakaian diberi slide item untuk edit
 + halaman paket tombol tambah di buat fixed {rian}
 - halaman list paket diberi slide item untuk edit
 + halaman list jenis pakaian bisa untuk cari berdasarkan nama dan satuan {rian}
@@ -69,7 +69,6 @@ p proses
 - di halaman income diberi grafik statistik 
 - di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
 - di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket
-p di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua
 + tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma {aryo}
 - di halaman cetak invoice buat cetak lewat web menggunakan fungsi print biasa, ada bug tinggi kertas terlalu panjang
 

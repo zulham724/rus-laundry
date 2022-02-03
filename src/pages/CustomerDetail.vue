@@ -12,20 +12,20 @@
     </q-header>
 
     <q-pull-to-refresh @refresh="refresh">
-      <q-page class="q-pa-md " v-if="customer">
+      <q-page class="q-pa-md" style="padding-top: 55px" v-if="customer">
         <div class="column">
           <div class="text-caption text-grey-8">Nama Pelanggan</div>
-          <q-input dense rounded outlined :label="customer.name">
+          <q-input dense rounded outlined :label="customer.name" v-model="customer.name" >
             <template v-slot:append>
-              <div class="text-caption">ubah</div>
+              <div class="text-caption" @click="update()">ubah</div>
             </template>
           </q-input>
         </div>
         <div class="column">
           <div class="text-caption text-grey-8">Nomer Telepon</div>
-          <q-input dense rounded outlined :label="customer.contact_number">
+          <q-input dense rounded outlined :label="customer.contact_number" v-model="customer.contact_number" >
             <template v-slot:append>
-              <div class="text-caption">ubah</div>
+              <div class="text-caption" @click="update()">ubah</div>
             </template>
           </q-input>
         </div>
@@ -159,6 +159,7 @@ export default {
       orders: [],
       orders_temp: [],
       isLoad: false,
+      change: false,
     };
   },
 
@@ -197,9 +198,8 @@ export default {
           (v) => v.id == parseInt(val)
         );
       }
-
-      ;
     },
+
     refresh(done) {
       this.getCustomer().then((res) => {
         if (done) done();

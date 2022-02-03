@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Jenis Pakaian</q-toolbar-title
+          >Pilih Jenis Pakaian</q-toolbar-title     
         >
         <q-btn
           class="float-right"
@@ -93,28 +93,15 @@
 
           <div v-else-if="isLoad == false && categories.length">
             <q-list class="q-pt-md">
-              <q-item class="q-my-sm bg-white">
-                <q-slide-item @left="onLeft" @right="onRight">
-                  <template v-slot:right>
-                    <q-icon name="alarm" />
-                  </template>
-
-                  <q-item>
-                    <q-item-section avatar>
-                      <q-avatar>
-                        <img
-                          src="https://cdn.quasar.dev/img/avatar3.jpg"
-                          draggable="false"
-                        />
-                      </q-avatar>
-                    </q-item-section>
-                    <q-item-section>Only right action</q-item-section>
-                  </q-item>
-                </q-slide-item>
-              </q-item>
+              <add-clothes-list
+                v-for="(category, c) in categories"
+                :key="c"
+                :category="category"
+              ></add-clothes-list>
 
               <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
+              <!--
               <q-item
                 v-for="(category, c) in categories"
                 :key="c"
@@ -131,7 +118,7 @@
                 <q-item-section side v-if="chooseMode">
                   <q-checkbox v-model="categories[c].checkCategory" />
                 </q-item-section>
-              </q-item>
+              </q-item> -->
             </q-list>
           </div>
 
@@ -260,10 +247,16 @@
 
 <script>
 import { debounce } from "quasar";
-import { useQuasar } from 'quasar'
-import { onBeforeUnmount } from 'vue'
+import { useQuasar } from "quasar";
+import { onBeforeUnmount } from "vue";
+import Acl from "src/pages/AddClothesList.vue";
 
 export default {
+  
+
+  components: {
+    "add-clothes-list": Acl,
+  },
   data() {
     return {
       dialogTambahPakaian: false,
@@ -360,12 +353,57 @@ export default {
         });
       }
     },
+    // onRight({ reset }) {
+    //   this.$q.notify("Right action triggered. Resetting in 100 second.");
+
+    // },
+    buttonSimpan(reset) {
+      // const $q = useQuasar();
+      // console.log(this.$refs.update[0].reset())
+      this.$refs.update.reset();
+    },
+    buttonBack(reset) {
+      // const $q = useQuasar();
+      this.$refs.update.reset();
+    },
   },
   mounted() {
     this.filterCategory = debounce(this.filterCategory, 1000);
     this.getClothes();
   },
+
+  // setup() {
+  //   const $q = useQuasar();
+  //   let timer;
+
+  //   function finalize(reset) {
+  //     timer = setTimeout(() => {
+  //       reset();
+  //     }, 1000);
+  //   }
+
+  //   onBeforeUnmount(() => {
+  //     clearTimeout(timer);
+  //   });
+
+  //   return {
+  //     onRight({ reset }) {
+  //       $q.notify("Back button triggered. Resetting in 1 second.");
+  //       finalize(reset);
+  //     },
+  //   };
+  // },
 };
 </script>
 
-<style></style>
+<style>
+.q-slide-item__right {
+  justify-content: normal;
+  width: 100%;
+}
+
+.q-slide-item__right > div {
+  width: 100%;
+  padding: 0px;
+}
+</style>

@@ -4,7 +4,7 @@
       <q-page>
         <div class="text-center q-pt-lg">
           <q-img
-          no-spinner
+            no-spinner
             src="~/assets/confirm-package-unscreen.gif"
             style="width: 80vw"
           />
@@ -15,9 +15,25 @@
         </div>
 
         <div class="col-12 text-center absolute-bottom q-pb-lg">
-          <q-btn dense @click="$router.push('/order-code')" flat label="Cetak kode pesanan"/>
-          <br>
-          <q-btn @click="$router.push('/make-an-order')" label="kembali" flat color="green-5" size="sm"/>
+          <q-btn
+            no-caps
+            dense
+            @click="$router.push('/order-code')"
+            flat
+            label="Cetak kode pesanan"
+            class="full-width bg-white text-weight-regular q-py-sm"
+            style="font-size: 20px"
+          />
+          <br />
+          <q-btn
+            no-caps
+            @click="$router.push('/make-an-order')"
+            label="kembali"
+            flat
+            color="green-5"
+            size="sm"
+            style="font-size: 14px"
+          />
         </div>
       </q-page>
     </q-page-container>

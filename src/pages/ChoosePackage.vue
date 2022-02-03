@@ -93,8 +93,28 @@
             </q-card-section>
           </q-card> -->
 
+        <!-- Skeleton -->
+        <div v-if="isLoad == true">
+          <div>
+            <q-list>
+              <q-item
+                clickable                
+                v-for="n in 5"
+                :key="n"
+                class="bg-white q-mt-sm"
+              >
+                <q-item-section avatar>
+                  <q-skeleton size="20px" />
+                </q-item-section>
+                <q-item-section>
+                  <q-skeleton type="text" width="130px"/>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
+        </div>
 
-        <div v-if="packages.length">
+        <div v-else-if="isLoad == false && packages.length">
           <div>
             <q-list>
               <q-item
@@ -119,6 +139,7 @@
             </q-list>
           </div>
         </div>
+
         <div v-else>
           <div class="text-center" style="margin-top: 65px">
             <img
@@ -187,13 +208,24 @@ export default {
       dialogAddPackage: false,
       search: null,
       packages: [],
+      isLoad: false,
     };
   },
   methods: {
     getPackages() {
-      this.$store.dispatch("Services/getServicesByCategory", this.categoryid).then((res) => {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store.dispatch("Services/getServicesByCategory", this.categoryid).then((res) => {
         this.packages = res.data;
+      }).catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
       });
+      
     },
     choosed(id) {
       this.packages = this.packages.map((item) => {

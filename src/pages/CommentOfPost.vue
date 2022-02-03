@@ -21,8 +21,8 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page class="q-pb-xl">
-        <div class="row q-ma-md">
+      <q-page class="q-pb-xl" v-if="post">
+        <div class="q-ma-md">
           <!-- Profil -->
           <div
             class="row col-12 q-px-sm"
@@ -32,23 +32,23 @@
               width: auto;
             "
           >
-            <div class="col-3 q-pa-xs self-center">
+            <div class="col-2 q-pa-xs self-center">
               <q-avatar size="40px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>
               </q-avatar>
             </div>
-            <div class="col self-center q-pr-sm">
+            <div class="col self-center">
               <div
                 class="text-weight-bold"
                 style="color: #3a3838; font-size: 17px; width: auto"
               >
-                IndonesiaLaundry
+                {{ post.author.name }}
               </div>
               <div
                 class="text-weight-medium"
                 style="color: #b1b1b1; font-size: 12px"
               >
-                2 hari
+                {{ moment(post.created_at).fromNow() }}
               </div>
             </div>
           </div>
@@ -64,24 +64,15 @@
               style="display: block; background-color: #c4c4c4; width: 1px"
             ></div>
             <div class="col q-pl-sm">
-              What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
-              printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an
-              unknown printer took a galley of type and scrambled it to make a
-              type specimen book. It has survived not only five centuries, but
-              also the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset sheets containing Lorem Ipsum passages, and more recently
-              with desktop publishing software like Aldus PageMaker including
-              versions of Lorem Ipsum.
+              {{ post.body }}
             </div>
           </div>
         </div>
         <q-separator size="2px"></q-separator>
 
         <!-- Comment balasan -->
-        <div v-for="n in 5" :key="n">
-          <div class="row q-ma-md">
+        <div v-for="(comment,c) in post.comments" :key="comment.id">
+          <div class="q-ma-md">
             <div class="row col-12">
               <!-- Profil     -->
               <div
@@ -97,18 +88,18 @@
                     <q-img src="~/assets/Avatar.png" no-spinner></q-img>
                   </q-avatar>
                 </div>
-                <div class="col self-center q-pr-sm">
+                <div class="col self-center q-pl-lg">
                   <div
                     class="text-weight-bold"
                     style="color: #3a3838; font-size: 17px; width: auto"
                   >
-                    IndonesiaLaundry
+                    {{ comment.user.name }}
                   </div>
                   <div
                     class="text-weight-medium"
                     style="color: #b1b1b1; font-size: 12px"
                   >
-                    30 menit
+                    {{ moment(comment.created_at).fromNow() }}
                   </div>
                 </div>
               </div>
@@ -121,14 +112,10 @@
                 round
                 flat
                 size="20px"
-                @click="like++ && changeButtonColor()"
+                :color="comment.liked_count ? 'red' : 'grey'"
+                :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
+                @click="comment.liked_count ? dislikeComment(c) : likeComment(c)"
               >
-                <q-icon
-                  id="iconLike"
-                  name="far fa-heart"
-                  size="20px"
-                  style="color: #b1b1b1"
-                ></q-icon>
               </q-btn>
             </div>
 
@@ -143,9 +130,7 @@
                 style="display: block; background-color: #c4c4c4; width: 1px"
               ></div>
               <div class="col q-pl-sm">
-                What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
-                printing and typesetting industry. Lorem Ipsum has been the
-                industry's
+                {{ comment.value }}
               </div>
             </div>
 
@@ -161,7 +146,7 @@
                 class="text-weight-medium q-pl-xs"
                 style="color: #b1b1b1; font-size: 12px"
               >
-                {{ like }} suka
+                {{ comment.likes_count }} suka
               </div>
               <q-space></q-space>
               <div
@@ -174,7 +159,10 @@
             </div>
 
             <!-- Lihat Comment balasan -->
-            <div v-for="n in 5" :key="n">
+            <div
+              v-for="replies_comment in replies_comments"
+              :key="replies_comment.id"
+            >
               <div class="row q-ma-md q-pl-md">
                 <div class="row col-12">
                   <!-- Profil     -->
@@ -269,15 +257,7 @@
 
         <!-- Type comment -->
         <div
-          class="
-            row
-            full-width
-            bg-white
-            shadow-3
-            self-center
-            q-py-sm q-px-md
-            fixed-bottom
-          "
+          class="row full-width bg-white shadow-3 self-center q-py-sm q-px-md fixed-bottom"
         >
           <!-- Profile -->
           <div class="col-2 self-end">
@@ -293,15 +273,15 @@
               dense
               autogrow
               square
-              v-model="text"
+              v-model="comment"
               hide-bottom-space
               placeholder="Tambahkan komentar..."
             />
           </div>
 
           <!-- Button Send -->
-          <div class="col-1 self-end">
-            <q-btn dense round flat size="20px">
+          <div class="col-1 self-end q-pr-lg">
+            <q-btn @click="addComment()" dense round flat size="20px">
               <q-icon
                 name="far fa-paper-plane"
                 size="20px"
@@ -317,16 +297,26 @@
 
 <script>
 import { ref } from "vue";
-
+import { mapState } from "vuex";
+import moment from "moment";
 export default {
+  props: ["postid"],
+  computed: {
+    ...mapState(["Post"]),
+  },
   data() {
     return {
-      text: ref(""),
+      comment: null,
       lihatBalasan: false,
       like: "100",
+      post: null,
     };
   },
+  mounted() {
+    this.getPostData();
+  },
   methods: {
+    moment,
     changeButtonColor() {
       var icon = document.getElementById("iconLike");
       if (icon.className == "far fa-heart") {
@@ -335,12 +325,34 @@ export default {
         icon.className = "far fa-heart";
       }
     },
+    getPostData() {
+      this.$store.dispatch("Post/show", this.postid).then((res) => {
+        this.post = res.data;
+      });
+    },
+    addComment() {
+      const payload = {
+        post_id: this.postid,
+        value: this.comment,
+      };
+      this.$store.dispatch("Comment/store", payload).then((res) => {
+        this.post.comments.push(res.data);
+      });
+    },
+    likeComment(index){
+      this.$store.dispatch("Comment/liked", this.post.comments[index].id).then(res => {
+        this.post.comments[index].liked_count = res.data.liked_count
+      })
+    },
+    dislikeComment(){
+
+    }
   },
 };
 </script>
 
 <style>
 .fas.fa-heart {
-    color: red !important;
+  color: red !important;
 }
 </style>

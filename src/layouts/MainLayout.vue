@@ -1,4 +1,3 @@
-
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
@@ -43,7 +42,7 @@
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
               Penghasilan
             </div>
-            </q-tab>
+          </q-tab>
 
           <q-tab name="pesanan" no-caps @click="$router.push('/make-an-order')"
             ><q-img
@@ -101,10 +100,9 @@ export default {
   data() {
     return {
       tab: this.$route.name,
-      include: ['HomePage','AddItemPage','IncomePage']
+      include: ["HomePage", "AddItemPage", "IncomePage"],
     };
   },
-  mounted(){
-  }
+  mounted() {},
 };
 </script>

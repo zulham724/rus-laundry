@@ -285,7 +285,7 @@ export default {
       this.images_videos.splice(index, 1);
     },
     store() {
-      this.$refs.form.validate((success) =>{
+      this.$refs.form.validate().then((success) =>{
         if(success){
           let formData = new FormData();
           this.files.forEach((file) => {
@@ -300,6 +300,8 @@ export default {
             this.$router.push('/community');
             this.$q.notify("Berhasil");
           });
+        }else{
+          alert('gagal')
         }
       })
     },

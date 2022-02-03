@@ -121,7 +121,7 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-6">
-                      <div>1 item terpilih</div>
+                      <div>{{  customers.filter((item) => item.checked).length }} item yang dipilih</div>
                     </div>
                     <div class="col-6">
                       <div class="row justify-end">
@@ -144,7 +144,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { mapState } from "vuex";
 export default {
   computed: {
@@ -194,14 +193,17 @@ export default {
     },
 
      deleteCustomers() {
-      let customers = this.customers.filter((item) => item.checked).map((item) => item.checked)
-
+      let customers = this.customers
+      .filter((item) => item.checked)
+      .map((item) => item.id);
+      console.log(customers)
       this.$store
         .dispatch("Customer/destroy", customers)
         .then((res) => {
           this.customers = this.customers.filter(
-            (item) => !item.checked
+            (item) => !item.checked               
           );
+          this.deletebutton = false
           this.$q.notify("Berhasil");
         });
     },
@@ -220,11 +222,11 @@ export default {
       this.selectall = !this.selectall;
 
     },
-    dialogDelete(){
+    dialogDelete() {
       let check = this.customers.filter((item) => item.checked).length
       if(check > 0){
         this.deletebutton = true
-      }else{
+      }else {
         this.deletebutton = false
       }
     },

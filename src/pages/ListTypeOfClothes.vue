@@ -39,7 +39,37 @@
             </q-card-section>
           </q-card>
         </div>
-        <div v-if="categories.length">
+
+        <!-- Skeleton -->
+        <div v-if="isLoad==true">
+          <q-card flat class="q-mt-sm full-width" v-for="n in 10" :key="n">
+            <q-card-section>
+              <div class="row">
+                <div class="col-6">
+                  <div
+                    class="text-weight-medium text-left"
+                    style="color: #888888"
+                  >
+                    <q-skeleton type="text" width="100px"></q-skeleton>
+                  </div>
+                  <div class="text-caption q-pr-md" style="color: #d0caca">
+                    <q-skeleton type="text" width="30px"></q-skeleton>
+                  </div>
+                </div>
+
+                <div class="col-6 self-center">
+                  <div class="row justify-end">
+                    <div class="q-pr-md">
+                      <q-skeleton type="text" width="60px"></q-skeleton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+
+        <div v-else-if="isLoad == false && categories.length">
           <q-card
             flat
             class="q-mt-sm full-width"
@@ -59,10 +89,12 @@
                     {{ category.service_unit.name }}
                   </div>
                 </div>
+
                 <div class="col-6">
                   <div class="row justify-end">
                     <div v-if="!category.added" class="q-pr-sm">
                       <q-btn
+                        no-caps
                         flat
                         @click="addCart(category)"
                         style="color: #ffd200"
@@ -77,19 +109,24 @@
             </q-card-section>
           </q-card>
         </div>
-        <div v-if="!categories.length">
+
+        <div v-else>
           <div class="text-center" style="margin-top: 80px">
             <q-img
-            no-spinner
+              no-spinner
               src="~/assets/paket-kosong-unscreen.gif"
               style="width: 205px; height: 205px"
             />
           </div>
         </div>
         <!-- <q-page-sticky position="bottom" :offset="[18, 18]"> -->
-        <q-btn class="full-width q-pt-sm fixed-bottom" to="/basket">
+        <q-btn no-caps class="full-width q-pt-sm fixed-bottom bg-white" to="/basket" style="z-index: 999">
           <q-avatar>
-            <q-img no-spinner src="~/assets/cart-pesanan.svg" style="width: 50%" />
+            <q-img
+              no-spinner
+              src="~/assets/cart-pesanan.svg"
+              style="width: 50%"
+            />
             <q-badge color="orange" floating>{{
               Orders.order.charts.length
             }}</q-badge>
@@ -132,23 +169,32 @@ export default {
       categories: [],
       categories_temp: [],
       notif: false,
+      isLoad: false,
     };
   },
   methods: {
     getCategoriesByShop() {
-      this.$store.dispatch("ServiceCategories/index").then((res) => {
-        this.categories = this.categories_temp = res.data.map((category) => {
-          this.Orders.order.charts.forEach((item2) => {
-            if (category.id == item2.id) {
-              category.added = true;
-            }
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store.dispatch("ServiceCategories/index").then((res) => {
+          this.categories = this.categories_temp = res.data.map((category) => {
+            this.Orders.order.charts.forEach((item2) => {
+              if (category.id == item2.id) {
+                category.added = true;
+              }
+            });
+            return category;
           });
-          return category;
-        });
+        }).catch((err) => {
+            reject(err);
+            // console.log(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
       });
     },
     addCart(item) {
-     
       this.$store.commit("Orders/add_order_cart", { data: item });
       this.notif = true;
       this.categories = this.categories.map((category) => {
@@ -160,18 +206,19 @@ export default {
         return category;
       });
     },
-    update(val){
-      if(val == ""){
-        this.categories = this.categories_temp
+    update(val) {
+      if (val == "") {
+        this.categories = this.categories_temp;
       }
 
       const needle = val.toLowerCase();
-      this.categories = this.categories_temp.filter((v)=> v.name.toLowerCase().indexOf(needle) > -1)
-      
+      this.categories = this.categories_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
     },
-    filterCategory(value){
-      this.update(value)
-    }
+    filterCategory(value) {
+      this.update(value);
+    },
   },
   mounted() {
     this.getCategoriesByShop();

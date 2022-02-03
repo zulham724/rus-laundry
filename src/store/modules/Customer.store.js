@@ -28,21 +28,21 @@ const actions = {
         })
     },
     
-    destroy({ comit }, customer) {
-        return new Promise((resolve, reject) => {
-            api.get(`/api/slave/deletecustomers`, customer.id).then(res => {
-                resolve(res)
-            }).catch(err => {
-                reject(res)
-            })
-        })
-    },
+    // destroy({ comit }, customer) {
+    //     return new Promise((resolve, reject) => {
+    //         api.get(`/api/slave/deletecustomers`, customer.id).then(res => {
+    //             resolve(res)
+    //         }).catch(err => {
+    //             reject(res)
+    //         })
+    //     })
+    // },
     destroy({ commit }, customerid){
         let access = {
             _method: 'delete',
             id: customerid
         }
-        return new Promise((resolve,reject) =>{
+        return new Promise((resolve, reject) => {
             api.post(`/api/slave/customer/${access.id}`, access).then(res => {
                 resolve(res)
             }).catch(err => {
@@ -50,6 +50,17 @@ const actions = {
             })
         })
     },
+
+    update({ commit }, customer) {
+        
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/updatecustomer`, customer).then(res => {
+                resolve(res)
+        }).catch(err => {
+            reject(err)
+        })
+        })
+},
 
     show({ comit }, customerid) {
         return new Promise((resolve, reject) => {
