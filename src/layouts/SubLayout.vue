@@ -9,7 +9,7 @@
     >
       <div class="q-gutter-none" style="max-width: 100%; height:5vh">
         <q-tabs v-model="tab" dense class="text-black" indicator-color="teal-6">
-          <q-tab name="postingan" no-caps
+          <q-tab name="postingan" no-caps @click="$router.push('/community')"
             ><q-img
               no-spinner
               style="width: 18px; height: 18px"
@@ -24,7 +24,7 @@
             </div>
           </q-tab>
 
-          <q-tab name="pesanan" no-caps
+          <q-tab name="pesanan" no-caps @click="$router.push('/course-of-home')"
             ><q-img
               no-spinner
               style="width: 18px; height: 18px"

@@ -94,13 +94,15 @@
           <div v-else-if="isLoad == false && categories.length">
             <q-list class="q-pt-md">
               <add-clothes-list
+                class="q-my-sm"
                 v-for="(category, c) in categories"
                 :key="c"
                 :category="category"
+                :chooseMode="chooseMode"
               ></add-clothes-list>
 
               <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-
+              
               <!--
               <q-item
                 v-for="(category, c) in categories"
@@ -266,7 +268,7 @@ export default {
       chooseMode: false,
       isLoad: false,
       val: null,
-      clothes: null,
+      // category: null,
     };
   },
 
@@ -310,15 +312,11 @@ export default {
         );
       }
     },
-    updateName() {
-      let id = this.clothes.id;
-      this.$store
-        .dispatch("ServiceCategories/updateName", this.clothes)
-        .then((res) => {
-          this.$router.push("/clothes/${id}");
-          this.$q.notify("Berhasil");
-        });
-    },
+    // updateName() {
+    //   let id = this.category.id;
+    //   this.$store
+    //     .dispatch("ServiceCategories/updateName", this.category)
+    // },
 
     filterCategory(val) {
       this.update(val);
@@ -327,6 +325,7 @@ export default {
       let categories = this.categories
         .filter((item) => item.checkCategory)
         .map((item) => item.id);
+      // console.log(categories)
 
       this.$store
         .dispatch("ServiceCategories/destroy", categories)

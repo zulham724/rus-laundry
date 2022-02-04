@@ -53,6 +53,15 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    updateName({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/updatepackagesname/${payload.id}`, payload).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 
 };

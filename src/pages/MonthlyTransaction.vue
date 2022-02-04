@@ -29,53 +29,55 @@
       </q-item>
     </div>
 
-     <div v-else-if="!isLoad && !orders.length">
-      <div class="text-subtitle1 text-center">Belum ada transaksi bulan ini</div>
+    <div v-else-if="!isLoad && !orders.length">
+      <div class="text-subtitle1 text-center">
+        Belum ada transaksi bulan ini
+      </div>
     </div>
 
-
-    <q-list
-      v-else-if="isLoad == false && orders"
-      bordered
-      separator
-      class="q-mx-md q-my-xs"
-      style="background-color: #fff; border-radius: 20px 20px 20px 20px"
-    >
-      <q-item
-        v-for="order in orders"
-        :key="order.id"
-        class="q-my-sm q-mx-md"
-        clickable
-        @click="$router.push(`/detail-transaksi/${order.id}`)"
+    <q-infinite-scroll @load="onLoadRef" :offset="250">
+      <q-list
+        ref="scrollTargetRef"
+        bordered
+        separator
+        class="q-mx-md q-my-xs"
+        style="background-color: #fff; border-radius: 20px 20px 20px 20px"
       >
-        <q-item-section avatar>
-            <q-avatar>
-            </q-avatar>
-        </q-item-section>
-
-        <q-item-section class="self-center">
-          <q-item-label class="text-weight-medium">{{
-            order.customer.name
-          }}</q-item-label>
-          <q-item-label caption lines="1" class="q-mb-sm">
-            {{ moment(order.updated_at).format("LL") }}</q-item-label
-          >
-        </q-item-section>
-
-        <q-item-section
-          class="text-weight-regular"
-          side
-          style="color: #54d240; font-size: 12px"
+        <q-item
+          v-for="order in orders"
+          :key="order.id"
+          class="q-my-sm q-mx-md"
+          clickable
+          @click="$router.push(`/detail-transaksi/${order.id}`)"
         >
-          +{{
-            new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }).format(order.total_sum)
-          }}
-        </q-item-section>
-      </q-item>
-    </q-list>
+          <q-item-section avatar>
+            <q-avatar> </q-avatar>
+          </q-item-section>
+
+          <q-item-section class="self-center">
+            <q-item-label class="text-weight-medium">{{
+              order.customer.name
+            }}</q-item-label>
+            <q-item-label caption lines="1" class="q-mb-sm">
+              {{ moment(order.updated_at).format("LL") }}</q-item-label
+            >
+          </q-item-section>
+
+          <q-item-section
+            class="text-weight-regular"
+            side
+            style="color: #54d240; font-size: 12px"
+          >
+            +{{
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(order.total_sum)
+            }}
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-infinite-scroll>
   </div>
 </template>
 
@@ -85,6 +87,21 @@ import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
+  //q-infinite-scroll
+  setup() {
+    const items = ref([{}, {}, {}, {}, {}]);
+
+    return {
+      items,
+      onLoad(index, done) {
+        setTimeout(() => {
+          items.value.push({}, {}, {}, {}, {});
+          done();
+        }, 2000);
+      },
+    };
+  },
+
   computed: {
     ...mapState(["Auth"]),
   },
@@ -97,14 +114,13 @@ export default {
       orders_temp: [],
       isLoad: false,
       items: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-
     };
   },
   mounted() {
     this.getOrdersShopByMonth();
   },
   methods: {
-   moment,
+    moment,
     getOrdersShopByMonth() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;

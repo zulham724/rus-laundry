@@ -40,7 +40,7 @@
           </q-btn>
         </div>
         <div class="col-1 text-center q-pr-xs self-center">
-          <q-avatar size="35px" style="background-color: #888888">
+          <q-avatar size="35px" style="background-color: #888888" @click="$router.push('/myprofile')">
             <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar>
         </div>

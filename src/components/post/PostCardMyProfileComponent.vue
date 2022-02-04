@@ -13,7 +13,7 @@
             <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar>
         </div>
-        <div class="col-8 q-pl-sm">
+        <div class="col-8 q-pl-md">
           <!-- Nama Profile -->
           <div
             class="text-weight-medium"
@@ -62,7 +62,7 @@
         </div>
       </div>
       <!-- Isi video/foto -->
-      <div class="full-width full-height q-py-xs q-px-md">
+      <div class="full-width full-height q-py-xs">
         <div v-if="post.files.length">
           <q-carousel
             v-model="slide"
@@ -160,18 +160,18 @@
       </div>
 
       <!-- Show comment  -->
-      <div class="row self-center q-px-md" v-if="post.comments.length">
+      <div class="row self-center q-px-md">
         <div
           class="text-weight-regular self-center"
           style="font-size: 12px; color: #3a3838"
         >
-          {{ post.comments[post.comments.length -1].user.name }}
+          kios_laundry
         </div>
         <div
           class="text-weight-regular self-center q-pl-sm"
           style="color: #b1b1b1; font-size: 10px"
         >
-          {{ post.comments[post.comments.length -1].value }}
+          Kenapa kok pake vanish?...
         </div>
       </div>
     </div>
@@ -186,6 +186,29 @@
             <q-separator size="5px"></q-separator>
           </div>
         </q-card-section>
+        <!-- Button Edit -->
+        <q-card-actions class="q-pt-md">
+          <q-btn no-caps class="full-width" dense flat>
+            <div class="row full-width q-py-sm">
+              <div class="col-3">
+                <q-btn dense outline round size="25px">
+                  <q-icon
+                    name="fas fa-pen"
+                    style="color: #787878"
+                    size="25px"
+                  ></q-icon>
+                </q-btn>
+              </div>
+              <div
+                class="col-8 text-weight-medium self-center text-left"
+                style="color: #3a3838; font-size: 20px"
+              >
+                Edit postingan
+              </div>
+            </div>
+          </q-btn>
+        </q-card-actions>
+
         <!-- Button Share -->
         <q-card-actions class="q-pt-md" v-close-popup>
           <q-btn no-caps class="full-width" dense flat @click="buttonShare()">
@@ -209,7 +232,7 @@
           </q-btn>
         </q-card-actions>
 
-        <!-- Button Report -->
+        <!-- Button Delete -->
         <q-card-actions>
           <q-btn no-caps class="full-width" dense flat>
             <div class="row full-width q-py-sm">
@@ -226,20 +249,20 @@
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
               >
-                Laporkan postingan
+                Hapus postingan
               </div>
             </div>
           </q-btn>
         </q-card-actions>
 
-        <!-- Button Hide Post -->
+        <!-- Button Arsip Post -->
         <q-card-actions>
           <q-btn no-caps class="full-width" dense flat>
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
                   <q-icon
-                    name="far fa-eye-slash"
+                    name="fas fa-archive"
                     style="color: #787878"
                     size="25px"
                   ></q-icon>
@@ -249,7 +272,30 @@
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
               >
-                Sembunyikan postingan
+                Arsipkan postingan
+              </div>
+            </div>
+          </q-btn>
+        </q-card-actions>
+
+        <!-- Button Nonaktifkan Comment -->
+        <q-card-actions>
+          <q-btn no-caps class="full-width" dense flat>
+            <div class="row full-width q-py-sm">
+              <div class="col-3">
+                <q-btn dense outline round size="25px">
+                  <q-icon
+                    name="fas fa-archive"
+                    style="color: #787878"
+                    size="25px"
+                  ></q-icon>
+                </q-btn>
+              </div>
+              <div
+                class="col-8 text-weight-medium self-center text-left"
+                style="color: #3a3838; font-size: 20px"
+              >
+                Nonaktifkan komentar
               </div>
             </div>
           </q-btn>
@@ -355,7 +401,7 @@ export default {
     return {
       slide: 0,
       dialogOption: false,
-      dialogShare:false,
+      dialogShare: false,
       readMoreActivated: false,
       storageUrl: STORAGE_URL,
     };
@@ -378,7 +424,6 @@ export default {
     buttonShare() {
       this.dialogShare = true;
     },
-
     activateReadMore() {
       this.readMoreActivated = true;
     },

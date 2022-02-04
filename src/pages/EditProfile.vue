@@ -16,7 +16,7 @@
           class="text-left text-weight-medium"
           style="color: #5a5656; font-size: 15px"
         >
-          <q-btn dense flat> <div>Simpan</div></q-btn>
+          <q-btn no-caps dense flat> <div>Simpan</div></q-btn>
         </q-item-section>
       </q-toolbar>
     </q-header>

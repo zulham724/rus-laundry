@@ -1,12 +1,23 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
-    <q-page-container style="background-color: #fafafa" v-if="detail_order">
+    <q-page-container style="background-color: #fafafa">
       <q-page>
-        <div class="text-center bg-transparent" style="height:200px">
+        <div class="text-center bg-transparent" style="height: 200px">
           <!-- Header Image -->
-          <q-img src="~/assets/header-mesin-cuci.svg" style="height:200px" class="fixed-top mbl-child" no-spinner>
+          <q-img
+            src="~/assets/header-mesin-cuci.svg"
+            style="height: 200px"
+            class="fixed-top mbl-child"
+            no-spinner
+          >
             <q-toolbar class="bg-transparent">
-              <q-btn :ripple="true" flat round size="sm" @click="$router.push('/')">
+              <q-btn
+                :ripple="true"
+                flat
+                round
+                size="sm"
+                @click="$router.push('/')"
+              >
                 <q-avatar
                   size="25px"
                   icon="fas fa-arrow-left"
@@ -22,10 +33,21 @@
             </q-toolbar>
           </q-img>
         </div>
+        <div v-if="isLoad">
+          <skeleton-detail-transaction-component></skeleton-detail-transaction-component>
+        </div>
         <q-page
           class="front"
-          style="background-color: white; margin-top: -35px; position: relative; border-radius: 50px 50px 0px 0px; "
+          style="
+            background-color: white;
+            margin-top: -35px;
+            position: relative;
+            border-radius: 50px 50px 0px 0px;
+          "
+          v-if="detail_order"
         >
+          <!-- Skeleton -->
+
           <q-carousel
             style="height: 100%"
             v-model="slide"
@@ -34,18 +56,22 @@
             swipeable
             animated
             control-type="regular"
-            control-color="blue"  
-           navigation-active-icon="local_laundry_service"
+            control-color="blue"
+            navigation-active-icon="local_laundry_service"
             navigation-position="top"
             navigation
             class="bg-transparent text-white shadow-4 rounded-borders q-pa-none"
-            
           >
-            <q-carousel-slide :name="`slide-${service.id}`" v-for="service in detail_order.services" :key="service.id">
-              <div class="row q-pt-xl justify-start ">
+            <q-carousel-slide
+              :name="`slide-${service.id}`"
+              v-for="service in detail_order.services"
+              :key="service.id"
+            >
+              <div class="row q-pt-xl justify-start" v-if="!isLoad">
                 <div class="col-6">
                   <!-- No Pesanan  -->
                   <div
+                    v-if="chooseMode"
                     class="q-pl-md text-weight-regular"
                     style="color: #c9c9c9"
                   >
@@ -60,31 +86,40 @@
                 </div>
                 <div class="col-6">
                   <div class="row justify-end">
-                  <q-btn no-caps dense flat @click="$router.push('/order-code')">
-                    <div
-                      class="text-weight-regular text-center q-px-xs"
-                      style="
-                        font-size: 10px;
-                        color: #fafafa;
-                        background-color: #3ec0e9;
-                        border-radius: 3px 3px 3px 3px;
-                      "
+                    <q-btn
+                      no-caps
+                      dense
+                      flat
+                      @click="$router.push('/order-code')"
                     >
-                      Cetak kode pesanan
-                    </div>
-                  </q-btn>
+                      <div
+                        class="text-weight-regular text-center q-px-xs"
+                        style="
+                          font-size: 10px;
+                          color: #fafafa;
+                          background-color: #3ec0e9;
+                          border-radius: 3px 3px 3px 3px;
+                        "
+                      >
+                        Cetak kode pesanan
+                      </div>
+                    </q-btn>
 
-                  <!-- Button Share -->
-                  <q-btn
-                    dense
-                    round
-                    size="13px"
-                    ripple
-                    flat
-                    @click="buttonShare()"
-                  >
-                    <q-icon size="20px" color="grey-8" name="fas fa-share-alt"></q-icon>
-                  </q-btn>
+                    <!-- Button Share -->
+                    <q-btn
+                      dense
+                      round
+                      size="13px"
+                      ripple
+                      flat
+                      @click="buttonShare()"
+                    >
+                      <q-icon
+                        size="20px"
+                        color="grey-8"
+                        name="fas fa-share-alt"
+                      ></q-icon>
+                    </q-btn>
                   </div>
                 </div>
               </div>
@@ -159,10 +194,7 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{
-                       service.process_time
-                      }}
-                      Jam</q-item-label
+                      >{{ service.process_time }} Jam</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -214,9 +246,7 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{
-                        service.category.name
-                      }}</q-item-label
+                      >{{ service.category.name }}</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -301,7 +331,11 @@
                     <q-btn
                       round
                       flat
-                      @click="$router.push(`/${detail_order.id}/status-cucian/${service.id}`)"
+                      @click="
+                        $router.push(
+                          `/${detail_order.id}/status-cucian/${service.id}`
+                        )
+                      "
                     >
                       <q-avatar size="30px" class="bg-transparent">
                         <q-img
@@ -354,11 +388,11 @@
             </q-carousel-slide>
           </q-carousel>
           <q-btn
-          v-if="detail_order.percentage == 100"
+            v-if="detail_order.percentage == 100"
             @click="buttonConfirm()"
             no-caps
             class="fixed-bottom mbl-child"
-            style="background-color: #49c2c0; color: #fafafa; width:100%;"
+            style="background-color: #49c2c0; color: #fafafa; width: 100%"
           >
             <div class="q-py-sm text-weight-regular">Konfirmasi Pesanan</div>
           </q-btn>
@@ -507,51 +541,18 @@
             </q-card-section>
           </q-card>
         </q-dialog>
-
-        <!-- Kondisi apabila pesanan belum di proses (perlu klik proses pesanan) -->
-
-        <!-- <div class="row absolute-bottom q-pb-md">
-          <div class="col-6 text-center">
-            
-            <q-btn
-              no-caps
-              style="
-                color: white;
-                background-color: #49c2c0;
-                font-size: 14px;
-                max-width: 50vw;
-                border-radius: 5px 5px 5px 5px;
-              "
-              class="text-weight-regular"
-            >
-              <div class="q-py-sm">Proses Pesanan</div>
-            </q-btn>
-          </div>
-          <div class="col-6 text-center">
-            
-            <q-btn
-              no-caps
-              style="
-                color: #313131;
-                background-color: white;
-                font-size: 14px;
-                max-width: 50vw;
-                border-radius: 5px 5px 5px 5px;
-              "
-              class="text-weight-regular"
-            >
-              <div class="q-py-sm">Batalkan Pesanan</div></q-btn
-            >
-          </div>
-        </div> -->
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import SkeletonDetailTransactionComponent from "src/components/SkeletonDetailTransactionComponent";
 export default {
   props: ["orderid"],
+  components: {
+    SkeletonDetailTransactionComponent: SkeletonDetailTransactionComponent,
+  },
   data() {
     return {
       slide: null,
@@ -559,6 +560,7 @@ export default {
       dialogConfirm: false,
       link: "example.com/share-link",
       detail_order: null,
+      isLoad: false,
     };
   },
 
@@ -570,16 +572,21 @@ export default {
       this.dialogConfirm = true;
     },
     getDetailOrder() {
-      this.$store.dispatch("Orders/show", this.orderid).then((res) => {
-        this.detail_order = res.data;
-        this.slide = `slide-${res.data.services[0].id}`
-        // console.log("haoiiii", res.data)
-      });
+      this.isLoad = true;
+      this.$store
+        .dispatch("Orders/show", this.orderid)
+        .then((res) => {
+          this.detail_order = res.data;
+          this.slide = `slide-${res.data.services[0].id}`;
+          // console.log("haoiiii", res.data)
+        })
+        .finally(() => {
+          this.isLoad = false;
+        });
     },
-    updateStatusOrder(){
-      alert('tess')
-    }
-    
+    updateStatusOrder() {
+      alert("tess");
+    },
   },
   mounted() {
     this.getDetailOrder();

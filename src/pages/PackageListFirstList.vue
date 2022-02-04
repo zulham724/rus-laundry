@@ -1,7 +1,7 @@
 <template>
   <q-slide-item
-    v-if="category != null"
-    :ref="`category_${category.id}`"
+    v-if="paket != null"
+    :ref="`paket_${paket.id}`"
     @right="onRight"
     right-color="white"
     center-color="black"
@@ -12,7 +12,7 @@
           <q-input
             :disable="Loading"
             v-model="text"
-            label="Ubah nama pakaian"
+            label="Ubah nama paket"
             dense
           >
             <template v-slot:append>
@@ -43,16 +43,17 @@
 
     <q-item>
       <q-item-section>
-        <q-item-label> {{ category.name }} </q-item-label>
-        <q-item-label caption>{{ category.service_unit.name }}</q-item-label>
+        <q-item-label> {{ paket.name }} </q-item-label>
+        <q-item-label caption>{{
+          paket.category.service_unit.name
+        }}</q-item-label>
       </q-item-section>
       <q-item-section side v-if="chooseMode">
-        <q-checkbox v-model="category.checkCategory" />
+        <q-checkbox v-model="paket.checked" />
       </q-item-section>
     </q-item>
   </q-slide-item>
 </template>
-
 <script>
 import { debounce } from "quasar";
 import { useQuasar } from "quasar";
@@ -60,42 +61,45 @@ import { onBeforeUnmount } from "vue";
 
 export default {
   props: {
-    category: null,
-    chooseMode: false,
+    paket:null,
+    chooseMode:false,
   },
 
-  name: "add-clothes-list-component",
+  name: "package-list-first-list",
   data() {
     return {
-      search: "",
-      options: ["Terbaru", "Terlama", "A-Z", "Z-A"],
-      categories: [],
-      categories_temp: [],
+      search: null,
+      packages: [],
+      packages_temp: [],
+      dialog_addPackage: false,
+      dialog_deletePackage: false,
+      loading: false,
       isLoad: false,
+      filterOptions: ["Terbaru", "Terlama", "A-Z", "Z-A"],
+      selectedFilterOption: null,
       Loading: false,
-      val: null,
       text: "",
     };
   },
 
   mounted() {
     this.filterCategory = debounce(this.filterCategory, 1000);
-    this.getClothes();
-    this.text = this.category.name;
+    this.getPackages();
+    this.text = this.paket.name;
   },
 
   methods: {
     buttonAddClothes() {
       this.dialogTambahPakaian = true;
     },
-    getClothes() {
+    getPackages() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
-          .dispatch("ServiceCategories/index")
+          .dispatch("Services/index")
           .then((res) => {
-            this.categories = this.categories_temp = res.data.map((item) => {
-              item.checkCategory = false;
+            this.packages = this.packages_temp = res.data.map((item) => {
+              item.checked = false;
               return item;
             });
             resolve(res.data);
@@ -111,11 +115,11 @@ export default {
     },
     update(value) {
       if (value == "") {
-        this.categories = this.categories_temp;
+        this.packages = this.packages_temp;
       }
 
       const needle = value.toLowerCase();
-      this.categories = this.categories_temp.filter(
+      this.packages = this.packages_temp.filter(
         (v) => v.name.toLowerCase().indexOf(needle) > -1
       );
       if (!this.categories.length) {
@@ -127,103 +131,52 @@ export default {
     filterCategory(val) {
       this.update(val);
     },
-    deleteClothes() {
-      let categories = this.categories
-        .filter((item) => item.checkCategory)
+    deletePackage() {
+      this.loading = true;
+      let package_choosed = this.packages
+        .filter((item) => item.checked)
         .map((item) => item.id);
 
       this.$store
-        .dispatch("ServiceCategories/destroy", categories)
+        .dispatch("Services/destroy", package_choosed)
         .then((res) => {
-          this.categories = this.categories.filter(
-            (item) => !item.checkCategory
-          );
+          this.packages = this.packages.filter((item) => !item.checked);
           this.$q.notify("Berhasil");
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
 
     refresh(done) {
-      this.getClothes().then((res) => {
+      this.getPackages().then((res) => {
         if (done) done();
       });
-    },
-    orderBy(val) {
-      if (val == "Terbaru") {
-        this.categories.sort((a, b) => {
-          return new Date(b.created_at) - new Date(a.created_at);
-        });
-      } else if (val == "Terlama") {
-        this.categories.sort((a, b) => {
-          return new Date(a.created_at) - new Date(b.created_at);
-        });
-      } else if (val == "A-Z") {
-        this.categories.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
-      } else if (val == "Z-A") {
-        this.categories.sort((a, b) => {
-          return b.name.localeCompare(a.name);
-        });
-      }
     },
     updateName(reset) {
       this.Loading = true;
       const payload = {
-        id: this.category.id,
+        id: this.paket.id,
         name: this.text,
       };
-      // let id = this.category.id;
       this.$store
-        .dispatch("ServiceCategories/updateName", payload)
+        .dispatch("Services/updateName", payload)
         .then((res) => {
           this.Loading = true;
-          this.category.name = res.data.name;
+          this.paket.name = res.data.name;
         })
         .finally(() => {
-          this.$refs["category_" + this.category.id].reset();
+          this.$refs["paket_" + this.paket.id].reset();
           this.Loading = false;
         });
     },
-    // onRight({ reset }) {
-    //   this.$q.notify("Right action triggered. Resetting in 100 second.");
-
-    // },
-    // buttonSimpan(reset) {
-    //   // const $q = useQuasar();[0].reset()
-    //   // console.log(this.$refs.update);
-    //   this.$refs["category_" + this.category.id].reset();
-    // },
     buttonBack(reset) {
-      // const $q = useQuasar();
-      this.$refs["category_" + this.category.id].reset();
-      this.text = this.category.name;
-    },
+      this.$refs["paket_" + this.paket.id].reset();
+      this.text = this.paket.name;
+    }
   },
-
-  // setup() {
-  //   const $q = useQuasar();
-  //   let timer;
-
-  //   function finalize(reset) {
-  //     timer = setTimeout(() => {
-  //       reset();
-  //     }, 1000);
-  //   }
-
-  //   onBeforeUnmount(() => {
-  //     clearTimeout(timer);
-  //   });
-
-  //   return {
-  //     onRight({ reset }) {
-  //       $q.notify("Back button triggered. Resetting in 1 second.");
-  //       finalize(reset);
-  //     },
-  //   };
-  // },
 };
 </script>
-
 <style>
 .q-slide-item__right {
   justify-content: normal;

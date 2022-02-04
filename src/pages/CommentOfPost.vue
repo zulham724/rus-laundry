@@ -71,7 +71,7 @@
         <q-separator size="2px"></q-separator>
 
         <!-- Comment balasan -->
-        <div v-for="(comment,c) in post.comments" :key="comment.id">
+        <div v-for="(comment, c) in post.comments" :key="comment.id">
           <div class="q-ma-md">
             <div class="row col-12">
               <!-- Profil     -->
@@ -114,7 +114,9 @@
                 size="20px"
                 :color="comment.liked_count ? 'red' : 'grey'"
                 :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
-                @click="comment.liked_count ? dislikeComment(c) : likeComment(c)"
+                @click="
+                  comment.liked_count ? dislikeComment(c) : likeComment(c)
+                "
               >
               </q-btn>
             </div>
@@ -314,6 +316,7 @@ export default {
   },
   mounted() {
     this.getPostData();
+    moment.locale('id')
   },
   methods: {
     moment,
@@ -336,17 +339,26 @@ export default {
         value: this.comment,
       };
       this.$store.dispatch("Comment/store", payload).then((res) => {
-        this.post.comments.push(res.data);
+        this.post = res.data
+        this.comment = null;
       });
     },
-    likeComment(index){
-      this.$store.dispatch("Comment/liked", this.post.comments[index].id).then(res => {
-        this.post.comments[index].liked_count = res.data.liked_count
-      })
+    likeComment(index) {
+      this.$store
+        .dispatch("Comment/like", this.post.comments[index].id)
+        .then((res) => {
+          this.post.comments[index].liked_count = res.data.liked_count;
+          this.post.comments[index].likes_count = res.data.likes_count;
+        });
     },
-    dislikeComment(){
-
-    }
+    dislikeComment(index) {
+      this.$store
+        .dispatch("Comment/dislike", this.post.comments[index].id)
+        .then((res) => {
+          this.post.comments[index].liked_count = res.data.liked_count;
+          this.post.comments[index].likes_count = res.data.likes_count;
+        });
+    },
   },
 };
 </script>

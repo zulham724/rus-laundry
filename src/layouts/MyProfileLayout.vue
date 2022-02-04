@@ -4,8 +4,8 @@
       <router-view />
     </q-page-container>
     <q-footer class="shadow-3" style="background-color: white">
-      <div class="q-gutter-none q-pa-sm" style="max-width: 100%">
-        <q-tabs v-model="tab" dense class="text-black" indicator-color="white">
+      <div class="q-gutter-none" style="max-width: 100%">
+        <q-tabs v-model="tab" class="text-black" indicator-color="purple-6" switch-indicator>
           <q-tab name="profile-other" no-caps @click="$router.push('/my-profile')"
             ><q-img
               class="q-pa-sm"

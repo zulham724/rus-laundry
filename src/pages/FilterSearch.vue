@@ -22,43 +22,6 @@
         <q-list
           separator
           dense
-          class="q-mx-xs shadow-1"
-          style="background-color: #ffffff"
-        >
-          <q-item-label
-            class="q-pl-md q-py-md text-weight-bold"
-            style="color: #888888"
-            >Layanan</q-item-label
-          >
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Setrika</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Cuci basah</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Cuci kering + setrika</q-item
-          >
-        </q-list>
-
-        <q-list
-          separator
-          dense
           class="q-mx-xs q-mt-md shadow-1"
           style="background-color: #ffffff"
         >
@@ -67,37 +30,184 @@
             style="color: #888888"
             >Berdasarkan Tanggal Masuk</q-item-label
           >
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-          <q-separator></q-separator>
+          <q-separator size="5px"></q-separator>
+
           <q-item
             v-ripple
             clickable
             class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Hari ini</q-item
+            style="color: #828282"
           >
+            <q-expansion-item
+              class="full-width"
+              expand-separator
+              label="Hari ini"
+            >
+              <q-card>
+                <q-card-section>
+                  <q-list>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment().format('DD-MM-yyyy'),
+                          moment().format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Hari ini </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment().subtract(1, 'days').format('DD-MM-yyyy'),
+                          moment().format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Kemarin </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment().format('DD-MM-yyyy'),
+                          moment().add(1, 'days').format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Besok </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-item>
           <q-item
             v-ripple
             clickable
             class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Minggu ini</q-item
+            style="color: #828282"
           >
+            <q-expansion-item
+              class="full-width"
+              expand-separator
+              label="Minggu"
+            >
+              <q-card>
+                <q-card-section>
+                  <q-list>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment().startOf('week').format('DD-MM-yyyy'),
+                          moment().endOf('week').format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Minggu ini </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment()
+                            .subtract(7, 'days')
+                            .startOf('week')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .subtract(7, 'days')
+                            .endOf('week')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Minggu Kemarin </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment()
+                            .add(7, 'days')
+                            .startOf('week')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .add(7, 'days')
+                            .endOf('week')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Minggu Besok </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-item>
           <q-item
             v-ripple
             clickable
             class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Bulan ini</q-item
+            style="color: #828282"
           >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Tahun ini</q-item
-          >
+            <q-expansion-item class="full-width" expand-separator label="Bulan">
+              <q-card>
+                <q-card-section>
+                  <q-list>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment().startOf('month').format('DD-MM-yyyy'),
+                          moment().endOf('month').format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Bulan ini </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment()
+                            .subtract(1, 'month')
+                            .startOf('month')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .subtract(1, 'month')
+                            .endOf('month')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Bulan Kemarin </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersIn(
+                          moment()
+                            .add(1, 'month')
+                            .startOf('month')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .add(1, 'month')
+                            .endOf('month')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Bulan Besok </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-item>
         </q-list>
 
         <q-list
@@ -111,107 +221,233 @@
             style="color: #888888"
             >Berdasarkan Tanggal Keluar</q-item-label
           >
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Hari ini</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Minggu ini</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Bulan ini</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Tahun ini</q-item
-          >
-        </q-list>
+          <q-separator size="5px"></q-separator>
 
-        <q-list
-          separator
-          dense
-          class="q-mx-xs q-mt-md shadow-1"
-          style="background-color: #ffffff"
-        >
-          <q-item-label
-            class="q-pl-md q-py-md text-weight-bold"
-            style="color: #888888"
-            >Berdasarkan Berat</q-item-label
-          >
-          <q-separator></q-separator>
-          <q-separator></q-separator>
-          <q-separator></q-separator>
           <q-item
             v-ripple
             clickable
             class="text-weight-medium"
-            style="color: #d0d0d0"
-            >1-3 Kg</q-item
+            style="color: #828282"
           >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >3-5 kg</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >5-7 kg</q-item
-          >
-          <q-item
-            v-ripple
-            clickable
-            class="text-weight-medium"
-            style="color: #d0d0d0"
-            >Diatas 7 kg</q-item
-          >
-        </q-list>
-
-        <!-- Button Reset dan Selesai -->
-        <div class="row q-pa-md">
-          <div class="col-6 text-center">
-            <q-btn rounded no-caps style="width: 30vw">
-              <div style="color: #313131">Reset</div>
-            </q-btn>
-          </div>
-          <div class="col-6 text-center">
-            <q-btn
-              rounded
-              no-caps
-              style="width: 30vw; background-color: #49c2c0"
+            <q-expansion-item
+              class="full-width"
+              expand-separator
+              label="Hari ini"
             >
-              <div style="color: #f4f4f4">Selesai</div>
-            </q-btn>
-          </div>
-        </div>
+              <q-card>
+                <q-card-section>
+                  <q-list>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment().format('DD-MM-yyyy'),
+                          moment().format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Hari ini </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment().subtract(1, 'days').format('DD-MM-yyyy'),
+                          moment().format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Kemarin </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment().format('DD-MM-yyyy'),
+                          moment().add(1, 'days').format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Besok </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-item>
+          <q-item
+            v-ripple
+            clickable
+            class="text-weight-medium"
+            style="color: #828282"
+          >
+            <q-expansion-item
+              class="full-width"
+              expand-separator
+              label="Minggu"
+            >
+              <q-card>
+                <q-card-section>
+                  <q-list>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment().startOf('week').format('DD-MM-yyyy'),
+                          moment().endOf('week').format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Minggu ini </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment()
+                            .subtract(7, 'days')
+                            .startOf('week')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .subtract(7, 'days')
+                            .endOf('week')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Minggu Kemarin </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment()
+                            .add(7, 'days')
+                            .startOf('week')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .add(7, 'days')
+                            .endOf('week')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Minggu Besok </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-item>
+          <q-item
+            v-ripple
+            clickable
+            class="text-weight-medium"
+            style="color: #828282"
+          >
+            <q-expansion-item class="full-width" expand-separator label="Bulan">
+              <q-card>
+                <q-card-section>
+                  <q-list>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment().startOf('month').format('DD-MM-yyyy'),
+                          moment().endOf('month').format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Bulan ini </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment()
+                            .subtract(1, 'month')
+                            .startOf('month')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .subtract(1, 'month')
+                            .endOf('month')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Bulan Kemarin </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      @click="
+                        filterOrdersOut(
+                          moment()
+                            .add(1, 'month')
+                            .startOf('month')
+                            .format('DD-MM-yyyy'),
+                          moment()
+                            .add(1, 'month')
+                            .endOf('month')
+                            .format('DD-MM-yyyy')
+                        )
+                      "
+                    >
+                      <q-item-section> Bulan Besok </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-item>
+        </q-list>
+
+        <q-inner-loading 
+        :showing="loading"
+        label="Please wait..."
+        label-class="text-teal"
+        label-style="font-size: 1.1em"
+        />
+         
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-export default {};
+import moment from "moment";
+export default {
+  data() {
+    return {
+      loading: false,
+    };
+  },
+  mounted() {},
+  methods: {
+    moment,
+    filterOrdersIn(from, to) {
+      const payload = {
+        from: from,
+        to: to,
+      };
+      this.loading = true
+      this.$store.dispatch("Orders/filterOrdersIn", payload).then((res) => {
+        this.$store.commit("Orders/set_orders", { data: res.data });
+        this.$router.push("/");
+      });
+    },
+    filterOrdersOut(from, to) {
+      const payload = {
+        from: from,
+        to: to,
+      };
+      this.loading = true
+      this.$store.dispatch("Orders/filterOrdersOut", payload).then((res) => {
+        this.$store.commit("Orders/set_orders", { data: res.data });
+        this.$router.push("/");
+      });
+    },
+  },
+};
 </script>
 
 <style></style>

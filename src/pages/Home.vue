@@ -171,7 +171,6 @@
             </div>
           </div>
         </q-img>
-        
       </div>
     </q-pull-to-refresh>
   </q-header>
@@ -246,6 +245,20 @@
       </q-item>
     </div>
 
+    <!--Empty Order-->
+    <div
+      v-else-if="!isLoad && !Orders.data.data.length"
+      class="text-center absolute-center"
+      style="margin-bottom: 100px"
+    >
+      <q-img
+        no-spinner
+        style="width: 160px; height: 160px"
+        src="~/assets/pesanan-kosong.svg"
+      ></q-img>
+      <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
+    </div>
+
     <!-- List Pesanan -->
     <div v-else-if="isLoad == false && orders">
       <q-infinite-scroll
@@ -314,20 +327,6 @@
       </q-infinite-scroll>
     </div>
 
-    <!--Empty Order-->
-    <div
-      v-else
-      class="text-center absolute-center"
-      style="margin-bottom: 100px"
-    >
-      <q-img
-        no-spinner
-        style="width: 160px; height: 160px"
-        src="~/assets/pesanan-kosong.svg"
-      ></q-img>
-      <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
-    </div>
-
     <!-- Scan Barcode -->
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
@@ -355,7 +354,7 @@ export default {
   name: "HomePage",
   keepalive: true,
   computed: {
-    ...mapState(["Auth"]),
+    ...mapState(["Auth", "Orders"]),
   },
   data() {
     return {
@@ -365,14 +364,17 @@ export default {
       orders: {},
       orders_temp: {},
       isLoad: false,
-      d:null,
+      d: null,
     };
   },
   mounted() {
-    this.getOrders();
     this.timeChecker();
 
-    // pairingTimes();
+    if (this.Orders.data) {
+      this.orders = this.Orders.data;
+    } else {
+      this.getOrders();
+    }
   },
   methods: {
     moment() {

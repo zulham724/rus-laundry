@@ -3,7 +3,7 @@
     <q-header>
       <q-toolbar class="bg-white shadow-1">
         <q-btn
-          @click="$router.back()"
+          @click="$router.push('/')"
           no-caps
           class="q-pa-md"
           flat
@@ -18,9 +18,9 @@
           style="color: black; font-size: 16px"
           >Nama pengguna lain</q-toolbar-title
         >
-        <!-- <q-space>  </q-space> -->
+
         <!-- Button option -->
-        <q-btn no-caps outline dense style="color: #898585">
+        <q-btn no-caps outline dense style="color: #898585" @click="$router.push('/edit-profile')">
           <div
             class="text-weight-medium q-px-sm"
             style="color: #898585; font-size: 13px"
@@ -41,13 +41,13 @@
             </div>
             <div class="col-8">
               <div
-                class="text-weight-medium text-right"
+                class="text-weight-medium text-right q-pb-sm"
                 style="color: #919193; font-size: 15px"
               >
                 Cabang Kudus
               </div>
               <div
-                class="row col-12 q-px-sm q-pt-md"
+                class="row col-12 q-px-sm q-py-xs"
                 style="
                   border-radius: 20px 0px 20px 0px;
                   background-color: #f5f7f9;
@@ -119,133 +119,6 @@
           </q-infinite-scroll>
         </div>
 
-        <q-dialog v-model="dialogOption" position="bottom">
-          <q-card class="justify-center full-width">
-            <q-card-section>
-              <div
-                class="justify-center full-width text-center q-px-xl"
-                style="display: block; border-radius: 10px; align: center"
-              >
-                <q-separator size="5px"></q-separator>
-              </div>
-            </q-card-section>
-            <!-- Button Edit -->
-            <q-card-actions class="q-pt-md">
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-pen"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Edit postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Share -->
-            <q-card-actions class="q-pt-md">
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-share-alt"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Bagikan postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Delete -->
-            <q-card-actions>
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-exclamation-triangle"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Hapus postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Arsip Post -->
-            <q-card-actions>
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-archive"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Arsipkan postingan
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-
-            <!-- Button Nonaktifkan Comment -->
-            <q-card-actions>
-              <q-btn no-caps class="full-width" dense flat>
-                <div class="row full-width q-py-sm">
-                  <div class="col-3">
-                    <q-btn dense outline round size="25px">
-                      <q-icon
-                        name="fas fa-archive"
-                        style="color: #787878"
-                        size="25px"
-                      ></q-icon>
-                    </q-btn>
-                  </div>
-                  <div
-                    class="col-8 text-weight-medium self-center text-left"
-                    style="color: #3a3838; font-size: 20px"
-                  >
-                    Nonaktifkan komentar
-                  </div>
-                </div>
-              </q-btn>
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
-
         <q-page-sticky position="bottom-right" :offset="[18, 60]">
           <q-fab
             icon="fas fa-plus"
@@ -279,6 +152,7 @@
             />
           </q-fab>
         </q-page-sticky>
+
       </q-page>
     </q-page-container>
   </q-layout>
@@ -286,13 +160,13 @@
 
 <script>
 import { mapState } from "vuex";
-import PostCardComponent from "src/components/post/PostCardComponent.vue";
+import PostCardMyProfileComponent from "src/components/post/PostCardMyProfileComponent.vue";
 
 export default {
   name: "MyProfilePage",
   include: ["MyProfilePage"],
   components: {
-    "item-post-component": PostCardComponent,
+    "item-post-component": PostCardMyProfileComponent,
   },
 
   computed: {
@@ -301,7 +175,6 @@ export default {
 
   data() {
     return {
-      dialogOption: false,
       posts: {},
     };
   },
@@ -315,9 +188,6 @@ export default {
   },
 
   methods: {
-    buttonOption() {
-      this.dialogOption = true;
-    },
     getAllPosts() {
       this.$store.dispatch("Post/index").then((res) => {
         this.posts = res.data;

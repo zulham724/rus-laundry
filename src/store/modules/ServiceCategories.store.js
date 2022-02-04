@@ -40,9 +40,9 @@ const actions = {
             })
         })
     },
-    updateName({commit}, clothes) {
+    updateName({commit}, payload) {
         return new Promise((resolve, reject) => {
-            api.post(`/api/slave/updateclothesname`, clothes).then(res => {
+            api.post(`/api/slave/updateclothesname/${payload.id}`, payload).then(res => {
                 resolve(res)
             }).catch(err =>{
                 reject(err)

@@ -58,17 +58,17 @@ p halaman list jenis pakaian diberi slide item untuk edit
 + halaman list paket bisa untuk filter terbaru terlama, abjad {pak azwar}
 - halaman income menu tiap harian mingguan bulanan dan custom belum benar
 + halaman home bisa untuk mencari berdasarkan nama pelanggan, id pesanan   {rian}
-- halaman home bisa untuk filter pesanan terbaru terlama, abjad nama pengguna
+p halaman home bisa untuk filter pesanan tanggal masuk dan tanggal keluar berdasarkan hari, minggu, bulan, tahun
 - config.xml diberi tambahan permission calendar dan camera 
 - buat boot untuk check permission 
 - buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru 
-- halaman home pada component header dibuat menyesuaikan jam pagi siang sore dan malam 
-- halaman detail pesanan kondisi if untuk memunculkan tampilan setelah request hanya berlaku di list saja, header tetap muncul sebelum request, jadi load time page lebih cepat
++ halaman home pada component header dibuat menyesuaikan jam pagi siang sore dan malam {aryo}
+p halaman detail pesanan kondisi if untuk memunculkan tampilan setelah request hanya berlaku di list saja, header tetap muncul sebelum request, jadi load time page lebih cepat
 - halaman income dibuat backend nya pagination dan diberi infinity scroll
 - pada saat menambahkan pesanan masukan pengingat kalender di H-1 pesanan selesai
 - di halaman income diberi grafik statistik 
 - di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
-- di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket
++ di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket {rian}
 + tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma {aryo}
 - di halaman cetak invoice buat cetak lewat web menggunakan fungsi print biasa, ada bug tinggi kertas terlalu panjang
 

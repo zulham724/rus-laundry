@@ -123,23 +123,14 @@
 
           <div v-else-if="isLoad == false && packages.length">
             <q-list class="q-pt-md q-mb-xl">
-              <q-item
-                class="q-my-sm bg-white"
+              <package-list-first-list
+                class="q-my-sm"
                 v-for="(paket, p) in packages"
                 :key="p"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    {{ paket.name }}
-                  </q-item-label>
-                  <q-item-label caption>
-                    {{ paket.category.service_unit.name }}
-                  </q-item-label>
-                </q-item-section>
-                <q-item-section side v-if="chooseMode">
-                  <q-checkbox v-model="packages[p].checked" />
-                </q-item-section>
-              </q-item>
+                :paket="paket"
+                :chooseMode="chooseMode"
+              ></package-list-first-list>
+              
             </q-list>
           </div>
 
@@ -155,7 +146,7 @@
               </div>
             </div>
           </div>
-          <div class="fixed-bottom" v-if="!chooseMode" style="z-index:1;">
+          <div class="fixed-bottom" v-if="!chooseMode" style="z-index: 1">
             <q-btn
               :ripple="{ color: 'orange' }"
               @click="dialog_addPackage = true"
@@ -168,7 +159,9 @@
               <q-dialog v-model="dialog_addPackage" persistent>
                 <q-card>
                   <q-card-section class="row justify-start">
-                    <div class="text-subtitle1 text-bold">Tambah paket baru?</div>
+                    <div class="text-subtitle1 text-bold">
+                      Tambah paket baru?
+                    </div>
                     <div class="text-caption">
                       yakin ingin menambah paket baru?
                     </div>
@@ -200,7 +193,7 @@
               <div class="text-subtitl2" style="color: white">Hapus Paket</div>
               <q-dialog v-model="dialog_deletePackage" persistent>
                 <q-card>
-                  <q-card-section class=" justify-start">
+                  <q-card-section class="justify-start">
                     <div class="text-subtitle1 text-bold">Hapus paket?</div>
                     <div class="text-caption">yakin ingin menghapus paket?</div>
                   </q-card-section>
@@ -233,8 +226,16 @@
 </template>
 
 <script>
+import { debounce } from "quasar";
+import { useQuasar } from "quasar";
+import { onBeforeUnmount } from "vue";
+import Plfl from "src/pages/PackageListFirstList.vue";
+
 export default {
-  props: ["categoryid"],
+  components: {
+    "package-list-first-list": Plfl,
+  },
+
   data() {
     return {
       search: null,

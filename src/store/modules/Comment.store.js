@@ -19,9 +19,18 @@ const actions = {
             })
         })
     },
-    liked({ commit }, commentId){
+    like({ commit }, commentId){
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/comment/${commentId}/like`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    dislike({ commit }, commentId){
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/comment/${commentId}/dislike`).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)

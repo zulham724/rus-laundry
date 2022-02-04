@@ -5,6 +5,7 @@ import {
 const state = {
     data: [],
     order: null,
+    dataM: [],
 
 };
 
@@ -52,6 +53,13 @@ const mutations = {
         }
     },
 
+    nextM(state, payload){
+        state.dataM = {
+            ...payload.dataM,
+            dataM: [...state.data.data, ...payload.data.data]
+        }
+    }
+
 };
 
 const actions = {
@@ -85,7 +93,11 @@ const actions = {
             api
                 .get(`/api/slave/getorderbymonth/${shopId}`)
                 .then((res) => {
-                    resolve(res);
+                    const data = res.data;
+                    commit('test',{
+                        data: dataM
+                    });
+                    resolve(res)
                 }).catch(err => {
                     reject(err)
                 })
@@ -153,7 +165,7 @@ const actions = {
             api
                 .post(`/api/slave/order`, formData)
                 .then((res) => {
-                    
+
                     resolve(res);
                 })
                 .catch((err) => {
@@ -166,6 +178,24 @@ const actions = {
     }) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/getorder`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    filterOrdersIn({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/filterOrdersIn/${payload.from}/${payload.to}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    filterOrdersOut({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/filterOrdersOut/${payload.from}/${payload.to}`).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)
@@ -270,6 +300,16 @@ const actions = {
             })
         })
     },
+    // test({commit, state}){
+    //     return new Promise((resolve. reject) => {
+    //         api.get(`${state.data.next_page_url}`).then(res => {
+    //             commit("test", { dataM: res.data })
+    //             resolve(res)
+    //         }).catch(err => {
+    //             reject(err)
+    //         })
+    //     })
+    // },
     countProfitOrdersByDay({ commit }, shopId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/getCountProfitOrdersByDay/${shopId}`).then(res => {
