@@ -25,6 +25,7 @@ p proses
 + di halaman pelanggan bisa melakukan hapus pelanggan secara satuan atau pilih semua {iqbal}
 + Mengedit pelanggan {iqbal}
 + Menambah pelanggan {iqbal}
++ halaman detail pesanan kondisi if untuk memunculkan tampilan setelah request hanya berlaku di list saja, header tetap muncul sebelum request, jadi load time page lebih cepat {iqbal}
 
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
@@ -63,7 +64,6 @@ p halaman home bisa untuk filter pesanan tanggal masuk dan tanggal keluar berdas
 - buat boot untuk check permission 
 - buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru 
 + halaman home pada component header dibuat menyesuaikan jam pagi siang sore dan malam {aryo}
-p halaman detail pesanan kondisi if untuk memunculkan tampilan setelah request hanya berlaku di list saja, header tetap muncul sebelum request, jadi load time page lebih cepat
 - halaman income dibuat backend nya pagination dan diberi infinity scroll
 - pada saat menambahkan pesanan masukan pengingat kalender di H-1 pesanan selesai
 - di halaman income diberi grafik statistik 

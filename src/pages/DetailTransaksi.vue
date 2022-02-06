@@ -46,8 +46,6 @@
           "
           v-if="detail_order"
         >
-          <!-- Skeleton -->
-
           <q-carousel
             style="height: 100%"
             v-model="slide"
@@ -363,7 +361,7 @@
                     >
                   </q-item-section>
                   <q-space></q-space>
-                  <q-item-section class="self-center" side>
+                  <q-item-section class="self-center q-pa-lg" side>
                     <q-item-label
                       class="text-weight-regular q-pt-md"
                       style="color: #c9c9c9; font-size: 15px"

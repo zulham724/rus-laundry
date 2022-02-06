@@ -45,14 +45,7 @@
                 self-center
                 q-mx-xl q-mt-sm
               "
-              style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #ffd53f,
-                  #ffb35a
-                );
-                border-radius: 5px;
-              "
+              style="background-color: #ffd53f; border-radius: 5px"
             >
               <div class="col-6 text-left">
                 <div style="color: white; font-size: 13px">Waktu kursus</div>
@@ -107,9 +100,9 @@
       <!-- Step course -->
       <div v-for="n in 7" :key="n">
         <!-- Container -->
-        <div class="full-width row">
+        <div @click="$router.push('/detail-course')" class="full-width row">
           <!-- Thumbnail video -->
-          <div class="col-5 text-center self-center">
+          <div class="col-5 text-center self-center" style="z-index: -1">
             <q-avatar
               square
               style="width: 140px; height: 80px; border-radius: 5px"
@@ -149,10 +142,7 @@
               >
                 <div
                   class="col-6 q-px-md q-py-xs"
-                  style="
-                    background-color: #d637b3;
-                    border-radius: 5px 0 0 0;
-                  "
+                  style="background-color: #d637b3; border-radius: 5px 0 0 0"
                 >
                   Video
                 </div>
@@ -186,6 +176,35 @@
         </div>
         <q-separator></q-separator>
       </div>
+
+      <!-- Dialog lock content -->
+      <q-dialog v-model="dialogLock" >
+        <q-card style="border-radius: 20px">
+          <!-- Image lock -->
+          <div>
+            <q-img
+              no-spinner
+              src="~/assets/animasi-proses-cuci.gif"
+              sizes="50px"
+            >
+            </q-img>
+          </div>
+
+          <div
+            class="text-weight-bold text-center q-py-sm"
+            style="color: #5f5959; font-size: 13px"
+          >
+            Konten ini Terkunci
+          </div>
+          <div
+            class="text-weight-medium text-center q-px-md q-pb-xl"
+            style="color: #b8b8b8; font-size: 13px"
+          >
+            Kamu sepertinya belum menyelesaikan pembelajaran di konten
+            sebelumnya. Yuk selesaikan dulu!
+          </div>
+        </q-card>
+      </q-dialog>
     </q-page>
   </q-layout>
 </template>
@@ -196,7 +215,13 @@ export default {
     return {
       value: 1,
       lockDuration: false,
+      dialogLock: false,
     };
+  },
+  methods: {
+    buttonLock() {
+      this.dialogLock = true;
+    },
   },
 };
 </script>

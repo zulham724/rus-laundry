@@ -120,6 +120,18 @@ const routes = [{
     },
 
     {
+        path: "/comment-of-course",
+        component: () =>
+            import ("pages/CommentOfCourse.vue")
+    },
+
+    {
+        path: "/detail-course",
+        component: () =>
+            import ("pages/DetailCourse.vue")
+    },
+
+    {
         path: "/list-of-course",
         component: () =>
             import ("pages/ListOfCourse.vue")

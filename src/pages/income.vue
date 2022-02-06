@@ -1,6 +1,5 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-page style="background-color: #fafafa">
-    <q-pull-to-refresh @refresh="refresh">
       <div style="height: 220px">
         <div
           class="fixed mbl-child"
@@ -29,7 +28,6 @@
           </div>
         </div>
       </div>
-    </q-pull-to-refresh>
 
     <div
       class="q-pb-lg"
@@ -242,7 +240,6 @@ export default {
       tab: "hari",
       orders: [],
       isLoad: false,
-      items: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
       total_profit: 0,
     };
   },

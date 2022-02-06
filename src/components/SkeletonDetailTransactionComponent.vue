@@ -12,7 +12,7 @@
         </div>
         <div class="q-pl-md text-weight-regular" style="color: #313131">
           <!--{{ detail_order.id }}-->
-        <q-skeleton width="40px" />
+          <q-skeleton width="40px" />
         </div>
       </div>
       <div class="col-6">
@@ -23,7 +23,7 @@
               style="
                 font-size: 10px;
                 color: #fafafa;
-              
+
                 border-radius: 3px 3px 3px 3px;
               "
             >
@@ -46,21 +46,20 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="120px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="120px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="10px" /></q-item-label
-          >
+            ><q-skeleton width="10px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section avatar>
           <q-avatar size="30px" class="bg-transparent">
-                <q-skeleton height="200px" width="100px" square />
-
+            <q-skeleton height="200px" width="100px" square />
           </q-avatar>
         </q-item-section>
       </q-item>
@@ -69,20 +68,20 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="120px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="120px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="10px" /></q-item-label
-          >
+            ><q-skeleton width="10px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section avatar>
           <q-avatar size="30px" class="bg-transparent">
-             <q-skeleton height="200px" width="100px" square />
+            <q-skeleton height="200px" width="100px" square />
           </q-avatar>
         </q-item-section>
       </q-item>
@@ -91,20 +90,20 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="120px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="120px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="20px" height="20px"/></q-item-label
-          >
+            ><q-skeleton width="20px" height="20px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section avatar>
           <q-avatar size="30px" class="bg-transparent">
-             <q-skeleton height="200px" width="100px" square />
+            <q-skeleton height="200px" width="100px" square />
           </q-avatar>
         </q-item-section>
       </q-item>
@@ -113,20 +112,20 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="30px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="30px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="120px" height="20px" /></q-item-label
-          >
+            ><q-skeleton width="120px" height="20px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section avatar>
           <q-avatar size="30px" class="bg-transparent">
-             <q-skeleton height="200px" width="100px" square />
+            <q-skeleton height="200px" width="100px" square />
           </q-avatar>
         </q-item-section>
       </q-item>
@@ -135,20 +134,20 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="80px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="80px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="120px" height="20px"/></q-item-label
-          >
+            ><q-skeleton width="120px" height="20px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section avatar>
           <q-avatar size="30px" class="bg-transparent">
-             <q-skeleton height="200px" width="100px" square />
+            <q-skeleton height="200px" width="100px" square />
           </q-avatar>
         </q-item-section>
       </q-item>
@@ -157,16 +156,15 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="30px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="30px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton type="text" width="30px"/>
-            <q-skeleton width="30px" /></q-item-label
-          >
+            > <q-skeleton width="30px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section avatar>
@@ -182,8 +180,8 @@
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton type="text" width="120px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="120px"
+          /></q-item-label>
         </q-item-section>
 
         <q-item-section avatar class="q-mt-xl">
@@ -193,7 +191,7 @@
             @click="$router.push(`/${detail_order.id}/laundry-details-other`)"
           >
             <q-avatar size="30px" class="bg-transparent">
-               <q-skeleton height="200px" width="100px" square />
+              <q-skeleton height="200px" width="100px" square />
             </q-avatar>
           </q-btn>
         </q-item-section>
@@ -205,8 +203,8 @@
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton type="text" width="120px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="120px"
+          /></q-item-label>
         </q-item-section>
 
         <q-item-section avatar>
@@ -228,30 +226,30 @@
           <q-item-label
             class="text-weight-regular q-pt-md"
             style="color: #c9c9c9; font-size: 15px"
-            ><q-skeleton type="text" width="60px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="60px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="150px" /></q-item-label
-          >
+            ><q-skeleton width="150px"
+          /></q-item-label>
         </q-item-section>
         <q-space></q-space>
         <q-item-section class="self-center" side>
           <q-item-label
             class="text-weight-regular q-pt-md"
             style="color: #c9c9c9; font-size: 15px"
-            ><q-skeleton type="text" width="60px"/></q-item-label
-          >
+            ><q-skeleton type="text" width="60px"
+          /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
           >
-           <q-skeleton width="60px" />
+            <q-skeleton width="100px" />
           </q-item-label>
         </q-item-section>
       </q-item>

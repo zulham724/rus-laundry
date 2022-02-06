@@ -409,8 +409,8 @@ export default {
           .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
           .then((res) => {
             this.orders = this.orders_temp = res.data;
-
             resolve(res.data);
+            console.log("ini isi res normal",res.data);
           })
           .catch((err) => {
             reject(err);
@@ -472,6 +472,7 @@ export default {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],
           };
+          console.log("ini isi res on load setelah diolah",res.data);
           done();
         });
       } else {
