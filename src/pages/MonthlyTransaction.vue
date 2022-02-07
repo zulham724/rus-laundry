@@ -30,12 +30,6 @@
         </q-item>
       </div>
 
-      <div v-else-if="!isLoad && !orders.data">
-        <div class="text-subtitle1 text-center">
-          Belum ada transaksi bulan ini
-        </div>
-      </div>
-
       <div v-else-if="isLoad == false && orders.data">
         <q-infinite-scroll
           @load="ketikaOnLoad"
@@ -84,6 +78,12 @@
             </q-item>
           </q-list>
         </q-infinite-scroll>
+      </div>
+
+      <div v-else>
+        <div class="text-subtitle1 text-center">
+          Belum ada transaksi minggu ini
+        </div>
       </div>
     </q-pull-to-refresh>
   </div>
@@ -137,7 +137,7 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            console.log("ini res data", res.data);
+            console.log("ini data bulanan",res.data)
           })
           .catch((err) => {
             reject(err);

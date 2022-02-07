@@ -1,5 +1,6 @@
 <template>
   <q-layout>
+  <q-page-container>
     <q-page>
       <!-- Header -->
       <div class="text-center bg-transparent" style="height: 200px">
@@ -10,7 +11,7 @@
           class="fixed-top mbl-child"
           no-spinner
         >
-          <q-toolbar class="bg-transparent">
+          <q-toolbar class="bg-transparent" style="z-index: 999">
             <q-btn
               :ripple="true"
               flat
@@ -21,7 +22,7 @@
               <q-avatar
                 size="25px"
                 icon="fas fa-arrow-left"
-                style="color: #ffffff"
+                style="color: #000"
               >
               </q-avatar>
             </q-btn>
@@ -206,6 +207,7 @@
         </q-card>
       </q-dialog>
     </q-page>
+    </q-page-container>
   </q-layout>
 </template>
 

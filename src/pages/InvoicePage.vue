@@ -15,7 +15,7 @@
         </q-toolbar>
       </q-header>
       <q-page class="q-pt-lg">
-        <q-card class="q-mx-md">
+        <q-card class="q-mx-md" v-if="order" id="order">
           <div class="row q-py-md">
             <div
               class="col-6 text-left q-pl-md text-weight-bolder"
@@ -45,7 +45,7 @@
               class="col-8 text-weight-regular q-pl-md"
               style="font-size: 12px; color: #c9c9c9"
             >
-              Suparjo
+              {{ order.customer.name }}
             </div>
             <div
               class="col-4 text-weight-regular"
@@ -59,7 +59,7 @@
               class="col-8 text-weight-regular q-pl-md"
               style="font-size: 12px; color: #c9c9c9"
             >
-              1 Januari 2022
+              {{ moment(order.created_at).format("ll") }}
             </div>
             <div
               class="col-4 text-weight-regular"
@@ -73,7 +73,7 @@
               class="col-8 text-weight-regular q-pl-md"
               style="font-size: 12px; color: #c9c9c9"
             >
-              0857831409898
+              {{ order.customer.contact_number }}
             </div>
           </div>
 
@@ -104,57 +104,44 @@
             </div>
           </div>
           <q-separator class="q-mx-sm"></q-separator>
-          <div class="row q-mx-md q-pt-md">
+          <div
+            class="row q-mx-md"
+            v-for="service in order.services"
+            :key="service.id"
+          >
             <div
               class="col-4 text-weight-regular"
               style="font-size: 10px; color: #313131"
             >
-              Reguler kering + setrika
+              {{ service.name }}
             </div>
             <div
               class="col-3 text-weight-regular text-center"
               style="font-size: 10px; color: #313131"
             >
-              Rp. 5000 /Kg
+              {{
+                new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(service.price)
+              }}/{{ service.category.service_unit.name }}
             </div>
             <div
               class="col-2 text-weight-regular text-center"
               style="font-size: 10px; color: #313131"
             >
-              5
+              {{ service.pivot.quantity }}
             </div>
             <div
               class="col-3 text-weight-regular text-center"
               style="font-size: 10px; color: #313131"
             >
-              Rp. 25000
-            </div>
-          </div>
-
-          <div class="row q-mx-md">
-            <div
-              class="col-4 text-weight-regular"
-              style="font-size: 10px; color: #313131"
-            >
-              Super Kilat kering
-            </div>
-            <div
-              class="col-3 text-weight-regular text-center"
-              style="font-size: 10px; color: #313131"
-            >
-              Rp. 15000 /pcs
-            </div>
-            <div
-              class="col-2 text-weight-regular text-center"
-              style="font-size: 10px; color: #313131"
-            >
-              5
-            </div>
-            <div
-              class="col-3 text-weight-regular text-center"
-              style="font-size: 10px; color: #313131"
-            >
-              Rp. 75000
+              {{
+                new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(service.price*service.pivot.quantity)
+              }}
             </div>
           </div>
 
@@ -176,7 +163,7 @@
                 Tanggal Pembayaran
               </div>
               <div class="col-4 q-mx-md" style="color: #31313; font-size: 10px">
-                {{ moment().format("DD MMMM YYYY") }}
+                {{ moment(order.updated_at).format('ll') }}
               </div>
 
               <div
@@ -193,7 +180,12 @@
               class="col-6 text-right q-pr-lg q-pt-sm text-weight-medium"
               style="color: #313131"
             >
-              Rp. 100.000
+              {{
+                new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(order.total_sum)
+              }}
             </div>
           </div>
         </q-card>
@@ -233,6 +225,7 @@
                 </div>
                 <div class="col-3 text-left q-pr-sm">
                   <q-btn
+                    @click="printOrder()"
                     class="shadow-1"
                     no-caps
                     flat
@@ -253,12 +246,17 @@
 import moment from "moment";
 
 export default {
+  props: ["orderid"],
   data() {
     return {
       dialogConfirm: false,
+      order: null,
     };
   },
-
+  mounted() {
+    this.getOrder();
+    // console.log(this.orderid)
+  },
   methods: {
     moment() {
       return moment();
@@ -266,6 +264,83 @@ export default {
 
     buttonConfirm() {
       this.dialogConfirm = true;
+    },
+    getOrder() {
+      this.$store.dispatch("Orders/show", this.orderid).then((res) => {
+        this.order = res.data;
+      });
+    },
+    printOrder() {
+      // this.$store.commit("Orders/delete_order");
+      // this.$router.push("/make-an-order");
+      // this.print()
+      if (this.$q.platform.is.android) {
+        window.BTPrinter.connect(
+          (data) => {
+            console.log("connecting");
+            console.log(data);
+            this.print();
+          },
+          (err) => {
+            console.log("Error");
+            console.log(err);
+          },
+          "RPP02N"
+        );
+      } else {
+        this.printDiv('order')
+        this.$q.notify("Hanya bisa di android");
+      }
+    },
+    print() {
+      htmlToImage
+        .toJpeg(this.$refs.order, {
+          quality: 1,
+          backgroundColor: "#FFFFFF",
+          height: 500,
+          width: 350,
+        })
+        .then((dataUrl) => {
+          // let res = this.imageToDataUri(dataUrl,300,300)
+          // console.log(dataUrl)
+          window.BTPrinter.printBase64(
+            function (data) {
+              console.log("Printing");
+              console.log(data);
+            },
+            function (err) {
+              console.log("Error");
+              console.log(err);
+            },
+            dataUrl,
+            1
+          );
+        });
+    },
+    imageToDataUri(img, width, height) {
+      // create an off-screen canvas
+      var canvas = document.createElement("canvas"),
+        ctx = canvas.getContext("2d");
+
+      // set its dimension to target size
+      canvas.width = width;
+      canvas.height = height;
+
+      // draw source image into the off-screen canvas:
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // encode image to data-uri with base64 version of compressed image
+      return canvas.toDataURL();
+    },
+    printDiv(divName) {
+      var printContents = document.getElementById(divName).innerHTML;
+      var originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+
+      window.print();
+
+      document.body.innerHTML = originalContents;
     },
   },
 };

@@ -2,7 +2,8 @@
   "recommendations": [
     "akamud.vscode-theme-onedark",
     "octref.vetur",
-    "zignd.html-css-class-completion"
+    "zignd.html-css-class-completion",
+    "redhat.vscode-xml"
   ],
   "unwantedRecommendations": [
     // "dbaeumer.jshint",

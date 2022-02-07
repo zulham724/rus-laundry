@@ -120,6 +120,12 @@ const routes = [{
     },
 
     {
+        path: "/search-of-course",
+        component: () =>
+            import ("pages/SearchOfCourse.vue")
+    },
+
+    {
         path: "/comment-of-course",
         component: () =>
             import ("pages/CommentOfCourse.vue")
@@ -299,9 +305,10 @@ const routes = [{
     },
 
     {
-        path: "/invoice-page",
+        path: "/invoice-page/:orderid",
         component: () =>
             import ("src/pages/InvoicePage.vue"),
+        props: true
     },
 
     {
@@ -476,6 +483,11 @@ const routes = [{
         path: "/marketplace-detail-photo",
         component: () =>
             import ("src/pages/marketplace-detail-photo.vue"),
+    },
+    {
+        path: "/marketplace-detail-user",
+        component: () =>
+            import ("src/pages/marketplace-detail-user.vue"),
     },
 
     // Always leave this as last one,

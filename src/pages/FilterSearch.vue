@@ -401,13 +401,13 @@
           </q-item>
         </q-list>
 
-        <q-inner-loading 
+        <q-inner-loading
         :showing="loading"
         label="Please wait..."
         label-class="text-teal"
         label-style="font-size: 1.1em"
         />
-         
+
       </q-page>
     </q-page-container>
   </q-layout>
@@ -429,10 +429,10 @@ export default {
         from: from,
         to: to,
       };
-      this.loading = true
+      // this.loading = true
       this.$store.dispatch("Orders/filterOrdersIn", payload).then((res) => {
-        this.$store.commit("Orders/set_orders", { data: res.data });
-        this.$router.push("/");
+        // this.$store.commit("Orders/set_orders", { data: res.data });
+        // this.$router.push("/");
       });
     },
     filterOrdersOut(from, to) {

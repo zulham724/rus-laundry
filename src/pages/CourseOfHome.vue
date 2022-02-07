@@ -1,12 +1,21 @@
-<template>
+<template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <!-- Header -->
   <q-page>
     <!-- Container -->
-    <div class="full-width" style="height: 180px; background-color: #fafafa">
+    <div
+      class="full-width"
+      style="
+        height: 180px;
+        background-color: #fafafa;
+        z-index: 999;
+        position: relative;
+      "
+    >
       <!-- Background blue -->
       <div
-        class="full-width"
+        class="full-width fixed-top"
         style="
+          z-index: 200;
           height: 150px;
           background-color: #3789e1;
           border-radius: 0px 0px 50px 50px;
@@ -27,7 +36,7 @@
             >
               IndonesiaLaundry
             </div>
-            <div class="row">
+            <div class="row q-gutter-x-sm">
               <div
                 class="col-2 q-px-md self-center"
                 style="
@@ -38,63 +47,60 @@
                   color: white;
                 "
               >
-                Lv.20
+                RK 20
+              </div>
+
+              <!-- Point -->
+              <div
+                class="col-4 q-px-md self-center"
+                style="
+                  background-color: #fff;
+                  border-radius: 20px;
+                  width: auto;
+                  font-size: 10px;
+                  color: #ff843e;
+                "
+              >
+                1500 Point
               </div>
             </div>
           </div>
-          <!-- Event koin -->
-          <div class="col-4 q-pr-md self-end" style="z-index: 999">
-            <div
-              class="row text-weight-medium"
-              style="color: #fafafa; font-size: 9px"
-            >
-              <div class="col-6 text-left">1500 koin</div>
-              <div class="col-6 text-right">2000 koin</div>
-            </div>
-            <div class="row">
-              <q-linear-progress
-                track-color="grey-11"
-                size="9px"
-                :value="progress1"
-                style="border-radius: 5px; color: #61ff00"
-              ></q-linear-progress>
-            </div>
-          </div>
         </div>
-      </div>
 
-      <!-- Search bar -->
-      <div
-        class="row justify-center q-px-xl"
-        style="z-index: 999; margin-top: -22px"
-      >
-        <q-input
-          dense
-          class="q-mx-xs full-width bg-white"
-          type="search"
-          outlined
-          v-model="search"
-          placeholder="Cari"
-        >
-          <template v-slot:prepend>
-            <q-icon
-              name="search"
-              class="self-center"
-              size="20px"
-              color="grey"
-            />
-          </template>
+        <!-- Search bar -->
+        <div class="row q-px-xl" style="z-index: 999; margin-top: 25px">
+          <q-input
+            dense
+            class="q-mx-xs full-width bg-white"
+            type="search"
+            outlined
+            v-model="search"
+            placeholder="Cari"
+          >
+            <template v-slot:prepend>
+              <q-icon
+                name="search"
+                class="self-center"
+                size="20px"
+                color="grey"
+              />
+            </template>
 
-          <template v-slot:append>
-          <q-icon name="close" @click="clear = ''" class="cursor-pointer" />
-        </template>
-        </q-input>
+            <template v-slot:append>
+              <q-icon name="close" @click="clear = ''" class="cursor-pointer" />
+            </template>
+          </q-input>
+        </div>
       </div>
     </div>
 
     <div v-for="n in 7" :key="n">
       <!-- Container -->
-      <div class="full-width row">
+      <div
+        class="full-width row"
+        style="position: relative"
+        @click="$router.push('/list-of-course')"
+      >
         <!-- Thumbnail video -->
         <div class="col-5 text-center self-center">
           <q-avatar
@@ -174,11 +180,10 @@ export default {
       progress1,
       progressLabel1: (progress1.value * 100).toFixed(2) + "%",
       lockDuration: false,
-      clear: ref(''),
+      clear: ref(""),
     };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

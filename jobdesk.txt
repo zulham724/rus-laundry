@@ -1,4 +1,4 @@
-status description: 
+status description:
 - pending
 p proses
 + complete
@@ -60,15 +60,17 @@ p halaman list jenis pakaian diberi slide item untuk edit
 - halaman income menu tiap harian mingguan bulanan dan custom belum benar
 + halaman home bisa untuk mencari berdasarkan nama pelanggan, id pesanan   {rian}
 p halaman home bisa untuk filter pesanan tanggal masuk dan tanggal keluar berdasarkan hari, minggu, bulan, tahun
-- config.xml diberi tambahan permission calendar dan camera 
-- buat boot untuk check permission 
-- buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru 
+- config.xml diberi tambahan permission calendar dan camera
+- buat boot untuk check permission
+- buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru
 + halaman home pada component header dibuat menyesuaikan jam pagi siang sore dan malam {aryo}
 - halaman income dibuat backend nya pagination dan diberi infinity scroll
 - pada saat menambahkan pesanan masukan pengingat kalender di H-1 pesanan selesai
-- di halaman income diberi grafik statistik 
+- di halaman income diberi grafik statistik
 - di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
 + di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket {rian}
 + tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma {aryo}
 - di halaman cetak invoice buat cetak lewat web menggunakan fungsi print biasa, ada bug tinggi kertas terlalu panjang
-
+- diberi interceptor kalau masa paket habis auto keluar dan tidak bisa masuk, jika masuk/login diberi notify masa paket habis
+- halaman laporan transaksi belum ada tampilan jika data kosong
+- dihalaman pesanan waktu konfirmasi pesanan masih belum bisa

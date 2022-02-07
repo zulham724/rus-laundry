@@ -1,33 +1,33 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-page style="background-color: #fafafa">
-      <div style="height: 220px">
+    <div style="height: 220px">
+      <div
+        class="fixed mbl-child"
+        style="
+          width: 100%;
+          height: 100%;
+          background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
+        "
+      >
         <div
-          class="fixed mbl-child"
-          style="
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
-          "
+          class="text-weight-regular text-center q-pt-xl"
+          style="color: white; font-size: 18px"
         >
-          <div
-            class="text-weight-regular text-center q-pt-xl"
-            style="color: white; font-size: 18px"
-          >
-            Total Pendapatan
-          </div>
-          <div
-            class="text-weight-bold text-center"
-            style="color: white; font-size: 38px"
-          >
-            {{
-              new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-              }).format(total_profit)
-            }}
-          </div>
+          Total Pendapatan
+        </div>
+        <div
+          class="text-weight-bold text-center"
+          style="color: white; font-size: 38px"
+        >
+          {{
+            new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(total_profit)
+          }}
         </div>
       </div>
+    </div>
 
     <div
       class="q-pb-lg"
@@ -87,7 +87,7 @@
       <!-- List Pesanan -->
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="hari">
-          <daily-transaction></daily-transaction>
+          <daily-transaction ></daily-transaction>
         </q-tab-panel>
         <q-tab-panel name="minggu">
           <weekly-transaction></weekly-transaction>
@@ -163,7 +163,7 @@
             </q-item>
           </div>
 
-          <q-list
+          <!-- <q-list
             v-else-if="isLoad == false && orders"
             bordered
             separator
@@ -209,7 +209,7 @@
                 +{{ order.total_sum }}
               </q-item-section>
             </q-item>
-          </q-list>
+          </q-list> -->
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -220,7 +220,7 @@
 import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
-import Daily from "src/pages/TodayTransaction.vue";
+import Daily from "src/pages/DailyTransaction.vue";
 import Monthly from "src/pages/MonthlyTransaction.vue";
 import Weekly from "src/pages/WeeklyTransaction.vue";
 

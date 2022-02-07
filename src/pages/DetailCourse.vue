@@ -64,7 +64,9 @@
               color="grey"
             >
               <q-img no-spinner src="~/assets/contoh-thumbnail.svg">
+                <!-- Jika video terlock -->
                 <q-icon
+                  v-if="(lockVideo = false)"
                   class="absolute-center"
                   name="fas fa-lock"
                   size="40px"
@@ -170,15 +172,15 @@
         </div>
       </div>
 
-      <!-- Dialog unnlock content -->
+      <!-- Dialog unlock content -->
       <q-dialog v-model="unlockLevel">
-        <q-card style="border-radius: 20px">
+        <q-card class="q-pa-lg" style="border-radius: 20px">
           <!-- Image lock -->
           <div>
             <q-img
               no-spinner
               src="~/assets/animasi-proses-cuci.gif"
-              sizes="50px"
+              sizes="40px"
             >
             </q-img>
           </div>
@@ -190,7 +192,7 @@
             Konten Baru Terbuka
           </div>
           <div
-            class="text-weight-medium text-center q-px-md q-pb-xl"
+            class="text-weight-medium text-center q-px-md"
             style="color: #b8b8b8; font-size: 13px"
           >
             Yeay!! akhirnya kamu telah mempelajari konten ini. Selamat konten
@@ -201,8 +203,8 @@
 
       <!-- Dialog earnCoin -->
       <q-dialog v-model="earnCoin">
-        <q-card style="border-radius: 20px">
-          <!-- Image lock -->
+        <q-card class="q-pa-lg" style="border-radius: 20px">
+          <!-- Image earnCoin -->
           <div>
             <q-img
               no-spinner
@@ -213,23 +215,85 @@
           </div>
 
           <div
-            class="text-weight-bold text-center q-py-sm"
+            class="text-weight-bold text-center q-pt-sm"
             style="color: #5f5959; font-size: 13px"
-          >SELAMAT ANDA MENDAPATKAN KOIN
-          </div>
-
-          <div
-            class="text-weight-medium text-center q-py-sm"
-            style="color: #FFD752; font-size: 20px"
-          >50 KOIN
-          </div>
-
-          <div
-            class="text-weight-medium q-px-md"
-            style="color: #494747"
           >
-            <div class="col-6"></div>
-            <div class="col-6"></div>
+            SELAMAT ANDA MENDAPATKAN KOIN
+          </div>
+
+          <div
+            class="text-weight-medium text-center q-pb-lg"
+            style="color: #ffd752; font-size: 20px"
+          >
+            50 KOIN
+          </div>
+
+          <div class="text-weight-medium row" style="color: #494747">
+            <!-- My level -->
+            <div class="col-6 text-left" style="font-size: 15px">Lv. 20</div>
+            <!-- Next level -->
+            <div class="col-6 text-right" style="font-size: 15px">Lv. 21</div>
+          </div>
+
+          <!-- Progress -->
+          <div class="row q-pt-xs">
+            <q-linear-progress
+              track-color="grey-14"
+              size="9px"
+              :value="progress1"
+              style="border-radius: 5px; color: #61ff00"
+            >
+            </q-linear-progress>
+          </div>
+
+          <div class="text-weight-medium row q-pt-xs">
+            <!-- My coin -->
+            <div class="col-6 text-left" style="font-size: 8px; color: #d2d2d2">
+              Koin kamu : 1000
+            </div>
+            <!-- Reward coin -->
+            <div
+              class="col-6 text-right"
+              style="font-size: 8px; color: #ffbf00"
+            >
+              1000 koin lagi untuk naik level
+            </div>
+          </div>
+        </q-card>
+      </q-dialog>
+
+      <!-- Dialog earnCoin -->
+      <q-dialog v-model="levelUp">
+        <q-card class="q-pa-lg" style="border-radius: 20px">
+          <!-- Image earnCoin -->
+          <div>
+            <q-img
+              no-spinner
+              src="~/assets/animasi-proses-cuci.gif"
+              sizes="50px"
+            >
+            </q-img>
+          </div>
+
+          <div
+            class="text-weight-bold text-center q-pt-sm"
+            style="color: #5f5959; font-size: 13px"
+          >
+            SELAMAT ANDA NAIK LEVEL
+          </div>
+
+          <div
+            class="text-weight-medium text-center q-pb-md"
+            style="color: #ffd752; font-size: 20px"
+          >
+            LV. 21
+          </div>
+
+          <div
+            class="text-weight-medium row text-center"
+            style="color: #60ff02; font-size: 15px"
+          >
+            Kamu mendapatkan 100 koin
           </div>
         </q-card>
       </q-dialog>
@@ -238,17 +302,20 @@
 </template>
 
 <script>
+import { ref } from "vue";
 export default {
   data() {
+    const progress1 = ref(0.7);
     return {
+      lockVideo: false,
       lockDuration: false,
       unlockLevel: false,
       earnCoin: false,
       levelUp: false,
+      progress1,
     };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

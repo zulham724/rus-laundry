@@ -418,7 +418,7 @@
 
               <q-card-actions class="text-primary" vertical>
                 <q-btn
-                  @click="updateStatusOrder()"
+                  @click="confirmService()"
                   no-caps
                   flat
                   label="Konfirmasi Transaksi"
@@ -563,6 +563,16 @@ export default {
   },
 
   methods: {
+    confirmService() {
+
+      const payload = {
+        id: this.detail_order.id,
+        order_status_id: 4,
+      };
+      this.$store.dispatch("Orders/updateStatus", payload).then((res) => {
+        this.$router.push(`/invoice-page/${this.detail_order.id}`);
+      });
+    },
     buttonShare() {
       this.dialogShare = true;
     },
@@ -576,7 +586,7 @@ export default {
         .then((res) => {
           this.detail_order = res.data;
           this.slide = `slide-${res.data.services[0].id}`;
-          // console.log("haoiiii", res.data)
+          console.log("haiiii", res.data)
         })
         .finally(() => {
           this.isLoad = false;

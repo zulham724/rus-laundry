@@ -53,7 +53,7 @@
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="10px"
+            ><q-skeleton width="120px"
           /></q-item-label>
         </q-item-section>
         <q-space></q-space>
@@ -75,7 +75,7 @@
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="10px"
+            ><q-skeleton width="120px"
           /></q-item-label>
         </q-item-section>
         <q-space></q-space>
@@ -97,7 +97,7 @@
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            ><q-skeleton width="20px" height="20px"
+            ><q-skeleton width="120px" height="20px"
           /></q-item-label>
         </q-item-section>
         <q-space></q-space>
@@ -112,7 +112,7 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="30px"
+            ><q-skeleton type="text" width="120px"
           /></q-item-label>
           <q-item-label
             caption
@@ -134,7 +134,7 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="80px"
+            ><q-skeleton type="text" width="120px"
           /></q-item-label>
           <q-item-label
             caption
@@ -156,14 +156,14 @@
           <q-item-label
             class="text-weight-regular"
             style="color: #c9c9c9; font-size: 12px"
-            ><q-skeleton type="text" width="30px"
+            ><q-skeleton type="text" width="120px"
           /></q-item-label>
           <q-item-label
             caption
             lines="1"
             class="text-weight-bold"
             style="font-size: 14px"
-            > <q-skeleton width="30px"
+            > <q-skeleton width="120px" height="20px"
           /></q-item-label>
         </q-item-section>
         <q-space></q-space>

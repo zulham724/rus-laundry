@@ -297,8 +297,11 @@
 
             <q-item-section class="self-center">
               <q-item-label class="text-weight-medium"
-                >{{ order.id }} {{ order.customer.name }}</q-item-label
+                >{{ order.customer.name }}</q-item-label
               >
+              <q-item-label caption>
+                ID pesanan {{ order.id }}
+              </q-item-label>
               <q-item-label caption lines="1" class="q-mb-sm">
                 {{ moment(order.created_at).format("lll") }}</q-item-label
               >
@@ -369,7 +372,7 @@ export default {
   },
   mounted() {
     this.timeChecker();
-
+    // this.getOrders();
     if (this.Orders.data) {
       this.orders = this.Orders.data;
     } else {
@@ -377,9 +380,7 @@ export default {
     }
   },
   methods: {
-    moment() {
-      return moment();
-    },
+   moment,
     print() {
       if (this.$q.platform.is.android) {
         window.BTPrinter.printText(
