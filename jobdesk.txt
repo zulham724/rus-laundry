@@ -67,10 +67,10 @@ p halaman home bisa untuk filter pesanan tanggal masuk dan tanggal keluar berdas
 - halaman income dibuat backend nya pagination dan diberi infinity scroll
 - pada saat menambahkan pesanan masukan pengingat kalender di H-1 pesanan selesai
 - di halaman income diberi grafik statistik
-- di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
+p di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
 + di halaman detail pesanan hapus tombol paket lainnya dan ganti dengan slide untuk pindah antar paket {rian}
 + tambah tombol keluar di bagian header pada halaman transaksi sesuai dengan desain di figma {aryo}
 - di halaman cetak invoice buat cetak lewat web menggunakan fungsi print biasa, ada bug tinggi kertas terlalu panjang
 - diberi interceptor kalau masa paket habis auto keluar dan tidak bisa masuk, jika masuk/login diberi notify masa paket habis
 - halaman laporan transaksi belum ada tampilan jika data kosong
-- dihalaman pesanan waktu konfirmasi pesanan masih belum bisa
++ dihalaman pesanan waktu konfirmasi pesanan masih belum bisa {rian}

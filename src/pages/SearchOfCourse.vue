@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-header>
+    <q-header class="fixed-top">
       <q-toolbar class="bg-white shadow-1 ">
         <q-btn
           @click="$router.push('/course-of-home')"

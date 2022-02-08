@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-header>
+    <q-header class="fixed-top">
       <q-toolbar class="shadow-1" style="background-color: #1c309b">
         <q-btn
           @click="$router.push('/list-of-course')"

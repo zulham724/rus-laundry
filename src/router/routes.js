@@ -120,6 +120,12 @@ const routes = [{
     },
 
     {
+        path: "/profile-of-course",
+        component: () =>
+            import ("pages/ProfileOfCourse.vue")
+    },
+
+    {
         path: "/search-of-course",
         component: () =>
             import ("pages/SearchOfCourse.vue")
@@ -485,9 +491,20 @@ const routes = [{
             import ("src/pages/marketplace-detail-photo.vue"),
     },
     {
+        path: "/marketplace-detail-shop",
+        component: () =>
+            import ("src/pages/marketplace-detail-shop.vue"),
+    },
+    {
         path: "/marketplace-detail-user",
         component: () =>
             import ("src/pages/marketplace-detail-user.vue"),
+    },
+
+    {
+        path: "/marketplace-search",
+        component: () =>
+            import ("pages/MarketplaceSearch.vue"),
     },
 
     // Always leave this as last one,
@@ -497,6 +514,7 @@ const routes = [{
         component: () =>
             import ("pages/Error404.vue"),
     },
+    
 ];
 
 export default routes;

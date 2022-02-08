@@ -481,7 +481,7 @@
                     color="primary"
                     class="q-mx-xs"
                   >
-                    <q-avatar icon="fab fa-facebook-f" size="30px"></q-avatar>
+                    <q-avatar avatar icon="fab fa-facebook-f" size="30px"></q-avatar>
                   </q-btn>
 
                   <!-- Button Instagram -->
@@ -523,11 +523,13 @@
                     outlined
                     bg-color="transparent"
                     v-model="link"
+                    ref="copy"
                   >
                     <q-btn
                       class="self-center q-px-xl"
                       label="Copy"
                       color="deep-purple-13"
+                      @click="copyLink()"
                     />
                     <template v-slot:prepend>
                       <q-icon name="fas fa-link" />
@@ -559,12 +561,12 @@ export default {
       link: "example.com/share-link",
       detail_order: null,
       isLoad: false,
+      copy: false,
     };
   },
 
   methods: {
     confirmService() {
-
       const payload = {
         id: this.detail_order.id,
         order_status_id: 4,
@@ -586,14 +588,21 @@ export default {
         .then((res) => {
           this.detail_order = res.data;
           this.slide = `slide-${res.data.services[0].id}`;
-          console.log("haiiii", res.data)
+          // console.log("haiiii", res.data);
         })
         .finally(() => {
           this.isLoad = false;
         });
     },
     updateStatusOrder() {
-      alert("tess");
+      alert("tess");  
+    },
+    copyLink() {
+      var modelValue= this.$refs.copy.modelValue;
+        // console.log(this.$refs.copy);
+      // modelValue.select();
+      // modelValue.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(modelValue);
     },
   },
   mounted() {

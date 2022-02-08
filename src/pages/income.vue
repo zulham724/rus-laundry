@@ -1,32 +1,35 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-page style="background-color: #fafafa">
     <div style="height: 220px">
-      <div
+      <!-- Header image -->
+      <q-img
         class="fixed mbl-child"
-        style="
-          width: 100%;
-          height: 100%;
-          background-image: linear-gradient(to top right, #48c6ef, #6f86d6);
-        "
+        style="width: 100%"
+        no-spinner
+        src="~/assets/uangterbang.svg"
       >
-        <div
-          class="text-weight-regular text-center q-pt-xl"
-          style="color: white; font-size: 18px"
-        >
-          Total Pendapatan
+        <!-- Container -->
+        <div class="row full-width q-ma-xl bg-transparent">
+          <!-- Total saldo -->
+          <div
+            class="row full-width text-weight-regular q-px-lg"
+            style="color: white; font-size: 18px; z-index: 99"
+          >
+            Total saldo
+          </div>
+          <div
+            class="text-weight-bold text-center q-px-lg"
+            style="color: white; font-size: 38px; z-index: 99"
+          >
+            {{
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(total_profit)
+            }}
+          </div>
         </div>
-        <div
-          class="text-weight-bold text-center"
-          style="color: white; font-size: 38px"
-        >
-          {{
-            new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }).format(total_profit)
-          }}
-        </div>
-      </div>
+      </q-img>
     </div>
 
     <div
@@ -34,183 +37,53 @@
       style="
         border-radius: 30px 30px 0 0;
         background-color: #fafafa;
-        margin-top: -30px;
-        position: relative;
+        margin-top: -60px;
+        z-index: 999;
       "
     >
       <q-tabs
+      dense
         stretch
-        id="thing_to_stick"
-        active-color="white"
-        active-bg-color="light-blue-4"
-        v-model="tab"
+        active-color="light-blue-4"
+        active-bg-color="white"
+        v-model="tabParent"
         no-caps
-        class="text-weight-regular"
+        indicator-color="transparent"
+        class="q-mx-xl text-weight-regular bg-light-blue-4 "
         style="
-          color: #756a6a;
+          color: #ffffff;
           font-size: 14px;
           border-radius: 30px 30px 0 0;
-          background-color: #fafafa;
+          height: 60px;
+          position: sticky;
+          top: 0px;
+          z-index: 999;
         "
       >
         <q-tab
-          @click="getProfitByDay()"
-          name="hari"
-          label="Hari ini"
-          style="border-radius: 0px 0px 15px 15px"
+          :ripple="false"
+          class="q-mx-md q-my-sm"
+          name="pendapatan"
+          label="Pendapatan"
+          style="border-radius: 20px"
         />
         <q-tab
-          @click="getProfitByWeek()"
-          name="minggu"
-          label="Minggu ini"
-          style="border-radius: 0px 0px 15px 15px"
+          :ripple="false"
+          class="q-mx-md q-my-sm"
+          name="pengeluaran"
+          label="Pengeluaran"
+          style="border-radius: 20px"
         />
-        <q-tab
-          @click="getProfitByMonth()"
-          name="bulan"
-          label="Bulan ini"
-          style="border-radius: 0px 0px 15px 15px"
-        />
-        <!--<q-tab
-          name="custom"
-          label=" Custom"
-          style="border-radius: 0px 0px 15px 15px"
-        />-->
       </q-tabs>
 
-      <div
-        class="row text-left q-pl-md q-pt-sm text-weight-regular"
-        style="font-size: 20px; color: #756a6a"
-      >
-        Transaksi
-      </div>
       <!-- List Pesanan -->
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="hari">
-          <daily-transaction ></daily-transaction>
+      <q-tab-panels v-model="tabParent" animated >
+        <q-tab-panel name="pendapatan" class="q-pa-none q-ma-none">
+          <pendapatan-transaction class="full-width" stretch></pendapatan-transaction>
         </q-tab-panel>
-        <q-tab-panel name="minggu">
-          <weekly-transaction></weekly-transaction>
-        </q-tab-panel>
-        <q-tab-panel name="bulan">
-          <monthly-transaction></monthly-transaction>
-        </q-tab-panel>
-        <q-tab-panel name="custom">
-          <div class="row justify-between q-ma-md">
-            <div
-              class="text-left text-weight-regular self-center"
-              style="font-size: 12px; color: #888888"
-            >
-              Custom Tanggal
-            </div>
-
-            <q-btn
-              :ripple="true"
-              dense
-              no-caps
-              outline
-              class="q-px-sm"
-              style="width: 100px"
-            >
-              <div class="text-left" style="color: #888888">Harian</div>
-              <q-space />
-              <q-icon name="fas fa-chevron-down" size="15px"></q-icon>
-
-              <q-popup-proxy
-                ref="qDateProxy"
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date v-model="date" range>
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-btn>
-          </div>
-
-          <!-- Skeleton -->
-          <div v-if="isLoad" class="q-mx-md q-my-xs">
-            <q-item
-              v-for="n in 9"
-              :key="n"
-              class="q-my-sm q-mx-md"
-              style="
-                border-radius: 10px 10px 10px 10px;
-                background-color: #fafafa;
-              "
-            >
-              <q-item-section avatar>
-                <q-skeleton size="60px" type="QAvatar" />
-              </q-item-section>
-
-              <q-item-section class="self-center">
-                <q-item-label class="text-weight-medium">
-                  <q-skeleton type="text" height="20px" />
-                </q-item-label>
-                <q-item-label>
-                  <q-skeleton type="text" width="15vw" />
-                </q-item-label>
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="self-center on-right">
-                  <q-skeleton width="50px" type="text" />
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </div>
-
-          <!-- <q-list
-            v-else-if="isLoad == false && orders"
-            bordered
-            separator
-            class="q-mx-md q-my-xs"
-            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
-          >
-            <q-item
-              v-for="order in orders.data"
-              :key="order.id"
-              class="q-my-sm q-mx-md"
-              clickable
-              @click="$router.push(`/detail-transaksi/${order.id}`)"
-            >
-              <q-item-section avatar>
-                <q-avatar
-                  color="primary"
-                  text-color="white"
-                  size="60px"
-                  style="margin-left: -20px"
-                >
-                  <q-img
-                    src="~/assets/avatar-box.png"
-                    alt="avatar-box"
-                    no-spinner
-                  />
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section class="self-center">
-                <q-item-label class="text-weight-medium">
-                  {{ order.customer.name }}</q-item-label
-                >
-                <q-item-label caption lines="1" class="q-mb-sm">
-                  {{ moment(order.updated_at).format("LL") }}</q-item-label
-                >
-              </q-item-section>
-
-              <q-item-section
-                class="text-weight-regular"
-                side
-                style="color: #54d240; font-size: 12px"
-              >
-                +{{ order.total_sum }}
-              </q-item-section>
-            </q-item>
-          </q-list> -->
-        </q-tab-panel>
+        <q-tab-panel name="pengeluaran" class="q-pa-none q-ma-none">
+          <pengeluaran-transaction class="full-width"></pengeluaran-transaction>
+        </q-tab-panel>   
       </q-tab-panels>
     </div>
   </q-page>
@@ -220,9 +93,8 @@
 import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
-import Daily from "src/pages/DailyTransaction.vue";
-import Monthly from "src/pages/MonthlyTransaction.vue";
-import Weekly from "src/pages/WeeklyTransaction.vue";
+import Pengeluaran from "src/pages/Pengeluaran.vue";
+import Pendapatan from "src/pages/Pemasukan.vue";
 
 export default {
   name: "IncomePage",
@@ -230,13 +102,13 @@ export default {
     ...mapState(["Auth"]),
   },
   components: {
-    "daily-transaction": Daily,
-    "monthly-transaction": Monthly,
-    "weekly-transaction": Weekly,
+    "pengeluaran-transaction": Pengeluaran,
+    "pendapatan-transaction": Pendapatan,
   },
   data() {
     return {
       date: ref("2022/01/19"),
+      tabParent: "pendapatan",
       tab: "hari",
       orders: [],
       isLoad: false,
@@ -301,9 +173,5 @@ export default {
 </script>
 
 <style>
-#thing_to_stick {
-  position: sticky;
-  top: 0px;
-  z-index: 999;
-}
+
 </style>

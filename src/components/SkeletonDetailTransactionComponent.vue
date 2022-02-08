@@ -226,7 +226,7 @@
           <q-item-label
             class="text-weight-regular q-pt-md"
             style="color: #c9c9c9; font-size: 15px"
-            ><q-skeleton type="text" width="60px"
+            ><q-skeleton type="text" width="120px"
           /></q-item-label>
           <q-item-label
             caption
@@ -241,7 +241,7 @@
           <q-item-label
             class="text-weight-regular q-pt-md"
             style="color: #c9c9c9; font-size: 15px"
-            ><q-skeleton type="text" width="60px"
+            ><q-skeleton type="text" width="120px"
           /></q-item-label>
           <q-item-label
             caption

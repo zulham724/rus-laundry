@@ -1,8 +1,8 @@
 <template>
   <q-layout>
     <!-- Header -->
-    <q-header>
-      <q-toolbar class="shadow-1" style="background-color: #1c309b">
+    <q-header class="q-pb-xl">
+      <q-toolbar class="shadow-1 fixed-top" style="background-color: #1c309b">
         <q-btn
           @click="$router.push('/detail-course')"
           no-caps
