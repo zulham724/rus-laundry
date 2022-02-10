@@ -120,7 +120,7 @@ export default {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
-          .dispatch("Orders/getOrdersShopByWeek", this.Auth.auth.shop.id)
+          .dispatch("WeeklyTransaction/getOrderShopByWeek", this.Auth.auth.shop.id)
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
@@ -142,7 +142,7 @@ export default {
     },
     ketikaOnLoad(index, done) {
       if (this.orders.next_page_url) {
-        this.$store.dispatch("Orders/nextW").then((res) => {
+        this.$store.dispatch("WeeklyTransaction/next").then((res) => {
           this.orders = {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],

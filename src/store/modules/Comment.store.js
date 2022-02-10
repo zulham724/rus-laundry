@@ -36,6 +36,24 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    getCommentCourse({ commit }, contentId){
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/${contentId}/comment`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    storeCommentCourse({ commit }, payload){
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/add_comment_course`, payload).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 };
 

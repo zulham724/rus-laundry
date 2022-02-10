@@ -32,10 +32,7 @@
               <div class="col-8 self-center">
                 <!-- Nama user -->
                 <div
-                  class="
-                    text-center
-                    text-weight-medium
-                  "
+                  class="text-center text-weight-medium"
                   style="color: white; font-size: 20px"
                 >
                   IndonesiaLaundry
@@ -72,6 +69,7 @@
             <div class="row text-weight-medium q-mt-lg">
               <!-- Button lihat semua -->
               <div
+                @click="$router.push('/detail-ranking')"
                 class="full-width text-right q-pr-sm"
                 style="color: #fafafa; font-size: 10px"
               >
@@ -216,7 +214,7 @@
           style="color: #4f4f4f; font-size: 12px; background-color: #fafafa"
         >
           <div class="col-6 text-left">Materi yang sudah dipelajari</div>
-          <div class="col-6 text-right" style="color: #26e745">Lihat semua</div>
+          <div @click="$router.push('/history-of-course')" class="col-6 text-right" style="color: #26e745">Lihat semua</div>
         </div>
         <!-- Container -->
         <div
@@ -327,6 +325,8 @@
           style="color: #4f4f4f; font-size: 12px; background-color: #fafafa"
         >
           <div class="col-6 text-left">Materi yang kamu suka</div>
+          <div @click="$router.push('/like-of-course')" class="col-6 text-right" style="color: #26e745">Lihat semua</div>
+
         </div>
         <!-- Container -->
         <div
@@ -382,7 +382,6 @@
           style="color: #4f4f4f; font-size: 12px; background-color: #fafafa"
         >
           <div class="col-6 text-left">Banyak diminati</div>
-          <div class="col-6 text-right" style="color: #26e745">Lihat semua</div>
         </div>
         <!-- Container -->
         <div

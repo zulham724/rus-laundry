@@ -31,24 +31,24 @@
       </div>
 
       <div v-else-if="!isLoad && orders.data">
-        <div v-if="!orders.data.length" class="q-pt-lg"> 
-          <div class="text-subtitle1 text-center q-py-xs" >
+        <div v-if="!orders.data.length" class="q-pt-lg">
+          <div class="text-subtitle1 text-center q-py-xs">
             Belum ada transaksi hari ini
           </div>
         </div>
 
         <div v-else-if="orders.data.length">
-          <q-infinite-scroll
-            @load="ketikaOnLoad"
-            :offset="250"
-            :scroll-target="scrollTargetRef"
+          <q-list
+            ref="scrollTargetRef"
+            bordered
+            separator
+            class="q-my-lg q-mx-sm"
+            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
           >
-            <q-list
-              ref="scrollTargetRef"
-              bordered
-              separator
-              class="q-my-lg q-mx-sm" 
-              style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+            <q-infinite-scroll
+              @load="ketikaOnLoad"
+              :offset="250"
+              :scroll-target="scrollTargetRef"
             >
               <q-item
                 v-for="order in orders.data"
@@ -83,8 +83,8 @@
                   }}
                 </q-item-section>
               </q-item>
-            </q-list>
-          </q-infinite-scroll>
+            </q-infinite-scroll>
+          </q-list>
         </div>
       </div>
     </q-pull-to-refresh>

@@ -20,7 +20,7 @@
       style="
         color: #756a6a;
         font-size: 14px;
-        border-radius: 30px 30px 0 0;
+        border-radius: 10px 10px 0 0;
         background-color: #fafafa;
       "
     >
@@ -28,19 +28,19 @@
         @click="getProfitByDay()"
         name="hari"
         label="Hari ini"
-        style="border-radius: 0px 0px 15px 15px"
+        style="border-radius: 0px 0px 10px 10px"
       />
       <q-tab
         @click="getProfitByWeek()"
         name="minggu"
         label="Minggu ini"
-        style="border-radius: 0px 0px 15px 15px"
+        style="border-radius: 0px 0px 10px 10px"
       />
       <q-tab
         @click="getProfitByMonth()"
         name="bulan"
         label="Bulan ini"
-        style="border-radius: 0px 0px 15px 15px"
+        style="border-radius: 0px 0px 10px 10px"
       />
       <!--<q-tab
           name="custom"
@@ -185,9 +185,9 @@
 import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
-import Daily from "src/pages/DailyTransaction.vue";
-import Monthly from "src/pages/MonthlyTransaction.vue";
-import Weekly from "src/pages/WeeklyTransaction.vue";
+import Daily from "src/pages/DailySpendTransaction.vue";
+import Monthly from "src/pages/MonthlySpendTransaction.vue";
+import Weekly from "src/pages/WeeklySpendTransaction.vue";
 
 export default {
   name: "IncomePage",

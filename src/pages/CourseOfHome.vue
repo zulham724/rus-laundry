@@ -30,15 +30,15 @@
             </q-avatar>
           </div>
           <div class="col-6 self-center q-pl-sm">
-            <div
+            <div @click="$router.push('/profile-of-course')"
               class="row text-weight-medium q-pb-xs"
               style="font-size: 20px; color: white"
             >
-              IndonesiaLaundry
+              {{ Auth.auth.shop.name }}
             </div>
             <div class="row q-gutter-x-sm">
               <div
-                class="col-2 q-px-md self-center"
+                class="col-4 q-px-sm self-center"
                 style="
                   background-color: #ff843e;
                   border-radius: 20px;
@@ -47,7 +47,7 @@
                   color: white;
                 "
               >
-                RK 20
+                Ranking 20
               </div>
 
               <!-- Point -->
@@ -75,6 +75,7 @@
             type="search"
             outlined
             v-model="search"
+            @update:model-value="filterModule(search)"
             placeholder="Cari"
           >
             <template v-slot:prepend>
@@ -94,46 +95,47 @@
       </div>
     </div>
 
-    <div v-for="n in 7" :key="n">
+    <div v-for="module in modules" :key="module.id" class="q-py-md">
       <!-- Container -->
       <div
         class="full-width row"
         style="position: relative"
-        @click="$router.push('/list-of-course')"
+        @click="$router.push(`/${module.id}/list-of-course`)"
       >
         <!-- Thumbnail video -->
         <div class="col-5 text-center self-center">
-          <q-avatar
+          <!-- <q-avatar
             square
             style="width: 140px; height: 80px; border-radius: 5px"
             color="grey"
+          > -->
+          <q-img
+            fit="cover"
+            width="140px"
+            height="80px"
+            v-if="module.banner"
+            no-spinner
+            :src="storageUrl + `/` + module.banner.src"
           >
-            <q-img no-spinner src="~/assets/contoh-thumbnail.svg">
-              <q-icon
-                class="absolute-center"
-                name="fas fa-lock"
-                size="40px"
-                color="white"
-              ></q-icon>
-            </q-img>
-          </q-avatar>
+          </q-img>
+          <!-- </q-avatar> -->
         </div>
         <div class="col-7 q-pt-sm">
           <!-- Judul -->
           <div class="text-weight-bold" style="color: #5f5959; font-size: 14px">
-            Latihan dasar laundry untuk pemula
+            {{ module.tittle }}
           </div>
           <!-- Deskripsi -->
           <div
             class="text-weight-regular"
             style="color: #5a5656; font-size: 9px"
           >
-            Berisi materi cara menjadi tukang laundry profesional secara step by
-            step
+            {{ module.description }}
           </div>
           <!-- durasi video -->
           <div v-if="lockDuration == false" class="row justify-end q-pt-sm">
             <div
+              v-if="module.sum_duration"
               class="text-weight-medium q-px-md q-py-xs"
               style="
                 color: white;
@@ -142,7 +144,7 @@
                 font-size: 11px;
               "
             >
-              1 jam 45 menit
+              {{ module.sum_duration }} menit
             </div>
           </div>
 
@@ -157,7 +159,7 @@
                 font-size: 11px;
               "
             >
-              Terbuka level 40
+              Terbuka level {{ module.min_level }}
             </div>
           </div>
         </div>
@@ -169,11 +171,13 @@
 
 <script>
 import { ref } from "vue";
-
+import { mapState } from "vuex";
 export default {
   name: "CourseOfHomePage",
   include: ["CourseOfHomePage"],
-
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     const progress1 = ref(0.5);
     return {
@@ -181,7 +185,31 @@ export default {
       progressLabel1: (progress1.value * 100).toFixed(2) + "%",
       lockDuration: false,
       clear: ref(""),
+      modules: [],
+      module_temp: [],
+      storageUrl: STORAGE_URL,
     };
+  },
+  mounted() {
+    this.getModule();
+  },
+  methods: {
+    getModule() {
+      this.$store.dispatch("Module/index").then((res) => {
+        this.modules = this.module_temp = res.data;
+      });
+    },
+    filterModule(value){
+      this.update(value)
+    },
+    update(val){
+      if(val == ""){
+        this.modules = this.module_temp
+      }
+
+      let needle = val.toLowerCase()
+      this.modules = this.module_temp.filter((v) => v.tittle.toLowerCase().indexOf(needle) > - 1)
+    }
   },
 };
 </script>

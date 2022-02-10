@@ -3,7 +3,7 @@
     <q-header class="fixed-top">
       <q-toolbar class="shadow-1" style="background-color: #1c309b">
         <q-btn
-          @click="$router.push('/list-of-course')"
+          @click="$router.back()"
           no-caps
           class="q-pa-md"
           flat
@@ -20,11 +20,15 @@
         >
       </q-toolbar>
     </q-header>
-    <q-page>
+    <q-page v-if="content">
       <!-- Video/foto -->
-      <div class="full-width bg-grey" style="height: 250px">a</div>
+      <div class="full-width bg-grey" style="height: 250px">
+        <vue-plyr v-if="content.video">
+          <video :src="storageUrl + `/` + content.video.src"></video>
+        </vue-plyr>
+      </div>
       <!-- Deskripsi -->
-      <div class="row q-px-sm q-pt-md">
+      <div class="q-px-sm q-pt-md">
         <div class="text-weight-bold" style="color: #5a5656; font-size: 15px">
           Deskripsi
         </div>
@@ -33,20 +37,12 @@
           class="text-weight-medium text-justify"
           style="color: #aca9a9; font-size: 12px"
         >
-          is simply dummy text of the printing and typesetting industry. Lorem
-          Ipsum has been the industry's standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it
-          to make a type specimen book. It has survived not only five centuries,
-          but also the leap into electronic typesetting, remaining essentially
-          unchanged. It was popularised in the 1960s with the release of
-          Letraset sheets containing Lorem Ipsum passages, and more recently
-          with desktop publishing software like Aldus PageMaker including
-          versions of Lorem Ipsum.
+          {{ content.description }}
         </div>
       </div>
 
       <!-- Materi berikutnya -->
-      <div class="fixed-bottom">
+      <div class="fixed-bottom" v-if="next_content">
         <div
           class="text-weight-bold q-px-md"
           style="color: #5f5959; font-size: 10px"
@@ -55,7 +51,7 @@
         </div>
         <!-- Step course -->
         <!-- Container -->
-        <div @click="$router.push('/detail-course')" class="full-width row">
+        <div @click="detailCourse(next_content.id)" class="full-width row">
           <!-- Thumbnail video -->
           <div class="col-5 text-center self-center" style="z-index: -1">
             <q-avatar
@@ -81,15 +77,14 @@
               class="text-weight-bold"
               style="color: #5f5959; font-size: 14px"
             >
-              Latihan dasar laundry untuk pemula
+              {{ next_content.tittle }}
             </div>
             <!-- Deskripsi -->
             <div
               class="text-weight-regular"
               style="color: #5a5656; font-size: 9px"
             >
-              Berisi materi cara menjadi tukang laundry profesional secara step
-              by step
+              {{ next_content.description }}
             </div>
             <!-- durasi video -->
             <div v-if="lockDuration == false" class="row justify-end q-pt-sm">
@@ -110,7 +105,7 @@
                   border-radius: 5px 0 0 0;
                 "
                 >
-                  10 menit
+                  {{ next_content.duration }} menit
                 </div>
               </div>
             </div>
@@ -135,16 +130,16 @@
         <!-- Bottom NavBar -->
         <div class="row shadow-3">
           <div class="col-6 justify-center text-center">
-            <q-btn class="full-width" no-caps flat>
-              <div>
-                <q-icon name="far fa-heart" color="grey" size="25px"></q-icon>
-                <div
-                  class="text-weight-medium"
-                  style="color: grey; font-size: 10px"
-                >
-                  Suka
-                </div>
-              </div>
+            <q-btn
+              class="full-width"
+              no-caps
+              flat
+              dense
+              size="20px"
+              :color="content.liked_count ? 'red' : 'grey'"
+              :icon="content.liked_count ? 'favorite' : 'favorite_border'"
+              @click="content.liked_count ? dislike() : like()"
+            >
             </q-btn>
           </div>
           <div class="col-6 justify-center text-center">
@@ -152,7 +147,7 @@
               class="full-width"
               no-caps
               flat
-              @click="$router.push('/comment-of-course')"
+              @click="$router.push(`/${content.id}/comment-of-course`)"
             >
               <div>
                 <q-icon
@@ -303,7 +298,12 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 export default {
+  props: ["contentid"],
+  computed: {
+    ...mapState(["ModuleContent"]),
+  },
   data() {
     const progress1 = ref(0.7);
     return {
@@ -313,7 +313,58 @@ export default {
       earnCoin: false,
       levelUp: false,
       progress1,
+      content: null,
+      next_content: null,
+      storageUrl: STORAGE_URL,
     };
+  },
+  mounted() {
+    this.getContent();
+    this.getNextContent();
+  },
+  methods: {
+    getContent() {
+      
+      this.$store.dispatch("ModuleContent/show", this.contentid).then((res) => {
+        this.content = res.data;
+      this.$forceUpdate()
+      });
+    },
+    getNextContent() {
+      
+      let next_id = this.$store.getters["ModuleContent/nextContent"](
+        this.contentid
+      );
+
+      this.$store.dispatch("ModuleContent/show", next_id).then((res) => {
+        this.next_content = res.data;
+         this.$forceUpdate()
+      });
+    },
+    like() {
+      this.content.liked_count = 1;
+      this.$store.dispatch("ModuleContent/like", this.contentid).then((res) => {
+        this.content.liked_count = res.data.liked_count;
+        this.$forceUpdate();
+      });
+    },
+    dislike() {
+      this.$store
+        .dispatch("ModuleContent/dislike", this.contentid)
+        .then((res) => {
+          this.content.liked_count = res.data.liked_count;
+        });
+    },
+    detailCourse(id) {
+      this.$router.push(`/${id}/detail-course`);
+      this.content = null
+      this.next_content = null
+      this.$nextTick().then(()=>{
+        this.getContent()
+        this.getNextContent()
+      })
+      this.$forceUpdate();
+    },
   },
 };
 </script>

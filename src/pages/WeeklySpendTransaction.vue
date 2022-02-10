@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <q-pull-to-refresh @refresh="refresh">
       <!-- Skeleton -->
       <div v-if="isLoad" class="q-py-md">
@@ -30,7 +30,7 @@
         </q-item>
       </div>
 
-      <div v-else-if="!isLoad && orders.data" >
+      <div v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg"> 
           <div class="text-subtitle1 text-center q-py-xs" >
             Belum ada transaksi hari ini
@@ -53,7 +53,7 @@
               <q-item
                 v-for="order in orders.data"
                 :key="order.id"
-                class="q-my-sm"
+                class="q-my-sm "
                 clickable
                 @click="$router.push(`/detail-transaksi/${order.id}`)"
               >
@@ -97,10 +97,6 @@ import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
-  setup() {
-    const items = ref([{}, {}, {}, {}, {}]);
-  },
-
   computed: {
     ...mapState(["Auth"]),
   },
@@ -109,32 +105,30 @@ export default {
     return {
       date: ref("2022/01/19"),
       tab: "hari",
-      orders: {},
+      orders: [],
       orders_temp: [],
       isLoad: false,
       items: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     };
   },
   mounted() {
-    this.getOrdersShopByDay();
+    this.getOrdersShopByWeek();
   },
   methods: {
     moment,
-    getOrdersShopByDay() {
+    getOrdersShopByWeek() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
-          .dispatch(
-            "DailyTransaction/getOrdersShopByDay",
-            this.Auth.auth.shop.id
-          )
+          .dispatch("WeeklySpendTransaction/getOrdersShopByWeek", this.Auth.auth.shop.id)
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            console.log("ini data harian", res.data);
+             console.log("ini data spend mingguan", res.data);
           })
           .catch((err) => {
             reject(err);
+            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;
@@ -142,18 +136,17 @@ export default {
       });
     },
     refresh(done) {
-      this.getOrdersShopByDay().then((res) => {
+      this.getOrdersShopByWeek().then((res) => {
         if (done) done();
       });
     },
     ketikaOnLoad(index, done) {
       if (this.orders.next_page_url) {
-        this.$store.dispatch("DailyTransaction/next").then((res) => {
+        this.$store.dispatch("WeeklySpendTransaction/next").then((res) => {
           this.orders = {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],
           };
-          console.log("ini pagination", res.data);
           done();
         });
       } else {
@@ -164,4 +157,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

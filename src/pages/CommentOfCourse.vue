@@ -4,7 +4,7 @@
     <q-header class="q-pb-xl">
       <q-toolbar class="shadow-1 fixed-top" style="background-color: #1c309b">
         <q-btn
-          @click="$router.push('/detail-course')"
+          @click="$router.back()"
           no-caps
           class="q-pa-md"
           flat
@@ -25,7 +25,7 @@
     <q-page-container>
       <q-page class="q-pa-md">
         <!-- Container -->
-        <div v-for="n in 5" :key="n" class="q-pb-lg">
+        <div v-for="(comment,c) in comments" :key="comment.id" class="q-pb-lg">
           <div class="row">
             <div class="col-8 row">
               <!-- Photo profile -->
@@ -39,14 +39,14 @@
                 class="col text-weight-bold self-center q-pl-xs"
                 style="color: #3a3838; font-size: 15px"
               >
-                Laundry_lain
+                {{ comment.user.name }}
               </div>
               <!-- Time of post -->
               <div
                 class="col text-weight-medium self-center q-pl-sm"
                 style="color: #b1b1b1; font-size: 10px"
               >
-                30 menit
+                 {{ moment(comment.created_at).locale('id').fromNow() }}
               </div>
             </div>
 
@@ -66,8 +66,16 @@
               </div>
               <!-- button like -->
               <div class="self-center q-pl-xs">
-                <q-btn round dense flat>
-                  <q-icon name="far fa-heart" color="grey" size="20px"></q-icon>
+                <q-btn 
+                round 
+                dense 
+                flat
+                :color="comment.liked_count ? 'red' : 'grey'"
+                :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
+                @click="
+                  comment.liked_count ? dislikeComment(c) : likeComment(c)
+                "
+                >
                 </q-btn>
               </div>
             </div>
@@ -78,9 +86,7 @@
             class="row text-weight-regular q-pt-sm"
             style="color: #5a5656; font-size: 15px"
           >
-            is simply dummy text of the printing and typesetting industry. Lorem
-            Ipsum has in the 1960s with the release of Letraset sheets
-            containing Lorem Ipsum passages
+            {{ comment.value }}
           </div>
 
           <!-- Reply comment & count like -->
@@ -117,7 +123,7 @@
                   class="col text-weight-medium self-center q-pl-sm"
                   style="color: #b1b1b1; font-size: 10px"
                 >
-                  30 menit
+                 
                 </div>
               </div>
 
@@ -196,7 +202,7 @@
 
           <!-- Button Send -->
           <div class="col-1 self-end q-pr-lg">
-            <q-btn dense round flat size="20px">
+            <q-btn @click="store()" dense round flat size="20px">
               <q-icon
                 name="far fa-paper-plane"
                 size="20px"
@@ -211,13 +217,53 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
+  props:["contentid"],
   data() {
     return {
       comment: null,
       commentReply: false,
+      comments: [],
     };
   },
+  mounted(){
+    this.getComments();
+  },
+  methods:{
+    moment,
+    getComments(){
+      this.$store.dispatch('Comment/getCommentCourse', this.contentid).then(res => {
+        this.comments = res.data.comments
+      })
+    },
+    store(){
+      const payload = {
+        id: this.contentid,
+        value: this.comment
+      }
+      this.$store.dispatch('Comment/storeCommentCourse', payload).then(res => {
+        this.comment = null
+        this.comments = res.data.comments
+      })
+    },
+    likeComment(index) {
+      this.$store
+        .dispatch("Comment/like", this.comments[index].id)
+        .then((res) => {
+          this.comments[index].liked_count = res.data.liked_count;
+          this.comments[index].likes_count = res.data.likes_count;
+        });
+    },
+    dislikeComment(index) {
+      this.$store
+        .dispatch("Comment/dislike", this.comments[index].id)
+        .then((res) => {
+          this.comments[index].liked_count = res.data.liked_count;
+          this.comments[index].likes_count = res.data.likes_count;
+        });
+    },
+  }
 };
 </script>
 

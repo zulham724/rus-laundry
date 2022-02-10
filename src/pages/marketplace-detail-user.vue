@@ -2,30 +2,52 @@
   <q-layout class="mbl">
     <q-header>
       <input type="file" ref="file" style="display: none" />
-      <div
-        @click="$refs.file.click()"
-        style="width: 100%; height: 150px"
-        class="bg-grey"
-      >
-        <div class="text-center q-pt-lg">
+      <div style="width: 100%; height: 150px;background-color:#cccccc">
+        <div @click="$refs.file.click()" class="text-center q-pt-lg">
           <q-icon size="50px" name="far fa-image" />
         </div>
-        <div class="text-center text-subtitle2">Tekan untuk rubah</div>
-        <div class="bg-red row" style="z-index:1">
-          <div class="col-3 bg-pink">tes</div>
-          <div class="col-5 bg-purple" style="height:30px">tes</div>
-          <div class="col-4 bg-yellow"></div>
+        <div @click="$refs.file.click()" class="text-center text-subtitle2">
+          Tekan untuk rubah
+        </div>
+        <div class="q-mt-md row" style="z-index: 999">
+          <div class="col-2"></div>
+          <div
+          @click="$refs.file.click()"
+            class="col-5 text-right"
+            style="height: 40px; background-color: rgba(75, 75, 75, 39%)"
+          >
+            <div class="q-pr-lg q-pt-sm text-body2">Ubah<q-icon class="q-pl-sm" name="fas fa-edit" /></div>
+          </div>
+          <div 
+            class="col-5"
+            style="height: 40px; background-color: rgba(75, 75, 75, 39%);border-left-style: solid;border-width:1px"><div class="text-body2 q-pt-sm text-center">Hapus<q-icon size="20px" class="q-pl-sm" name="delete_outline" /></div></div>
         </div>
       </div>
-      <div class="bg-transparent absolute" >
-        <q-avatar class="q-ml-md" style="margin-top:-50px;background-color:#bdbdbd"  size="90px">
+      <div class="bg-transparent absolute">
+        <q-avatar
+          class="q-ml-sm"
+          style="margin-top: -50px; background-color: #bdbdbd"
+          size="90px"
+        >
           <q-icon name="fas fa-user" />
         </q-avatar>
-        <q-avatar  @click="$refs.file.click()" style="margin-left:-19px;margin-top:5px;background-color: white; z-index: 999"  size="25px">
-          <q-icon name="fas fa-camera" color="grey"/>
+        <q-avatar
+          @click="$refs.file.click()"
+          style="
+            margin-left: -22px;
+            margin-top: 5px;
+            background-color: white;
+            z-index: 999;
+          "
+          size="25px"
+        >
+          <q-icon name="fas fa-camera" color="grey" />
         </q-avatar>
       </div>
-      <div class=" q-py-md text-body1 text-right q-pr-md" style="background-color: #9B27F1">
+      <div
+        class="q-py-md text-body1 text-right q-pr-md"
+        style="background-color: #9b27f1"
+      >
         Laundry Indonesia
       </div>
     </q-header>

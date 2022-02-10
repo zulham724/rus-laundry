@@ -20,7 +20,9 @@ const mutations = {
 };
 
 const actions = {
-    getOrderShopByWeek({ commit }, shopId) {
+    getOrdersShopByWeek({
+        commit
+      }, shopId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/getorderbyweek/${shopId}`)
                 .then((res) => {

@@ -125,13 +125,13 @@ export default {
         this.isLoad = true;
         this.$store
           .dispatch(
-            "DailyTransaction/getOrdersShopByDay",
+            "DailySpendTransaction/getOrdersShopByDay",
             this.Auth.auth.shop.id
           )
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            console.log("ini data harian", res.data);
+             console.log("ini data spend harian", res.data);
           })
           .catch((err) => {
             reject(err);
@@ -148,7 +148,7 @@ export default {
     },
     ketikaOnLoad(index, done) {
       if (this.orders.next_page_url) {
-        this.$store.dispatch("DailyTransaction/next").then((res) => {
+        this.$store.dispatch("DailySpendTransaction/next").then((res) => {
           this.orders = {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],

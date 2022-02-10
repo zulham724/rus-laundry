@@ -108,8 +108,10 @@
         <q-tab-panel name="toko">
         <div class="row">
         <div class="col-12">
-        <q-card class="bg-red">
-        <img src="~/assets/lds.svg">
+        <q-card class="">
+        <q-avatar>
+          <img src="~/assets/lds.svg">
+        </q-avatar>
         </q-card>
         </div>
         </div>

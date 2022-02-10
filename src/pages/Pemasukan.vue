@@ -1,49 +1,58 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-  <div 
+  <div
+    class="q-pb-lg"
     style="
-      border-radius:  20px 20px 20px 20px;
-      margin-top: 0px;
+      border-radius: 30px 30px 0 0;
+      background-color: #fafafa;
+      margin-top: -30px;
       position: relative;
     "
   >
     <q-tabs
       stretch
       id="thing_to_stick"
+      indicator-color="transparent"
       active-color="white"
       active-bg-color="light-blue-4"
-      indicator-color="transparent"
       v-model="tab"
       no-caps
-      class="text-weight-regular bg-red"
+      class="text-weight-regular"
       style="
         color: #756a6a;
         font-size: 14px;
-        border-radius: 20px 20px 0px 0px
+        border-radius: 10px 10px 0 0;
+        background-color: #fafafa;
       "
     >
       <q-tab
         @click="getProfitByDay()"
         name="hari"
         label="Hari ini"
-        style="border-radius: 0px 0px 20px 20px"
+        style="border-radius: 0px 0px 10px 10px"
       />
       <q-tab
         @click="getProfitByWeek()"
         name="minggu"
         label="Minggu ini"
-        style="border-radius: 0px 0px 20px 20px"
+        style="border-radius: 0px 0px 10px 10px"
       />
       <q-tab
         @click="getProfitByMonth()"
         name="bulan"
         label="Bulan ini"
-        style="border-radius: 0px 0px 20px 20px"
+        style="border-radius: 0px 0px 10px 10px"
       />
+      <!--<q-tab
+          name="custom"
+          label=" Custom"
+          style="border-radius: 0px 0px 10px 10px"
+        />-->
     </q-tabs>
 
+
     <!-- List Pesanan -->
-    <q-tab-panels v-model="tab" animated style="border-radius: 20px 20px 20px 20px">
-      <q-tab-panel name="hari" >
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="hari">
         <daily-transaction></daily-transaction>
       </q-tab-panel>
       <q-tab-panel name="minggu">
@@ -52,7 +61,6 @@
       <q-tab-panel name="bulan">
         <monthly-transaction></monthly-transaction>
       </q-tab-panel>
-      <!--
       <q-tab-panel name="custom">
         <div class="row justify-between q-ma-md">
           <div
@@ -88,8 +96,87 @@
             </q-popup-proxy>
           </q-btn>
         </div>
-      </q-tab-panel> 
-      -->
+
+        <!-- Skeleton -->
+        <div v-if="isLoad" class="q-mx-md q-my-xs">
+          <q-item
+            v-for="n in 9"
+            :key="n"
+            class="q-my-sm q-mx-md"
+            style="
+              border-radius: 10px 10px 10px 10px;
+              background-color: #fafafa;
+            "
+          >
+            <q-item-section avatar>
+              <q-skeleton size="60px" type="QAvatar" />
+            </q-item-section>
+
+            <q-item-section class="self-center">
+              <q-item-label class="text-weight-medium">
+                <q-skeleton type="text" height="20px" />
+              </q-item-label>
+              <q-item-label>
+                <q-skeleton type="text" width="15vw" />
+              </q-item-label>
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label class="self-center on-right">
+                <q-skeleton width="50px" type="text" />
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
+
+        <!-- <q-list
+            v-else-if="isLoad == false && orders"
+            bordered
+            separator
+            class="q-mx-md q-my-xs"
+            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+          >
+            <q-item
+              v-for="order in orders.data"
+              :key="order.id"
+              class="q-my-sm q-mx-md"
+              clickable
+              @click="$router.push(`/detail-transaksi/${order.id}`)"
+            >
+              <q-item-section avatar>
+                <q-avatar
+                  color="primary"
+                  text-color="white"
+                  size="60px"
+                  style="margin-left: -20px"
+                >
+                  <q-img
+                    src="~/assets/avatar-box.png"
+                    alt="avatar-box"
+                    no-spinner
+                  />
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">
+                  {{ order.customer.name }}</q-item-label
+                >
+                <q-item-label caption lines="1" class="q-mb-sm">
+                  {{ moment(order.updated_at).format("LL") }}</q-item-label
+                >
+              </q-item-section>
+
+              <q-item-section
+                class="text-weight-regular"
+                side
+                style="color: #E82222; font-size: 12px"
+              >
+                -{{ order.total_sum }}
+              </q-item-section>
+            </q-item>
+          </q-list> -->
+      </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
