@@ -2,7 +2,7 @@
   <q-layout class="mbl">
     <q-header
       style="background-image: linear-gradient(to right, #ff9ac5, #7900ff)"
-      class=" row q-pb-lg"
+      class="row q-pb-lg"
     >
       <div class="col-1 q-mt-md q-pl-sm" style="margin-top: 20px">
         <q-btn flat dense><q-icon name="fas fa-arrow-left" /></q-btn>
@@ -68,11 +68,17 @@
             Tentang toko
           </div>
           <div class="text-caption q-px-md q-py-md" style="color: #cdcdcd">
-            Menjual beberapa peralatan untuk Laundry Like a sabun cuci,pewangi,mesin cuci,setrika,dll
+            Menjual beberapa peralatan untuk Laundry Like a sabun
+            cuci,pewangi,mesin cuci,setrika,dll
           </div>
         </div>
-        <div class="q-mt-md q-pl-md text-weight-regular q-pb-md" style="background-color: #f5f7f9;color:#707070">Produk LaundryIndonesia</div>
-          <div class="row">
+        <div
+          class="q-mt-md q-pl-md text-weight-regular q-pb-md"
+          style="background-color: #f5f7f9; color: #707070"
+        >
+          Produk LaundryIndonesia
+        </div>
+        <div class="row">
           <div class="col-6">
             <q-card class="q-pb-xl q-mx-sm">
               <img

@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="mbl">
     <q-header class="fixed-top">
       <q-toolbar class="bg-white shadow-1 ">
         <q-btn

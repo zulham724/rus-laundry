@@ -1,6 +1,11 @@
 <template>
   <q-layout class="mbl">
-    <q-header>
+    <q-header class="bg-transparent">
+    <q-btn class="q-ml-md absolute" no-caps round flat size="12px"
+        @click="$router.back();"
+          ><q-icon color="white" name="fas fa-arrow-left"
+        /><div class="q-pl-sm text-body1">Anda</div>
+        </q-btn>
       <input type="file" ref="file" style="display: none" />
       <div style="width: 100%; height: 150px;background-color:#cccccc">
         <div @click="$refs.file.click()" class="text-center q-pt-lg">

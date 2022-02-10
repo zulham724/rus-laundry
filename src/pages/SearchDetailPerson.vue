@@ -1,103 +1,24 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf">
-    <q-header class="text-center">
-      <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.back()">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #49c2c0">
+  <div>
+    <q-list >
+      <q-item clickable v-for="n in 23" :key="n" class=" q-my-xs">
+        <q-item-section avatar>
+          <q-avatar size="50px">
+            <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar>
-        </q-btn>
-        <q-input
-          dense
-          class="q-mx-xs full-width"
-          type="search"
-          rounded
-          outlined
-          v-model="search"
-          label="Cari"
-        >
-          <template v-slot:prepend>
-            <q-icon
-              name="search"
-              class="self-center"
-              size="25px"
-              color="grey"
-            />
-          </template>
-        </q-input>
-      </q-toolbar>
-    </q-header>
-    <q-page-container style="background-color: #fafafa">
-      <q-pull-to-refresh>
-        <q-page>
-
-
-          <q-list class="">
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section avatar>
-                <q-avatar icon="folder" color="primary" text-color="white" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Laundry Semarang</q-item-label>
-                <q-item-label caption>pusat_oleholehbaju</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section avatar>
-                <q-avatar icon="folder" color="primary" text-color="white" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Laundry Semarang</q-item-label>
-                <q-item-label caption>pusat_oleholehbaju</q-item-label>
-              </q-item-section>
-            </q-item>
-            
-          </q-list>
-          <q-footer>
-            <q-tabs
-              v-model="tab"
-              inline-label
-              switch-indicator
-              indicator-color="teal-14"
-              active-color="teal-14"
-              class="bg-white full-width"
-              style="color:#000000"
-            >
-              <q-tab name="gambar" label="semua" />
-              <q-tab name="video" label="orang" />
-              <q-tab name="a" label="#tagar" />
-              <q-tab name="d" label="postingan" />
-            </q-tabs>
-          </q-footer>
-        </q-page>
-      </q-pull-to-refresh>
-    </q-page-container>
-  </q-layout>
+        </q-item-section>
+        <q-item-section class="text-weight-medium self-center">
+          <q-item-label style="color: #3A3838; font-size: 17px">laundry_semarang</q-item-label>
+          <q-item-label style="color: #919193; font-size: 13px">pusat_oleholehbaju</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { ref } from "vue";
 export default {
-  setup() {
-    return {
-      menu: ref(false),
-      onItemClick() {
-        // console.log('Clicked on an Item')
-      },
-      tab: ref("mails"),
-    };
-  },
-
-  computed: {
-    ...mapState(["Printer"]),
-  },
-  data() {
-    return {
-      printers: [],
-    };
-  },
-  mounted() {},
-  methods: {},
+  
 };
 </script>
 

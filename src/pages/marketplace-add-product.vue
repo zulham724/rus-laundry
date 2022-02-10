@@ -43,128 +43,85 @@
               width: 92%;
               color: white;
             "
+            @click="$router.push('/marketplace-add-product-item')"
             no-caps
             label="Tambah Produk"
           ></q-btn>
         </div>
         <div class="row q-mt-md">
-          <div class="col-6">
-            <q-card class="q-pb-xl q-mx-sm">
+          <div class="col-6" v-for="product in products" :key="product.id">
+            <q-card class="q-pb-lg q-mx-sm">
               <img
+                v-if="product.images.length"
                 class="bg-red"
-                src="~/assets/jualan1.svg"
+                :src="STORAGE_URL+`/`+product.images[0].src"
+                style="height: 150px"
+              />
+              <img
+                v-else
+                class="bg-red"
                 style="height: 150px"
               />
               <div
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
               >
-                Detergen Rinso anti Belanda Murah
+                {{ product.tittle }}
               </div>
               <div
                 class="text-caption text-weight-regular q-pl-xs"
                 style="color: #c5c5c5"
               >
-                Rp.15.000
+                {{
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(product.price)
+                }}
               </div>
               <div
                 class="text-subtitle2 text-weight-medium q-pl-xs"
                 style="color: #161952"
               >
-                Rp.10.000
+                {{
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(product.price)
+                }}
               </div>
               <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />Kota Kudus
+                <q-icon name="fas fa-map-marker-alt" color="red" />{{ product.shop.user.home_address }}
+              </div>
+              <div class="text-center">
+                <q-btn
+                  padding="none"
+                  flat
+                  dense
+                  style="
+                    background-color: #9b27f1;
+                    width: 90%;
+                    color: white;
+                    font-size: 10px;
+                  "
+                  no-caps
+                  label="Edit produk"
+                ></q-btn>
+                <q-btn
+                  padding="none"
+                  flat
+                  dense
+                  style="
+                    background-color: #ababab;
+                    width: 90%;
+                    color: white;
+                    font-size: 10px;
+                  "
+                  no-caps
+                  label="Hapus"
+                ></q-btn>
               </div>
             </q-card>
-            <q-card class="q-pb-xl q-mt-md q-mx-sm">
-              <img
-                class="bg-red"
-                src="~/assets/jualan1.svg"
-                style="height: 150px"
-              />
-              <div
-                class="text-caption text-weight-medium q-pl-xs"
-                style="color: #5f5f5f"
-              >
-                Detergen Rinso anti Belanda Murah
-              </div>
-              <div
-                class="text-caption text-weight-regular q-pl-xs"
-                style="color: #c5c5c5"
-              >
-                Rp.15.000
-              </div>
-              <div
-                class="text-subtitle2 text-weight-medium q-pl-xs"
-                style="color: #161952"
-              >
-                Rp.10.000
-              </div>
-              <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />Kota Kudus
-              </div>
-            </q-card>
-        
-          </div>
-          <div class="col-6">
-            <q-card class="q-pb-xl q-mx-sm">
-              <img
-                class="bg-red"
-                src="~/assets/jualan1.svg"
-                style="height: 150px"
-              />
-              <div
-                class="text-caption text-weight-medium q-pl-xs"
-                style="color: #5f5f5f"
-              >
-                Detergen Rinso anti Belanda Murah
-              </div>
-              <div
-                class="text-caption text-weight-regular q-pl-xs"
-                style="color: #c5c5c5"
-              >
-                Rp.15.000
-              </div>
-              <div
-                class="text-subtitle2 text-weight-medium q-pl-xs"
-                style="color: #161952"
-              >
-                Rp.10.000
-              </div>
-              <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />Kota Kudus
-              </div>
-            </q-card>
-            <q-card class="q-pb-xl q-mt-md q-mx-sm">
-              <img
-                class="bg-red"
-                src="~/assets/jualan1.svg"
-                style="height: 150px"
-              />
-              <div
-                class="text-caption text-weight-medium q-pl-xs"
-                style="color: #5f5f5f"
-              >
-                Detergen Rinso anti Belanda Murah
-              </div>
-              <div
-                class="text-caption text-weight-regular q-pl-xs"
-                style="color: #c5c5c5"
-              >
-                Rp.15.000
-              </div>
-              <div
-                class="text-subtitle2 text-weight-medium q-pl-xs"
-                style="color: #161952"
-              >
-                Rp.10.000
-              </div>
-              <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />Kota Kudus
-              </div>
-            </q-card>
-            
           </div>
         </div>
       </q-page>
@@ -173,7 +130,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      products: [],
+      STORAGE_URL: STORAGE_URL
+    };
+  },
+  mounted() {
+    this.getProducts();
+  },
+  methods: {
+    getProducts() {
+      this.$store.dispatch("Product/getProductByShop").then((res) => {
+        this.products = res.data;
+      });
+    },
+  },
+};
 </script>
 
 <style>

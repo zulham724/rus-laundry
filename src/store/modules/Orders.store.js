@@ -359,6 +359,15 @@ const actions = {
             })
         })
     },
+    getOrder({ commit }) {
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getorder`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            });
+        })
+    },
     next({
         commit,
         state

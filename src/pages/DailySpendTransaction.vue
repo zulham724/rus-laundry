@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <q-pull-to-refresh @refresh="refresh">
       <!-- Skeleton -->
       <div v-if="isLoad" class="q-py-md">
@@ -30,9 +30,9 @@
         </q-item>
       </div>
 
-      <div v-else-if="!isLoad && orders.data" >
-        <div v-if="!orders.data.length" class="q-pt-lg"> 
-          <div class="text-subtitle1 text-center q-py-xs" >
+      <div v-else-if="!isLoad && orders.data">
+        <div v-if="!orders.data.length" class="q-pt-lg">
+          <div class="text-subtitle1 text-center q-py-xs">
             Belum ada transaksi hari ini
           </div>
         </div>
@@ -50,39 +50,44 @@
               class="q-my-lg q-mx-sm"
               style="background-color: #fff; border-radius: 20px 20px 20px 20px"
             >
-              <q-item
-                v-for="order in orders.data"
-                :key="order.id"
-                class="q-my-sm"
-                clickable
-                @click="$router.push(`/detail-transaksi/${order.id}`)"
-              >
-                <q-item-section avatar>
-                  <q-avatar> </q-avatar>
-                </q-item-section>
+              <q-expansion-item v-for="order in orders.data" :key="order.id">
+                <template v-slot:header>
+                  <q-item-section avatar>
+                    <q-avatar
+                      icon="fas fa-box-open"
+                      color="primary"
+                      text-color="white"
+                    />
+                  </q-item-section>
 
-                <q-item-section class="self-center">
-                  <q-item-label class="text-weight-medium">
-                    {{ order.id }} {{ order.customer.name }}</q-item-label
-                  >
-                  <q-item-label caption lines="1" class="q-mb-sm">
-                    {{ moment(order.updated_at).format("LL") }}</q-item-label
-                  >
-                </q-item-section>
+                  <q-item-section>
+                    {{ order.name }} <br />
+                    {{ moment(order.created_at).format("LL") }}
+                  </q-item-section>
 
-                <q-item-section
-                  class="text-weight-regular"
-                  side
-                  style="color: #54d240; font-size: 12px"
-                >
-                  +{{
-                    new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(order.total_sum)
-                  }}
-                </q-item-section>
-              </q-item>
+                  <q-item-section side>
+                    <div class="row items-center" style="color: #e82222; font-size: 12px">
+                      -{{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(order.value)
+                      }}
+                    </div>
+                  </q-item-section>
+                </template>
+                <q-card class="q-px-md">
+                  Deskripsi
+                  <q-card-section
+                    class="q-px-none"
+                    style="margin-top: -10px; font-size: 12px"
+                  >
+                    {{ order.note }}
+                  </q-card-section>
+                </q-card>
+              </q-expansion-item>
+
+              
             </q-list>
           </q-infinite-scroll>
         </div>
@@ -131,7 +136,7 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-             console.log("ini data spend harian", res.data);
+            console.log("ini data spend harian", res.data);
           })
           .catch((err) => {
             reject(err);

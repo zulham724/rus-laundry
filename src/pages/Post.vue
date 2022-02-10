@@ -48,6 +48,7 @@
       <div class="row q-px-md">
         <!-- Search -->
         <q-input
+        @click="$router.push('/search')"
           dense
           class="q-ml-sm full-width"
           type="search"

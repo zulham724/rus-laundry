@@ -126,6 +126,18 @@ const routes = [{
 },
 
 {
+    path: "/tagar",
+    component: () =>
+        import("pages/Tagar.vue")
+},
+
+{
+    path: "/search-detail",
+    component: () =>
+        import("pages/SearchDetail.vue")
+},
+
+{
     path: "/like-of-course",
     component: () =>
         import("pages/LikeOfCourse.vue")
@@ -463,17 +475,17 @@ const routes = [{
         import("src/pages/Following.vue"),
 },
 
-{
-    path: "/search-detail-person",
-    component: () =>
-        import("src/pages/SearchDetailPerson.vue"),
-},
+// {
+//     path: "/search-detail-person",
+//     component: () =>
+//         import("src/pages/SearchDetailPerson.vue"),
+// },
 
-{
-    path: "/search-detail-tagar",
-    component: () =>
-        import("src/pages/SearchDetailTagar.vue"),
-},
+// {
+//     path: "/search-detail-tagar",
+//     component: () =>
+//         import("src/pages/SearchDetailTagar.vue"),
+// },
 
 {
     path: "/report-post",
@@ -506,9 +518,10 @@ const routes = [{
 },
 
 {
-    path: "/marketplace-detail",
+    path: "/marketplace-detail/:productid",
     component: () =>
         import("src/pages/marketplace-detail.vue"),
+    props: true
 },
 
 {
@@ -541,6 +554,21 @@ const routes = [{
     path: "/marketplace-add-product",
     component: () =>
         import("pages/marketplace-add-product.vue"),
+},
+{
+    path: "/marketplace-input-whatsapp",
+    component: () =>
+        import("pages/marketplace-input-whatsapp.vue"),
+},
+{
+    path: "/marketplace-input-whatsapp2",
+    component: () =>
+        import("pages/marketplace-input-whatsapp2.vue"),
+},
+{
+    path: "/marketplace-add-product-item",
+    component: () =>
+        import("pages/marketplace-add-product-item.vue"),
 },
 
 // Always leave this as last one,

@@ -1,7 +1,7 @@
 <template>
   <q-layout class="mbl">
     <q-page-container>
-      <q-page>
+      <q-page v-if="product">
         <q-carousel animated v-model="slide" arrows navigation infinite>
           <q-carousel-slide
             :name="1"
@@ -21,6 +21,7 @@
           />
         </q-carousel>
         <q-btn
+          @click="$router.back()"
           round
           dense
           class="absolute-top-left q-mt-md q-ml-md"
@@ -56,14 +57,21 @@
             class=""
             style="text-decoration: line-through; color: #cdcdcd"
             for=""
-            >Rp 2.900.000</label
           >
+            {{
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(product.price)
+            }}
+          </label>
         </div>
+        {{}}
         <div
           class="q-ml-sm text-subtitle2"
           style="font-size: 20px; color: #5f5f5f"
         >
-          Sabun Pembersih Dosa
+          {{ product.tittle }}
         </div>
         <div
           class="text-caption q-ml-sm"
@@ -78,10 +86,11 @@
           </q-avatar>
           <div class="column q-ml-sm">
             <label
+              v-if="product.shop"
               class=""
               style="font-family: roboto; font-size: 17px; color: #5f5f5f"
               for=""
-              >LaundryTopSpeed
+              >{{ product.shop.name }}
             </label>
             <div>
               <img
@@ -90,9 +99,10 @@
                 alt=""
               />
               <label
+                v-if="product.shop"
                 class="text-caption q-ml-xs"
                 style="font-size: 13px; font-family: roboto; color: #c5c5c5"
-                >Kota Darjo</label
+                >{{ product.shop.user.home_address }}</label
               >
             </div>
             <q-btn
@@ -124,8 +134,26 @@
             <div class="col-6"></div>
             <div class="col-3">
               <div class="column">
-                <div style="color: #cdcdcd" class="text-subtitle2 text-right q-pr-sm">Second</div>
-                <div style="color: #cdcdcd" class="text-subtitle2 text-right q-pr-sm">10 KG</div>
+                <div
+                  v-if="product.is_new"
+                  style="color: #cdcdcd"
+                  class="text-subtitle2 text-right q-pr-sm"
+                >
+                  Baru
+                </div>
+                <div
+                  v-else
+                  style="color: #cdcdcd"
+                  class="text-subtitle2 text-right q-pr-sm"
+                >
+                  Second
+                </div>
+                <div
+                  style="color: #cdcdcd"
+                  class="text-subtitle2 text-right q-pr-sm"
+                >
+                  {{ product.weight }} KG
+                </div>
               </div>
             </div>
           </div>
@@ -136,37 +164,34 @@
             Deskripsi Barang
           </div>
           <div class="q-pb-sm" style="font-size: 10px">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-            aliquid alias ex optio minima accusantium natus vitae! Consectetur
-            sequi repellendus nihil consequatur exercitationem, cumque est atque
-            adipisci nisi, veniam debitis ipsum quae culpa aut ea veritatis sunt
-            dolor dicta. Iste sint magnam nam, hic, dolorem pariatur non ad
-            veniam neque vero, itaque nisi amet. Numquam odit, a incidunt
-            praesentium amet officia quam accusantium similique et recusandae,
-            quae voluptatum porro nulla? Ab libero, illum eum sunt ea nobis modi
-            nihil quasi, ipsum omnis nesciunt exercitationem animi, labore et
-            odit praesentium cum doloribus iste temporibus? Odit dolor optio
-            minus, ipsum assumenda quidem.
+            {{ product.description }}
           </div>
         </div>
         <div class="row">
           <div
             class="col-6 q-pl-sm text-weight-bold q-pb-md"
-            style="background-color: #f5f7f9;font-size:12px"
+            style="background-color: #f5f7f9; font-size: 12px"
           >
             Produk Lainnya dari toko ini
           </div>
-          <div 
+          <div
             class="col-6 text-right q-pr-sm text-weight-regular q-pb-md"
-            style="background-color: #f5f7f9; color: #707070;font-size:12px"
+            style="background-color: #f5f7f9; color: #707070; font-size: 12px"
           >
             Lihat selengkapnya
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-6">
-            <q-card class="q-pb-xl q-mx-sm">
+        <div class="row" v-if="another_products.length">
+          <div
+            class="col-6"
+            v-for="another_product in another_products"
+            :key="another_product.id"
+          >
+            <q-card
+              class="q-pb-xl q-mx-sm"
+              @click="detailProduct(another_product.id)"
+            >
               <img
                 class="bg-red"
                 src="~/assets/jualan1.svg"
@@ -176,7 +201,7 @@
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
               >
-                Detergen Rinso anti Belanda Murah
+                {{ another_product.tittle }}
               </div>
               <div
                 class="text-caption text-weight-regular q-pl-xs"
@@ -188,40 +213,17 @@
                 class="text-subtitle2 text-weight-medium q-pl-xs"
                 style="color: #161952"
               >
-                Rp.10.000
+                {{
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(another_product.price)
+                }}
               </div>
               <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />Kota Kudus
-              </div>
-            </q-card>
-          </div>
-          <div class="col-6">
-            <q-card class="q-pb-xl q-mx-sm">
-              <img
-                class="bg-red"
-                src="~/assets/jualan1.svg"
-                style="height: 150px"
-              />
-              <div
-                class="text-caption text-weight-medium q-pl-xs"
-                style="color: #5f5f5f"
-              >
-                Detergen Rinso anti Belanda Murah
-              </div>
-              <div
-                class="text-caption text-weight-regular q-pl-xs"
-                style="color: #c5c5c5"
-              >
-                Rp.15.000
-              </div>
-              <div
-                class="text-subtitle2 text-weight-medium q-pl-xs"
-                style="color: #161952"
-              >
-                Rp.10.000
-              </div>
-              <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />Kota Kudus
+                <q-icon name="fas fa-map-marker-alt" color="red" />{{
+                  another_product.shop.user.home_address
+                }}
               </div>
             </q-card>
           </div>
@@ -250,13 +252,43 @@ import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 
 export default {
+  props: ["productid"],
+  components: {
+    Icon,
+  },
   data() {
     return {
       slide: ref(1),
+      product: null,
+      another_products: [],
     };
   },
-  components: {
-    Icon,
+  mounted() {
+    this.getDetailProduct();
+  },
+  methods: {
+    getDetailProduct() {
+      this.$store.dispatch("Product/show", this.productid).then((res) => {
+        this.product = res.data;
+        this.getAnotherProducts(res.data.shop.id);
+        this.$forceUpdate()
+      });
+    },
+    getAnotherProducts(id) {
+      this.$store.dispatch("Product/getAnotherProducts", id).then((res) => {
+        this.another_products = res.data;
+        this.$forceUpdate()
+      });
+    },
+    detailProduct(id) {
+      this.product = null;
+      this.another_products = [];
+      this.$router.push(`/marketplace-detail/${id}`);
+      this.$nextTick().then(() => {
+         this.getDetailProduct();
+      });
+      this.$forceUpdate();
+    },
   },
 };
 </script>

@@ -39,7 +39,7 @@
             </div>
           </q-tab>
 
-          <q-tab name="kategori" no-caps
+          <q-tab name="kategori" no-caps @click="$router.push('/marketplace-home')"
             ><q-img
               no-spinner
               style="width: 18px; height: 18px"

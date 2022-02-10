@@ -216,6 +216,12 @@ export default {
     moment() {
       return moment();
     },
+    getTotalProfit(){
+      this.total_profit = 0
+      this.$nextTick().then(()=>{
+        this.total_profit
+      })
+    },
     getOrders() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
@@ -240,6 +246,7 @@ export default {
         .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          this.$emit('save-callback', res.data)
         });
     },
     getProfitByWeek() {
@@ -247,6 +254,7 @@ export default {
         .dispatch("Orders/countProfitOrdersByWeek", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          this.$emit('save-callback', res.data)
         });
     },
     getProfitByMonth() {
@@ -254,6 +262,7 @@ export default {
         .dispatch("Orders/countProfitOrdersByMonth", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          this.$emit('save-callback', res.data)
         });
     },
     refresh(done) {

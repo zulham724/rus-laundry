@@ -24,7 +24,7 @@ const actions = {
         commit
       }, shopId) {
         return new Promise((resolve, reject) => {
-            api.get(`/api/slave/getorderbyweek/${shopId}`)
+            api.get(`/api/slave/${shopId}/spendingthisweek`)
                 .then((res) => {
                     const data = res.data;
                     commit('set_week', {

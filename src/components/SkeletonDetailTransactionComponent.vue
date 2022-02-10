@@ -249,7 +249,7 @@
             class="text-weight-bold"
             style="font-size: 14px"
           >
-            <q-skeleton width="100px" />
+            <q-skeleton width="150px" />
           </q-item-label>
         </q-item-section>
       </q-item>

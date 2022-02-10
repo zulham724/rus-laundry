@@ -172,7 +172,7 @@
             </q-item-label>
           </q-item-section>
         </q-item>
-        <q-item class="q-py-md" clickable style="background-color: #ffffff">
+        <!--<q-item class="q-py-md" clickable style="background-color: #ffffff">
           <q-item-section avatar class="self-center">
             <q-avatar square size="40px">
               <q-img no-spinner src="~/assets/pengeluaran.svg" width="40px" height="40px"></q-img>
@@ -187,7 +187,7 @@
               Pengeluaran
             </q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item>-->
         <q-item class="q-py-md" clickable style="background-color: #ffffff">
           <q-item-section avatar class="self-center">
             <q-avatar square size="40px">

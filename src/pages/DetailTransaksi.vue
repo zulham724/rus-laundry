@@ -481,7 +481,11 @@
                     color="primary"
                     class="q-mx-xs"
                   >
-                    <q-avatar avatar icon="fab fa-facebook-f" size="30px"></q-avatar>
+                    <q-avatar
+                      avatar
+                      icon="fab fa-facebook-f"
+                      size="30px"
+                    ></q-avatar>
                   </q-btn>
 
                   <!-- Button Instagram -->
@@ -558,7 +562,7 @@ export default {
       slide: null,
       dialogShare: false,
       dialogConfirm: false,
-      link: "example.com/share-link",
+      link: null,
       detail_order: null,
       isLoad: false,
       copy: false,
@@ -595,11 +599,11 @@ export default {
         });
     },
     updateStatusOrder() {
-      alert("tess");  
+      alert("tess");
     },
     copyLink() {
-      var modelValue= this.$refs.copy.modelValue;
-        // console.log(this.$refs.copy);
+      var modelValue = this.$refs.copy.modelValue;
+      // console.log(this.$refs.copy);
       // modelValue.select();
       // modelValue.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(modelValue);
@@ -607,6 +611,7 @@ export default {
   },
   mounted() {
     this.getDetailOrder();
+    this.link = window.location.href;
   },
 };
 </script>

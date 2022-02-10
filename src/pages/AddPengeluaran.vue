@@ -16,31 +16,43 @@
           class="text-left text-weight-medium"
           style="color: #5a5656; font-size: 15px"
         >
-          <q-btn @click="$router.push('/income')" no-caps dense flat> <div>Simpan</div></q-btn>
+          <q-btn @click="storeSpend()" no-caps dense flat>
+            <div>Simpan</div></q-btn
+          >
         </q-item-section>
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
       <q-pull-to-refresh>
         <q-page>
-          <q-input class="q-px-sm q-py-sm" outlined label="Nama Pengeluaran" />
-          <q-input
-            class="q-px-sm q-py-sm"
-            outlined
-            label="Nama Pengeluaran"
-            v-model="spend.name"
-          />
-          <q-input
-            class="q-px-sm q-py-sm"
-            outlined
-            label="Nama Pengeluaran"
-          />
-          <q-input
-            class="q-px-sm q-py-sm"
-            outlined
-            label="Deskripsi"
-            type="textarea"
-          />
+          <q-form ref="form">
+            <q-input
+              class="q-px-sm q-py-md"
+              outlined
+              label="Nama Pengeluaran"
+              v-model="newSpend.name"
+            />
+            <q-input
+              class="q-px-sm q-py-md"
+              outlined
+              v-model="newSpend.created_at"
+              type="date"
+            />
+            <q-input
+              class="q-px-sm q-py-md"
+              outlined
+              label="Jumlah Pengeluaran"
+              type="number"
+              v-model="newSpend.value"
+            />
+            <q-input
+              class="q-px-sm q-py-md"
+              outlined
+              label="Deskripsi"
+              type="textarea"
+              v-model="newSpend.note"
+            />
+          </q-form>
         </q-page>
         <q-footer>
           <q-btn
@@ -82,33 +94,29 @@
 import { mapState } from "vuex";
 import { ref } from "vue";
 export default {
-
-  setup() {
-    return {
-      alert: ref(false),
-      menu: ref(false),
-      onItemClick() {
-        // console.log('Clicked on an Item')
-      },
-      tab: ref("mails"),
-      spend:{}
-    };
-  },
-
   computed: {
     ...mapState(["Printer"]),
   },
   data() {
     return {
       printers: [],
+      newSpend: {},
+      spend: {},
     };
   },
-  mounted() {},
   methods: {
-    // store(){
-    //   this.$store.dispatch("Payment/store", this.spend)
-    // }
+    storeSpend() {
+      this.$store
+        .dispatch("Spend/store", this.newSpend)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .finally(() => {
+          this.$router.push(`/income`);
+        });
+    },
   },
+  mounted() {},
 };
 </script>
 

@@ -1,29 +1,39 @@
 <template>
-  <q-layout>
+  <q-layout class="mbl">
     <q-page>
-      <!-- Search bar -->
-      <div class="row justify-center q-pa-md">
-        <q-input
-          dense
-          class="q-mx-xs full-width"
-          type="search"
-          outlined
-          v-model="search"
-          label="Cari"
-        >
-          <template v-slot:prepend>
-            <q-icon
-              name="search"
-              class="self-center"
-              size="25px"
-              color="grey"
-            />
-          </template>
-        </q-input>
+      <div class="row q-pa-md">
+        <div class="col-1 self-center">
+          <q-btn dense  no-caps flat>
+            <q-icon size="20px" name="fas fa-arrow-left" style="color: #9b27f1">
+            </q-icon>
+          </q-btn>
+        </div>
+        <div class="col-10">
+          <!-- Search bar -->
+          <div class="row justify-center">
+            <q-input
+              dense
+              class="q-mx-xs full-width"
+              type="search"
+              outlined
+              v-model="search"
+              placeholder="Cari"
+            >
+              <template v-slot:prepend>
+                <q-icon
+                  name="search"
+                  class="self-center"
+                  size="25px"
+                  color="grey"
+                />
+              </template>
+            </q-input>
+          </div>
+        </div>
       </div>
 
       <!-- Histori pencarian -->
-      <div class="row text-weight-medium q-pa-md q-pt-md">
+      <div class="row text-weight-medium q-px-md q-py-sm">
         <div class="row col-12">
           <div class="col-6 text-left" style="font-size: #15px; color: #3a3838">
             Histori pencarian

@@ -24,7 +24,7 @@
       <!-- Video/foto -->
       <div class="full-width bg-grey" style="height: 250px">
         <vue-plyr v-if="content.video">
-          <video :src="storageUrl + `/` + content.video.src"></video>
+          <video :src="STORAGE_URL + `/` + content.video.src"></video>
         </vue-plyr>
       </div>
       <!-- Deskripsi -->
@@ -315,7 +315,7 @@ export default {
       progress1,
       content: null,
       next_content: null,
-      storageUrl: STORAGE_URL,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {

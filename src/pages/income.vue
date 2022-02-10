@@ -20,9 +20,15 @@
               Total Saldo
             </div>
             <div class="col-6 text-right self-end">
-              <q-btn @click="$router.push('/addspend')" class="bg-white" no-caps style="border-radius: 20px" dense>
+              <q-btn
+                v-if="tabParent == 'pengeluaran'"
+                @click="$router.push('/addspend')"
+                class="bg-white"
+                no-caps
+                style="border-radius: 20px"
+                dense
+              >
                 <div
-                  
                   class="text-weight-medium q-px-xs"
                   style="color: #766c6c; font-size: 13px"
                 >
@@ -70,15 +76,21 @@
     </div>
 
     <!-- List Pesanan -->
-    <q-tab-panels class="full-width" v-model="tabParent" animated style="margin-top:-9.5px; border-radius:10px 10px 0px 0px " >
+    <q-tab-panels
+      class="full-width"
+      v-model="tabParent"
+      animated
+      style="margin-top: -9.5px; border-radius: 10px 10px 0px 0px"
+    >
       <q-tab-panel name="pendapatan" class="q-pa-none q-ma-none">
         <pendapatan-transaction
+          v-on:save-callback="getTotalProfit"
           class="full-width"
           stretch
         ></pendapatan-transaction>
       </q-tab-panel>
-      <q-tab-panel name="pengeluaran" class="q-pa-none q-ma-none" >
-        <pengeluaran-transaction class="full-width" ></pengeluaran-transaction>
+      <q-tab-panel name="pengeluaran" class="q-pa-none q-ma-none">
+        <pengeluaran-transaction class="full-width"></pengeluaran-transaction>
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
@@ -107,15 +119,20 @@ export default {
       orders: [],
       isLoad: false,
       total_profit: 0,
+      buttonAddSpend: false,
     };
   },
   mounted() {
     this.getOrders();
     this.getProfitByDay();
+    // this.getProfitByMonth();
   },
   methods: {
     moment() {
       return moment();
+    },
+    getTotalProfit(value) {
+      this.total_profit = value;
     },
     getOrders() {
       return new Promise((resolve, reject) => {
@@ -155,6 +172,7 @@ export default {
         .dispatch("Orders/countProfitOrdersByMonth", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          console.log(res.data);
         });
     },
     refresh(done) {

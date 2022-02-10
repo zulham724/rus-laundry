@@ -24,7 +24,7 @@ const actions = {
     commit
   }, shopId) {
     return new Promise((resolve, reject) => {
-      api.get(`/api/slave/getorderbyday/${shopId}`)
+      api.get(`/api/slave/${shopId}/spendingtoday`)
         .then((res) => {
           const data = res.data;
           commit('set_day', {
