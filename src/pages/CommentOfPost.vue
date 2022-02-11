@@ -22,22 +22,22 @@
     </q-header>
     <q-page-container>
       <q-page class="q-pb-xl" v-if="post">
-        <div class="q-ma-md">
+        <div class="full-width row q-ma-md">
           <!-- Profil -->
           <div
-            class="row col-12 q-px-sm"
+            class="row q-px-lg q-py-xs q-mx-sm"
             style="
               border-radius: 20px 0px 20px 0px;
               background-color: #f7f7f7;
               width: auto;
             "
           >
-            <div class="col-2 q-pa-xs self-center">
+            <div class="q-pr-xs self-center">
               <q-avatar size="40px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>
               </q-avatar>
             </div>
-            <div class="col self-center">
+            <div class="self-center">
               <div
                 class="text-weight-bold"
                 style="color: #3a3838; font-size: 17px; width: auto"

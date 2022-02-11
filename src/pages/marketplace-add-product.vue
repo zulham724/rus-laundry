@@ -24,6 +24,7 @@
           outlined
           v-model="search"
           label="Cari"
+          @update:model-value="filterAddProducts(search)"
         >
           <template v-slot:prepend>
             <q-icon
@@ -43,25 +44,28 @@
               width: 92%;
               color: white;
             "
-            @click="$router.push('/marketplace-add-product-item')"
+            @click="addProduct()"
             no-caps
             label="Tambah Produk"
           ></q-btn>
         </div>
         <div class="row q-mt-md">
-          <div class="col-6" v-for="product in products" :key="product.id">
-            <q-card class="q-pb-lg q-mx-sm">
+          <div
+            class="col-6 q-pa-sm"
+            v-for="(product, p) in products"
+            :key="product.id"
+          >
+            <q-card
+              class="q-pa-md"
+              @click="$router.push(`/marketplace-detail/${product.id}`)"
+            >
               <img
                 v-if="product.images.length"
                 class="bg-red"
-                :src="STORAGE_URL+`/`+product.images[0].src"
+                :src="STORAGE_URL + `/` + product.images[0].src"
                 style="height: 150px"
               />
-              <img
-                v-else
-                class="bg-red"
-                style="height: 150px"
-              />
+              <img v-else class="bg-red" style="height: 150px" />
               <div
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
@@ -91,7 +95,9 @@
                 }}
               </div>
               <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />{{ product.shop.user.home_address }}
+                <q-icon name="fas fa-map-marker-alt" color="red" />{{
+                  product.shop.user.home_address
+                }}
               </div>
               <div class="text-center">
                 <q-btn
@@ -106,7 +112,54 @@
                   "
                   no-caps
                   label="Edit produk"
+                  @click="$router.push(`/marketplace-add-product-edit/${product.id}`)"
                 ></q-btn>
+                <!-- Dialog Hapus Product -->
+                <q-dialog v-model="dialogHapusProduk">
+                  <q-card>
+                    <q-card-section>
+                      <div
+                        class="text-weight-bold text-left"
+                        style="font-size: 16px"
+                      >
+                        Hapus Produk
+                      </div>
+
+                      <div>
+                        class="text-weight-light text-left q-mt-none"
+                        style="width:300px; font-size: 12px" > yakin ingin
+                        menghapus produk?
+                      </div>
+                    </q-card-section>
+
+                    <q-card-actions>
+                      <div class="row justify-end q-x-gutter-sm">
+                        <q-btn
+                          v-close-popup
+                          class="text-white"
+                          no-caps
+                          label="Batal"
+                          flat
+                          text-color="grey-8"
+                          style="width: 30px; background-color: white"
+                        />
+                        <q-btn
+                          v-close-popup
+                          class="text-white"
+                          no-caps
+                          flat
+                          @click="deleteProduct(product.id, p)"
+                          label="Oke"
+                          style="
+                            width: 30px;
+                            background-color: #49c2c0;
+                            color: white;
+                          "
+                        />
+                      </div>
+                    </q-card-actions>
+                  </q-card>
+                </q-dialog>
                 <q-btn
                   padding="none"
                   flat
@@ -118,33 +171,127 @@
                     font-size: 10px;
                   "
                   no-caps
+                  @click="deleteProduct(product.id)"
                   label="Hapus"
                 ></q-btn>
               </div>
             </q-card>
           </div>
         </div>
+
+        <!-- Dialog Whatsapp -->
+        <q-dialog v-model="dialogWhatsapp" persistent>
+          <q-card class="full-width">
+            <!-- Gif Warning -->
+            <div class="justify-center">
+              <div class="row justify-center q-pt-sm">
+                <q-img
+                  no-spinner
+                  src="~/assets/animasi-proses-cuci.gif"
+                  style="width: 100px"
+                ></q-img>
+              </div>
+
+              <div
+                class="row q-px-md text-weight-medium q-pt-md justify-center"
+                style="color: #393939; font-size: 17px"
+              >
+                MASUKAN NOMOR WHATSAPP
+              </div>
+              <div
+                class="row q-px-sm text-weight-medium text-center q-pt-md"
+                style="color: #747474; font-size: 12px"
+              >
+                Silahkan masukan nomor WhatsApp aktif. Nomor tsb akan digunakan
+                sebagai media transaksi oleh penjual dan pembeli.
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="row justify-end q-pa-md">
+              <!-- Button Abaikan -->
+              <q-btn dense flat no-caps v-close-popup>
+                <div
+                  class="text-weight-bold"
+                  style="color: #393939; font-size: 14px"
+                >
+                  Abaikan
+                </div>
+              </q-btn>
+              <!-- Button Input wa -->
+              <q-btn
+                dense
+                flat
+                no-caps
+                class="q-ml-sm"
+                @click="$router.push('/marketplace-input-whatsapp')"
+              >
+                <div
+                  class="text-weight-bold"
+                  style="color: #393939; font-size: 14px"
+                >
+                  Lanjutkan
+                </div>
+              </q-btn>
+            </div>
+          </q-card>
+        </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
       products: [],
-      STORAGE_URL: STORAGE_URL
+      STORAGE_URL: STORAGE_URL,
+      dialogWhatsapp: false,
+      products_temp: [],
+      dialog_deleteProduct: false,
+      chooseMode: false,
+      search: "",
     };
   },
   mounted() {
     this.getProducts();
   },
   methods: {
+    deleteProduct(id, index) {
+      this.$store.dispatch("Product/destroy", id).then((res) => {
+        this.products.splice(index, 1);
+        this.$q.notify("Berhasil");
+      });
+    },
     getProducts() {
       this.$store.dispatch("Product/getProductByShop").then((res) => {
-        this.products = res.data;
+        this.products = this.products_temp = res.data;
       });
+    },
+    addProduct() {
+      if (!this.Auth.auth.contact_number) {
+        this.dialogWhatsapp = true;
+      } else {
+        this.$router.push("/marketplace-add-product-item");
+      }
+    },
+    filterAddProducts(value) {
+      this.updateAddProducts(value);
+    },
+    updateAddProducts(cari) {
+      if (cari === "") {
+        this.products = this.products_temp;
+      }
+
+      const needle = cari.toLowerCase();
+      this.products = this.products_temp.filter(
+        (v) => v.tittle.toLowerCase().indexOf(needle) > -1
+      );
     },
   },
 };

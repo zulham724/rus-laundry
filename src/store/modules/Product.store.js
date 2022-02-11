@@ -1,15 +1,17 @@
 import { api } from 'boot/axios';
 
 const state = {
-
+    products: {}
 };
 
 const mutations = {
-
+    set_product(state, payload) {
+      state.products = payload.products
+    },
+    
 };
 
 const actions = {
-
     store({ commit }, product) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/product`, product).then(res => {
@@ -37,6 +39,19 @@ const actions = {
             })
         })
     },
+    destroy({ commit }, productId){
+        let access = {
+            _method: 'delete',
+            id: productId
+        }
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/product/${access.id}`, access).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     show({ commit }, productId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/product/${productId}`).then(res => {
@@ -54,8 +69,32 @@ const actions = {
                 reject(err)
             })
         })
-    }
+    },
+    like({commit}, id){
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/product/${id}/like`)
+            .then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    dislike({commit}, id){
+        return new Promise((resolve, reject) => {
+            let access = {
+                _method: "delete"
+            };
 
+            api.get(`/api/slave/product/${id}/dislike`)
+            .then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+    
 };
 
 const getters = {};

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <q-pull-to-refresh @refresh="refresh">
       <!-- Skeleton -->
       <div v-if="isLoad" class="q-py-md">
@@ -30,9 +30,10 @@
         </q-item>
       </div>
 
-      <div v-else-if="!isLoad && orders.data" >
-        <div v-if="!orders.data.length" class="q-pt-lg"> 
-          <div class="text-subtitle1 text-center q-py-xs" >
+      <div v-else-if="!isLoad && orders.data">
+        <div v-if="!orders.data.length" class="q-pt-lg">
+          <div class="text-subtitle1 text-center q-py-xs">
+            <q-img no-spinner src="~/assets/nullicsp.gif" :ratio="1" />
             Belum ada transaksi hari ini
           </div>
         </div>

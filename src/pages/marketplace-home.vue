@@ -8,82 +8,133 @@
         height: 75px;
       "
     >
-      <div class="col-10 q-mt-md">
-        <q-input
-          dense
-          style="border-radius: 20px; width: 95%"
-          class="q-ml-sm bg-white"
-          type="search"
-          rounded
-          outlined
-          v-model="search"
-          label="Cari Produk"
-        >
-          <template v-slot:prepend>
-            <q-icon
-              name="search"
-              class="self-center"
-              size="25px"
-              color="grey"
-            />
-          </template>
-        </q-input>
-      </div>
-      <div class="col-2 q-pl-sm q-mt-md">
-        <q-avatar size="40px">
-          <img src="~/assets/Avatar.png" />
-        </q-avatar>
+      <div class="row full-width q-px-md">
+        <div class="col-10 self-center justify-center">
+          <q-input
+            dense
+            style="border-radius: 20px; width: 95%"
+            class="q-ml-sm bg-white"
+            type="search"
+            rounded
+            outlined
+            v-model="search"
+            label="Cari Produk"
+            @update:model-value="filterProducts(search)"
+          >
+            <template v-slot:prepend>
+              <q-icon
+                name="search"
+                class="self-center"
+                size="25px"
+                color="grey"
+              />
+            </template>
+          </q-input>
+        </div>
+        <div class="col-2 self-center text-center">
+          <q-avatar
+            size="50px"
+            @click="$router.push('/marketplace-detail-user')"
+          >
+            <q-img src="~/assets/Avatar.png" no-spinner />
+          </q-avatar>
+        </div>
       </div>
     </q-header>
     <q-page-container>
       <q-page class="q-px-md">
-        <div class="text-caption q-py-sm">Untuk kamu hari ini</div>
-        <div class="row">
-          <div class="col-6" v-for="product in products" :key="product.id"> 
-            <q-card class="q-pb-xl q-mx-sm" @click="$router.push(`/marketplace-detail/${product.id}`)">
-              <img
-                v-if="product.images.length"
-                class="bg-red"
-                :src="STORAGE_URL+`/`+product.images[0].src"
-                style="height: 150px"
-              />
-               <img
-               v-else
-                class="bg-red"
-                style="height: 150px"
-              />
-              <div
-                class="text-caption text-weight-medium q-pl-xs"
-                style="color: #5f5f5f"
+        <!-- Empty Product -->
+        <div v-if="emptySearch">
+          <q-img no-spinner src="~/assets/animasi-proses-cuci.gif" />
+          <div class="text-h6">
+            Maaf produk Kosong pindah shopee ae akeh promo
+          </div>
+        </div>
+
+        <!-- Skeleton -->
+        <div v-if="isLoad">
+          <div class="row q-mb-md" v-for="n in 4" :key="n">
+            <div class="col-6 q-px-sm">
+              <q-card class="full-width q-pb-xl">
+                <q-item class="q-pa-none q-ma-none full-width">
+                  <!-- Image -->
+                  <q-card-section class="full-width q-pa-none">
+                    <q-skeleton class="full-width" height="150px" />
+                  </q-card-section>
+                </q-item>
+                <div class="q-px-sm q-pt-xs">
+                  <!-- Nama produk -->
+                  <q-skeleton type="text" height="20px" />
+                  <q-skeleton type="text" height="20px" />
+                  <!-- Harga Produk -->
+                  <q-skeleton type="text" width="90px" height="22px" />
+                  <!-- Location -->
+                  <q-skeleton type="text" width="60px" height="18px" />
+                </div>
+              </q-card>
+            </div>
+            <div class="col-6 q-px-sm">
+              <q-card class="full-width q-pb-xl">
+                <q-item class="q-pa-none q-ma-none full-width">
+                  <!-- Image -->
+                  <q-card-section class="full-width q-pa-none">
+                    <q-skeleton class="full-width" height="150px" />
+                  </q-card-section>
+                </q-item>
+                <div class="q-px-sm q-pt-xs">
+                  <!-- Nama produk -->
+                  <q-skeleton type="text" height="20px" />
+                  <q-skeleton type="text" height="20px" />
+                  <!-- Harga Produk -->
+                  <q-skeleton type="text" width="90px" height="22px" />
+                  <!-- Location -->
+                  <q-skeleton type="text" width="60px" height="18px" />
+                </div>
+              </q-card>
+            </div>
+          </div>
+        </div>
+
+        <div v-else>
+          <div class="text-caption q-py-sm">Untuk kamu hari ini</div>
+          <div class="row">
+            <div class="col-6" v-for="product in products" :key="product.id">
+              <q-card
+                class="q-pb-md q-mx-sm q-my-sm"
+                @click="$router.push(`/marketplace-detail/${product.id}`)"
               >
-                {{ product.tittle }}
-              </div>
-              <div
-                class="text-caption text-weight-regular q-pl-xs"
-                style="color: #c5c5c5"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(product.price)
-                }}
-              </div>
-              <div
-                class="text-subtitle2 text-weight-medium q-pl-xs"
-                style="color: #161952"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(product.price)
-                }}
-              </div>
-              <div class="text-caption q-pl-xs">
-                <q-icon name="fas fa-map-marker-alt" color="red" />{{ product.shop.user.home_address }}
-              </div>
-            </q-card>
+                <img
+                  v-if="product.images.length"
+                  class="bg-red"
+                  :src="STORAGE_URL + `/` + product.images[0].src"
+                  style="height: 150px"
+                />
+
+                <img v-else class="bg-red" style="height: 150px" />
+                <div
+                  class="text-caption text-weight-medium q-pl-xs"
+                  style="color: #5f5f5f"
+                >
+                  {{ product.tittle }}
+                </div>
+                <div
+                  class="text-subtitle2 text-weight-medium q-pl-xs"
+                  style="color: #161952"
+                >
+                  {{
+                    new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(product.price)
+                  }}
+                </div>
+                <div class="text-caption q-pl-xs">
+                  <q-icon name="fas fa-map-marker-alt" color="red" />{{
+                    product.shop.user.home_address
+                  }}
+                </div>
+              </q-card>
+            </div>
           </div>
         </div>
 
@@ -91,7 +142,7 @@
         <q-dialog v-model="dialogWelcome" persistent>
           <q-card class="full-width">
             <!-- Gif Warning -->
-            <div class="row justify-center">
+            <div class="justify-center full-width">
               <div class="row justify-center q-pt-sm">
                 <q-img
                   no-spinner
@@ -101,7 +152,7 @@
               </div>
 
               <div
-                class="row q-px-md text-weight-medium q-pt-md"
+                class="row text-weight-medium q-pt-md justify-center"
                 style="color: #393939; font-size: 17px"
               >
                 SELAMAT DATANG DI MARKETPLACE
@@ -118,7 +169,7 @@
 
             <!-- Button confirm -->
             <div class="row justify-end q-pa-md">
-              <q-btn dense flat no-caps v-close-popup @click="dialogWhatsapp = true">
+              <q-btn dense flat no-caps v-close-popup @click="openDialogWA()">
                 <div
                   class="text-weight-bold"
                   style="color: #393939; font-size: 14px"
@@ -134,7 +185,7 @@
         <q-dialog v-model="dialogWhatsapp" persistent>
           <q-card class="full-width">
             <!-- Gif Warning -->
-            <div class="row justify-center">
+            <div class="justify-center">
               <div class="row justify-center q-pt-sm">
                 <q-img
                   no-spinner
@@ -144,7 +195,7 @@
               </div>
 
               <div
-                class="row q-px-md text-weight-medium q-pt-md"
+                class="row q-px-md text-weight-medium q-pt-md justify-center"
                 style="color: #393939; font-size: 17px"
               >
                 MASUKAN NOMOR WHATSAPP
@@ -170,7 +221,13 @@
                 </div>
               </q-btn>
               <!-- Button Input wa -->
-              <q-btn dense flat no-caps class="q-ml-sm" @click="$router.push('/marketplace-input-whatsapp')">
+              <q-btn
+                dense
+                flat
+                no-caps
+                class="q-ml-sm"
+                @click="$router.push('/marketplace-input-whatsapp')"
+              >
                 <div
                   class="text-weight-bold"
                   style="color: #393939; font-size: 14px"
@@ -186,7 +243,7 @@
         <q-dialog v-model="dialogAfterInputWhatsapp" persistent>
           <q-card class="full-width">
             <!-- Gif Warning -->
-            <div class="row justify-center">
+            <div class="justify-center">
               <div class="row justify-center q-pt-sm">
                 <q-img
                   no-spinner
@@ -196,16 +253,17 @@
               </div>
 
               <div
-                class="row q-px-md text-weight-medium q-pt-md"
+                class="row q-px-md text-weight-medium q-pt-md justify-center"
                 style="color: #393939; font-size: 17px"
               >
-                NOMOR TELAH DITAMBAHKAN 
+                NOMOR TELAH DITAMBAHKAN
               </div>
               <div
                 class="row q-px-sm text-weight-medium text-center q-pt-md"
                 style="color: #747474; font-size: 12px"
               >
-                Nomor Whatsapp kamu berhasil di tambahkan. jika kamu mau merubahnya bisa akses di menu nomor Whatsapp.
+                Nomor Whatsapp kamu berhasil di tambahkan. jika kamu mau
+                merubahnya bisa akses di menu nomor Whatsapp.
               </div>
             </div>
 
@@ -228,26 +286,64 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
+      isLoad: false,
       dialogWelcome: true,
       dialogWhatsapp: false,
       dialogAfterInputWhatsapp: false,
+      STORAGE_URL: STORAGE_URL,
       products: [],
-      STORAGE_URL: STORAGE_URL
+      products_temp: [],
+      search: "",
+      emptySearch: false,
     };
   },
-  mounted(){
-    this.getProducts()
+  mounted() {
+    this.getProducts();
   },
-  methods:{
-    getProducts(){
-      this.$store.dispatch("Product/index").then(res => {
-        this.products = res.data
-      })
-    }
-  }
+  methods: {
+    filterProducts(value) {
+      this.updateProducts(value);
+    },
+    updateProducts(cari) {
+      if (cari === "") {
+        this.products = this.products_temp;
+      }
+
+      const needle = cari.toLowerCase();
+      this.products = this.products_temp.filter(
+        (v) => v.tittle.toLowerCase().indexOf(needle) > -1
+      );
+    },
+    openDialogWA() {
+      if (!this.Auth.auth.contact_number) {
+        this.dialogWhatsapp = true;
+      }
+    },
+    getProducts() {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Product/index")
+          .then((res) => {
+            this.products = this.products_temp = res.data;
+            console.log("ini produk", res.data);
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
+    },
+  },
 };
 </script>
 

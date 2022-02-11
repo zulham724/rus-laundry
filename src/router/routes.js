@@ -126,6 +126,36 @@ const routes = [{
 },
 
 {
+    path: "/follow-marketplace",
+    component: () =>
+        import("pages/FollowMarketplace.vue")
+},
+
+{
+    path: "/followers-marketplace",
+    component: () =>
+        import("pages/FollowersMarketplace.vue")
+},
+
+{
+    path: "/change-no-whatsapp",
+    component: () =>
+        import("pages/ChangeNoWhatsApp.vue")
+},
+
+{
+    path: "/change-no-whatsapp2",
+    component: () =>
+        import("pages/ChangeNoWhatsApp2.vue")
+},
+
+{
+    path: "/change-no-whatsapp3",
+    component: () =>
+        import("pages/ChangeNoWhatsApp3.vue")
+},
+
+{
     path: "/tagar",
     component: () =>
         import("pages/Tagar.vue")
@@ -551,6 +581,11 @@ const routes = [{
         import("pages/marketplace-detail-galery.vue"),
 },
 {
+    path: "/marketplace-confirm-photo",
+    component: () =>
+        import("pages/marketplace-confirm-photo.vue"),
+},
+{
     path: "/marketplace-add-product",
     component: () =>
         import("pages/marketplace-add-product.vue"),
@@ -569,6 +604,21 @@ const routes = [{
     path: "/marketplace-add-product-item",
     component: () =>
         import("pages/marketplace-add-product-item.vue"),
+},
+{
+  path: "/marketplace-add-product-edit",
+  component: () =>
+    import("pages/marketplace-add-product-edit.vue"),
+},
+{
+    path: "/marketplace-product-liked",
+    component: () =>
+        import("pages/marketplace-product-liked.vue"),
+},
+{
+    path: "/marketplace-history-product",
+    component: () =>
+        import("pages/marketplace-history-product.vue"),
 },
 
 // Always leave this as last one,

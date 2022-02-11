@@ -2,7 +2,19 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-page-container style="background-color: #fafafa">
       <q-page>
-        <div class="row" style="height: 300px; width: 100vw; background-image: linear-gradient(to top left, #85D9DE, #70C7E2, #4CA6E5);">
+        <div
+          class="row"
+          style="
+            height: 300px;
+            width: 100vw;
+            background-image: linear-gradient(
+              to top left,
+              #85d9de,
+              #70c7e2,
+              #4ca6e5
+            );
+          "
+        >
           <q-img
             no-spinner
             class="fixed"
@@ -13,7 +25,9 @@
               margin-right: auto;
             "
             src="~/assets/bg-buat-pesanan.svg"
-          />
+          >
+            
+          </q-img>
         </div>
 
         <div
@@ -317,8 +331,8 @@ export default {
       this.employee = employee;
     },
     saveOrder() {
-      this.order.customer_id = this.customer.id
-      this.order.employee_id = this.employee.id
+      this.order.customer_id = this.customer.id;
+      this.order.employee_id = this.employee.id;
       this.$store.commit("Orders/set_order", { order: this.order });
       this.$router.push("/list-type-of-clothes");
     },
@@ -349,14 +363,16 @@ export default {
       this.updateCustomer(val);
     },
     getEmployees() {
-      this.$store.dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id).then((res) => {
-        this.employees = this.employees_temp = res.data.map((item) => {
-          return {
-            name: item.name,
-            id: item.id,
-          };
+      this.$store
+        .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.employees = this.employees_temp = res.data.map((item) => {
+            return {
+              name: item.name,
+              id: item.id,
+            };
+          });
         });
-      });
     },
     updateEmployee(val) {
       if (val === "") {

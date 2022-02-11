@@ -66,7 +66,8 @@ const actions = {
   },
   like({ commit }, id) {
     return new Promise((resolve, reject) => {
-      api.get(`/api/slave/post/${id}/like`).then(res => {
+      api.get(`/api/slave/post/${id}/like`)
+      .then(res => {
         resolve(res)
       }).catch(err => {
         reject(err)
@@ -79,7 +80,8 @@ const actions = {
         _method: "delete"
       };
 
-      api.get(`/api/slave/post/${id}/dislike`).then(res => {
+      api.get(`/api/slave/post/${id}/dislike`)
+      .then(res => {
         resolve(res)
       }).catch(err => {
         reject(err)

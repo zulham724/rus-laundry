@@ -65,7 +65,7 @@
                       class="text-caption text-weight-medium q-pl-xs"
                       style="color: #5f5f5f"
                     >
-                      Detergen Rinso anti Belanda Murah
+                      Detergen Rinso anti dosa Murah
                     </div>
                     <div
                       class="text-caption text-weight-regular q-pl-xs"
@@ -400,7 +400,7 @@
                 </div>
                 <div class="col-7 q-pl-md">
                   <div class="column">
-                    <div class="text-subtitle2">Puan Laundry</div>
+                    <div class="text-subtitle2">Cuan Laundry</div>
                     <div class="text-caption">
                       <q-icon name="fas fa-map-marker-alt" color="red" />Kota
                       Kita
@@ -425,23 +425,26 @@
             <div class="row justify-center text-weight-medium">Filter</div>
 
             <div class="row text-weight-medium" style="color: #393939; font-size: 17px">urutkan berdasarkan</div>
-            <div class="row full-width">
-            <div class="col-2">
-              <q-btn dense no-caps style="border-radius: 10px">
+            <div class="row  full-width">
+            <div class="col-2 q-pb-xl q-ml-md">
+              <q-btn dense no-caps style="width: 73px; border-radius: 10px">
                 <div class="text-weight-bold" style="font-size: 12px">semua</div>
               </q-btn>
             </div>
-            <div class="col-5 justify-center bg-red">
-              <q-btn dense no-caps style="border-radius: 10px">
+            <div class="col-4 q-ml-lg">
+              <q-btn dense no-caps class="bg-red" style=" width: 150px; border-radius: 10px">
                 <div class="text-weight-bold" style="font-size: 12px">harga: termurah</div>
               </q-btn>
             </div>
-            <div class="col-5 justify-center">
+            <div class="col-5">
               <q-btn no-caps dense style="border-radius: 10px">
-                <div class="text-weight-bold" style="font-size: 12px">harga: termahal</div>
+                <div class="text-weight-bold" style="width: 130px; font-size: 12px">harga: termahal</div>
               </q-btn>
             </div>
               
+              <div class="column text-weight-medium col-12" style="color: #393939; font-size: 17px">Batas Harga</div>
+              <q-input style=" border: 1px solid #D3D3D3; border-radius: 5px;" borderless color="grey" class="col-3" label="Harga Min"></q-input>
+              <q-input style=" border: 1px solid #D3D3D3; border-radius: 5px;" borderless color="grey" class="text-align-center q-ml-lg col-3" label="Harga Max"></q-input>
             </div>
           </q-card>
         </q-dialog>
@@ -464,7 +467,7 @@ export default {
 <style>
 </style>
 
-
+-----------------------------------------------------------------------------------------------------------
 
 <!-- <div class="text-caption q-mb-md text-center">filter</div>
             <div class="text-subtitle2">urutkan berdasarkan</div>

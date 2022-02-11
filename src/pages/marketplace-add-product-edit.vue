@@ -9,9 +9,9 @@
         <q-toolbar-title
           class="text-left text-weight-medium text-body1"
           style="color: #484848"
-          >tambah produk
+          >edit produk
         </q-toolbar-title>
-        <q-btn flat no-caps class="text-indigo-10" @click="store()">Tampilkan</q-btn>
+        <q-btn flat no-caps class="text-indigo-10" @click="store()">Simpan</q-btn>
       </q-toolbar>
       <q-dialog v-model="confirm" persistent>
       <q-card>
@@ -85,7 +85,7 @@
                       (val) =>
                         (val && val.length > 0) || 'Please type something',
                     ]"
-            v-model="product.tittle"
+            v-model="text_product_tittle"
             placeholder="Masukkan nama produk"
           />
         </div>
@@ -202,7 +202,17 @@ export default {
       confirm: false,
     };
   },
+
+  mounted(){
+      this.text_product_tittle = this.product.tittle
+  },
+
   methods: {
+    getProducts() {
+      this.$store.dispatch("Product/getProductByShop").then((res) => {
+        this.products = this.products_temp = res.data;
+      });
+    },
     openMedia() {
       this.$refs.addImages.pickFiles();
     },

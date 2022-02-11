@@ -1,91 +1,131 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-layout style="background-color: #fafafa">
-    <q-header style="background-color: #ffffff" class="q-pb-md">
-      <!-- <q-pull-to-refresh @refresh = "refresh" > -->
-      <div class="row q-pa-md self-center bg-white">
-        <div
-          class="col-5 text-weight-medium self-center"
-          style="color: #3a3838; font-size: 20px"
-        >
-          Postingan
-        </div>
-        <div class="col-5">
-          <q-btn flat dense no-caps @click="$router.push('/make-post')">
-            <div
-              class="row justify-center q-px-sm q-py-xs"
-              style="background-color: #f5f7f9; border-radius: 10px"
-            >
-              <q-icon
-                class="self-center"
-                name="far fa-image"
-                size="15px"
-                style="color: #000000"
-              />
+    <div class="fixed-top bg-white" style="z-index: 999">
+      <q-header style="background-color: #ffffff" class="q-pb-md">
+        <div class="row q-pa-md self-center bg-white">
+          <div
+            class="col-5 text-weight-medium self-center"
+            style="color: #3a3838; font-size: 20px"
+          >
+            Postingan
+          </div>
+          <div class="col-5">
+            <q-btn flat dense no-caps @click="$router.push('/make-post')">
               <div
-                class="text-weight-medium q-pl-sm"
-                style="font-size: 14px; color: #3a3838"
+                class="row justify-center q-px-sm q-py-xs"
+                style="background-color: #f5f7f9; border-radius: 10px"
               >
-                Buat postingan
+                <q-icon
+                  class="self-center"
+                  name="far fa-image"
+                  size="15px"
+                  style="color: #000000"
+                />
+                <div
+                  class="text-weight-medium q-pl-sm"
+                  style="font-size: 14px; color: #3a3838"
+                >
+                  Buat postingan
+                </div>
               </div>
-            </div>
-          </q-btn>
+            </q-btn>
+          </div>
+          <div class="col-1 text-center self-center">
+            <q-btn dense round flat @click="$router.push('/notification')">
+              <q-icon
+                name="far fa-bell"
+                sizes="20px"
+                style="color: #888888"
+              ></q-icon>
+            </q-btn>
+          </div>
+          <div class="col-1 text-center q-pr-xs self-center">
+            <q-avatar
+              size="35px"
+              style="background-color: #888888"
+              @click="$router.push('/myprofile')"
+            >
+              <q-img no-spinner src="~/assets/Avatar.png"></q-img>
+            </q-avatar>
+          </div>
         </div>
-        <div class="col-1 text-center self-center">
-          <q-btn dense round flat @click="$router.push('/notification')">
-            <q-icon
-              name="far fa-bell"
-              sizes="20px"
-              style="color: #888888"
-            ></q-icon>
-          </q-btn>
+        <div class="row q-px-md">
+          <!-- Search -->
+          <q-input
+            @click="$router.push('/search')"
+            dense
+            class="q-ml-sm full-width"
+            type="search"
+            rounded
+            outlined
+            v-model="search"
+            label="Cari"
+          >
+            <template v-slot:prepend>
+              <q-icon
+                name="search"
+                class="self-center"
+                size="25px"
+                color="grey"
+              />
+            </template>
+          </q-input>
         </div>
-        <div class="col-1 text-center q-pr-xs self-center">
-          <q-avatar size="35px" style="background-color: #888888" @click="$router.push('/myprofile')">
-            <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-          </q-avatar>
-        </div>
-      </div>
-      <div class="row q-px-md">
-        <!-- Search -->
-        <q-input
-        @click="$router.push('/search')"
-          dense
-          class="q-ml-sm full-width"
-          type="search"
-          rounded
-          outlined
-          v-model="search"
-          label="Cari"
-        >
-          <template v-slot:prepend>
-            <q-icon
-              name="search"
-              class="self-center"
-              size="25px"
-              color="grey"
-            />
-          </template>
-        </q-input>
-      </div>
-      <!-- </q-pull-to-refresh>  -->
-    </q-header>
+      </q-header>
+    </div>
     <q-page-container>
       <q-page class="q-mt-sm bg-white">
-        <q-infinite-scroll @load="onLoad" :offset="250">
-          <!-- Postingan -->
-          <q-intersection
-            :ref="`intersection_${post.id}`"
-            v-for="post in Post.posts.data"
-            :key="post.id"
-            :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
-          >
-            <item-post-component
-              v-on:update-height="updateHeight(post)"
-              :post="post"
-              :style="`position:relative;height:100%`"
-            ></item-post-component>
-          </q-intersection>
-        </q-infinite-scroll>
+        <q-pull-to-refresh @refresh="refresh">
+          <!-- Skeleton -->
+          <div v-if="isLoad">
+            <q-card class="q-pb-lg" v-for="n in 9" :key="n">
+              <q-item class="q-pa-none">
+                <!-- Avatar -->
+                <q-card-section avatar>
+                  <q-skeleton type="QAvatar" size="60px" />
+                </q-card-section>
+
+                <q-item-section>
+                  <q-item-label>
+                    <q-skeleton type="text" width="150px" height="25px" />
+                  </q-item-label>
+                  <q-item-label caption>
+                    <q-skeleton type="text" width="100px" />
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <!-- Isi post -->
+              <q-item-section class="q-px-md q-py-sm">
+                <q-item-label>
+                  <q-skeleton type="text" />
+                  <q-skeleton type="text" />
+                  <q-skeleton type="text" />
+                </q-item-label>
+              </q-item-section>
+
+              <q-skeleton height="350px" square class="q-mx-md q-m" />
+            </q-card>
+          </div>
+
+          <div v-else>
+            <q-infinite-scroll @load="onLoad" :offset="250">
+              <!-- Postingan -->
+              <q-intersection
+                :ref="`intersection_${post.id}`"
+                v-for="post in Post.posts.data"
+                :key="post.id"
+                :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+              >
+                <item-post-component
+                  v-on:update-height="updateHeight(post)"
+                  :post="post"
+                  :style="`position:relative;height:100%`"
+                ></item-post-component>
+              </q-intersection>
+            </q-infinite-scroll>
+          </div>
+        </q-pull-to-refresh>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -98,13 +138,14 @@ export default {
   name: "PostPage",
   include: ["PostPage"],
   components: {
-    "item-post-component": PostCardComponent, 
+    "item-post-component": PostCardComponent,
   },
-  computed:{
+  computed: {
     ...mapState(["Post"]),
   },
   data() {
     return {
+      isLoad: false,
       tab: "postingan",
       posts: {},
       search: "",
@@ -113,13 +154,25 @@ export default {
   mounted() {
     this.getAllPosts();
   },
-  created(){
+  created() {
     if (!this.Post.posts.data) this.$store.dispatch("Post/index");
   },
   methods: {
     getAllPosts() {
-      this.$store.dispatch("Post/index").then((res) => {
-        this.posts = res.data;
+      return new Promise((resolve, reject) => {
+        (this.isLoad = true),
+          this.$store
+            .dispatch("Post/index")
+            .then((res) => {
+              this.posts = res.data;
+              console.log("ini data post", res.data);
+            })
+            .catch((err) => {
+              reject(err);
+            })
+            .finally(() => {
+              this.isLoad = false;
+            });
       });
     },
     getItemPostHeight(post) {
@@ -137,11 +190,18 @@ export default {
       console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
       // alert(post.size.height)
     },
-    onLoad(index, done){
-      this.Post.posts.next_page_url ? this.$store.dispatch("Post/next").then(res => {
-        done()
-      }) : done();
-    }
+    onLoad(index, done) {
+      this.Post.posts.next_page_url
+        ? this.$store.dispatch("Post/next").then((res) => {
+            done();
+          })
+        : done();
+    },
+    refresh(done) {
+      this.getAllPosts().then((res) => {
+        if (done) done();
+      });
+    },
   },
 };
 </script>

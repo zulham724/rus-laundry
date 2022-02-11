@@ -2,7 +2,7 @@
   <q-layout class="mbl">
     <q-header class="text-center shadow-1">
       <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.push('/marketplace-input-whatsapp')">
+        <q-btn flat round @click="$router.push('/change-no-whatsapp2')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
           </q-avatar>
         </q-btn>
@@ -92,7 +92,7 @@
               class="text-weight-regular"
               style="color: white; font-size: 15px"
             >
-              Simpan
+              Konfirmasi
             </div>
           </q-btn>
         </div>

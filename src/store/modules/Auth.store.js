@@ -17,6 +17,9 @@ const mutations = {
     },
     set_auth(state, payload){
         state.auth = payload.auth
+    },
+    update_phone_number(state, payload){
+        state.auth.contact_number = payload.contact_number
     }
 };
 
@@ -51,6 +54,16 @@ const actions = {
             commit("logout");
             delete api.defaults.headers.common.Authorization;
             resolve();
+        })
+    },
+    addWANumber({ commit }, contact_number){
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/inputnumberphone`, contact_number).then(res => {
+                commit('update_phone_number', {contact_number: contact_number});
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
         })
     }
 };

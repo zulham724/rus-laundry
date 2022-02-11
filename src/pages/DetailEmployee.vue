@@ -17,7 +17,7 @@
 
         <q-dialog v-model="dialogDelete">
           <q-card style="width: 300px">
-            <q-card-section>
+            *<q-card-section>
               <div class="text-weight-bold text-left" style="font-size: 15px">
                 Hapus data
               </div>

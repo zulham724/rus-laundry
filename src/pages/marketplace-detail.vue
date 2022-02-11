@@ -2,71 +2,47 @@
   <q-layout class="mbl">
     <q-page-container>
       <q-page v-if="product">
-        <q-carousel animated v-model="slide" arrows navigation infinite>
+        <q-carousel animated v-model="slide" arrows navigation>
           <q-carousel-slide
-            :name="1"
-            img-src="https://cdn.quasar.dev/img/mountains.jpg"
-          />
-          <q-carousel-slide
-            :name="2"
-            img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-          />
-          <q-carousel-slide
-            :name="3"
-            img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
-          <q-carousel-slide
-            :name="4"
-            img-src="https://cdn.quasar.dev/img/quasar.jpg"
+            v-for="(image, i) in product.images"
+            :key="image.id"
+            :name="i"
+            :img-src="STORAGE_URL + `/` + image.src"
           />
         </q-carousel>
         <q-btn
           @click="$router.back()"
           round
           dense
-          class="absolute-top-left q-mt-md q-ml-md"
+          class="absolute-top-left q-mt-md q-ml-md bg-blue-6"
           style="background-color: RGB(0, 0, 50%)"
           size="15px"
         >
           <q-icon color="white" name="fas fa-arrow-left" />
         </q-btn>
-        <label style="font-family: roboto; font-size: 23px" class="q-pl-sm"
-          >Rp 2.000.000</label
-        >
+        <label style="font-family: roboto; font-size: 23px" class="q-pl-sm">
+          {{
+            new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(product.price)
+          }}
+        </label>
         <div class="float-right q-mt-xs">
-          <q-btn size="12px" dense flat
-            ><q-icon style="color: #6a6a6a" name="far fa-heart"
-          /></q-btn>
+          <q-btn
+            size="16px"
+            dense
+            round
+            flat
+            :color="product.liked_count ? 'red' : 'grey'"
+            :icon="product.liked_count ? 'favorite' : 'favorite_border'"
+            @click="product.liked_count ? dislike() : like()"
+          >
+          </q-btn>
           <q-btn class="q-ml-sm" dense flat
             ><Icon style="font-size: 20px; color: #6a6a6a" icon="cil:share"
           /></q-btn>
         </div>
-        <div class="q-pb-xs">
-          <label
-            class="q-py-xs q-px-xs q-mx-sm"
-            style="
-              font-size: 8px;
-              background: rgba(211, 35, 204, 0.63);
-              border-radius: 5px;
-              color: #ffffff;
-            "
-            for=""
-            >40%</label
-          >
-          <label
-            class=""
-            style="text-decoration: line-through; color: #cdcdcd"
-            for=""
-          >
-            {{
-              new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-              }).format(product.price)
-            }}
-          </label>
-        </div>
-        {{}}
         <div
           class="q-ml-sm text-subtitle2"
           style="font-size: 20px; color: #5f5f5f"
@@ -74,10 +50,18 @@
           {{ product.tittle }}
         </div>
         <div
+         v-if="!product.likes_count"
           class="text-caption q-ml-sm"
           style="font-size: 10px; color: #cdcdcd"
         >
-          2M orang suka
+          0 orang suka
+        </div>
+        <div
+          v-if="product.likes_count"
+          class="text-caption q-ml-sm"
+          style="font-size: 10px; color: #cdcdcd"
+        >
+          {{ product.likes_count }} orang suka
         </div>
         <q-separator class="q-mb-sm"> </q-separator>
         <div class="flex">
@@ -193,10 +177,12 @@
               @click="detailProduct(another_product.id)"
             >
               <img
+                v-if="another_product.images.length"
                 class="bg-red"
-                src="~/assets/jualan1.svg"
+                :src="STORAGE_URL + `/` + another_product.images[0].src"
                 style="height: 150px"
               />
+              <img v-else class="bg-red" style="height: 150px" />
               <div
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
@@ -230,6 +216,7 @@
         </div>
         <q-page-sticky position="bottom-right" :offset="[7, 10]">
           <q-btn
+            @click="submitMessage()"
             no-caps
             color="green"
             icon="fab fa-whatsapp"
@@ -249,45 +236,141 @@
 
 <script>
 import { Icon } from "@iconify/vue";
-import { ref } from "vue";
-
+import { mapState } from "vuex";
 export default {
   props: ["productid"],
+  computed: {
+    ...mapState(["Auth"]),
+  },
   components: {
     Icon,
   },
   data() {
     return {
-      slide: ref(1),
+      slide: 0,
       product: null,
       another_products: [],
+      STORAGE_URL: STORAGE_URL,
+      message: "",
+      order: {},
     };
   },
   mounted() {
-    this.getDetailProduct();
+    this.detailProduct(this.productid);
   },
   methods: {
-    getDetailProduct() {
-      this.$store.dispatch("Product/show", this.productid).then((res) => {
+    likeList(){
+      product.likes_count 
+    },
+    getRoutePath() {
+      let props = this.$router.resolve({
+        name: "UserInvoice",
+        params: { order_ref: this.order.order_ref },
+      });
+
+      return location.origin + props.href;
+    },
+    submitMessage() {
+      this.order.shop_id = this.product.shop.id;
+      this.order.customer_id = this.Auth.auth.id;
+      this.order.product_id = this.product.id;
+      this.order.quantity = 1;
+      this.order.total_price = this.product.price;
+
+      this.$store.dispatch("Orders/orderProduct", this.order).then((res) => {
+        let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
+          this.product.shop.user.contact_number
+        )}&text=${encodeURI(this.message)}`;
+        window.open(url, "_blank");
+      });
+    },
+    money(number) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(number);
+    },
+    formatPhoneNumber(number) {
+      let formatted = number.replace(/\D/g, "");
+
+      if (formatted.startsWith("0")) {
+        formatted = "+62" + formatted.substr(1);
+      }
+
+      return formatted;
+    },
+    // setPaymentMessage() {
+    //   let str = "Silahkan lakukan pembayaran ke nomor rekening berikut:\n\n";
+    //   if (this.banks.data.length) {
+    //     this.banks.data.forEach((el) => {
+    //       str += `*${el.bank_name} - ${el.bank_office}*\nNorek: ${el.account_number}\nA.n ${el.account_name}\n\n`;
+    //     });
+    //     return str;
+    //   } else {
+    //     return "";
+    //   }
+    // },
+    setTextMessage() {
+      if (this.order) {
+        let url = `${location.origin}/marketplace-detail/${this.product.id}`;
+        // if (this.order.order_status == "UNPAID") {
+        let tmp = `
+          Order via Whatsapp
+          \nNama Produk : ${this.product.tittle}
+          \nHarga : ${this.money(this.product.price)}
+          \nJumlah : ${1}
+          \nUrl : ${url}`;
+        // *\n\n${this.setPaymentMessage()}\nUntuk detail tagihan dapat dilihat di ${this.getRoutePath()}\n\nTerima Kasih
+        //  `;
+        this.message = tmp;
+        // } else {
+        //   let tmp = `Halo kak ${this.order.customer_name}\nkami dari *${
+        //     this.product.shop.name ? this.product.shop.name : "..."
+        //   }\n\n......\n\nTerima Kasih
+        //    `;
+        //   this.message = tmp;
+        // }
+      }
+    },
+    async getDetailProduct() {
+      await this.$store.dispatch("Product/show", this.productid).then((res) => {
         this.product = res.data;
         this.getAnotherProducts(res.data.shop.id);
-        this.$forceUpdate()
+        this.setTextMessage();
+        console.log("ini data produk", res.data);
       });
     },
     getAnotherProducts(id) {
       this.$store.dispatch("Product/getAnotherProducts", id).then((res) => {
         this.another_products = res.data;
-        this.$forceUpdate()
+        this.$forceUpdate();
       });
     },
-    detailProduct(id) {
+    async detailProduct(id) {
+      // console.log(this.productid);
       this.product = null;
       this.another_products = [];
-      this.$router.push(`/marketplace-detail/${id}`);
+      await this.$router.push(`/marketplace-detail/${id}`);
       this.$nextTick().then(() => {
-         this.getDetailProduct();
+        this.getDetailProduct();
       });
       this.$forceUpdate();
+    },
+    like() {
+      this.product.liked_count = 1;
+      this.$store.dispatch("Product/like", this.product.id).then((res) => {
+        this.product.liked_count = res.data.liked_count;
+        this.product.likes_count = res.data.likes_count;
+        this.$forceUpdate();
+      });
+    },
+    dislike() {
+      this.product.liked_count = 0;
+      this.$store.dispatch("Product/dislike", this.product.id).then((res) => {
+        this.product.liked_count = res.data.liked_count;
+        this.product.likes_count = res.data.likes_count;
+        this.$forceUpdate();
+      });
     },
   },
 };

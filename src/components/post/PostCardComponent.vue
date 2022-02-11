@@ -62,7 +62,7 @@
         </div>
       </div>
       <!-- Isi video/foto -->
-      <div class="full-width full-height q-py-xs q-px-md">
+      <div class="full-width full-height q-py-xs q-px-md mbl-child">
         <div v-if="post.files.length">
           <q-carousel
             v-model="slide"
@@ -152,7 +152,7 @@
       <!-- Button show comment -->
       <div
         v-if="post.comments_count > 0"
-        @click="$router.push('/comment-of-post')"
+        @click="$router.push('/post/${post.id}/comment-of-post')"
         class="text-weight-regular q-px-md"
         style="color: #b1b1b1; font-size: 10px"
       >
@@ -165,13 +165,13 @@
           class="text-weight-regular self-center"
           style="font-size: 12px; color: #3a3838"
         >
-          {{ post.comments[post.comments.length -1].user.name }}
+          {{ post.comments[post.comments.length - 1].user.name }}
         </div>
         <div
           class="text-weight-regular self-center q-pl-sm"
           style="color: #b1b1b1; font-size: 10px"
         >
-          {{ post.comments[post.comments.length -1].value }}
+          {{ post.comments[post.comments.length - 1].value }}
         </div>
       </div>
     </div>
@@ -352,10 +352,10 @@ export default {
     ...mapState(["Auth"]),
   },
   data() {
-    return {
+    return {      
       slide: 0,
       dialogOption: false,
-      dialogShare:false,
+      dialogShare: false,
       readMoreActivated: false,
       storageUrl: STORAGE_URL,
     };

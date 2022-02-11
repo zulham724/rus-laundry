@@ -249,6 +249,19 @@ const actions = {
                 });
         });
     },
+    orderProduct({ commit }, formData){
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/slave/orderproduct`, formData)
+                .then((res) => {
+
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
     filterOrdersIn({
         commit
     }, payload) {
@@ -383,16 +396,6 @@ const actions = {
             })
         })
     },
-    // test({commit, state}){
-    //     return new Promise((resolve. reject) => {
-    //         api.get(`${state.data.next_page_url}`).then(res => {
-    //             commit("test", { dataM: res.data })
-    //             resolve(res)
-    //         }).catch(err => {
-    //             reject(err)
-    //         })
-    //     })
-    // },
     countProfitOrdersByDay({
         commit
     }, shopId) {

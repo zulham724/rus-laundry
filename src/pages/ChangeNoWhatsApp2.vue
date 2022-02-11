@@ -2,7 +2,7 @@
   <q-layout class="mbl">
     <q-header class="text-center shadow-1">
       <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.push('/marketplace-home')">
+        <q-btn flat round @click="$router.push('/change-no-whatsapp')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
           </q-avatar>
         </q-btn>
@@ -16,12 +16,41 @@
     <q-page-container>
       <q-page class="q-pa-lg">
         <div
-          class="text-weight-bold q-py-sm"
+          class="text-weight-bold q-py-sm q-pb-lg"
           style="color: #747474; font-size: 16px"
         >
-          Belum ada nomor WhatsApp <br />tambah nomor baru
+          Ganti Nomor Whatsapp <br />anda
         </div>
 
+        <!-- No WhatsApp lama -->
+        <div class="row q-py-md">
+          <q-form ref="form" class="row full-width">
+            <!-- Phone Code of Country -->
+            <div class="col-2">
+              <q-select
+                dense
+                v-model="model"
+                :options="options"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Pilih kode negara',
+                ]"
+              />
+            </div>
+            <!-- Phone number -->
+            <div class="col-10 q-pl-md">
+              <q-input
+                dense
+                v-model="contact"
+                placeholder="Masukan nomor wa lama"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Masukkan No. Hp anda',
+                ]"
+              />
+            </div>
+          </q-form>
+        </div>
+
+        <!-- No WhatsApp Baru -->
         <div class="row q-py-md">
           <q-form ref="form" class="row full-width">
             <!-- Phone Code of Country -->
@@ -52,7 +81,6 @@
         <!-- Button save -->
         <div class="row q-pt-xl">
           <q-btn
-            @click="inputWA()"
             no-caps
             class="q-pa-md full-width"
             style="background-color: #9b27f1; border-radius: 10px"
@@ -61,7 +89,7 @@
               class="text-weight-regular"
               style="color: white; font-size: 15px"
             >
-              Simpan
+              Ubah
             </div>
           </q-btn>
         </div>
@@ -71,6 +99,8 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   data() {
     return {
@@ -78,19 +108,6 @@ export default {
       contact: null,
       options: ["+62"],
     };
-  },
-  methods: {
-    inputWA() {
-      this.$refs.form.validate().then((success) => {
-        if(success){
-          this.$store.dispatch("Auth/addWANumber", {contact_number: this.model+this.contact}).then(res => {
-            this.$router.back()
-          })
-        }else{
-          this.$q.notify("kesalahan")
-        }
-      })
-    },
   },
 };
 </script>

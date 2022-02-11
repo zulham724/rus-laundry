@@ -26,6 +26,7 @@ p proses
 + Mengedit pelanggan {iqbal}
 + Menambah pelanggan {iqbal}
 + halaman detail pesanan kondisi if untuk memunculkan tampilan setelah request hanya berlaku di list saja, header tetap muncul sebelum request, jadi load time page lebih cepat {iqbal}
++ di halaman detail pesanan fitur share bisa copas link {iqbal}
 
 + buat semua gambar no-spinner {bryan}
 + Menambah Pesanan {rian}
@@ -52,19 +53,19 @@ p proses
 + halaman tambah jenis pakaian tombol tambah di buat fixed {rian}
 p halaman list jenis pakaian diberi slide item untuk edit
 + halaman paket tombol tambah di buat fixed {rian}
-- halaman list paket diberi slide item untuk edit
++ halaman list paket diberi slide item untuk edit {aryo}
 + halaman list jenis pakaian bisa untuk cari berdasarkan nama dan satuan {rian}
 + halaman list paket bisa untuk cari berdasarkan nama dan satuan {rian}
 + halaman list jenis pakaian bisa untuk fiter terbaru terlama, abjad {rian}
 + halaman list paket bisa untuk filter terbaru terlama, abjad {pak azwar}
-- halaman income menu tiap harian mingguan bulanan dan custom belum benar
++ halaman income menu tiap harian mingguan bulanan dan custom belum benar {aryo}
 + halaman home bisa untuk mencari berdasarkan nama pelanggan, id pesanan   {rian}
 p halaman home bisa untuk filter pesanan tanggal masuk dan tanggal keluar berdasarkan hari, minggu, bulan, tahun
 - config.xml diberi tambahan permission calendar dan camera
 - buat boot untuk check permission
 - buat axios diberi interceptor untuk mengecek access_token berlaku atau tidak, kalau tidak berlaku buat request untuk ambil access_token yang baru
 + halaman home pada component header dibuat menyesuaikan jam pagi siang sore dan malam {aryo}
-- halaman income dibuat backend nya pagination dan diberi infinity scroll
++ halaman income dibuat backend nya pagination dan diberi infinity scroll {aryo}
 - pada saat menambahkan pesanan masukan pengingat kalender di H-1 pesanan selesai
 - di halaman income diberi grafik statistik
 p di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, instagram, telegram
@@ -74,3 +75,8 @@ p di halaman detail pesanan fitur share bisa copas link, share ke whatsapp, inst
 - diberi interceptor kalau masa paket habis auto keluar dan tidak bisa masuk, jika masuk/login diberi notify masa paket habis
 - halaman laporan transaksi belum ada tampilan jika data kosong
 + dihalaman pesanan waktu konfirmasi pesanan masih belum bisa {rian}
++ fungsi hapus produk pada halaman marketplace add product {iqbal}
+p saat hapus product muncul alert untuk konfirmasi hapus
+- fungsi edit produk pada halaman marketplace add product
++ jumlah like pada halaman detail produk masih statis {aryo}
++ di halaman marketplace add product ketika produk di klik belum ke redirect ke halaman detail product{aryo}

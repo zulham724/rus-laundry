@@ -14,7 +14,27 @@
             src="~/assets/bg-add-item.svg"
             class="fixed-top mbl-child"
 
-          />
+          >
+            <div class="bg-transparent row">
+              <q-btn
+              dense
+              round
+                @click="$router.push('/menu')"
+                no-caps
+                class="q-pa-sm"
+                flat
+                style="color: white"
+              >
+                <q-icon
+                  size="25px"
+                  name="fas fa-arrow-left"
+                  style="color: #888888"
+                >
+                </q-icon>
+              </q-btn>
+              <div class="text-weight-bold q-pl-sm self-center" style="color: #888888; font-size: 20px">Kategori</div>
+            </div>
+          </q-img>
         </div>
 
         <div
