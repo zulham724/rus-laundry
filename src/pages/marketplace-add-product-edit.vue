@@ -11,21 +11,39 @@
           style="color: #484848"
           >edit produk
         </q-toolbar-title>
-        <q-btn flat no-caps class="text-indigo-10" @click="store()">Simpan</q-btn>
+        <q-btn flat no-caps class="text-indigo-10" @click="update()"
+          >Simpan</q-btn
+        >
       </q-toolbar>
       <q-dialog v-model="confirm" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <div class="text-h6">Yakin ingin keluar ?</div>
-          <span class="q-ml-sm">keluar akan menghapus produk ini</span>
-        </q-card-section>
+        <q-card>
+          <q-card-section class="row items-center">
+            <div class="text-h6">Yakin ingin keluar ?</div>
+            <span class="q-ml-sm">keluar akan menghapus produk ini</span>
+          </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn flat no-caps dense label="keluar" style="background-color:#9B27F1" color="white" v-close-popup />
-          <q-btn flat no-caps dense label="batal" color="black" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+          <q-card-actions align="right">
+            <q-btn
+              flat
+              no-caps
+              dense
+              label="keluar"
+              style="background-color: #9b27f1"
+              color="white"
+              @click="$router.push('/marketplace-add-product')"
+              v-close-popup
+            />
+            <q-btn
+              flat
+              no-caps
+              dense
+              label="batal"
+              color="black"
+              v-close-popup
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </q-header>
     <q-page-container>
       <q-page class="q-pa-sm">
@@ -39,7 +57,7 @@
                   height: 150px;
                   background-color: #d0d1dc;
                   border-radius: 10px;
-                  margin-left:12px;
+                  margin-left: 12px;
                 "
               >
                 tambah foto
@@ -77,14 +95,14 @@
             </div>
           </div>
           <q-input
+            :disable="Loading"
             class="q-ml-md q-mt-sm"
             style="width: 95%"
             outlined
             lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || 'Please type something',
-                    ]"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
             v-model="text_product_tittle"
             placeholder="Masukkan nama produk"
           />
@@ -100,16 +118,16 @@
             </div>
           </div>
           <q-input
+            :disable="Loading"
             type="number"
             class="q-ml-md q-mt-sm"
             style="width: 95%"
             outlined
             lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || 'Please type something',
-                    ]"
-            v-model.number="product.price"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+            v-model="text_product_price"
             placeholder="Masukkan harga produk"
           />
         </div>
@@ -124,17 +142,17 @@
             </div>
           </div>
           <q-input
+            :disable="Loading"
             autogrow
             class="q-ml-md q-mt-sm"
             style="width: 95%"
             outlined
             lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || 'Please type something',
-                    ]"
-            v-model="product.description"
-            placeholder="Masukkan nama produk"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+            v-model="text_product_description"
+            placeholder="Masukkan Deskripsi produk"
           />
         </div>
         <div class="q-ml-lg q-mt-lg text-weight-medium">Detail Produk</div>
@@ -151,16 +169,16 @@
             </div>
           </div>
           <q-input
+          :disable="Loading"
             type="number"
             class="q-ml-md q-mt-sm"
             style="width: 95%"
             outlined
             lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || 'Please type something',
-                    ]"
-            v-model.number="product.weight"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+            v-model="text_product_weight"
             placeholder="Masukkan berat produk"
           />
         </div>
@@ -170,15 +188,13 @@
           </div>
         </div>
         <q-input
+        :disable="Loading"
           class="q-ml-md q-mt-sm"
           style="width: 95%"
           lazy-rules
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) || 'Please type something',
-                    ]"
+          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
-          v-model="is_new"
+          v-model="text_product_is_new"
           placeholder="Masukkan kondisi produk"
         />
       </q-page>
@@ -194,20 +210,72 @@
 
 <script>
 export default {
+  props: ["productid"],
+
   data() {
     return {
       product: {},
+      produk: null,
       images: [],
       is_new: null,
       confirm: false,
+      text_product_tittle: "",
+      text_product_price: "",
+      text_product_description: "",
+      text_product_weight: "",
+      text_product_is_new: "",
+      Loading: false,
     };
   },
 
-  mounted(){
-      this.text_product_tittle = this.product.tittle
+  mounted() {
+    this.getProduct();
+    
   },
 
   methods: {
+    update(reset){
+      this.Loading = true;
+      const payload = {
+        id: this.produk.id,
+        name: this.text_product_tittle, 
+        price: this.text_product_price,
+        description: this.text_product_description,
+        weight: this.text_product_weight,
+        is_new: this.text_product_is_new,
+      };
+      this.$store.dispatch("Product/updateProduct", payload)
+      .then((res) => {
+        this.Loading = true;
+        this.produk.tittle = res.data.tittle;
+        this.produk.price = res.data.price;
+        this.produk.description = res.data.description;
+        this.produk.weight = res.data.weight;
+        this.produk.is_new = res.data.is_new;
+        console.log("ini data setelah update", res.data);
+      })
+      .finally(() => {
+        this.Loading = false;
+      });
+    },
+    getProduct() {
+      this.Loading = true;
+      this.$store
+        .dispatch("Product/show", this.productid)
+        .then((res) => {
+          this.Loading = true;
+          this.produk = res.data;
+          console.log("ini detail produk", res.data);
+        })
+        .finally(() => {
+          this.text_product_tittle = this.produk.tittle;
+          this.text_product_price = this.produk.price;
+          this.text_product_description = this.produk.description;
+          this.text_product_weight = this.produk.weight;
+          this.text_product_is_new = this.produk.is_new;
+          this.Loading = false;
+        });
+    },
     getProducts() {
       this.$store.dispatch("Product/getProductByShop").then((res) => {
         this.products = this.products_temp = res.data;
@@ -236,17 +304,17 @@ export default {
       this.images.splice(index, 1);
     },
     store() {
-      if(this.is_new = "baru"){
-        this.product.is_new == 1
-      }else{
-        this.product.is_new == 0
+      if ((this.is_new = "baru")) {
+        this.product.is_new == 1;
+      } else {
+        this.product.is_new == 0;
       }
       let formData = this.jsonToFormData(this.product);
       this.$store.dispatch("Product/store", formData).then((res) => {
         this.$q.notify("Berhasil");
         this.product = {};
         this.images = [];
-        this.is_new = null
+        this.is_new = null;
       });
     },
 

@@ -76,7 +76,7 @@
     <q-page-container>
       <q-page>
         <q-list class="q-mt-md">
-          <q-item class="q-pb-md" clickable v-ripple>
+          <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/marketplace-add-product')">
             <q-item-section avatar>
               <img style="margin-left: -1px" src="~/assets/badge1.svg" />
             </q-item-section>
@@ -120,7 +120,7 @@
               >Baru-baru dilihat</q-item-section
             >
           </q-item>
-          <q-item class="q-pb-md" clickable v-ripple>
+          <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/marketplace-product-liked')">
             <q-item-section avatar>
               <q-icon color="black" name="fas fa-heart" />
             </q-item-section>

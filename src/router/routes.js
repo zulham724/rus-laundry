@@ -286,6 +286,12 @@ const routes = [{
 },
 
 {
+    path: "/profile-account-setting",
+    component: () =>
+        import("src/pages/profile-account-setting.vue"),
+},
+
+{
     path: "/filter-search",
     component: () =>
         import("src/pages/FilterSearch.vue"),
@@ -551,7 +557,7 @@ const routes = [{
     path: "/marketplace-detail/:productid",
     component: () =>
         import("src/pages/marketplace-detail.vue"),
-    props: true
+    props: true,
 },
 
 {
@@ -606,9 +612,10 @@ const routes = [{
         import("pages/marketplace-add-product-item.vue"),
 },
 {
-  path: "/marketplace-add-product-edit",
+  path: "/marketplace-add-product-edit/:productid",
   component: () =>
     import("pages/marketplace-add-product-edit.vue"),
+    props:true,
 },
 {
     path: "/marketplace-product-liked",

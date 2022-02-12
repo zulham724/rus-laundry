@@ -180,7 +180,7 @@ export default {
           .then((res) => {
             this.employees = this.employees_temp = res.data;
             resolve(res.data);
-            // console.log("ini employee", res.data)
+            console.log("ini employee", res.data)
           })
           .finally(() => {
             this.isLoad = false;

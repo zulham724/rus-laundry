@@ -206,7 +206,7 @@
             <q-card>
               <q-card-section>
                 <div class="text-weight-bold text-left" style="font-size: 16px">
-                  Hapus Pakaian
+                  Hapus Pakaian?
                 </div>
 
                 <div
@@ -228,7 +228,7 @@
                     text-color="grey-8"
                     style="width: 30px; background-color: white"
                   />
-                  <q-btn
+                  <q-btn  
                     v-close-popup
                     class="text-white"
                     no-caps

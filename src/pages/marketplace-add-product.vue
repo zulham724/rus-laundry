@@ -1,18 +1,20 @@
-<template>
+ <template>
   <q-layout class="mbl">
-    <q-header class="text-center shadow-1">
-      <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.back()">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
-          </q-avatar>
-        </q-btn>
-        <q-toolbar-title
-          class="text-left text-weight-medium"
-          style="color: #3a3838; font-size: 17px"
-          >Produk Anda
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
+    <div class="fixed-top" style="z-index: 999">
+      <q-header class="text-center shadow-1">
+        <q-toolbar class="bg-white">
+          <q-btn flat round @click="$router.back()">
+            <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
+            </q-avatar>
+          </q-btn>
+          <q-toolbar-title
+            class="text-left text-weight-medium"
+            style="color: #3a3838; font-size: 17px"
+            >Produk Anda
+          </q-toolbar-title>
+        </q-toolbar>
+      </q-header>
+    </div>
     <q-page-container>
       <q-page>
         <q-input
@@ -49,19 +51,47 @@
             label="Tambah Produk"
           ></q-btn>
         </div>
-        <div class="row q-mt-md">
+
+        <!-- Skeleton -->
+        <div v-if="isLoad">
+          <div v-for="n in 4" :key="n" class="row q-mt-md">
+            <div class="col-6 q-pa-sm">
+              <q-card class="full-width q-pa-md">
+                <!--Image -->
+                <q-skeleton height="150px" square />
+
+                <!-- Text nama barang -->
+                <q-skeleton type="text" />
+                <q-skeleton type="text" />
+                <q-skeleton type="text" width="100px" />
+                <q-skeleton type="text" width="80px" />
+              </q-card>
+            </div>
+            <div class="col-6 q-pa-sm">
+              <q-card class="full-width q-pa-md">
+                <!--Image -->
+                <q-skeleton height="150px" square />
+
+                <!-- Text nama barang -->
+                <q-skeleton type="text" />
+                <q-skeleton type="text" />
+                <q-skeleton type="text" width="100px" />
+                <q-skeleton type="text" width="80px" />
+              </q-card>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="row q-mt-md">
           <div
             class="col-6 q-pa-sm"
             v-for="(product, p) in products"
             :key="product.id"
           >
-            <q-card
-              class="q-pa-md"
-              @click="$router.push(`/marketplace-detail/${product.id}`)"
-            >
+            <q-card class="q-pa-md">
               <img
                 v-if="product.images.length"
-                class="bg-red"
+                class="bg-grey"
                 :src="STORAGE_URL + `/` + product.images[0].src"
                 style="height: 150px"
               />
@@ -112,27 +142,30 @@
                   "
                   no-caps
                   label="Edit produk"
-                  @click="$router.push(`/marketplace-add-product-edit/${product.id}`)"
+                  @click="
+                    $router.push(`/marketplace-add-product-edit/${product.id}`)
+                  "
                 ></q-btn>
                 <!-- Dialog Hapus Product -->
-                <q-dialog v-model="dialogHapusProduk">
+                <q-dialog v-model="dialog_deleteProduct">
                   <q-card>
                     <q-card-section>
                       <div
                         class="text-weight-bold text-left"
                         style="font-size: 16px"
                       >
-                        Hapus Produk
+                        Hapus Produk?
                       </div>
 
-                      <div>
+                      <div
                         class="text-weight-light text-left q-mt-none"
-                        style="width:300px; font-size: 12px" > yakin ingin
-                        menghapus produk?
+                        style="width: 300px; font-size: 12px"
+                      >
+                        yakin ingin menghapus produk?
                       </div>
                     </q-card-section>
 
-                    <q-card-actions>
+                    <q-card-actions class="text-primary" vertical>
                       <div class="row justify-end q-x-gutter-sm">
                         <q-btn
                           v-close-popup
@@ -160,6 +193,7 @@
                     </q-card-actions>
                   </q-card>
                 </q-dialog>
+
                 <q-btn
                   padding="none"
                   flat
@@ -171,7 +205,7 @@
                     font-size: 10px;
                   "
                   no-caps
-                  @click="deleteProduct(product.id)"
+                  @click="dialog_deleteProduct = true"
                   label="Hapus"
                 ></q-btn>
               </div>
@@ -256,6 +290,7 @@ export default {
       dialog_deleteProduct: false,
       chooseMode: false,
       search: "",
+      isLoad: false,
     };
   },
   mounted() {
@@ -269,8 +304,19 @@ export default {
       });
     },
     getProducts() {
-      this.$store.dispatch("Product/getProductByShop").then((res) => {
-        this.products = this.products_temp = res.data;
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Product/getProductByShop")
+          .then((res) => {
+            this.products = this.products_temp = res.data;
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
       });
     },
     addProduct() {

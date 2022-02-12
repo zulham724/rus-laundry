@@ -11,7 +11,7 @@
           style="color: #888888; font-size: 16px"
           >Info Karyawan</q-toolbar-title
         >
-        <q-btn no-caps flat color="black" @click="this.dialogDelete = true;">
+        <q-btn no-caps flat color="black" @click="this.dialogDelete = true">
           <div class="text-weight-bold">Hapus</div>
         </q-btn>
 
@@ -58,7 +58,7 @@
       <q-page class="q-mt-xl" v-if="employee">
         <div class="text-center">
           <q-avatar size="150px">
-            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner/>
+            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
           </q-avatar>
         </div>
 
@@ -136,7 +136,8 @@
       </q-page>
 
       <q-footer>
-        <q-btn @click="$router.push(`/${employee.id}/edit-employee`)"
+        <q-btn
+          @click="$router.push(`/${employee.id}/edit-employee`)"
           class="q-py-md"
           no-caps
           style="width: 100%; background-color: #49c2c0; color: #fafafa"
@@ -150,34 +151,35 @@
 
 <script>
 export default {
-  props:["employeeid"],
+  props: ["employeeid"],
   data() {
     return {
       dialogDelete: false,
       employee: null,
     };
   },
+  mounted() {
+    this.getEmployee();
+  },
 
   methods: {
-    getEmployee(){
-      this.$store.dispatch('Employee/show', this.employeeid).then(res => {
-        this.employee = res.data
-      })
+    getEmployee() {
+      this.$store.dispatch("Employee/show", this.employeeid).then((res) => {
+        this.employee = res.data;
+        console.log("ini detail employee", res.data);
+      });
     },
     deleteEmployee() {
-      this.$store.dispatch("Employee/destroy", this.employee.id).then(res => {
-        this.$router.push(`/employee`)
-        this.$q.notify("Berhasil")
-      })
+      this.$store.dispatch("Employee/destroy", this.employee.id).then((res) => {
+        this.$router.push(`/employee`);
+        this.$q.notify("Berhasil");
+      });
     },
 
     buttonPrintCard() {
       this.$router.push("/print-card");
     },
   },
-  mounted(){
-    this.getEmployee()
-  }
 };
 </script>
 

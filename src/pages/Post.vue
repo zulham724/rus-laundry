@@ -87,7 +87,7 @@
 
                 <q-item-section>
                   <q-item-label>
-                    <q-skeleton type="text" width="150px" height="25px" />
+                    <q-skeleton type="text" width="150px"/>
                   </q-item-label>
                   <q-item-label caption>
                     <q-skeleton type="text" width="100px" />
@@ -165,6 +165,7 @@ export default {
             .dispatch("Post/index")
             .then((res) => {
               this.posts = res.data;
+              resolve(res.data);
               console.log("ini data post", res.data);
             })
             .catch((err) => {

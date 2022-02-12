@@ -12,6 +12,15 @@ const mutations = {
 };
 
 const actions = {
+    updateProduct({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/updateproducts/${payload.id}`, payload).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     store({ commit }, product) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/product`, product).then(res => {

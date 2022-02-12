@@ -335,7 +335,7 @@ export default {
     async getDetailProduct() {
       await this.$store.dispatch("Product/show", this.productid).then((res) => {
         this.product = res.data;
-        this.getAnotherProducts(res.data.shop.id);
+        this.getAnotherProducts(res.data.shop.id);  
         this.setTextMessage();
         console.log("ini data produk", res.data);
       });
