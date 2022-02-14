@@ -1,5 +1,5 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-  <q-page-container>
+  <q-page-container style="background-color: #fafafa">
     <q-page style="background-color: #fafafa">
       <div
         class="text-center"
@@ -188,7 +188,7 @@
             </q-item-label>
           </q-item-section>
         </q-item>-->
-        <q-item class="q-py-md" clickable style="background-color: #ffffff">
+        <q-item class="q-py-md" clickable style="background-color: #ffffff" @click="$router.push('/bulk-whatsapp')">
           <q-item-section avatar class="self-center">
             <q-avatar square size="40px">
               <q-img
@@ -210,7 +210,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item class="q-py-md" clickable style="background-color: #ffffff">
+        <q-item class="q-py-md" clickable style="background-color: #ffffff" @click="$router.push('/profile-account-setting')">
           <q-item-section avatar class="self-center">
             <q-avatar square size="40px">
               <q-img

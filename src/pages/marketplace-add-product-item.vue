@@ -293,6 +293,7 @@ export default {
 
         Promise.all(array).then((res) => {
           this.images = res;
+          console.log(this.images)
         });
       }
     },

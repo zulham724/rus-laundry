@@ -3,7 +3,7 @@
     <div class="fixed-top" style="z-index: 999">
       <q-header class="text-center shadow-1">
         <q-toolbar class="bg-white">
-          <q-btn flat round @click="$router.back()">
+          <q-btn flat round @click="$router.push('/marketplace-detail-user')">
             <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
             </q-avatar>
           </q-btn>
@@ -298,7 +298,8 @@ export default {
   },
   methods: {
     deleteProduct(id, index) {
-      this.$store.dispatch("Product/destroy", id).then((res) => {
+      this.$store.dispatch("Product/destroy", id)
+      .then((res) => {
         this.products.splice(index, 1);
         this.$q.notify("Berhasil");
       });

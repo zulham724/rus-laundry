@@ -52,7 +52,7 @@
             <template v-slot:before>
               <div
                 @click="openMedia()"
-                class="col-4 text-white q-pr-sm q-pt-lg text-center"
+                class="col-4 text-white justify-center self-center q-px-md"
                 style="
                   height: 150px;
                   background-color: #d0d1dc;
@@ -60,12 +60,12 @@
                   margin-left: 12px;
                 "
               >
-                tambah foto
+                <div class="full-height self-center q-pt-xl">tambah foto</div>
               </div>
             </template>
             <template v-slot="{ item, index }">
-              <div :key="index" class="q-px-md">
-                <q-img :src="item.src" width="150px" height="150px">
+              <div  :key="index" class="q-px-md">
+                <q-img :src="STORAGE_URL + '/' + item.src" width="150px" height="150px">
                   <q-btn
                     style="position: absolute; bottom: 0; right: 0; z-index: 1"
                     color="red"
@@ -73,7 +73,7 @@
                     dense
                     class="all-pointer-events"
                     icon="close"
-                    @click="removeImage(index)"
+                    @click="deleteImages()"
                   />
                 </q-img>
               </div>
@@ -225,6 +225,8 @@ export default {
       text_product_weight: "",
       text_product_is_new: "",
       Loading: false,
+      STORAGE_URL: STORAGE_URL,
+      testDelete: [],
     };
   },
 
@@ -265,6 +267,8 @@ export default {
         .then((res) => {
           this.Loading = true;
           this.produk = res.data;
+          this.testDelete = res.data.images.map((item) => {return item});
+          console.log("ini data foto", res.data.images);
           console.log("ini detail produk", res.data);
         })
         .finally(() => {
@@ -273,6 +277,7 @@ export default {
           this.text_product_description = this.produk.description;
           this.text_product_weight = this.produk.weight;
           this.text_product_is_new = this.produk.is_new;
+          this.images = this.produk.images;
           this.Loading = false;
         });
     },
@@ -359,6 +364,17 @@ export default {
         formData.append(parentKey, value);
       }
     },
+
+    deleteImages() {
+      let dft = this.testDelete
+      .map((item) => item.id)
+
+      this.$store
+      .dispatch("Product/deleteImagesTest", dft)
+      .then((res) => {
+        console.log("semoga berhasil", dft);
+      })
+    }
   },
 };
 </script>

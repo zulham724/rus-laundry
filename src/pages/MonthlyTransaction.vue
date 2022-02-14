@@ -33,10 +33,10 @@
       <div v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
-            Belum ada transaksi hari ini
+            <q-img no-spinner src="~/assets/nullicsp.gif" :ratio="1" />
+            Belum ada transaksi bulan ini
           </div>
         </div>
-
         <div v-else-if="orders.data.length">
           <q-list
             ref="scrollTargetRef"
@@ -90,7 +90,7 @@
     </q-pull-to-refresh>
   </div>
 </template>
-
+halaman endi sing ngekek i icon iku mau? iki
 <script>
 import { ref } from "vue";
 import moment from "moment";

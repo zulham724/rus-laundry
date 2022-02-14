@@ -287,6 +287,7 @@ export default {
               return item;
             });
             resolve(res.data);
+            console.log("ini res", res.data)
           })
           .catch((err) => {
             reject(err);
@@ -325,7 +326,6 @@ export default {
       let categories = this.categories
         .filter((item) => item.checkCategory)
         .map((item) => item.id);
-      // console.log(categories)
 
       this.$store
         .dispatch("ServiceCategories/destroy", categories)

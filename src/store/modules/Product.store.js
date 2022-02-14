@@ -102,6 +102,15 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    deleteImagesTest({ commit }, dft){
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/deleteimage`, dft).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
     
 };

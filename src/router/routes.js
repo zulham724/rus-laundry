@@ -126,6 +126,18 @@ const routes = [{
 },
 
 {
+    path: "/bulk-whatsapp-content",
+    component: () =>
+        import("pages/BulkWhatsAppContent.vue")
+},
+
+{
+    path: "/bulk-whatsapp",
+    component: () =>
+        import("pages/BulkWhatsApp.vue")
+},
+
+{
     path: "/follow-marketplace",
     component: () =>
         import("pages/FollowMarketplace.vue")
@@ -626,6 +638,18 @@ const routes = [{
     path: "/marketplace-history-product",
     component: () =>
         import("pages/marketplace-history-product.vue"),
+},
+
+{
+    path: "/account-change-password",
+    component: () =>
+        import("pages/account-change-password.vue"),
+},
+
+{
+    path: "/account-forget-password",
+    component: () =>
+        import("pages/account-forget-password.vue"),
 },
 
 // Always leave this as last one,
