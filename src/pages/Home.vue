@@ -246,7 +246,7 @@
     </div>
 
     <!--Empty Order-->
-    <div
+    <!-- <div
       v-else-if="!isLoad && !Orders.data.data.length"
       class="text-center absolute-center"
       style="margin-bottom: 100px"
@@ -257,7 +257,7 @@
         src="~/assets/pesanan-kosong.svg"
       ></q-img>
       <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
-    </div>
+    </div> -->
 
     <!-- List Pesanan -->
     <div v-else-if="isLoad == false && orders">
@@ -296,12 +296,10 @@
             </q-item-section>
 
             <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium"
-                >{{ order.customer.name }}</q-item-label
-              >
-              <q-item-label caption>
-                ID pesanan {{ order.id }}
-              </q-item-label>
+              <q-item-label class="text-weight-medium">{{
+                order.customer.name
+              }}</q-item-label>
+              <q-item-label caption> ID pesanan {{ order.id }} </q-item-label>
               <q-item-label caption lines="1" class="q-mb-sm">
                 {{ moment(order.created_at).format("lll") }}</q-item-label
               >
@@ -380,7 +378,7 @@ export default {
     }
   },
   methods: {
-   moment,
+    moment,
     print() {
       if (this.$q.platform.is.android) {
         window.BTPrinter.printText(
@@ -411,7 +409,7 @@ export default {
           .then((res) => {
             this.orders = this.orders_temp = res.data;
             resolve(res.data);
-            console.log("ini isi res normal",res.data);
+            console.log("ini isi res normal", res.data);
           })
           .catch((err) => {
             reject(err);
@@ -473,7 +471,7 @@ export default {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],
           };
-          console.log("ini isi res on load setelah diolah",res.data);
+          console.log("ini isi res on load setelah diolah", res.data);
           done();
         });
       } else {
@@ -489,6 +487,9 @@ export default {
     //         date.status = true;
     //       }
     // },
+    sdf() {
+      console.log(Auth);
+    },
   },
 };
 </script>

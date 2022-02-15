@@ -103,9 +103,13 @@ const actions = {
             })
         })
     },
-    deleteImagesTest({ commit }, dft){
+    deleteImagesTest({ commit }, id){
         return new Promise((resolve, reject) => {
-            api.post(`/api/slave/deleteimage`, dft).then(res => {
+            let access = {
+                _method: "delete"
+            };
+            
+            api.post(`/api/slave/deleteimage/${id}`).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)

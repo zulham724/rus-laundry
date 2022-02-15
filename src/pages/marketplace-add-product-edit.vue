@@ -64,8 +64,12 @@
               </div>
             </template>
             <template v-slot="{ item, index }">
-              <div  :key="index" class="q-px-md">
-                <q-img :src="STORAGE_URL + '/' + item.src" width="150px" height="150px">
+              <div :key="index" class="q-px-md">
+                <q-img
+                  :src="STORAGE_URL + '/' + item.src"
+                  width="150px"
+                  height="150px"
+                >
                   <q-btn
                     style="position: absolute; bottom: 0; right: 0; z-index: 1"
                     color="red"
@@ -169,7 +173,7 @@
             </div>
           </div>
           <q-input
-          :disable="Loading"
+            :disable="Loading"
             type="number"
             class="q-ml-md q-mt-sm"
             style="width: 95%"
@@ -188,7 +192,7 @@
           </div>
         </div>
         <q-input
-        :disable="Loading"
+          :disable="Loading"
           class="q-ml-md q-mt-sm"
           style="width: 95%"
           lazy-rules
@@ -232,33 +236,33 @@ export default {
 
   mounted() {
     this.getProduct();
-    
   },
 
   methods: {
-    update(reset){
+    update(reset) {
       this.Loading = true;
       const payload = {
         id: this.produk.id,
-        name: this.text_product_tittle, 
+        name: this.text_product_tittle,
         price: this.text_product_price,
         description: this.text_product_description,
         weight: this.text_product_weight,
         is_new: this.text_product_is_new,
       };
-      this.$store.dispatch("Product/updateProduct", payload)
-      .then((res) => {
-        this.Loading = true;
-        this.produk.tittle = res.data.tittle;
-        this.produk.price = res.data.price;
-        this.produk.description = res.data.description;
-        this.produk.weight = res.data.weight;
-        this.produk.is_new = res.data.is_new;
-        console.log("ini data setelah update", res.data);
-      })
-      .finally(() => {
-        this.Loading = false;
-      });
+      this.$store
+        .dispatch("Product/updateProduct", payload)
+        .then((res) => {
+          this.Loading = true;
+          this.produk.tittle = res.data.tittle;
+          this.produk.price = res.data.price;
+          this.produk.description = res.data.description;
+          this.produk.weight = res.data.weight;
+          this.produk.is_new = res.data.is_new;
+          console.log("ini data setelah update", res.data);
+        })
+        .finally(() => {
+          this.Loading = false;
+        });
     },
     getProduct() {
       this.Loading = true;
@@ -267,7 +271,9 @@ export default {
         .then((res) => {
           this.Loading = true;
           this.produk = res.data;
-          this.testDelete = res.data.images.map((item) => {return item});
+          this.testDelete = res.data.images.map((item) => {
+            return item;
+          });
           console.log("ini data foto", res.data.images);
           console.log("ini detail produk", res.data);
         })
@@ -366,18 +372,13 @@ export default {
     },
 
     deleteImages() {
-      let dft = this.testDelete
-      .map((item) => item.id)
-
-      this.$store
-      .dispatch("Product/deleteImagesTest", dft)
-      .then((res) => {
-        console.log("semoga berhasil", dft);
-      })
-    }
+      let dft = this.testDelete.map((item) => item.id);
+      this.$store.dispatch("Product/deleteImagesTest", dft).then((res) => {
+        this.images.splice(this.images.findIndex, 1);
+      });
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

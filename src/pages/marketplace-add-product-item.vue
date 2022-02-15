@@ -293,7 +293,7 @@ export default {
 
         Promise.all(array).then((res) => {
           this.images = res;
-          console.log(this.images)
+          console.log(this.images);
         });
       }
     },
@@ -308,7 +308,7 @@ export default {
       }
       let formData = this.jsonToFormData(this.product);
       this.$store.dispatch("Product/store", formData).then((res) => {
-        this.$router.push('/marketplace-add-product')
+        this.$router.push("/marketplace-add-product");
         this.$q.notify("Berhasil");
         this.product = {};
         this.images = [];
@@ -361,5 +361,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
