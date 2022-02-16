@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" @click="$router.back()">
+        <q-btn flat round size="10px" @click="$router.push('/')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
@@ -64,43 +64,6 @@
               </q-card-section>
             </q-card>
           </div>
-          <!-- <q-btn-dropdown
-            class="q-my-sm bg-white"
-            style="width: 100%; color: #888888"
-            align="left"
-            flat
-            dropdown-icon="arrow_drop_down"
-            label="Paket Satuan"
-          >
-            <q-list v-ripple>
-              <q-item clickable v-close-popup v-ripple>
-                <q-item-section v-ripple>
-                  <q-item-label v-ripple style="color: #888888"
-                    >Reguler Cuci Kering + Setrika</q-item-label
-                  >
-                </q-item-section>
-              </q-item>
-              <q-separator></q-separator>
-
-              <q-item clickable v-close-popup>
-                <q-item-section>
-                  <q-item-label style="color: #888888"
-                    >Reguler Cuci Basah</q-item-label
-                  >
-                </q-item-section>
-              </q-item>
-              <q-separator></q-separator>
-
-              <q-item clickable v-close-popup>
-                <q-item-section>
-                  <q-item-label style="color: #888888"
-                    >Super Kilat Cuci Basah</q-item-label
-                  >
-                </q-item-section>
-              </q-item>
-              <q-separator></q-separator>
-            </q-list>
-          </q-btn-dropdown> -->
 
           <!-- Skeleton -->
           <div v-if="isLoad">
@@ -226,16 +189,16 @@
 </template>
 
 <script>
-import { debounce } from "quasar";
-import { useQuasar } from "quasar";
-import { onBeforeUnmount } from "vue";
 import Plfl from "src/pages/PackageListFirstList.vue";
+import { mapState } from 'vuex';
 
 export default {
   components: {
     "package-list-first-list": Plfl,
   },
-
+  computed:{
+    ...mapState(["Auth"])
+  },
   data() {
     return {
       search: null,
@@ -270,7 +233,7 @@ export default {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
-          .dispatch("Services/index")
+          .dispatch("Services/getServicesByShop", this.Auth.auth.shop.id)
           .then((res) => {
             this.packages = this.packages_temp = res.data.map((item) => {
               item.checked = false;
@@ -280,7 +243,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;

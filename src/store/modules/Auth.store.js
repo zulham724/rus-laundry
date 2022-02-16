@@ -53,6 +53,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit("logout");
             delete api.defaults.headers.common.Authorization;
+            this.$router.push('/login')
             resolve();
         })
     },

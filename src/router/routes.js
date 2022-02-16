@@ -126,6 +126,18 @@ const routes = [{
 },
 
 {
+    path: "/new-home",
+    component: () =>
+        import("pages/NewHome.vue")
+},
+
+{
+    path: "/transaction",
+    component: () =>
+        import("pages/Transaction.vue")
+},
+
+{
     path: "/bulk-whatsapp-content",
     component: () =>
         import("pages/BulkWhatsAppContent.vue")
@@ -650,6 +662,11 @@ const routes = [{
     path: "/account-forget-password",
     component: () =>
         import("pages/account-forget-password.vue"),
+},
+{
+    path: "/marketplace-search-empty",
+    component: () =>
+        import("pages/marketplace-search-empty.vue"),
 },
 
 // Always leave this as last one,

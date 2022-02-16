@@ -80,3 +80,14 @@ p di halaman detail pesanan fitur share ke whatsapp, instagram, telegram
 - fungsi edit produk pada halaman marketplace add product
 + jumlah like pada halaman detail produk masih statis {aryo}
 + di halaman marketplace add product ketika produk di klik belum ke redirect ke halaman detail product{aryo}
+
+
+minus
++ notify duplicate email di make an order
++ v-if tombol tambah paket di packet list first
+- kondisi produk
+- pesanan tidak masuk
++ tambah pelanggan masih bermasalah
++ jam di postingan belum benar
++ komentar masih bermasalah
+- jaringan lambat

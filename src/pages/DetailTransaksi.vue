@@ -591,8 +591,12 @@ export default {
         .dispatch("Orders/show", this.orderid)
         .then((res) => {
           this.detail_order = res.data;
-          this.slide = `slide-${res.data.services[0].id}`;
-          // console.log("haiiii", res.data);
+          if(res.data.services.length){
+            this.slide = `slide-${res.data.services[0].id}`;
+            // console.log("haiiii", res.data);
+          }else{
+            this.slide = 'slide-0'
+          }
         })
         .finally(() => {
           this.isLoad = false;

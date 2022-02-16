@@ -152,45 +152,13 @@
           </div>
         </div>
 
-        <div class="absolute-bottom" >
+        <div class="absolute-bottom" v-if="packages.length">
           <q-btn no-caps class="full-width q-py-sm" style="background-color:#49C2C0" @click="addPackage()">
             <div class="text-weight-regular" style="color:white;">
               Tambah Paket
             </div>
           </q-btn>
         </div>
-
-        <q-dialog v-model="dialogAddPackage">
-            <q-card>
-              <q-card-section>
-                <div
-                  class="text-weight-bold text-left"
-                  style="font-size: 16px"
-                >
-                  Tambah paket baru?
-                </div>
-
-                <div
-                  class="text-weight-light text-left q-mt-none"
-                  style="width: 300px; font-size: 12px"
-                >
-                  Yakin ingin membuat jenis paket baru?
-                </div>
-              </q-card-section>
-
-              <q-card-actions class="text-primary" vertical>
-                <div class="col-9"></div>
-                <div class="col-3 text-right"><q-btn
-                class="text-white"
-                  to="/add-package"
-                  no-caps
-                  flat
-                  label="Oke"
-                  style="width:30px;background-color: #49c2c0; color: white"
-                /></div>
-                </q-card-actions>
-            </q-card>
-          </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -219,7 +187,7 @@ export default {
         this.packages = res.data;
       }).catch((err) => {
             reject(err);
-            // console.log(err);
+            
           })
           .finally(() => {
             this.isLoad = false;

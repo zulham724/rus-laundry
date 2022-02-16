@@ -5,12 +5,7 @@
         class="text-center"
         style="
           border-radius: 0px 0px 0px 70px;
-          background-image: linear-gradient(
-            to top left,
-            #ffbb98,
-            #ffecc1,
-            #b4e6ea
-          );
+          background-image: linear-gradient(to top left,#ffbb98,#ffecc1,#b4e6ea);
         "
       >
         <q-img
@@ -213,7 +208,7 @@
     </q-card>
 
     <!-- Skeleton -->
-    <div v-if="isLoad">
+    <div v-if="isLoad == true">
       <q-item
         v-for="n in 9"
         :key="n"
@@ -244,20 +239,6 @@
         </q-item-section>
       </q-item>
     </div>
-
-    <!--Empty Order-->
-    <!-- <div
-      v-else-if="!isLoad && !Orders.data.data.length"
-      class="text-center absolute-center"
-      style="margin-bottom: 100px"
-    >
-      <q-img
-        no-spinner
-        style="width: 160px; height: 160px"
-        src="~/assets/pesanan-kosong.svg"
-      ></q-img>
-      <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
-    </div> -->
 
     <!-- List Pesanan -->
     <div v-else-if="isLoad == false && orders">
@@ -328,6 +309,20 @@
       </q-infinite-scroll>
     </div>
 
+    <!--Empty Order-->
+    <div
+      v-else
+      class="text-center absolute-center"
+      style="margin-bottom: 100px"
+    >
+      <q-img
+        no-spinner
+        style="width: 160px; height: 160px"
+        src="~/assets/pesanan-kosong.svg"
+      ></q-img>
+      <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
+    </div>
+
     <!-- Scan Barcode -->
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
@@ -361,7 +356,6 @@ export default {
     return {
       tab: "home",
       search: "",
-      progress: 0.6 * 100 + "%",
       orders: {},
       orders_temp: {},
       isLoad: false,
@@ -371,11 +365,12 @@ export default {
   mounted() {
     this.timeChecker();
     // this.getOrders();
-    if (this.Orders.data) {
+    if (this.Orders.data.data.length) {
       this.orders = this.Orders.data;
     } else {
       this.getOrders();
     }
+    console.log(this.Auth.auth)
   },
   methods: {
     moment,
@@ -407,9 +402,9 @@ export default {
         this.$store
           .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
           .then((res) => {
-            this.orders = this.orders_temp = res.data;
+            this.orders = res.data;
             resolve(res.data);
-            console.log("ini isi res normal", res.data);
+            // console.log("ini isi res normal", res.data);
           })
           .catch((err) => {
             reject(err);

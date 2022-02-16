@@ -1,4 +1,4 @@
-<template>
+ <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container style="background-color: #fafafa">
       <q-header>
@@ -429,10 +429,10 @@ export default {
         from: from,
         to: to,
       };
-      // this.loading = true
+      this.loading = true
       this.$store.dispatch("Orders/filterOrdersIn", payload).then((res) => {
-        // this.$store.commit("Orders/set_orders", { data: res.data });
-        // this.$router.push("/");
+        this.$store.commit("Orders/set_orders", { data: res.data });
+        this.$router.push("/transaction");
       });
     },
     filterOrdersOut(from, to) {
@@ -443,7 +443,7 @@ export default {
       this.loading = true
       this.$store.dispatch("Orders/filterOrdersOut", payload).then((res) => {
         this.$store.commit("Orders/set_orders", { data: res.data });
-        this.$router.push("/");
+        this.$router.push("/transaction");
       });
     },
   },

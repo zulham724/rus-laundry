@@ -4,12 +4,26 @@
       <q-header style="background-color: #ffffff" class="q-pb-md">
         <div class="row q-pa-md self-center bg-white">
           <div
-            class="col-5 text-weight-medium self-center"
+            class="col-5 row text-weight-medium self-center"
             style="color: #3a3838; font-size: 20px"
           >
-            Postingan
+            <q-btn
+              @click="$router.push('/')"
+              no-caps
+              dense
+              flat
+              style="color: white"
+            >
+              <q-icon
+                size="20px"
+                name="fas fa-arrow-left"
+                style="color: #9b27f1"
+              >
+              </q-icon>
+            </q-btn>
+            <div class="q-pl-sm">Postingan</div>
           </div>
-          <div class="col-5">
+          <div class="col-5 text-right">
             <q-btn flat dense no-caps @click="$router.push('/make-post')">
               <div
                 class="row justify-center q-px-sm q-py-xs"
@@ -23,7 +37,7 @@
                 />
                 <div
                   class="text-weight-medium q-pl-sm"
-                  style="font-size: 14px; color: #3a3838"
+                  style="font-size: 13px; color: #3a3838"
                 >
                   Buat postingan
                 </div>
@@ -39,11 +53,11 @@
               ></q-icon>
             </q-btn>
           </div>
-          <div class="col-1 text-center q-pr-xs self-center">
+          <div class="col-1 text-center q-px-xs self-center">
             <q-avatar
               size="35px"
               style="background-color: #888888"
-              @click="$router.push('/myprofile')"
+              @click="$router.push('/my-profile')"
             >
               <q-img no-spinner src="~/assets/Avatar.png"></q-img>
             </q-avatar>
@@ -87,7 +101,7 @@
 
                 <q-item-section>
                   <q-item-label>
-                    <q-skeleton type="text" width="150px"/>
+                    <q-skeleton type="text" width="150px" />
                   </q-item-label>
                   <q-item-label caption>
                     <q-skeleton type="text" width="100px" />
@@ -155,7 +169,7 @@ export default {
     this.getAllPosts();
   },
   created() {
-    if (!this.Post.posts.data) this.$store.dispatch("Post/index");
+    // if (!this.Post.posts.data) this.$store.dispatch("Post/index");
   },
   methods: {
     getAllPosts() {

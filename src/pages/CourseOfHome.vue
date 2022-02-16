@@ -23,14 +23,31 @@
         "
       >
         <!-- Profile -->
-        <div class="row q-pt-lg q-pl-lg">
-          <div class="col-2 text-center">
+        <div class="row q-pt-lg">
+          <div class="col-1 text-right self-center q-pl-sm">
+             <q-btn
+              @click="$router.push('/')"
+              no-caps
+              dense
+              flat
+              style="color: white"
+            >
+              <q-icon
+                size="20px"
+                name="fas fa-arrow-left"
+                style="color: #ffffff"
+              >
+              </q-icon>
+            </q-btn>
+          </div>
+          <div class="col-2 text-center q-pl-sm">
             <q-avatar size="60px" style="background-color: #888888">
               <q-img no-spinner src="~/assets/Avatar.png"></q-img>
             </q-avatar>
           </div>
-          <div class="col-6 self-center q-pl-sm">
-            <div @click="$router.push('/profile-of-course')"
+          <div class="col-6 self-center q-pl-sm ">
+            <div
+              @click="$router.push('/profile-of-course')"
               class="row text-weight-medium q-pb-xs"
               style="font-size: 20px; color: white"
             >
@@ -65,6 +82,7 @@
               </div>
             </div>
           </div>
+          <div class="col-2"></div>
         </div>
 
         <!-- Search bar -->
@@ -199,17 +217,19 @@ export default {
         this.modules = this.module_temp = res.data;
       });
     },
-    filterModule(value){
-      this.update(value)
+    filterModule(value) {
+      this.update(value);
     },
-    update(val){
-      if(val == ""){
-        this.modules = this.module_temp
+    update(val) {
+      if (val == "") {
+        this.modules = this.module_temp;
       }
 
-      let needle = val.toLowerCase()
-      this.modules = this.module_temp.filter((v) => v.tittle.toLowerCase().indexOf(needle) > - 1)
-    }
+      let needle = val.toLowerCase();
+      this.modules = this.module_temp.filter(
+        (v) => v.tittle.toLowerCase().indexOf(needle) > -1
+      );
+    },
   },
 };
 </script>

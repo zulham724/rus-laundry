@@ -1,4 +1,6 @@
-import { api } from 'boot/axios';
+import {
+    api
+} from 'boot/axios';
 
 const state = {
     products: {}
@@ -6,22 +8,26 @@ const state = {
 
 const mutations = {
     set_product(state, payload) {
-      state.products = payload.products
+        state.products = payload.products
     },
-    
+
 };
 
 const actions = {
-    updateProduct({ commit }, payload) {
+    updateProduct({
+        commit
+    }, product) {
         return new Promise((resolve, reject) => {
-            api.post(`/api/slave/updateproducts/${payload.id}`, payload).then(res => {
+            api.post(`/api/slave/updateproducts/${product.id}`, product).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)
             })
         })
     },
-    store({ commit }, product) {
+    store({
+        commit
+    }, product) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/product`, product).then(res => {
                 resolve(res)
@@ -30,7 +36,9 @@ const actions = {
             })
         })
     },
-    index({ commit }) {
+    index({
+        commit
+    }) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/product`).then(res => {
                 resolve(res)
@@ -48,7 +56,9 @@ const actions = {
             })
         })
     },
-    destroy({ commit }, productId){
+    destroy({
+        commit
+    }, productId) {
         let access = {
             _method: 'delete',
             id: productId
@@ -61,7 +71,9 @@ const actions = {
             })
         })
     },
-    show({ commit }, productId) {
+    show({
+        commit
+    }, productId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/product/${productId}`).then(res => {
                 resolve(res)
@@ -70,7 +82,9 @@ const actions = {
             })
         })
     },
-    getAnotherProducts({ commit }, shopId) {
+    getAnotherProducts({
+        commit
+    }, shopId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/${shopId}/getproducts`).then(res => {
                 resolve(res)
@@ -79,44 +93,60 @@ const actions = {
             })
         })
     },
-    like({commit}, id){
+    like({
+        commit
+    }, id) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/product/${id}/like`)
-            .then(res => {
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
+                .then(res => {
+                    resolve(res)
+                }).catch(err => {
+                    reject(err)
+                })
         })
     },
-    dislike({commit}, id){
+    dislike({
+        commit
+    }, id) {
         return new Promise((resolve, reject) => {
             let access = {
                 _method: "delete"
             };
 
             api.get(`/api/slave/product/${id}/dislike`)
-            .then(res => {
+                .then(res => {
+                    resolve(res)
+                }).catch(err => {
+                    reject(err)
+                })
+        })
+    },
+    deleteImagesTest({
+        commit  
+    }, payload) {
+        return new Promise((resolve, reject) => {
+            
+
+            api.post(`/api/slave/deleteimage`, payload).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)
             })
         })
     },
-    deleteImagesTest({ commit }, id){
+    testadd({
+        commit
+    }, formData) {
         return new Promise((resolve, reject) => {
-            let access = {
-                _method: "delete"
-            };
-            
-            api.post(`/api/slave/deleteimage/${id}`).then(res => {
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
+            api.post(`/api/slave/addimage`, formData)
+                .then(res => {
+                    resolve(res)
+                }).catch(err => {
+                    reject(err)
+                })
         })
     }
-    
+
 };
 
 const getters = {};

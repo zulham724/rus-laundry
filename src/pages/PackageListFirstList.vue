@@ -84,7 +84,7 @@ export default {
 
   mounted() {
     this.filterCategory = debounce(this.filterCategory, 1000);
-    this.getPackages();
+    // this.getPackages();
     this.text = this.paket.name;
   },
 

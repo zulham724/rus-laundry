@@ -22,7 +22,7 @@
     </q-header>
     <q-page-container>
       <q-page class="q-pb-xl" v-if="post">
-        <div class="full-width row q-ma-md">
+        <div class="full-width q-ma-md">
           <!-- Profil -->
           <div
             class="row q-px-lg q-py-xs q-mx-sm"
@@ -62,7 +62,8 @@
             <div
               class="full-height"
               style="display: block; background-color: #c4c4c4; width: 1px"
-            ></div>
+            >
+            </div>
             <div class="col q-pl-sm">
               {{ post.body }}
             </div>

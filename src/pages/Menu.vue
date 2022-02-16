@@ -13,7 +13,7 @@
           src="~/assets/header-menu-1.svg"
           alt="header-menu"
           class="shadow-1"
-          style="border-radius: 0px 0px 0px 70px; height: 25vh"
+          style="border-radius: 0px 0px 0px 70px; height: 25vh;"
         >
         </q-img>
       </div>
@@ -188,7 +188,12 @@
             </q-item-label>
           </q-item-section>
         </q-item>-->
-        <q-item class="q-py-md" clickable style="background-color: #ffffff" @click="$router.push('/bulk-whatsapp')">
+        <q-item
+          class="q-py-md"
+          clickable
+          style="background-color: #ffffff"
+          @click="$router.push('/bulk-whatsapp')"
+        >
           <q-item-section avatar class="self-center">
             <q-avatar square size="40px">
               <q-img
@@ -210,7 +215,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item class="q-py-md" clickable style="background-color: #ffffff" @click="$router.push('/profile-account-setting')">
+        <q-item
+          class="q-py-md"
+          clickable
+          style="background-color: #ffffff"
+          @click="$router.push('/profile-account-setting')"
+        >
           <q-item-section avatar class="self-center">
             <q-avatar square size="40px">
               <q-img

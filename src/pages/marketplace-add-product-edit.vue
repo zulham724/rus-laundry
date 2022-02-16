@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium text-body1"
           style="color: #484848"
-          >edit produk
+          >edit product
         </q-toolbar-title>
         <q-btn flat no-caps class="text-indigo-10" @click="update()"
           >Simpan</q-btn
@@ -19,7 +19,7 @@
         <q-card>
           <q-card-section class="row items-center">
             <div class="text-h6">Yakin ingin keluar ?</div>
-            <span class="q-ml-sm">keluar akan menghapus produk ini</span>
+            <span class="q-ml-sm">keluar akan menghapus product ini</span>
           </q-card-section>
 
           <q-card-actions align="right">
@@ -46,7 +46,7 @@
       </q-dialog>
     </q-header>
     <q-page-container>
-      <q-page class="q-pa-sm">
+      <q-page class="q-pa-sm" v-if="product">
         <div class="row q-mx-sm q-mt-md">
           <q-virtual-scroll :items="images" virtual-scroll-horizontal>
             <template v-slot:before>
@@ -70,6 +70,13 @@
                   width="150px"
                   height="150px"
                 >
+                  <q-spinner
+                    class="full-width full-height"
+                    v-if="item.id == photoId"
+                    color="white"
+                    size="3em"
+                    :thickness="1"
+                  />
                   <q-btn
                     style="position: absolute; bottom: 0; right: 0; z-index: 1"
                     color="red"
@@ -77,7 +84,8 @@
                     dense
                     class="all-pointer-events"
                     icon="close"
-                    @click="deleteImages()"
+                    v-model="testSelect"
+                    @click="deleteImages(item.id, index)"
                   />
                 </q-img>
               </div>
@@ -90,7 +98,7 @@
         </div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
-            <div class="col-6">Nama Produk</div>
+            <div class="col-6">Nama product</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
@@ -107,13 +115,13 @@
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
-            v-model="text_product_tittle"
-            placeholder="Masukkan nama produk"
+            v-model="product.tittle"
+            placeholder="Masukkan nama product"
           />
         </div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
-            <div class="col-6">Harga Produk</div>
+            <div class="col-6">Harga product</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
@@ -131,13 +139,13 @@
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
-            v-model="text_product_price"
-            placeholder="Masukkan harga produk"
+            v-model="product.price"
+            placeholder="Masukkan harga product"
           />
         </div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
-            <div class="col-6">Deskripsi Produk</div>
+            <div class="col-6">Deskripsi product</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
@@ -155,15 +163,15 @@
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
-            v-model="text_product_description"
-            placeholder="Masukkan Deskripsi produk"
+            v-model="product.description"
+            placeholder="Masukkan Deskripsi product"
           />
         </div>
-        <div class="q-ml-lg q-mt-lg text-weight-medium">Detail Produk</div>
+        <div class="q-ml-lg q-mt-lg text-weight-medium">Detail product</div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
             <div class="col-6 text-caption" style="color: #d0d1dc">
-              Berat Produk
+              Berat product
             </div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
@@ -182,25 +190,83 @@
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
-            v-model="text_product_weight"
-            placeholder="Masukkan berat produk"
+            v-model="product.weight"
+            placeholder="Masukkan berat product"
           />
         </div>
         <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
           <div class="col-6 text-caption" style="color: #d0d1dc">
-            kondisi Produk
+            kondisi product
           </div>
         </div>
         <q-input
           :disable="Loading"
+          type="number"
+          @click="dialogKondisiBarang = true"
           class="q-ml-md q-mt-sm"
           style="width: 95%"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
-          v-model="text_product_is_new"
-          placeholder="Masukkan kondisi produk"
+          v-model="product.is_new"
+          placeholder="Masukkan kondisi product"
         />
+
+        <q-dialog v-model="dialogKondisiBarang" position="bottom" persistent>
+          <q-card class="row full-width q-pa-sm">
+            <div
+              class="full-width row justify-center text-weight-bold"
+              style="color: #161952; font-size: 17px"
+            >
+              Kondisi
+            </div>
+            <q-form class="full-width">
+              <!-- Kondisi barang baru -->
+              <div class="row full-width q-pa-sm" >
+                <q-radio
+                  @click="StatusProduct()"
+                  keep-color
+                  name="kondisiBarang"
+                  label="Baru"
+                  val="1"
+                  v-model="is_new"
+                />
+              </div>
+              <!-- Kondisi barang Bekas -->
+              <div class="row full-width q-pa-sm" >
+                <q-radio
+                  @click="StatusProduct()"
+                  keep-color
+                  name="kondisiBarang"
+                  label="Bekas"
+                  val="0"
+                  v-model="is_new"
+                />
+              </div>
+
+              <!-- Button konfirmasi -->
+              <div class="row full-width q-pa-xs q-pt-md">
+                <q-btn
+                  @click="input_is_new = true"
+                  v-close-popup
+                  no-caps
+                  flat
+                  class="full-width"
+                  style="background-color: #9b27f1"
+                  
+                >
+                  <div
+                    class="text-weight-medium q-pa-xs"
+                    style="color: #f1f1f1; font-size: 17px"
+                    
+                  >
+                    Konfirmasi
+                  </div>
+                </q-btn>
+              </div>
+            </q-form>
+          </q-card>
+        </q-dialog>
       </q-page>
       <q-file
         ref="addImages"
@@ -218,19 +284,16 @@ export default {
 
   data() {
     return {
-      product: {},
-      produk: null,
+      product: null,
       images: [],
       is_new: null,
       confirm: false,
-      text_product_tittle: "",
-      text_product_price: "",
-      text_product_description: "",
-      text_product_weight: "",
-      text_product_is_new: "",
       Loading: false,
       STORAGE_URL: STORAGE_URL,
       testDelete: [],
+      photoId: null,
+      dialogKondisiBarang: false,
+      ftld: false,
     };
   },
 
@@ -239,25 +302,17 @@ export default {
   },
 
   methods: {
-    update(reset) {
+    StatusProduct(){
+      this.product.is_new = parseInt(this.is_new)
+      console.log("test status produk", this.product.is_new)
+    },
+    update() {
       this.Loading = true;
-      const payload = {
-        id: this.produk.id,
-        name: this.text_product_tittle,
-        price: this.text_product_price,
-        description: this.text_product_description,
-        weight: this.text_product_weight,
-        is_new: this.text_product_is_new,
-      };
       this.$store
-        .dispatch("Product/updateProduct", payload)
+        .dispatch("Product/updateProduct", this.product)
         .then((res) => {
           this.Loading = true;
-          this.produk.tittle = res.data.tittle;
-          this.produk.price = res.data.price;
-          this.produk.description = res.data.description;
-          this.produk.weight = res.data.weight;
-          this.produk.is_new = res.data.is_new;
+          this.product = res.data;
           console.log("ini data setelah update", res.data);
         })
         .finally(() => {
@@ -270,20 +325,15 @@ export default {
         .dispatch("Product/show", this.productid)
         .then((res) => {
           this.Loading = true;
-          this.produk = res.data;
+          this.product = res.data;
           this.testDelete = res.data.images.map((item) => {
             return item;
           });
           console.log("ini data foto", res.data.images);
-          console.log("ini detail produk", res.data);
+          console.log("ini detail product", res.data);
         })
         .finally(() => {
-          this.text_product_tittle = this.produk.tittle;
-          this.text_product_price = this.produk.price;
-          this.text_product_description = this.produk.description;
-          this.text_product_weight = this.produk.weight;
-          this.text_product_is_new = this.produk.is_new;
-          this.images = this.produk.images;
+          this.images = this.product.images;
           this.Loading = false;
         });
     },
@@ -296,20 +346,15 @@ export default {
       this.$refs.addImages.pickFiles();
     },
     async previewImages(files) {
-      if (files.length > 10) {
-        this.$q.notify("Hanya bisa menambahkan 10 foto");
-      } else {
-        this.product.images = files;
+      let payload = {
+        product_id: this.product.id,
+        images: files,
+      };
 
-        let array = [];
-        await files.forEach((images, i) => {
-          array[i] = this.toBase64(images);
-        });
-
-        Promise.all(array).then((res) => {
-          this.images = res;
-        });
-      }
+      let formData = this.jsonToFormData(payload);
+      this.$store.dispatch("Product/testadd", formData).then((res) => {
+        this.images = res.data.images;
+      });
     },
     removeImage(index) {
       this.images.splice(index, 1);
@@ -371,13 +416,17 @@ export default {
       }
     },
 
-    deleteImages() {
-      let dft = this.testDelete.map((item) => item.id);
-      this.$store.dispatch("Product/deleteImagesTest", dft).then((res) => {
-        this.images.splice(this.images.findIndex, 1);
-      });
+    deleteImages(photoId, index) {
+      this.photoId = photoId
+      this.$store
+        .dispatch("Product/deleteImagesTest", { id: photoId })
+        .then((res) => {
+          this.images.splice(index, 1);
+        });
+      console.log("delete");
     },
   },
+  //setup inner loading
 };
 </script>
 

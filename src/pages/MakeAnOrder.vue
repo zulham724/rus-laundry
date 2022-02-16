@@ -47,6 +47,7 @@
             </div>
 
             <q-form ref="form">
+              <input type="hidden" v-model="customer.id">
               <q-input
                 readonly
                 dense
@@ -389,9 +390,11 @@ export default {
     },
     storeCustomer() {
       this.$store.dispatch("Customer/store", this.newCustomer).then((res) => {
-        this.customer = this.newCustomer;
+        this.customer = res.data;
         this.getCustomers();
-      });
+      }).catch(err => {
+        this.$q.notify('email sudah ada')
+      })
     },
   },
   mounted() {

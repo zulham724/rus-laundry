@@ -53,7 +53,8 @@
 
         <q-card flat class="q-my-sm bg-white text-subtitle2">
           <q-input
-            v-model="package.process_time"
+            type="number"
+            v-model.number="package.process_time"
             class="text-subtitle2"
             bg-color="white"
             filled

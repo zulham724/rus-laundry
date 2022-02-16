@@ -62,6 +62,15 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    getServicesByShop({ commit }, shopId){
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/shop/${shopId}/getServicesByShop`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 
 };

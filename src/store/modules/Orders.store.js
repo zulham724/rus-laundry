@@ -3,7 +3,7 @@ import {
 } from "boot/axios";
 
 const state = {
-    data: [],
+    data: {},
     order: null,
     dataM: [],
     dataW: [],
@@ -18,15 +18,6 @@ const mutations = {
     set_order(state, payload) {
         payload.order.charts = []
         state.order = payload.order;
-    },
-    set_month(state, payload) {
-        state.dataM = payload.dataM;
-    },
-    set_week(state, payload) {
-        state.dataW = payload.dataW;
-    },
-    set_day(state, payload) {
-        state.dataD = payload.dataD;
     },
     delete_order(state) {
         state.order = null
@@ -62,121 +53,9 @@ const mutations = {
             data: [...state.data.data, ...payload.data.data]
         }
     },
-    nextM(state, payload) {
-        state.dataM = {
-            ...payload.data,
-            data: [...state.dataM.data, ...payload.data.data]
-        }
-    },
-    nextW(state, payload) {
-        state.dataW = {
-            ...payload.data,
-            data: [...state.dataW.data, ...payload.data.data]
-        }
-    },
-    nextD(state, payload) {
-        state.dataD = {
-            ...payload.data,
-            data: [...state.dataD.data, ...payload.data.data]
-        }
-    }
 };
 
 const actions = {
-    getOrdersShopByDay({
-        commit
-    }, shopId) {
-        return new Promise((resolve, reject) => {
-            api.get(`/api/slave/getorderbyday/${shopId}`)
-                .then((res) => {
-                    const data = res.data;
-                    commit('set_day', {
-                        dataD: data
-                    });
-                    resolve(res);
-                }).catch(err => {
-                    reject(err)
-                })
-        });
-    },
-    nextD({
-        commit,
-        state
-    }) {
-        return new Promise((resolve, reject) => {
-            api.get(`${state.dataD.next_page_url}`).then(res => {
-                commit("nextD", {
-                    data: res.data
-                })
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
-        })
-    },
-    getOrdersShopByWeek({
-        commit
-    }, shopId) {
-        return new Promise((resolve, reject) => {
-            api.get(`/api/slave/getorderbyweek/${shopId}`)
-                .then((res) => {
-                    const data = res.data;
-                    commit('set_week', {
-                        dataW: data
-                    });
-                    resolve(res);
-                }).catch(err => {
-                    reject(err)
-                })
-        });
-    },
-    nextW({
-        commit,
-        state
-    }) {
-        return new Promise((resolve, reject) => {
-            api.get(`${state.dataW.next_page_url}`).then(res => {
-                commit("nextW", {
-                    data: res.data
-                })
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
-        })
-    },
-    getOrdersShopByMonth({
-        commit
-    }, shopId) {
-        return new Promise((resolve, reject) => {
-            api
-                .get(`/api/slave/getorderbymonth/${shopId}`)
-                .then((res) => {
-                    const data = res.data;
-                    commit('set_month', {
-                        dataM: data
-                    });
-                    resolve(res)
-                }).catch(err => {
-                    reject(err)
-                })
-        });
-    },
-    nextM({
-        commit,
-        state
-    }) {
-        return new Promise((resolve, reject) => {
-            api.get(`${state.dataM.next_page_url}`).then(res => {
-                commit("nextM", {
-                    data: res.data
-                })
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
-        })
-    },
     updateStatus({
         commit
     }, orderStatus) {

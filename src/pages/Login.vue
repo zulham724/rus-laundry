@@ -135,7 +135,7 @@ export default {
               this.$router.push("/");
             })
             .catch((err) => {
-              // this.$q.notify("terjadi kesalahan")
+              this.$q.notify("terjadi kesalahan")
               console.log(err);
             })
             .finally(() => {

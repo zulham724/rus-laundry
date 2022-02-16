@@ -10,7 +10,23 @@
         "
       >
         <div class="row full-width q-px-md">
-          <div class="col-10 self-center justify-center">
+        <div class="col-1 self-center text-center">
+          <q-btn
+              @click="$router.push('/')"
+              no-caps
+              dense
+              flat
+              style="color: white"
+            >
+              <q-icon
+                size="20px"
+                name="fas fa-arrow-left"
+                style="color: #ffffff"
+              >
+              </q-icon>
+            </q-btn>
+        </div>
+          <div class="col-9 self-center justify-center">
             <q-input
               dense
               style="border-radius: 20px; width: 95%"
@@ -156,7 +172,7 @@
               </div>
 
               <div
-                class="row text-weight-medium q-pt-md justify-center"
+                class="row text-weight-medium q-pt-md text-center justify-center"
                 style="color: #393939; font-size: 17px"
               >
                 SELAMAT DATANG DI MARKETPLACE
@@ -199,7 +215,7 @@
               </div>
 
               <div
-                class="row q-px-md text-weight-medium q-pt-md justify-center"
+                class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
                 style="color: #393939; font-size: 17px"
               >
                 MASUKAN NOMOR WHATSAPP
@@ -257,7 +273,7 @@
               </div>
 
               <div
-                class="row q-px-md text-weight-medium q-pt-md justify-center"
+                class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
                 style="color: #393939; font-size: 17px"
               >
                 NOMOR TELAH DITAMBAHKAN

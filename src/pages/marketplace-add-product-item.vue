@@ -70,7 +70,7 @@
             </template>
             <template v-slot="{ item, index }">
               <div :key="index" class="q-px-md">
-                <q-img :src="item.src" width="150px" height="150px">
+                <q-img :src="item.src" width="130px" height="150px" style="border-radius: 10px;" class="shadow-2">
                   <q-btn
                     style="position: absolute; bottom: 0; right: 0; z-index: 1"
                     color="red"
@@ -189,19 +189,19 @@
           </div>
         </div>
         <q-input
+          type="number"
           @click="dialogKondisiBarang = true"
           class="q-ml-md q-mt-sm"
           style="width: 95%"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
-          v-model="is_new"
+          v-model="product.is_new"
           placeholder="Masukkan kondisi produk"
-        >
-        </q-input>
+        />
 
         <!-- Dialog kondisi barang -->
-        <q-dialog v-model="dialogKondisiBarang" position="bottom">
+        <q-dialog v-model="dialogKondisiBarang" position="bottom" persistent>
           <q-card class="row full-width q-pa-sm">
             <div
               class="full-width row justify-center text-weight-bold"
@@ -211,37 +211,43 @@
             </div>
             <q-form class="full-width">
               <!-- Kondisi barang baru -->
-              <div class="row full-width q-pa-sm">
+              <div class="row full-width q-pa-sm" >
                 <q-radio
+                  @click="StatusProduct()"
                   keep-color
-                  v-model="kondisiBarang"
-                  val="baru"
+                  name="kondisiBarang"
                   label="Baru"
-                  color="purple-7"
+                  val="1"
+                  v-model="is_new"
                 />
               </div>
               <!-- Kondisi barang Bekas -->
-              <div class="row full-width q-pa-sm">
+              <div class="row full-width q-pa-sm" >
                 <q-radio
+                  @click="StatusProduct()"
                   keep-color
-                  v-model="kondisiBarang"
-                  val="bekas"
+                  name="kondisiBarang"
                   label="Bekas"
-                  color="purple-7"
+                  val="0"
+                  v-model="is_new"
                 />
               </div>
 
               <!-- Button konfirmasi -->
               <div class="row full-width q-pa-xs q-pt-md">
                 <q-btn
+                  @click="input_is_new = true"
+                  v-close-popup
                   no-caps
                   flat
                   class="full-width"
                   style="background-color: #9b27f1"
+                  
                 >
                   <div
                     class="text-weight-medium q-pa-xs"
                     style="color: #f1f1f1; font-size: 17px"
+                    
                   >
                     Konfirmasi
                   </div>
@@ -272,11 +278,20 @@ export default {
       is_new: null,
       confirm: false,
       dialogKondisiBarang: false,
-      kondisiBarang: ref("baru"),
-      aa: "aaaa",
-    };
+      is_new: null,
+      // kondisiBarang: ref("baru"),
+      // aa: "aaaa",
+      // submitResult = ref([])
+    }
+  },
+  mounted(){
+    
   },
   methods: {
+    StatusProduct(){
+      this.product.is_new = parseInt(this.is_new)
+      console.log("test status produk", this.product.is_new)
+    },
     openMedia() {
       this.$refs.addImages.pickFiles();
     },
@@ -357,7 +372,10 @@ export default {
         formData.append(parentKey, value);
       }
     },
-  },
+    
+  }
+  //setup dialog
+ 
 };
 </script>
 

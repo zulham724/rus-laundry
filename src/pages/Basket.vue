@@ -3,6 +3,7 @@
     <q-header>
       <q-toolbar class="bg-white q-py-md">
         <q-btn
+          :disable="loading"
           flat
           round
           size="10px"
@@ -171,7 +172,7 @@
             </q-card>
             <div class="q-pa-lg">
               <q-btn
-              
+                :disable="loading"
                 @click="store()"
                 class="full-width"
                 style="border-radius: 10px"
@@ -204,6 +205,7 @@ export default {
   data() {
     return {
       expanded: false,
+      loading: false,
     };
   },
   methods: {
@@ -245,12 +247,14 @@ export default {
       this.Orders.order.total_price = total_price;
     },
     store() {
+      this.loading = true
       let order = this.Orders.order;
-      // console.log(order)
       this.$store.dispatch("Orders/store", order).then((res) => {
         this.$q.notify("Berhasil");
         this.$router.push("/confirm-order");
-      });
+      }).finally(()=>{
+        this.loading = false
+      })
     },
   },
   mounted() {
