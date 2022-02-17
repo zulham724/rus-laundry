@@ -73,7 +73,7 @@
             </div>
             <div class="col-5 bg-white"></div>
           </div>
-          <div class="q-my-xs">
+          <!-- <div class="q-my-xs">
             <q-btn
               no-caps
               flat
@@ -92,7 +92,7 @@
                 <q-icon name="fas fa-chevron-right" size="15px"></q-icon>
               </div>
             </q-btn>
-          </div>
+          </div> -->
           <div
             flat
             class="bg-white q-px-md q-mt-sm text-weight-medium"
@@ -159,7 +159,6 @@ export default {
       isLoad: false,
       total_karyawan: 0,
       telah_absen: 0,
-      dates: [],
     };
   },
   mounted() {

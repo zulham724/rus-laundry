@@ -211,7 +211,6 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            // console.log("ini isi res normal", res.data);
           })
           .catch((err) => {
             reject(err);

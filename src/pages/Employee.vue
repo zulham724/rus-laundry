@@ -238,7 +238,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;
@@ -246,7 +245,6 @@ export default {
       });
     },
     update(value) {
-      console.log(value);
       if (value == "") {
         this.employees = this.employees_temp;
       }

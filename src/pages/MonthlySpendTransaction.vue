@@ -146,11 +146,9 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            console.log("ini data spend bulanan", res.data);
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;

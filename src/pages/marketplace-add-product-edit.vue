@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium text-body1"
           style="color: #484848"
-          >edit product
+          >edit produk
         </q-toolbar-title>
         <q-btn flat no-caps class="text-indigo-10" @click="update()"
           >Simpan</q-btn
@@ -78,6 +78,7 @@
                     :thickness="1"
                   />
                   <q-btn
+                    :disable="disableButton"
                     style="position: absolute; bottom: 0; right: 0; z-index: 1"
                     color="red"
                     flat
@@ -98,7 +99,7 @@
         </div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
-            <div class="col-6">Nama product</div>
+            <div class="col-6">Nama produk</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
@@ -121,7 +122,7 @@
         </div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
-            <div class="col-6">Harga product</div>
+            <div class="col-6">Harga produk</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
@@ -145,7 +146,7 @@
         </div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
-            <div class="col-6">Deskripsi product</div>
+            <div class="col-6">Deskripsi produk</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
@@ -167,11 +168,11 @@
             placeholder="Masukkan Deskripsi product"
           />
         </div>
-        <div class="q-ml-lg q-mt-lg text-weight-medium">Detail product</div>
+        <div class="q-ml-lg q-mt-lg text-weight-medium">Detail produk</div>
         <div>
           <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
             <div class="col-6 text-caption" style="color: #d0d1dc">
-              Berat product
+              Berat produk
             </div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
@@ -196,19 +197,20 @@
         </div>
         <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
           <div class="col-6 text-caption" style="color: #d0d1dc">
-            kondisi product
+            kondisi produk
           </div>
         </div>
         <q-input
+          readonly
           :disable="Loading"
-          type="number"
+          type="text"
           @click="dialogKondisiBarang = true"
           class="q-ml-md q-mt-sm"
           style="width: 95%"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
-          v-model="product.is_new"
+          :model-value="product.is_new != undefined ? product.is_new ? 'Baru' : 'Bekas' : null"
           placeholder="Masukkan kondisi product"
         />
 
@@ -288,12 +290,13 @@ export default {
       images: [],
       is_new: null,
       confirm: false,
+      //ini untuk men-disable button ketika proses saving data
       Loading: false,
       STORAGE_URL: STORAGE_URL,
-      testDelete: [],
       photoId: null,
       dialogKondisiBarang: false,
       ftld: false,
+      disableButton: false,
     };
   },
 
@@ -326,9 +329,6 @@ export default {
         .then((res) => {
           this.Loading = true;
           this.product = res.data;
-          this.testDelete = res.data.images.map((item) => {
-            return item;
-          });
           console.log("ini data foto", res.data.images);
           console.log("ini detail product", res.data);
         })
@@ -417,13 +417,15 @@ export default {
     },
 
     deleteImages(photoId, index) {
+      this.disableButton = true;
       this.photoId = photoId
       this.$store
         .dispatch("Product/deleteImagesTest", { id: photoId })
         .then((res) => {
           this.images.splice(index, 1);
+        }).finally(() => {
+          this.disableButton = false;
         });
-      console.log("delete");
     },
   },
   //setup inner loading

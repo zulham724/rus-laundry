@@ -323,7 +323,6 @@ export default {
       products_temp: [],
       search: "",
       emptySearch: false,
-      kosong: "kosong heh",
     };
   },
   mounted() {
@@ -355,8 +354,7 @@ export default {
           .dispatch("Product/index")
           .then((res) => {
             this.products = this.products_temp = res.data;
-            resolve(res.data);
-            console.log("ini produk", res.data);
+            resolve(res.data); 
           })
           .catch((err) => {
             reject(err);

@@ -287,7 +287,6 @@ export default {
               return item;
             });
             resolve(res.data);
-            console.log("ini res", res.data)
           })
           .catch((err) => {
             reject(err);
@@ -367,7 +366,6 @@ export default {
     // },
     buttonSimpan(reset) {
       // const $q = useQuasar();
-      // console.log(this.$refs.update[0].reset())
       this.$refs.update.reset();
     },
     buttonBack(reset) {

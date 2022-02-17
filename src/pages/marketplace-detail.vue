@@ -336,8 +336,6 @@ export default {
       await this.$store.dispatch("Product/show", this.productid).then((res) => {
         this.product = res.data;
         this.getAnotherProducts(res.data.shop.id);  
-        this.setTextMessage();
-        console.log("ini data produk", res.data);
       });
     },
     getAnotherProducts(id) {
@@ -347,7 +345,6 @@ export default {
       });
     },
     async detailProduct(id) {
-      // console.log(this.productid);
       this.product = null;
       this.another_products = [];
       await this.$router.push(`/marketplace-detail/${id}`);

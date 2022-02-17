@@ -36,17 +36,31 @@
                 </div>
               </q-btn>
             </div>
-          </div>
+          </div>  
 
           <div
+            v-if="tabParent == 'pendapatan'"
             class="text-weight-bold text-left"
             style="color: white; font-size: 36px"
-          >
+          > 
             {{
               new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
               }).format(total_profit)
+            }}
+          </div>  
+
+          <div
+            v-if="tabParent == 'pengeluaran'"
+            class="text-weight-bold text-left"
+            style="color: white; font-size: 36px"
+          > 
+            {{
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(total_spend)
             }}
           </div>
 
@@ -119,12 +133,15 @@ export default {
       orders: [],
       isLoad: false,
       total_profit: 0,
+      total_spend: 0,
+      //ini untuk show dan hide tombol tambah pengeluaran
       buttonAddSpend: false,
     };
   },
   mounted() {
     this.getOrders();
     this.getProfitByDay();
+    this.getSpendToday();
     // this.getProfitByMonth();
   },
   methods: {
@@ -142,22 +159,34 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            // console.log("Data keseluruhan", res.data);
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;
           });
       });
     },
+    getSpendToday() {
+      this.$store
+        .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.total_spend = res.data;
+        });
+    },
     getProfitByDay() {
       this.$store
         .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+        });
+    },
+    getSpendWeekly() {
+      this.$store
+        .dispatch("Orders/countSpendOrdersByWeek", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.total_spend = res.data;
         });
     },
     getProfitByWeek() {
@@ -167,12 +196,18 @@ export default {
           this.total_profit = res.data;
         });
     },
+    getSpendMonthly() {
+      this.$store
+        .dispatch("Orders/countSpendOrdersByMonth", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.total_spend = res.data;
+        });
+    },
     getProfitByMonth() {
       this.$store
         .dispatch("Orders/countProfitOrdersByMonth", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
-          console.log(res.data);
         });
     },
     refresh(done) {

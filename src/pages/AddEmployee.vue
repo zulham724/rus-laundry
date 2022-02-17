@@ -40,7 +40,7 @@
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
           />
-          <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" />
+          <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" model-value="Karyawan" readonly/>
           <q-input
             v-model="employee.contact_number"
             class="q-mx-lg q-py-md"

@@ -267,13 +267,10 @@ export default {
       model: "2022/01/14",
       dates: [],
       isLoad: false,
-      isLoad2: false,
     };
   },
   mounted() {
     this.init();
-    // alert("halo");
-    // console.log(this.Auth.auth.shop.id)
   },
   methods: {
     init(done) {

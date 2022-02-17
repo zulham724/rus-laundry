@@ -20,7 +20,7 @@ const routes = [{
         path: "",
         name: "home",
         component: () =>
-            import("pages/Home.vue"),
+            import("pages/NewHome.vue"),
         keepalive: true,
     },
     {
@@ -67,28 +67,24 @@ const routes = [{
         component: () =>
             import("pages/Menu.vue"),
     },
+
+    {
+        path: "/transaction",
+        component: () =>
+            import("pages/Transaction.vue")
+    },
     ],
 },
 {
     path: "/community",
     component: () =>
         import("layouts/SubLayout.vue"),
-    children: [{
-        path: "",
-        component: import('pages/Post.vue')
-    },
-
-    {
-        path: "/course-of-home",
-        component: () =>
-            import("pages/CourseOfHome.vue"),
-    },
-
-    {
-        path: "/marketplace-home",
-        component: () =>
-            import("pages/marketplace-home.vue"),
-    },
+    children: [
+        {
+            path: "",
+            component: () =>
+                import("pages/Post.vue"),
+        },
     ]
 },
 
@@ -126,15 +122,29 @@ const routes = [{
 },
 
 {
-    path: "/new-home",
+    path: "/home2",
     component: () =>
-        import("pages/NewHome.vue")
+        import("pages/Home.vue"),
+},
+
+
+
+{
+    path: "/course-of-home",
+    component: () =>
+        import("pages/CourseOfHome.vue"),
 },
 
 {
-    path: "/transaction",
+    path: "/marketplace-home",
     component: () =>
-        import("pages/Transaction.vue")
+        import("pages/marketplace-home.vue"),
+},
+
+{
+    path: "/new-home",
+    component: () =>
+        import("pages/NewHome.vue")
 },
 
 {

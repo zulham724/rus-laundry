@@ -3,7 +3,7 @@
     <q-page>
       <!--Header Pagi-->
       <div
-      v-if="d >= 0 && d <= 10"
+        v-if="backgroundSetter >= 0 && backgroundSetter <= 10"
         class="row"
         style="
           min-height: 220px;
@@ -90,11 +90,20 @@
               >
                 {{ moment().format("DD MMMM YYYY") }}
               </div>
+              <div v-if="isLoad">
+                <q-skeleton type="text" />
+              </div>
               <div
+                v-else
                 class="text-weight-bold"
                 style="color: #313131; font-size: 18px"
               >
-                Rp 1.000.000,00
+                {{
+                new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                }).format(total_profit)
+                }}
               </div>
             </div>
           </div>
@@ -112,11 +121,20 @@
               >
                 {{ moment().format("DD MMMM YYYY") }}
               </div>
+              <div v-if="isLoad2">
+                <q-skeleton type="text" />
+              </div>
               <div
+                v-else
                 class="text-weight-bold"
                 style="color: #313131; font-size: 18px"
               >
-                Rp 0
+                {{
+                new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                }).format(total_spend)
+                }}
               </div>
             </div>
           </div>
@@ -153,6 +171,7 @@
           </div>
           <div class="col-6">
             <q-btn
+              @click="doScanOrder()"
               style="
                 background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
                 width: 100%;
@@ -183,11 +202,11 @@
 
       <!--Header Siang-->
       <div
-      v-else-if="d >= 11 && d <= 17"
+        v-else-if="backgroundSetter >= 11 && backgroundSetter <= 17"
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#70C7E2,#4CA6E5);
+          background-image: linear-gradient(to top right,#ffffff,#70c7e2,#4ca6e5);
         "
       >
         <div class="row full-width">
@@ -217,7 +236,7 @@
                 <div class="self-center">
                   <div
                     class="text-weight-bold"
-                    style="color: #70C7E2; font-size: 15px"
+                    style="color: #70c7e2; font-size: 15px"
                   >
                     Selamat Siang
                   </div>
@@ -268,13 +287,22 @@
                 class="text-weight-medium"
                 style="color: #a3a3a3; font-size: 12px"
               >
-                {{ moment().locale('ID').format("dddd, DD MMMM YYYY") }}
+                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
+              </div>
+              <div v-if="isLoad">
+                <q-skeleton type="text" />
               </div>
               <div
+                v-else
                 class="text-weight-bold"
                 style="color: #313131; font-size: 18px"
               >
-                Rp 1.000.000,00
+                {{
+                new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                }).format(total_profit)
+                }}
               </div>
             </div>
           </div>
@@ -290,13 +318,22 @@
                 class="text-weight-medium"
                 style="color: #a3a3a3; font-size: 12px"
               >
-                {{ moment().locale('ID').format("dddd, DD MMMM YYYY") }}
+                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
+              </div>
+              <div v-if="isLoad2">
+                <q-skeleton type="text" />
               </div>
               <div
+                v-else
                 class="text-weight-bold"
                 style="color: #313131; font-size: 18px"
               >
-                Rp 0
+                {{
+                new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                }).format(total_spend)
+                }}
               </div>
             </div>
           </div>
@@ -363,7 +400,7 @@
 
       <!--Header Malam-->
       <div
-      v-else-if="d >= 18 && d <= 23"
+        v-else-if="backgroundSetter >= 18 && backgroundSetter <= 23"
         class="row"
         style="
           min-height: 220px;
@@ -448,13 +485,21 @@
                 class="text-weight-medium"
                 style="color: #a3a3a3; font-size: 12px"
               >
-                {{ moment().locale('ID').format("dddd, DD MMMM YYYY") }}
+                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
+              </div>
+              <div v-if="isLoad">
+                <q-skeleton type="text" />
               </div>
               <div
                 class="text-weight-bold"
                 style="color: #313131; font-size: 18px"
               >
-                Rp 1.000.000,00
+                {{
+                new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                }).format(total_profit)
+                }}
               </div>
             </div>
           </div>
@@ -470,13 +515,22 @@
                 class="text-weight-medium"
                 style="color: #a3a3a3; font-size: 12px"
               >
-                {{ moment().locale('ID').format("dddd, DD MMMM YYYY") }}
+                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
+              </div>
+              <div v-if="isLoad2">
+                <q-skeleton type="text" />
               </div>
               <div
+                v-else
                 class="text-weight-bold"
                 style="color: #313131; font-size: 18px"
               >
-                Rp 0
+                {{
+                new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                }).format(total_spend)
+                }}
               </div>
             </div>
           </div>
@@ -543,38 +597,43 @@
 
       <!-- Transaksi Hari ini -->
       <div class="shadow-1 bg-white q-mt-sm q-pa-md">
-        <q-btn class="full-width" flat no-caps dense @click="$router.push('/transaction')">
-          <div class="row full-width self-center">
-            <div
-              class="col-6 text-weight-medium text-left self-center"
-              style="color: #313131; font-size: 15px"
-            >
-              Transaksi hari ini
-            </div>
-            <div class="col-6 self-center text-right">
+        <!-- <q-btn class="full-width" flat no-caps dense @click="$router.push('/transaction')"> -->
+        <div class="row full-width self-center">
+          <div
+            class="col-6 text-weight-medium text-left self-center"
+            style="color: #313131; font-size: 15px"
+          >
+            Transaksi hari ini
+          </div>
+          <!-- <div class="col-6 self-center text-right">
               <q-icon
                 name="fas fa-angle-right"
                 size="20px"
                 color="black"
               ></q-icon>
-            </div>
-          </div>
-        </q-btn>
-        <div
-          class="text-weight-medium q-pl-xs"
-          style="color: #a3a3a3; font-size: 12px"
-        >
-          {{ moment().locale('ID').format("dddd, DD MMMM YYYY") }}
+            </div> -->
+        </div>
+        <!-- </q-btn> -->
+        <div class="text-weight-medium" style="color: #a3a3a3; font-size: 12px">
+          {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
         </div>
         <div
           class="row q-mt-md"
           style="background-color: #ebebeb; border-radius: 5px"
         >
           <div
+            v-if="this.dailyOrderCounter > 0"
             class="text-weight-medium q-pa-sm"
             style="color: #313131; font-size: 15px"
           >
-            10 Pesanan baru
+            {{ this.dailyOrderCounter }} Pesanan Baru
+          </div>
+          <div
+            v-else
+            class="text-weight-medium q-pa-sm"
+            style="color: #313131; font-size: 15px"
+          >
+            Belum Ada Pesanan Hari Ini
           </div>
         </div>
       </div>
@@ -586,7 +645,7 @@
           <!--Button Kursus-->
           <div class="col-4 text-center q-px-xs" style="height: 150px">
             <q-btn
-            @click="$router.push('/course-of-home')"
+              @click="$router.push('/course-of-home')"
               no-caps
               class="shadow-2 q-px-md full-height full-width"
               style="border-radius: 10px"
@@ -614,7 +673,7 @@
           <!--Button Postingan-->
           <div class="col-4 text-center q-px-xs" style="height: 150px">
             <q-btn
-            @click="$router.push('/community')"
+              @click="$router.push('/community')"
               no-caps
               class="shadow-2 q-px-md full-height full-width"
               style="border-radius: 10px"
@@ -642,7 +701,7 @@
           <!--Button Marketplace-->
           <div class="col-4 text-center q-px-xs" style="height: 150px">
             <q-btn
-            @click="$router.push('/marketplace-home')"
+              @click="$router.push('/marketplace-home')"
               no-caps
               class="shadow-2 q-px-md full-height full-width"
               style="border-radius: 10px"
@@ -672,12 +731,17 @@
 
       <!--Kategori Layanan-->
       <div class="full-width">
-        <q-img no-spinner src="~/assets/bg_kategori_layanan_new.svg" width="100vw" height="220px" class="row full-width">
+        <q-img
+          no-spinner
+          src="~/assets/bg_kategori_layanan_new.svg"
+          width="100vw"
+          height="220px"
+          class="row full-width"
+        >
           <div
             class="
               row
-              full-width
-              full-height
+              full-width full-height
               bg-transparent
               justify-end
               q-pa-none
@@ -685,18 +749,40 @@
             "
           >
             <div class="col-2 bg-transparent self-start">
-              <q-img no-spinner src="~/assets/logo_kategori_layanan.svg" width="70px" ></q-img>
+              <q-img
+                no-spinner
+                src="~/assets/logo_kategori_layanan.svg"
+                width="70px"
+              ></q-img>
             </div>
-            <div class="col-5 bg-transparent text-center justify-center self-center" style="border-radius: 10px">
-            
-                <q-img @click="$router.push('/add-clothes')" no-spinner src="~/assets/card_item.svg" ></q-img>
-                
+            <div
+              class="
+                col-5
+                bg-transparent
+                text-center
+                justify-center
+                self-center
+              "
+              style="border-radius: 10px"
+            >
+              <q-img
+                @click="$router.push('/add-clothes')"
+                no-spinner
+                src="~/assets/card_item.svg"
+              ></q-img>
             </div>
-            <div class="col-5 bg-transparent self-center" style="border-radius: 20px">
-                <q-img @click="$router.push('/package-list-first')" no-spinner src="~/assets/card_layanan.svg" width="100%" height="100%"></q-img>
+            <div
+              class="col-5 bg-transparent self-center"
+              style="border-radius: 20px"
+            >
+              <q-img
+                @click="$router.push('/package-list-first')"
+                no-spinner
+                src="~/assets/card_layanan.svg"
+                width="100%"
+                height="100%"
+              ></q-img>
             </div>
-              
-
           </div>
         </q-img>
       </div>
@@ -718,22 +804,123 @@ export default {
 
   data() {
     return {
-      d: null,
-    }
+      //ini untuk mengatur background header
+      backgroundSetter: null,
+      //ini untuk menyimpan saldo masuk hari ini
+      total_profit: 0,
+      //ini untuk menyimpan saldo keluar hari ini
+      total_spend: 0,
+      //ini untuk skeleton saldo masuk hari ini
+      isLoad: false,
+      //ini untuk skeleton saldo keluar hari ini
+      isLoad2: false,
+      //ini untuk menyimpan data pesanan baru
+      dailyOrderCounter: null,
+    };
   },
 
   mounted() {
     this.timeChecker();
+    this.getProfitByDay();
+    this.getSpendToday();
+    this.getDailyTransaction();
   },
 
   methods: {
     moment,
     timeChecker() {
-      this.d = new Date().getHours();
+      this.backgroundSetter = new Date().getHours();
       // console.log(this.d.getHours() > 10 && this.d.getHours() < 17)
     },
-  },
+    getDailyTransaction(){
+      this.$store.dispatch("Orders/dailyTransactionCounter", this.Auth.auth.shop.id)
+      .then((res) => {
+        this.dailyOrderCounter = res.data;
+      }).finally(() => {
+        console.log(this.trtest);
+      });
 
+    },
+    getProfitByDay() {
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store.dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.total_profit = res.data;
+          resolve(res.data);
+        }).catch((err) => {
+          reject(err);
+        }).finally(() => {
+          this.isLoad = false;
+        })
+      
+      })
+      
+    },
+    getSpendToday() {
+      return new Promise((resolve, reject) => {
+        this.isLoad2 = true;
+        this.$store
+        .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.total_spend = res.data;
+          console.log("ini data spend harian", res.data)
+        }).finally(() => {
+          this.isLoad2 = false;
+        })
+      })
+      
+    },
+    print() {
+      if (this.$q.platform.is.android) {
+        window.BTPrinter.printText(
+          function (data) {
+            console.log("Success");
+            console.log(data);
+          },
+          function (err) {
+            console.log("Error");
+            console.log(err);
+          },
+          "Firos Bupati sidoarjo"
+        );
+      } else {
+        this.$q.notify("Hanya bisa di android");
+      }
+    },
+    doScanOrder() {
+      cordova.plugins.barcodeScanner.scan(
+        (result) => {
+          this.$store
+            .dispatch("Orders/show", parseInt(result.text))
+            .then((res) => {
+              this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
+            });
+        },
+        (error) => {
+          alert("Scanning failed: " + error);
+        },
+        {
+          preferFrontCamera: false, // iOS and Android
+          showFlipCameraButton: true, // iOS and Android
+          showTorchButton: true, // iOS and Android
+          torchOn: false, // Android, launch with the torch switched on (if available)
+          saveHistory: true, // Android, save scan history (default false)
+          prompt: "Place a barcode inside the scan area", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations: true, // iOS
+          disableSuccessBeep: false, // iOS and Android
+        }
+      );
+    },
+    refresh(done) {
+      this.getProfitByDay().then((res) => {
+        if (done) done();
+      });
+    },
+  },
 };
 </script>
 

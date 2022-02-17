@@ -1,6 +1,9 @@
-<template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
+<template >
+<q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
+<div class="fixed-top" style="z-index: 999">
   <q-header class="bg-transparent">
     <q-pull-to-refresh @refresh="refresh">
+    
       <div
         class="text-center"
         style="
@@ -169,7 +172,9 @@
       </div>
     </q-pull-to-refresh>
   </q-header>
+  </div>
 
+  <q-page-container>
   <q-page>
     <q-card flat class="q-pa-sm">
       <q-card-section class="row bg-white">
@@ -338,7 +343,10 @@
         />
       </q-btn>
     </q-page-sticky>
+    
   </q-page>
+  </q-page-container>
+  </q-layout>
 </template>
 
 <script>

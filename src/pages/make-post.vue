@@ -35,13 +35,13 @@
               /></q-avatar>
               <div class="q-pl-sm column">
                 <div class="text-weight-medium" style="font-size: 12px">
-                  Indonesia Loundry
+                  Indonesia Laundry
                 </div>
                 <div
                   class="text-caption text-weight-medium"
                   style="color: #b1b1b1; font-size: 10px"
                 >
-                  2 Hari
+                
                 </div>
               </div>
             </div>
@@ -250,7 +250,6 @@ export default {
         item.visible = "ada";
       });
       this.$forceUpdate();
-      console.log(this.files);
     },
     toBase64(file) {
       return new Promise((resolve, reject) => {
@@ -265,7 +264,6 @@ export default {
       });
     },
     openMedia() {
-      // console.log(this.$refs.media)
       this.$refs.selectfiles.pickFiles();
     },
     async previewImages(files) {
@@ -278,7 +276,6 @@ export default {
 
       Promise.all(array).then((res) => {
         this.images_videos = res;
-        console.log(this.images_videos);
       });
     },
     removeImage(index) {
@@ -289,7 +286,6 @@ export default {
         if(success){
           let formData = new FormData();
           this.files.forEach((file) => {
-            // console.log(typeof image, image);
             formData.append("files[]", file);
           });
           formData.append("tittle", "LAUNDRY POST");
@@ -297,7 +293,7 @@ export default {
           formData.append("status", "PUBLISHED");
           formData.append("featured", 0);
           this.$store.dispatch("Post/store", formData).then((res) => {
-            this.$router.push('/community');
+            this.$router.push("/community");
             this.$q.notify("Berhasil");
           });
         }else{

@@ -72,8 +72,10 @@ export default {
       categories: [],
       categories_temp: [],
       isLoad: false,
+      //ini untuk men-disable input saat proses save
       Loading: false,
       val: null,
+      //ini untuk menyimpan string ketika updata nama
       text: "",
     };
   },
@@ -102,7 +104,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;
@@ -190,7 +191,6 @@ export default {
     // },
     // buttonSimpan(reset) {
     //   // const $q = useQuasar();[0].reset()
-    //   // console.log(this.$refs.update);
     //   this.$refs["category_" + this.category.id].reset();
     // },
     buttonBack(reset) {

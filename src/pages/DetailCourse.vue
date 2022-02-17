@@ -324,22 +324,22 @@ export default {
   },
   methods: {
     getContent() {
-      
       this.$store.dispatch("ModuleContent/show", this.contentid).then((res) => {
         this.content = res.data;
-      this.$forceUpdate()
+        this.$forceUpdate();
       });
     },
     getNextContent() {
-      
       let next_id = this.$store.getters["ModuleContent/nextContent"](
         this.contentid
       );
 
-      this.$store.dispatch("ModuleContent/show", next_id).then((res) => {
-        this.next_content = res.data;
-         this.$forceUpdate()
-      });
+      if (next_id) {
+        this.$store.dispatch("ModuleContent/show", next_id).then((res) => {
+          this.next_content = res.data;
+          this.$forceUpdate();
+        });
+      }
     },
     like() {
       this.content.liked_count = 1;
@@ -357,12 +357,12 @@ export default {
     },
     detailCourse(id) {
       this.$router.push(`/${id}/detail-course`);
-      this.content = null
-      this.next_content = null
-      this.$nextTick().then(()=>{
-        this.getContent()
-        this.getNextContent()
-      })
+      this.content = null;
+      this.next_content = null;
+      this.$nextTick().then(() => {
+        this.getContent();
+        this.getNextContent();
+      });
       this.$forceUpdate();
     },
   },

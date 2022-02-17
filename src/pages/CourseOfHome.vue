@@ -1,4 +1,5 @@
-<template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
+<template >
+<q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <!-- Header -->
   <q-page>
     <!-- Container -->
@@ -185,6 +186,7 @@
       <q-separator></q-separator>
     </div>
   </q-page>
+  </q-layout>
 </template>
 
 <script>

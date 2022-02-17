@@ -132,7 +132,6 @@ export default {
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
-            console.log("ini data harian", res.data);
           })
           .catch((err) => {
             reject(err);
@@ -154,7 +153,6 @@ export default {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],
           };
-          console.log("ini pagination", res.data);
           done();
         });
       } else {

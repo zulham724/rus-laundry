@@ -73,11 +73,13 @@ export default {
       packages_temp: [],
       dialog_addPackage: false,
       dialog_deletePackage: false,
+      //ini untuk men-disable input saat proses save
       loading: false,
       isLoad: false,
       filterOptions: ["Terbaru", "Terlama", "A-Z", "Z-A"],
       selectedFilterOption: null,
       Loading: false,
+      //ini untuk menyimpan string ketika updata nama
       text: "",
     };
   },
@@ -106,7 +108,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;

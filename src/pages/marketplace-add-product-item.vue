@@ -189,14 +189,15 @@
           </div>
         </div>
         <q-input
-          type="number"
+          readonly
+          type="text"
           @click="dialogKondisiBarang = true"
           class="q-ml-md q-mt-sm"
           style="width: 95%"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
-          v-model="product.is_new"
+          :model-value="product.is_new != undefined ? product.is_new ? 'Baru' : 'Bekas' : null"
           placeholder="Masukkan kondisi produk"
         />
 
@@ -290,7 +291,7 @@ export default {
   methods: {
     StatusProduct(){
       this.product.is_new = parseInt(this.is_new)
-      console.log("test status produk", this.product.is_new)
+      // console.log("test status produk", this.product.is_new)
     },
     openMedia() {
       this.$refs.addImages.pickFiles();

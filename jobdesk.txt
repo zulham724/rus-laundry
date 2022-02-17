@@ -77,7 +77,7 @@ p di halaman detail pesanan fitur share ke whatsapp, instagram, telegram
 + dihalaman pesanan waktu konfirmasi pesanan masih belum bisa {rian}
 + fungsi hapus produk pada halaman marketplace add product {iqbal}
 + saat hapus product muncul alert untuk konfirmasi hapus {iqbal}
-- fungsi edit produk pada halaman marketplace add product
++ fungsi edit produk pada halaman marketplace add product
 + jumlah like pada halaman detail produk masih statis {aryo}
 + di halaman marketplace add product ketika produk di klik belum ke redirect ke halaman detail product{aryo}
 
@@ -90,4 +90,7 @@ minus
 + tambah pelanggan masih bermasalah
 + jam di postingan belum benar
 + komentar masih bermasalah
++ halaman commmunity masih error
+- halaman attendance-details error
+- 
 - jaringan lambat

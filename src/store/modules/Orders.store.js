@@ -67,6 +67,15 @@ const actions = {
             })
         })
     },
+    dailyTransactionCounter({commit}, shopId){
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/dailyTransactionCounter/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     getOrdersByShop({
         commit
     }, shopId) {
@@ -286,6 +295,17 @@ const actions = {
             })
         })
     },
+    countSpendOrdersByDay({
+        commit
+    }, shopId){
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getCountSpendOrdresByDay/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     countProfitOrdersByWeek({
         commit
     }, shopId) {
@@ -297,6 +317,17 @@ const actions = {
             })
         })
     },
+    countSpendOrdersByWeek({
+      commit
+    }, shopId) {
+      return new Promise((resolve, reject) => {
+        api.get(`/api/slave/getCountSpendOrdresByWeek/${shopId}`).then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     countProfitOrdersByMonth({
         commit
     }, shopId) {
@@ -307,6 +338,17 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    countSpendOrdersByMonth({
+      commit
+    }, shopId) {
+      return new Promise((resolve, reject) => {
+        api.get(`/api/slave/getCountSpendOrdresByMonth/${shopId}`).then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
     },
 
 };
