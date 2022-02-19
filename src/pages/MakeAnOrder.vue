@@ -69,15 +69,6 @@
                 style="color: #bababa; text-weight-regular"
               />
               <q-input
-                dense
-                v-model="order.date"
-                class="q-pa-xs"
-                type="date"
-                outlined
-                style="color: #bababa; text-weight-regular"
-              />
-
-              <q-input
                 readonly
                 dense
                 @click="dialogListEmployee = true"

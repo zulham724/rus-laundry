@@ -1,4 +1,4 @@
-<template  view="lHh lpR fFf" >
+<template view="lHh lpR fFf">
   <q-layout class="mbl" style="background-color: #fafafa">
     <q-page>
       <!--Header Pagi-->
@@ -7,7 +7,12 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#ffecc1,#b4e6ea);
+          background-image: linear-gradient(
+            to top right,
+            #ffffff,
+            #ffecc1,
+            #b4e6ea
+          );
         "
       >
         <div class="row full-width">
@@ -99,10 +104,10 @@
                 style="color: #313131; font-size: 18px"
               >
                 {{
-                new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                }).format(total_profit)
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(total_profit)
                 }}
               </div>
             </div>
@@ -121,7 +126,7 @@
               >
                 {{ moment().format("DD MMMM YYYY") }}
               </div>
-              <div v-if="isLoad2">
+              <div v-if="isLoad">
                 <q-skeleton type="text" />
               </div>
               <div
@@ -130,10 +135,10 @@
                 style="color: #313131; font-size: 18px"
               >
                 {{
-                new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                }).format(total_spend)
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(total_spend)
                 }}
               </div>
             </div>
@@ -144,8 +149,9 @@
         <div class="row full-width">
           <div class="col-6">
             <q-btn
+              @click="ScanAttendance()"
               style="
-                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
+                background-image: linear-gradient(to bottom right, #f6d365, #fda085);
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -171,9 +177,9 @@
           </div>
           <div class="col-6">
             <q-btn
-              @click="doScanOrder()"
+              
               style="
-                background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
+                background-image: linear-gradient(to bottom right, #4ecebf, #3fafb6);
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -192,7 +198,7 @@
                   class="text-weight-medium self-center q-pl-sm"
                   style="color: white; font-size: 14px"
                 >
-                  Scan Barang
+                  Scan Barang asdas
                 </div>
               </div>
             </q-btn>
@@ -206,7 +212,12 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#70c7e2,#4ca6e5);
+          background-image: linear-gradient(
+            to top right,
+            #ffffff,
+            #70c7e2,
+            #4ca6e5
+          );
         "
       >
         <div class="row full-width">
@@ -298,10 +309,10 @@
                 style="color: #313131; font-size: 18px"
               >
                 {{
-                new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                }).format(total_profit)
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(total_profit)
                 }}
               </div>
             </div>
@@ -320,7 +331,7 @@
               >
                 {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
               </div>
-              <div v-if="isLoad2">
+              <div v-if="isLoad">
                 <q-skeleton type="text" />
               </div>
               <div
@@ -329,10 +340,10 @@
                 style="color: #313131; font-size: 18px"
               >
                 {{
-                new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                }).format(total_spend)
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(total_spend)
                 }}
               </div>
             </div>
@@ -343,8 +354,13 @@
         <div class="row full-width">
           <div class="col-6">
             <q-btn
+              @click="ScanAttendance()"
               style="
-                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #f6d365,
+                  #fda085
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -370,8 +386,13 @@
           </div>
           <div class="col-6">
             <q-btn
+                @click="doScanOrder()"
               style="
-                background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #4ecebf,
+                  #3fafb6
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -404,7 +425,12 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#505483,#000650);
+          background-image: linear-gradient(
+            to top right,
+            #ffffff,
+            #505483,
+            #000650
+          );
         "
       >
         <div class="row full-width">
@@ -495,10 +521,10 @@
                 style="color: #313131; font-size: 18px"
               >
                 {{
-                new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                }).format(total_profit)
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(total_profit)
                 }}
               </div>
             </div>
@@ -517,7 +543,7 @@
               >
                 {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
               </div>
-              <div v-if="isLoad2">
+              <div v-if="isLoad">
                 <q-skeleton type="text" />
               </div>
               <div
@@ -526,10 +552,10 @@
                 style="color: #313131; font-size: 18px"
               >
                 {{
-                new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                }).format(total_spend)
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(total_spend)
                 }}
               </div>
             </div>
@@ -541,7 +567,11 @@
           <div class="col-6">
             <q-btn
               style="
-                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #f6d365,
+                  #fda085
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -568,7 +598,11 @@
           <div class="col-6">
             <q-btn
               style="
-                background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #4ecebf,
+                  #3fafb6
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -739,14 +773,7 @@
           class="row full-width"
         >
           <div
-            class="
-              row
-              full-width full-height
-              bg-transparent
-              justify-end
-              q-pa-none
-              self-center
-            "
+            class="row full-width full-height bg-transparent justify-end q-pa-none self-center"
           >
             <div class="col-2 bg-transparent self-start">
               <q-img
@@ -756,13 +783,7 @@
               ></q-img>
             </div>
             <div
-              class="
-                col-5
-                bg-transparent
-                text-center
-                justify-center
-                self-center
-              "
+              class="col-5 bg-transparent text-center justify-center self-center"
               style="border-radius: 10px"
             >
               <q-img
@@ -794,6 +815,8 @@
 import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
+import ScanAttendance from "src/components/ScanAttendance.vue";
+import { QrcodeStream } from "qrcode-reader-vue3";
 
 export default {
   name: "HomePage",
@@ -825,51 +848,52 @@ export default {
     this.getSpendToday();
     this.getDailyTransaction();
   },
-
   methods: {
     moment,
     timeChecker() {
       this.backgroundSetter = new Date().getHours();
       // console.log(this.d.getHours() > 10 && this.d.getHours() < 17)
     },
-    getDailyTransaction(){
-      this.$store.dispatch("Orders/dailyTransactionCounter", this.Auth.auth.shop.id)
-      .then((res) => {
-        this.dailyOrderCounter = res.data;
-      }).finally(() => {
-        console.log(this.trtest);
-      });
-
+    getDailyTransaction() {
+      this.$store
+        .dispatch("Orders/dailyTransactionCounter", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.dailyOrderCounter = res.data;
+        })
+        .finally(() => {
+          console.log(this.trtest);
+        });
     },
     getProfitByDay() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
-        this.$store.dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.total_profit = res.data;
-          resolve(res.data);
-        }).catch((err) => {
-          reject(err);
-        }).finally(() => {
-          this.isLoad = false;
-        })
-      
-      })
-      
+        this.$store
+          .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.total_profit = res.data;
+            resolve(res.data);
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
     },
     getSpendToday() {
       return new Promise((resolve, reject) => {
-        this.isLoad2 = true;
+        this.isLoad = true;
         this.$store
-        .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.total_spend = res.data;
-          console.log("ini data spend harian", res.data)
-        }).finally(() => {
-          this.isLoad2 = false;
-        })
-      })
-      
+          .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.total_spend = res.data;
+            console.log("ini data spend harian", res.data);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
     },
     print() {
       if (this.$q.platform.is.android) {
@@ -888,32 +912,77 @@ export default {
         this.$q.notify("Hanya bisa di android");
       }
     },
+
+    ScanAttendance() {
+      console.log("test absen");
+      if (this.$q.platform.is.android) {
+        cordova.plugins.barcodeScanner.scan(
+          (result) => {
+            this.$store
+              .dispatch("attendance/show", parseInt(result.text))
+              .then((res) => {
+                this.$router.push(
+                  `/attendance-details/${parseInt(result.text)}`
+                );
+              });
+          },
+          (error) => {
+            alert("Scanning failed: " + error);
+          },
+          {
+            preferFrontCamera: false, // iOS and Android
+            showFlipCameraButton: true, // iOS and Android
+            showTorchButton: true, // iOS and Android
+            torchOn: false, // Android, launch with the torch switched on (if available)
+            saveHistory: true, // Android, save scan history (default false)
+            prompt: "Scan barcode Absensi disini", // Android
+            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+            orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false, // iOS and Android
+          }
+        );
+      } else {
+        this.$q.notify("Scan Browser");
+        this.$q.dialog({
+          component: ScanAttendance,
+
+          // props forwarded to your custom component
+        });
+      }
+    },
+
     doScanOrder() {
-      cordova.plugins.barcodeScanner.scan(
-        (result) => {
-          this.$store
-            .dispatch("Orders/show", parseInt(result.text))
-            .then((res) => {
-              this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
-            });
-        },
-        (error) => {
-          alert("Scanning failed: " + error);
-        },
-        {
-          preferFrontCamera: false, // iOS and Android
-          showFlipCameraButton: true, // iOS and Android
-          showTorchButton: true, // iOS and Android
-          torchOn: false, // Android, launch with the torch switched on (if available)
-          saveHistory: true, // Android, save scan history (default false)
-          prompt: "Place a barcode inside the scan area", // Android
-          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-          formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
-          orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
-          disableAnimations: true, // iOS
-          disableSuccessBeep: false, // iOS and Android
-        }
-      );
+      if (this.$q.platform.is.android) {
+        cordova.plugins.barcodeScanner.scan(
+          (result) => {
+            this.$store
+              .dispatch("Orders/show", parseInt(result.text))
+              .then((res) => {
+                this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
+              });
+          },
+          (error) => {
+            alert("Scanning failed: " + error);
+          },
+          {
+            preferFrontCamera: false, // iOS and Android
+            showFlipCameraButton: true, // iOS and Android
+            showTorchButton: true, // iOS and Android
+            torchOn: false, // Android, launch with the torch switched on (if available)
+            saveHistory: true, // Android, save scan history (default false)
+            prompt: "Place a barcode inside the scan area", // Android
+            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+            orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false, // iOS and Android
+          }
+        );
+      } else {
+        this.$q.notify("Hanya bisa di android");
+      }
     },
     refresh(done) {
       this.getProfitByDay().then((res) => {
@@ -924,5 +993,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

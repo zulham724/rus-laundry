@@ -3,7 +3,7 @@
     <q-page>
       <div class="row q-pa-md">
         <div class="col-1 self-center">
-          <q-btn dense  no-caps flat>
+          <q-btn dense  no-caps flat @click="$router.back()">
             <q-icon size="20px" name="fas fa-arrow-left" style="color: #9b27f1">
             </q-icon>
           </q-btn>

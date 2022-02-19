@@ -86,11 +86,29 @@ minus
 + notify duplicate email di make an order
 + v-if tombol tambah paket di packet list first
 - kondisi produk
-- pesanan tidak masuk
++ pesanan tidak masuk
 + tambah pelanggan masih bermasalah
 + jam di postingan belum benar
 + komentar masih bermasalah
 + halaman commmunity masih error
-- halaman attendance-details error
-- 
+- loading di semua hapus dan edit,
+- loading di postingan dan tombol posting belum disable
+- loading dan tombol tambah dan hapus belum bisa kembali ke awal di add-clothes
+- loading dan tombol tambah dan hapus belum bisa kembali ke awal di package-list-first 
+- tombol back di search post
 - jaringan lambat
+
+
+revisi
+- pada saat menambah produk dikasih validasi q-form harus mengisi semua field
+- harus isi lokasi toko ketika masuk marketplace
+- nama toko dihalaman new home masih statis
+- tampilan data kosong dihalaman transaksi
+- tanggal dihalaman pesanan harus dengan jam 
+- dihalaman karyawan belum ada back nya
+- dihalaman menu kategori layanan di hapus
+- dipengaturan akun lokasi bisnis belum bisa pindah halaman
+- fungsi update profile belum bisa
+- update foto belum bisa semua
+- banner di halaman menu jelek
+- 
