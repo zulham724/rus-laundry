@@ -297,7 +297,6 @@ export default {
     attendanceOutEmployee(){
        cordova.plugins.barcodeScanner.scan(
        (result)=> {
-      
         this.$store.dispatch("Employee/attendanceOut", parseInt(result.text)).then(res => {
           this.$router.push(`/employee`)
           this.$q.notify("Berhasil Absen")

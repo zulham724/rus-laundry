@@ -32,17 +32,16 @@ export default {
     onDecode(decodedString) {
       console.log(decodedString);
       this.$store
-        .dispatch("Employee/attendanceIn", parseInt(decodedString))
+        .dispatch("Orders/show", parseInt(decodedString))
         .then((res) => {
-          this.$router.push(`/employee`);
-          this.$q.notify("Berhasil Absen");
+          this.$router.push(`/detail-transaksi/${parseInt(decodedString)}`);
+          this.$q.notify("Berhasil mencari");
         })
         .catch((err) => {
-          this.dialogAttendance = true;
+          // console.log(err);
         });
     },
-    // following method is REQUIRED
-    // (don't change its name --> "show")
+
     show() {
       this.$refs.dialog.show();
     },
