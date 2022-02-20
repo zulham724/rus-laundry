@@ -101,7 +101,7 @@
                 <div
                   class="col q-px-sm q-py-xs"
                   style="
-                  background-color: #0c1e7f;D637B3
+                  background-color: #0c1e7f;
                   border-radius: 5px 0 0 0;
                 "
                 >
@@ -174,8 +174,9 @@
           <div>
             <q-img
               no-spinner
-              src="~/assets/animasi-proses-cuci.gif"
-              sizes="40px"
+              src="~/assets/icon_unlock.png"
+              width="120px"
+              height="150px"
             >
             </q-img>
           </div>
@@ -203,8 +204,9 @@
           <div>
             <q-img
               no-spinner
-              src="~/assets/animasi-proses-cuci.gif"
-              sizes="50px"
+              src="~/assets/icon_earn_coin.png"
+              width="250px"
+              height="150px"
             >
             </q-img>
           </div>
@@ -264,8 +266,9 @@
           <div>
             <q-img
               no-spinner
-              src="~/assets/animasi-proses-cuci.gif"
-              sizes="50px"
+              src="~/assets/icon_rank.png"
+              width="300px"
+              height="200px"
             >
             </q-img>
           </div>

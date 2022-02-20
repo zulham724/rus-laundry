@@ -70,7 +70,7 @@
                       <q-img no-spinner src="~/assets/icon-coin.svg"></q-img>
                     </q-avatar>
                     <q-item-label class="self-center" style="font-size: 10px"
-                      >1500 Point/2000 Point</q-item-label
+                      >1500 Point</q-item-label
                     >
                   </div>
                 </q-item-section>

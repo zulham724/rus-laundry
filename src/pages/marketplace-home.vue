@@ -166,7 +166,7 @@
               <div class="row justify-center q-pt-sm">
                 <q-img
                   no-spinner
-                  src="~/assets/animasi-proses-cuci.gif"
+                  src="~/assets/alert_gif.gif"
                   style="width: 100px"
                 ></q-img>
               </div>
@@ -209,7 +209,7 @@
               <div class="row justify-center q-pt-sm">
                 <q-img
                   no-spinner
-                  src="~/assets/animasi-proses-cuci.gif"
+                  src="~/assets/wa_gif.gif"
                   style="width: 100px"
                 ></q-img>
               </div>
@@ -267,7 +267,7 @@
               <div class="row justify-center q-pt-sm">
                 <q-img
                   no-spinner
-                  src="~/assets/animasi-proses-cuci.gif"
+                  src="~/assets/wa_gif.gif"
                   style="width: 100px"
                 ></q-img>
               </div>

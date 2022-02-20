@@ -111,6 +111,4 @@ revisi
 - fungsi update profile belum bisa
 - update foto belum bisa semua
 - banner di halaman menu jelek
-
-
-
+- 

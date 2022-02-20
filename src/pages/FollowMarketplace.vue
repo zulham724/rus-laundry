@@ -110,7 +110,7 @@
           <div class="row full-width justify-center q-pt-md">
             <q-img
               no-spinner
-              src="~/assets/animasi-proses-cuci.gif"
+              src="~/assets/man_gif.gif"
               style="width: 200px"
             ></q-img>
           </div>

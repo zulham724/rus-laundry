@@ -1,6 +1,7 @@
-<template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-  <q-page-container style="background-color: #fafafa">
-    <q-page style="background-color: #fafafa">
+<template >
+  <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
+    <div class="fixed-top" style="z-index:999">
+      <q-header class="bg-transparent" >
       <div
         class="text-center"
         style="
@@ -10,16 +11,19 @@
       >
         <q-img
           no-spinner
-          src="~/assets/header-menu-1.svg"
+          src="~/assets/header-menu.png"
           alt="header-menu"
           class="shadow-1"
-          style="border-radius: 0px 0px 0px 70px; height: 25vh;"
+          style="border-radius: 0px 0px 0px 70px; height: 230px;"
         >
         </q-img>
       </div>
-
-      <q-list separator style="background-color: #fafafa" class="q-mt-xs">
-        <q-item
+      </q-header>
+</div>
+<q-page-container style="background-color: #fafafa">
+    <q-page style="background-color: #fafafa">
+      <q-list separator style="background-color: #fafafa; position: relative" class="q-mt-xs">
+        <!-- <q-item
           class="q-py-md"
           clickable
           style="background-color: #ffffff"
@@ -44,7 +48,7 @@
               Kategori Layanan
             </q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
         <q-item
           class="q-py-md"
           clickable
@@ -299,6 +303,7 @@
       </q-dialog>
     </q-page>
   </q-page-container>
+  </q-layout>
 </template>
 
 <script>

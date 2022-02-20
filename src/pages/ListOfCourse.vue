@@ -164,7 +164,7 @@
                   <div
                     class="col q-px-sm q-py-xs"
                     style="
-                  background-color: #0c1e7f;D637B3
+                  background-color: #0c1e7f;
                   border-radius: 5px 0 0 0;
                 "
                   >
@@ -199,7 +199,7 @@
             <div>
               <q-img
                 no-spinner
-                src="~/assets/animasi-proses-cuci.gif"
+                src="~/assets/animation-lock.gif"
                 sizes="50px"
               >
               </q-img>

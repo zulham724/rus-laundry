@@ -2,7 +2,25 @@
   <q-page class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-pull-to-refresh @refresh="refresh">
       <div class="row bg-white q-px-md q-py-lg">
-        <!-- Search -->
+<div class="col-1 justify-center self-center">
+  <!-- Button back -->
+        <q-btn
+              @click="$router.push('/menu')"
+              no-caps
+              dense
+              flat
+              style="color: white"
+            >
+              <q-icon
+                size="20px"
+                name="fas fa-arrow-left"
+                style="color: #000"
+              >
+              </q-icon>
+            </q-btn>
+</div>
+<div class="col-11 justify-center self-center">
+  <!-- Search -->
         <q-input
           class="full-width"
           dense
@@ -17,6 +35,9 @@
             <q-icon name="search" />
           </template>
         </q-input>
+</div>
+        
+        
       </div>
 
       <q-btn no-caps to="/attendance" flat class="full-width bg-white q-mt-md">
@@ -297,6 +318,7 @@ export default {
     attendanceOutEmployee(){
        cordova.plugins.barcodeScanner.scan(
        (result)=> {
+      
         this.$store.dispatch("Employee/attendanceOut", parseInt(result.text)).then(res => {
           this.$router.push(`/employee`)
           this.$q.notify("Berhasil Absen")

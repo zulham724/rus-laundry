@@ -32,14 +32,14 @@ export default {
     onDecode(decodedString) {
       console.log(decodedString);
       this.$store
-        .dispatch("Employee/attendanceIn", parseInt(decodedString))
-        .then((res) => {
-          this.$router.push(`/employee`);
-          this.$q.notify("Berhasil Absen");
-        })
-        .catch((err) => {
-          this.dialogAttendance = true;
-        });
+            .dispatch("Employee/attendanceIn", parseInt(result.text))
+            .then((res) => {
+              this.$router.push(`/employee`);
+              this.$q.notify("Berhasil Absen");
+            })
+            .catch((err) => {
+              this.dialogAttendance = true;
+            });
     },
     // following method is REQUIRED
     // (don't change its name --> "show")
@@ -58,6 +58,7 @@ export default {
       // when QDialog emits "hide" event
       this.$emit("hide");
     },
+
 
     onOKClick() {
       // on OK, it is REQUIRED to

@@ -103,7 +103,7 @@
                       class="q-pl-md self-center"
                       style="font-size: 10px; color: #4f4f4f"
                     >
-                      1500 Point/2000 Point
+                      1500 Point
                     </div>
                   </div>
                 </div>
@@ -197,7 +197,7 @@
                 <div
                   class="col q-px-sm q-py-xs"
                   style="
-                  background-color: #0c1e7f;D637B3
+                  background-color: #0c1e7f;
                   border-radius: 5px 0 0 0;
                 "
                 >

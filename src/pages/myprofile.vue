@@ -1,6 +1,7 @@
 <template>
-  <q-layout>
-    <q-header>
+  <q-layout class="mbl">
+    <div class="fixed-top" style="z-index: 999">
+    <q-header class="bg-transparent">
       <q-toolbar class="bg-white shadow-1">
         <q-btn
           @click="$router.push('/')"
@@ -30,6 +31,7 @@
         </q-btn>
       </q-toolbar>
     </q-header>
+    </div>
     <q-page-container>
       <q-page class="">
         <div class="q-pa-md q-mb-lg">

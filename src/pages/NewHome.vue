@@ -146,7 +146,7 @@
             <q-btn
               @click="ScanAttendance()"
               style="
-                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
+                background-image: linear-gradient(to bottom right, #f6d365, #fda085);
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -172,13 +172,9 @@
           </div>
           <div class="col-6">
             <q-btn
-              @click="doScanOrder()"
+              
               style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #4ecebf,
-                  #3fafb6
-                );
+                background-image: linear-gradient(to bottom right, #4ecebf, #3fafb6);
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -197,7 +193,7 @@
                   class="text-weight-medium self-center q-pl-sm"
                   style="color: white; font-size: 14px"
                 >
-                  Scan Barang
+                  Scan Barang asdas
                 </div>
               </div>
             </q-btn>
@@ -211,12 +207,7 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(
-            to top right,
-            #ffffff,
-            #70c7e2,
-            #4ca6e5
-          );
+          background-image: linear-gradient(to top right,#ffffff,#70c7e2,#4ca6e5);
         "
       >
         <div class="row full-width">
@@ -381,7 +372,7 @@
           </div>
           <div class="col-6">
             <q-btn
-              @click="doScanOrder()"
+                @click="doScanOrder()"
               style="
                 background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
                 width: 100%;
@@ -416,12 +407,7 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(
-            to top right,
-            #ffffff,
-            #505483,
-            #000650
-          );
+          background-image: linear-gradient(to top right,#ffffff,#505483,#000650);
         "
       >
         <div class="row full-width">
@@ -558,11 +544,7 @@
           <div class="col-6">
             <q-btn
               style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #f6d365,
-                  #fda085
-                );
+                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -589,11 +571,7 @@
           <div class="col-6">
             <q-btn
               style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #4ecebf,
-                  #3fafb6
-                );
+                background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -688,7 +666,7 @@
 
                 <div
                   class="text-weight-medium q-pt-md text-center"
-                  style="color: #31313; font-size: 15px"
+                  style="color: #313131; font-size: 15px"
                 >
                   Kursus
                 </div>
@@ -716,7 +694,7 @@
 
                 <div
                   class="text-weight-medium q-pt-md text-center"
-                  style="color: #31313; font-size: 15px"
+                  style="color: #313131; font-size: 15px"
                 >
                   Postingan
                 </div>
@@ -744,7 +722,7 @@
 
                 <div
                   class="text-weight-medium q-pt-md text-center"
-                  style="color: #31313; font-size: 15px"
+                  style="color: #313131; font-size: 15px"
                 >
                   Marketplace
                 </div>
@@ -764,14 +742,7 @@
           class="row full-width"
         >
           <div
-            class="
-              row
-              full-width full-height
-              bg-transparent
-              justify-end
-              q-pa-none
-              self-center
-            "
+            class="row full-width full-height bg-transparent justify-end q-pa-none self-center"
           >
             <div class="col-2 bg-transparent self-start">
               <q-img
@@ -781,13 +752,7 @@
               ></q-img>
             </div>
             <div
-              class="
-                col-5
-                bg-transparent
-                text-center
-                justify-center
-                self-center
-              "
+              class="col-5 bg-transparent text-center justify-center self-center"
               style="border-radius: 10px"
             >
               <q-img
@@ -820,7 +785,7 @@ import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
 import ScanAttendance from "src/components/ScanAttendance.vue";
-import ScanOrder from "src/components/ScanOrder.vue";
+import { QrcodeStream } from "qrcode-reader-vue3";
 
 export default {
   name: "HomePage",
@@ -917,7 +882,6 @@ export default {
       }
     },
 
-    //fungsi scan absensi
     ScanAttendance() {
       console.log("test absen");
       if (this.$q.platform.is.android) {
@@ -952,14 +916,13 @@ export default {
         this.$q.notify("Scan Browser");
         this.$q.dialog({
           component: ScanAttendance,
+
           // props forwarded to your custom component
         });
       }
     },
 
-    //fungsi scan barang
     doScanOrder() {
-      console.log("test scan order");
       if (this.$q.platform.is.android) {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
@@ -987,13 +950,7 @@ export default {
           }
         );
       } else {
-        // this.$q.notify("Hanya bisa di android");
-        this.$q.notify("Scan Browser");
-        this.$q.dialog({
-          component: ScanOrder,
-
-          // props forwarded to your custom component
-        });
+        this.$q.notify("Hanya bisa di android");
       }
     },
     refresh(done) {
