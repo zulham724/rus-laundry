@@ -1,24 +1,24 @@
-
 import { api } from "src/boot/axios";
 
 const state = {
     token: {},
     auth: null,
-   
-    
+
+
 };
 
 const mutations = {
     set_token(state, payload) {
-    state.token = payload.token
+        state.token = payload.token
     },
     logout(state, payload) {
         state.token = {}
+        state.auth = null
     },
-    set_auth(state, payload){
+    set_auth(state, payload) {
         state.auth = payload.auth
     },
-    update_phone_number(state, payload){
+    update_phone_number(state, payload) {
         state.auth.contact_number = payload.contact_number
     }
 };
@@ -37,11 +37,11 @@ const actions = {
                 const token = res.data;
                 api.defaults.headers.common.Accept = "application/json";
                 api.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
-                commit('set_token', {token:token})
+                commit('set_token', { token: token })
                 api.get(`api/slave/user`).then(resp => {
                     const auth = resp.data
-                    commit('set_auth', {auth:auth})
-                }).finally(()=>{
+                    commit('set_auth', { auth: auth })
+                }).finally(() => {
                     resolve(res.data)
                 })
             }).catch(err => {
@@ -57,10 +57,10 @@ const actions = {
             resolve();
         })
     },
-    addWANumber({ commit }, contact_number){
+    addWANumber({ commit }, contact_number) {
         return new Promise((resolve, reject) => {
             api.post(`/api/slave/inputnumberphone`, contact_number).then(res => {
-                commit('update_phone_number', {contact_number: contact_number});
+                commit('update_phone_number', { contact_number: contact_number });
                 resolve(res)
             }).catch(err => {
                 reject(err)

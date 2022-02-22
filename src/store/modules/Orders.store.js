@@ -5,10 +5,6 @@ import {
 const state = {
     data: {},
     order: null,
-    dataM: [],
-    dataW: [],
-    dataD: [],
-
 };
 
 const mutations = {
@@ -53,9 +49,18 @@ const mutations = {
             data: [...state.data.data, ...payload.data.data]
         }
     },
+    reset(state) {
+        state.order = null
+        state.data = {}
+    }
 };
 
 const actions = {
+    reset({ commit }) {
+        return new Promise((resolve, reject) => {
+            commit('reset')
+        })
+    },
     updateStatus({
         commit
     }, orderStatus) {
@@ -67,7 +72,7 @@ const actions = {
             })
         })
     },
-    dailyTransactionCounter({commit}, shopId){
+    dailyTransactionCounter({ commit }, shopId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/dailyTransactionCounter/${shopId}`).then(res => {
                 resolve(res)
@@ -137,7 +142,7 @@ const actions = {
                 });
         });
     },
-    orderProduct({ commit }, formData){
+    orderProduct({ commit }, formData) {
         return new Promise((resolve, reject) => {
             api
                 .post(`/api/slave/orderproduct`, formData)
@@ -297,7 +302,7 @@ const actions = {
     },
     countSpendOrdersByDay({
         commit
-    }, shopId){
+    }, shopId) {
         return new Promise((resolve, reject) => {
             api.get(`/api/slave/getCountSpendOrdresByDay/${shopId}`).then(res => {
                 resolve(res)
@@ -318,15 +323,15 @@ const actions = {
         })
     },
     countSpendOrdersByWeek({
-      commit
+        commit
     }, shopId) {
-      return new Promise((resolve, reject) => {
-        api.get(`/api/slave/getCountSpendOrdresByWeek/${shopId}`).then(res => {
-          resolve(res)
-        }).catch(err => {
-          reject(err)
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getCountSpendOrdresByWeek/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
         })
-      })
     },
     countProfitOrdersByMonth({
         commit
@@ -340,15 +345,15 @@ const actions = {
         })
     },
     countSpendOrdersByMonth({
-      commit
+        commit
     }, shopId) {
-      return new Promise((resolve, reject) => {
-        api.get(`/api/slave/getCountSpendOrdresByMonth/${shopId}`).then(res => {
-          resolve(res)
-        }).catch(err => {
-          reject(err)
+        return new Promise((resolve, reject) => {
+            api.get(`/api/slave/getCountSpendOrdresByMonth/${shopId}`).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
         })
-      })
     },
 
 };

@@ -1,9 +1,9 @@
 {
     "name": "rus-laundry",
     "version": "0.0.1",
-    "description": "",
-    "productName": "Quasar App",
-    "author": "BryanAlthafano <xacpro@gmail.com>",
+    "description": "By CV Ardata Media",
+    "productName": "Laundry Digital",
+    "author": "Zulham Azwar Achmad",
     "private": true,
     "scripts": {
         "test": "echo \"No test specified\" && exit 0"

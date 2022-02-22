@@ -172,7 +172,7 @@
           </div>
           <div class="col-6">
             <q-btn
-              
+              @click="doScanOrder()"
               style="
                 background-image: linear-gradient(to bottom right, #4ecebf, #3fafb6);
                 width: 100%;
@@ -193,7 +193,7 @@
                   class="text-weight-medium self-center q-pl-sm"
                   style="color: white; font-size: 14px"
                 >
-                  Scan Barang asdas
+                  Scan Barang
                 </div>
               </div>
             </q-btn>
@@ -372,7 +372,7 @@
           </div>
           <div class="col-6">
             <q-btn
-                @click="doScanOrder()"
+              @click="doScanOrder()"
               style="
                 background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
                 width: 100%;
@@ -785,6 +785,7 @@ import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
 import ScanAttendance from "src/components/ScanAttendance.vue";
+import ScanOrder from 'src/components/ScanOrder.vue'
 import { QrcodeStream } from "qrcode-reader-vue3";
 
 export default {
@@ -913,7 +914,7 @@ export default {
           }
         );
       } else {
-        this.$q.notify("Scan Browser");
+        this.$q.notify("Scan Absensi");
         this.$q.dialog({
           component: ScanAttendance,
 
@@ -921,8 +922,8 @@ export default {
         });
       }
     },
-
     doScanOrder() {
+      console.log('scan pesanan')
       if (this.$q.platform.is.android) {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
@@ -950,7 +951,12 @@ export default {
           }
         );
       } else {
-        this.$q.notify("Hanya bisa di android");
+        this.$q.notify("Scan Pesanan");
+        this.$q.dialog({
+          component: ScanOrder,
+
+          // props forwarded to your custom component
+        });
       }
     },
     refresh(done) {

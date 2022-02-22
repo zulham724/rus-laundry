@@ -323,9 +323,12 @@ export default {
       this.dialogLogout = true;
     },
     doLogout() {
-      this.$store.dispatch("Auth/logout").then((res) => {
+      let reset_auth_data = this.$store.dispatch("Auth/logout")
+      let reset_orders_data = this.$store.dispatch('Orders/reset')
+
+      Promise.all([reset_auth_data,reset_orders_data]).then(res=>{
         this.$router.push("/login");
-      });
+      })
     },
   },
 };

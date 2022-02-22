@@ -48,6 +48,7 @@
       </div>
 
       <q-page>
+        <q-pull-to-refresh @refresh="refresh">
         <!-- Skeleton -->
         <div v-if="isLoad == true">
           <q-item
@@ -85,7 +86,7 @@
         </div>
 
         <!-- List Pesanan -->
-        <div v-else-if="isLoad == false && orders">
+        <div v-else-if="isLoad == false && orders.data">
           <q-infinite-scroll
             @load="onLoadRef"
             :offset="250"
@@ -152,6 +153,11 @@
                 </q-item-section>
               </q-item>
             </q-list>
+            <template v-slot:loading>
+              <div class="row justify-center q-my-md">
+                <q-spinner-dots color="primary" size="40px" />
+              </div>
+            </template>
           </q-infinite-scroll>
         </div>
 
@@ -168,6 +174,7 @@
           ></q-img>
           <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
         </div>
+        </q-pull-to-refresh>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -194,7 +201,7 @@ export default {
   },
 
   mounted() {
-      if (this.Orders.data) {
+    if (!!this.Orders.data.data) {
       this.orders = this.Orders.data;
     } else {
       this.getOrders();
@@ -202,8 +209,8 @@ export default {
   },
 
   methods: {
-      moment,
-      getOrders() {
+    moment,
+    getOrders() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
@@ -240,7 +247,7 @@ export default {
             ...res.data,
             data: [...this.orders.data, ...res.data.data],
           };
-          console.log("ini isi res on load setelah diolah", res.data);
+          // console.log("ini isi res on load setelah diolah", res.data);
           done();
         });
       } else {
