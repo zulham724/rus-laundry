@@ -15,8 +15,8 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Keranjang</q-toolbar-title
-        >
+          >Keranjang
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
@@ -28,7 +28,7 @@
             :key="category.id"
           >
             <div class="row bg-white q-py-sm q-mt-sm">
-              <div class="col-6">
+              <div class="col-4">
                 <div
                   class="q-ma-md text-subtitle1 text-weight-medium float-left"
                   style="color: grey"
@@ -36,7 +36,7 @@
                   {{ category.name }}
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-8">
                 <q-btn
                   class="q-ma-sm float-right"
                   @click="tambahkg(c)"
@@ -49,7 +49,7 @@
                   ></q-icon>
                 </q-btn>
                 <div class="float-right q-pa-sm text-weight-medium text-h5">
-                  {{ category.quantity }}
+                  {{ category.quantity ? category.quantity.toFixed(1) : null }}
                 </div>
 
                 <q-btn
@@ -79,7 +79,9 @@
             <div v-if="this.Orders.order.charts[c].package">
               <div>
                 <q-card class="no-shadow">
-                  <q-card-section @click="$router.push(`/${category.id}/choose-package`)">
+                  <q-card-section
+                    @click="$router.push(`/${category.id}/choose-package`)"
+                  >
                     <div class="text-caption">
                       {{ this.Orders.order.charts[c].package.name }}
                     </div>
@@ -116,12 +118,18 @@
             </div>
           </q-card>
 
-          <div
-            class="col-12 q-pt-lg"
-            v-if="this.Orders.order.total_price"
-          >
+          <div class="col-12 q-pt-lg" v-if="this.Orders.order.total_price">
             <q-card class="q-pa-sm shadow-5">
               <q-card-section>
+                <div class="row full-width justify-center">
+                  <q-btn v-if="!payment" flat @click="paymentDialog = true"
+                    >Tambah Pembayaran</q-btn
+                  >
+                  <q-btn v-else flat @click="paymentDialog = true">
+                    Pembayaran sejumlah RP.
+                    {{ payment.toLocaleString() }} dimasukan (KLIK UNTUK UBAH)
+                  </q-btn>
+                </div>
                 <div class="text-caption">Total Harga</div>
                 <div class="text-subtitle1">
                   {{
@@ -191,6 +199,32 @@
           </div>
           <div class="text-h6 text-center">Wah Keranjangmu Kosong</div>
         </div>
+
+        <!-- dialog payment  -->
+        <q-dialog v-model="paymentDialog">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">Pembayaran Lunas/ DP</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <q-form ref="paymentForm">
+                <q-input
+                  type="number"
+                  @keypress="isNumber($event)"
+                  placeholder="Masukan Nominal"
+                  v-model="payment"
+                ></q-input>
+              </q-form>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="OK" color="primary" @click="submitPayment()" />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
+        <!-- end dialog payment  -->
       </q-page>
     </q-page-container>
   </q-layout>
@@ -206,17 +240,42 @@ export default {
     return {
       expanded: false,
       loading: false,
+      paymentDialog: false,
+      payment: null,
     };
   },
   methods: {
+    isNumber(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    submitPayment() {
+      if (this.payment > this.Orders.order.total_price) {
+        this.$q.notify("Pembayaran melebihi batas");
+      } else {
+        this.$q.notify("Pembayaran dimasukan");
+        this.payment = parseInt(this.payment);
+        this.Orders.order.payment = this.payment;
+        // console.log(this.payment);
+        this.paymentDialog = false;
+      }
+    },
     tambahkg(index) {
-      this.Orders.order.charts[index].quantity++;
+      this.Orders.order.charts[index].quantity += 0.1;
       this.getPrice();
-      // console.log(this.Orders.order.charts[index])
     },
     kurangkg(index) {
-      this.Orders.order.charts[index].quantity -= 1;
-      if (this.Orders.order.charts[index].quantity == 0) {
+      this.Orders.order.charts[index].quantity -= 0.1;
+      if (this.Orders.order.charts[index].quantity <= 0.1) {
         this.$store.commit("Orders/remove_order_chart", {
           id: this.Orders.order.charts[index].id,
         });
@@ -245,16 +304,20 @@ export default {
         total_price += category.total_price;
       });
       this.Orders.order.total_price = total_price;
+      this.payment = this.Orders.order.payment;
     },
     store() {
-      this.loading = true
+      this.loading = true;
       let order = this.Orders.order;
-      this.$store.dispatch("Orders/store", order).then((res) => {
-        this.$q.notify("Berhasil");
-        this.$router.push("/confirm-order");
-      }).finally(()=>{
-        this.loading = false
-      })
+      this.$store
+        .dispatch("Orders/store", order)
+        .then((res) => {
+          this.$q.notify("Berhasil");
+          this.$router.push("/confirm-order");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
   mounted() {

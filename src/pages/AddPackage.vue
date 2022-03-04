@@ -11,9 +11,6 @@
           style="color: #888888; font-size: 16px"
           >Tambah Paket Baru</q-toolbar-title
         >
-        <q-btn @click="store()" no-caps flat color="grey" class="text-right">
-          <div class="text-weight-medium">Tambah</div>
-        </q-btn>
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
@@ -31,6 +28,7 @@
         </q-card>
 
         <q-input
+          type="number"
           v-model="package.price"
           class="q-my-sm text-subtitle2"
           label="Harga"
@@ -75,7 +73,7 @@
 
         <q-card flat class="q-mt-sm full-width">
           <q-select
-          class="q-px-md"
+            class="q-px-md"
             dense
             v-model="category"
             :options="categories"
@@ -83,6 +81,19 @@
             label="Pilih Kategori"
           />
         </q-card>
+
+        <div class="fixed-bottom" style="z-index: 1">
+          <q-btn
+            @click="store()"
+            :ripple="{ color: 'orange' }"
+            flat
+            no-caps
+            class="full-width"
+            style="background-color: #49c2c0"
+            label="Tambah"
+            text-color="grey-1"
+          />
+        </div>
 
         <q-dialog v-model="dialogTambahPaket">
           <q-card>

@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header class="bg-transparent">
       <q-btn
-        @click="$router.push('/')"
+        @click="$router.back()"
         flat
         class="bg-transparent text-subtitle2 text-weight-light float-left q-pa-md"
       >
@@ -21,7 +21,12 @@
           Merubah Status Pesanan
         </div>
 
-        <div class="bg-grey-1 shadow-7" style="border-radius: 5px" ref="order" id="order">
+        <div
+          class="bg-grey-1 shadow-7"
+          style="border-radius: 5px"
+          ref="order"
+          id="order"
+        >
           <div class="text-grey text-caption q-pl-md q-pt-sm">No Pesanan</div>
           <div class="text-subtitle1 q-pl-md">
             {{ order.id }}
@@ -116,7 +121,7 @@ export default {
           "RPP02N"
         );
       } else {
-        this.printDiv('order')
+        this.printDiv("order");
         this.$q.notify("Hanya bisa di android");
       }
     },

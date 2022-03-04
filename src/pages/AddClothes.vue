@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Jenis Pakaian</q-toolbar-title
+          >Pilih Item</q-toolbar-title
         >
         <q-btn
           class="float-right"
@@ -92,7 +92,7 @@
           </div>
 
           <div v-else-if="isLoad == false && categories.length">
-            <q-list class="q-pt-md">
+            <q-list class="q-pt-md q-mb-xl">
               <add-clothes-list
                 class="q-my-sm"
                 v-for="(category, c) in categories"
@@ -100,27 +100,6 @@
                 :category="category"
                 :chooseMode="chooseMode"
               ></add-clothes-list>
-
-              <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-              
-              <!--
-              <q-item
-                v-for="(category, c) in categories"
-                :key="c"
-                class="q-my-sm bg-white"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    {{ category.name }}
-                  </q-item-label>
-                  <q-item-label caption>
-                    {{ category.service_unit.name }}
-                  </q-item-label>
-                </q-item-section>
-                <q-item-section side v-if="chooseMode">
-                  <q-checkbox v-model="categories[c].checkCategory" />
-                </q-item-section>
-              </q-item> -->
             </q-list>
           </div>
 
@@ -228,7 +207,7 @@
                     text-color="grey-8"
                     style="width: 30px; background-color: white"
                   />
-                  <q-btn  
+                  <q-btn
                     v-close-popup
                     class="text-white"
                     no-caps
@@ -312,11 +291,6 @@ export default {
         );
       }
     },
-    // updateName() {
-    //   let id = this.category.id;
-    //   this.$store
-    //     .dispatch("ServiceCategories/updateName", this.category)
-    // },
 
     filterCategory(val) {
       this.update(val);
@@ -377,28 +351,6 @@ export default {
     this.filterCategory = debounce(this.filterCategory, 1000);
     this.getClothes();
   },
-
-  // setup() {
-  //   const $q = useQuasar();
-  //   let timer;
-
-  //   function finalize(reset) {
-  //     timer = setTimeout(() => {
-  //       reset();
-  //     }, 1000);
-  //   }
-
-  //   onBeforeUnmount(() => {
-  //     clearTimeout(timer);
-  //   });
-
-  //   return {
-  //     onRight({ reset }) {
-  //       $q.notify("Back button triggered. Resetting in 1 second.");
-  //       finalize(reset);
-  //     },
-  //   };
-  // },
 };
 </script>
 

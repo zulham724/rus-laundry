@@ -19,10 +19,9 @@
             no-caps
             dense
             @click="$router.push('/order-code')"
-            flat
             label="Cetak kode pesanan"
-            class="full-width bg-white text-weight-regular q-py-sm"
-            style="font-size: 20px"
+            class="bg-white text-weight-regular q-py-sm q-px-sm"
+            style="font-size: 20px; border-radius: 10px"
           />
           <br />
           <q-btn

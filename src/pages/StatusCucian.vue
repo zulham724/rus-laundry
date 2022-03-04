@@ -50,34 +50,16 @@
                 {{ moment(order.created_at).format("lll") }}
               </div>
             </div>
-            <div class="col-4">
-              <div
-                class="row justify-end items-center q-pr-md"
-                v-if="order.service_status.status.id == 1"
-              >
-                <q-btn
-                  label="proses paket"
-                  size="sm"
-                  flat
-                  @click="updateStatusService()"
-                />
-              </div>
-              <div class="row justify-end items-center q-pr-md" v-else>
-                <q-btn
-                  v-show="order.service_status.status.id < 3"
-                  label="selsaikan paket"
-                  size="sm"
-                  flat
-                  @click="updateStatusService()"
-                />
-              </div>
-            </div>
           </div>
         </div>
 
         <!-- Animasi Proses Cucian -->
         <div class="text-center">
-          <q-img src="~/assets/animasi-proses-cuci.gif" style="width: 30vh">
+          <q-img
+            no-loading
+            src="~/assets/animasi-proses-cuci.gif"
+            style="width: 30vh"
+          >
           </q-img>
         </div>
         <!-- Animasi Progress Loading  -->
@@ -113,21 +95,43 @@
 
         <div class="row justify-center">
           <!-- Button Batalkan Pesanan -->
-          <q-btn
-            @click="$router.push(`/detail-transaksi/${orderid}`)"
-            flat
-            rounded
-            no-caps
-            style="
-              color: #313131;
-              background-color: white;
-              font-size: 12px;
-              max-width: 50vw;
-            "
-            class="text-weight-regular"
-          >
-            <div class="q-pa-sm">kembali</div></q-btn
-          >
+          <div v-if="order.service_status.status.id == 1">
+            <q-btn
+              @click="updateStatusService()"
+              flat
+              rounded
+              no-caps
+              style="
+                color: #fafafa;
+                background-color: #49c2c0;
+                font-size: 12px;
+                max-width: 50vw;
+                border-radius: 10px;
+              "
+              class="text-weight-regular"
+            >
+              <div class="q-pa-sm">Proses</div>
+            </q-btn>
+          </div>
+
+          <div v-else>
+            <q-btn
+              v-show="order.service_status.status.id < 3"
+              @click="updateStatusService()"
+              flat
+              no-caps
+              style="
+                color: #fafafa;
+                background-color: #49c2c0;
+                font-size: 12px;
+                max-width: 50vw;
+                border-radius: 10px;
+              "
+              class="text-weight-regular"
+            >
+              <div class="q-pa-sm">Selesai</div></q-btn
+            >
+          </div>
         </div>
       </q-page>
     </q-page-container>
@@ -172,26 +176,26 @@ export default {
         service_id: this.serviceid,
       };
       this.$store.dispatch("Orders/getStatus", payload).then((res) => {
-        this.order = res.data
-        console.log("ini data", res.data )
+        this.order = res.data;
+        console.log("ini data", res.data);
       });
     },
-    updateStatusService(){
+    updateStatusService() {
       let service_status_id;
-      if(this.order.service_status.service_status_id == 1){
-         service_status_id = 2
-      }else{
-         service_status_id = 3
+      if (this.order.service_status.service_status_id == 1) {
+        service_status_id = 2;
+      } else {
+        service_status_id = 3;
       }
-        // console.log(service_status_id)
-        const payload = {
-          id: this.order.service_status.id,
-          service_status_id: service_status_id
-        }
-      this.$store.dispatch("Services/updateStatus", payload).then(res => {
-        this.getStatusService()
-      })
-    }
+      // console.log(service_status_id)
+      const payload = {
+        id: this.order.service_status.id,
+        service_status_id: service_status_id,
+      };
+      this.$store.dispatch("Services/updateStatus", payload).then((res) => {
+        this.getStatusService();
+      });
+    },
   },
 
   mounted() {

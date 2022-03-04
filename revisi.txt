@@ -1,0 +1,27 @@
++ halaman input new clothes judul menjadi tambah item
++ halaman package list first waktu pengerjaan menjadi number
++ halaman add package tombol tambah diganti di bawah
++ halaman make an order langsung ada tombol tambah pelanggan
++ halaman list type of clothes judul menjadi jenis item
++ halaman list type of clothes padding bawah masih menutupi
++ halaman home bagian info pesanan baru di beri router push
++ halaman transaksi diberi pull refresh dan skeleton
++ halaman detail transaksi ketika cetak kode pesanan router back diperbaiki
++ halaman status cucian tombol proses paket diperbaiki
++ halaman detail transaksi di tampilkan status cucian per barang
++ halaman invoice tambahkan tombol back
++ halaman home belum ada antrian hari ini untuk monitor transaksi
++ halaman basket (bisa diketik dan juga di pencet & jika kg kelipatan 1)
++ halaman confirm order tombol cetak kode pesanan diperbaiki
++ halaman make an order bagian email (harus email)
++ halaman tambah pesanan beri skeleton ketika loading data list customer [tidak ada loading karena data di mounted]
++ halaman tambah pesanan beri skeleton ketika loading data list karyawan [tidak ada loading karena data di mounted]
++ halaman transaksi di beri filter status pembayaran di list (belum bayar, bayar sebagian, lunas) & filter berdasarkan status pembayaran
+
+? buat halaman preview pesanan bagi para customer [belum ada design]
+? halaman basket ada tombol tambah pembayaran (bayar nanti, dp , dan lunas) [belum ada design]
+? halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
+
+- halaman keranjang error jika ada item yang tidak memiliki paket
+- halaman berikan softdelete pada item dan paket
+

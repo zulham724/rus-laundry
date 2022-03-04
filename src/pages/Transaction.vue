@@ -34,6 +34,7 @@
               outlined
               v-model="search"
               label="Cari Pesanan"
+              @update:model-value="searchTransaksi()"
             >
               <q-icon
                 name="search"
@@ -49,131 +50,145 @@
 
       <q-page>
         <q-pull-to-refresh @refresh="refresh">
-        <!-- Skeleton -->
-        <div v-if="isLoad == true">
-          <q-item
-            v-for="n in 19"
-            :key="n"
-            class="q-my-sm q-mx-md"
-            style="
-              border-radius: 10px 10px 10px 10px;
-              background-color: #fafafa;
-            "
-          >
-            <q-item-section avatar>
-              <q-skeleton type="QAvatar" size="60px" />
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label class="text-weight-medium">
-                <q-skeleton type="text" height="20px" />
-              </q-item-label>
-              <q-item-label>
-                <q-skeleton type="text" width="15vw" />
-              </q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-              <q-linear-progress
-                style="max-width: 20vw; border-radius: 50px"
-                class="self-center on-right"
-                size="25px"
-              >
-                <q-skeleton type="QChip" />
-              </q-linear-progress>
-            </q-item-section>
-          </q-item>
-        </div>
-
-        <!-- List Pesanan -->
-        <div v-else-if="isLoad == false && orders.data">
-          <q-infinite-scroll
-            @load="onLoadRef"
-            :offset="250"
-            :scroll-target="scrollTargetRef"
-          >
-            <q-list
-              ref="scrollTargetRef"
-              bordered
-              separator
-              class="q-mx-md q-my-xs"
-              style="background-color: #fff; border-radius: 20px 20px 20px 20px"
+          <!-- Skeleton -->
+          <div v-if="isLoad == true">
+            <q-item
+              v-for="n in 19"
+              :key="n"
+              class="q-my-sm q-mx-md"
+              style="
+                border-radius: 10px 10px 10px 10px;
+                background-color: #fafafa;
+              "
             >
-              <q-item
-                v-for="order in orders.data"
-                :key="order.id"
-                class="q-my-sm q-mx-md"
-                clickable
-                @click="$router.push(`/detail-transaksi/${order.id}`)"
+              <q-item-section avatar>
+                <q-skeleton type="QAvatar" size="60px" />
+              </q-item-section>
+
+              <q-item-section class="self-center">
+                <q-item-label class="text-weight-medium">
+                  <q-skeleton type="text" height="20px" />
+                </q-item-label>
+                <q-item-label>
+                  <q-skeleton type="text" width="15vw" />
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-linear-progress
+                  style="max-width: 20vw; border-radius: 50px"
+                  class="self-center on-right"
+                  size="25px"
+                >
+                  <q-skeleton type="QChip" />
+                </q-linear-progress>
+              </q-item-section>
+            </q-item>
+          </div>
+
+          <!-- List Pesanan -->
+          <div v-else-if="isLoad == false && orders.data">
+            <q-infinite-scroll
+              @load="onLoadRef"
+              :offset="250"
+              :scroll-target="scrollTargetRef"
+            >
+              <q-list
+                ref="scrollTargetRef"
+                bordered
+                separator
+                class="q-mx-md q-my-xs"
+                style="
+                  background-color: #fff;
+                  border-radius: 20px 20px 20px 20px;
+                "
               >
-                <q-item-section avatar>
-                  <q-avatar
-                    color="primary"
-                    text-color="white"
-                    size="60px"
-                    style="margin-left: -20px"
-                  >
-                    <q-img
-                      no-spinner
-                      src="~/assets/avatar-box.png"
-                      alt="avatar-box"
-                    />
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section class="self-center">
-                  <q-item-label class="text-weight-medium">{{
-                    order.customer.name
-                  }}</q-item-label>
-                  <q-item-label caption>
-                    ID pesanan {{ order.id }}
-                  </q-item-label>
-                  <q-item-label caption lines="1" class="q-mb-sm">
-                    {{ moment(order.created_at).format("lll") }}</q-item-label
-                  >
-                </q-item-section>
-
-                <q-item-section>
-                  <q-linear-progress
-                    stripe
-                    style="max-width: 20vw; border-radius: 50px; color: #49c26b"
-                    class="self-center q-mb-md on-right"
-                    size="25px"
-                    :value="order.percentage / 100"
-                  >
-                    <div class="absolute-full flex flex-center">
-                      <q-badge
-                        style="font-size: 15px"
-                        class="bg-transparent"
-                        text-color="white "
-                        :label="`${order.percentage}%`"
+                <q-item
+                  v-for="order in orders.data"
+                  :key="order.id"
+                  class="q-my-sm q-mx-md"
+                  clickable
+                  @click="$router.push(`/detail-transaksi/${order.id}`)"
+                >
+                  <q-item-section avatar>
+                    <q-avatar
+                      color="primary"
+                      text-color="white"
+                      size="60px"
+                      style="margin-left: -20px"
+                    >
+                      <q-img
+                        no-spinner
+                        src="~/assets/avatar-box.png"
+                        alt="avatar-box"
                       />
-                    </div>
-                  </q-linear-progress>
-                </q-item-section>
-              </q-item>
-            </q-list>
-            <template v-slot:loading>
-              <div class="row justify-center q-my-md">
-                <q-spinner-dots color="primary" size="40px" />
-              </div>
-            </template>
-          </q-infinite-scroll>
-        </div>
+                    </q-avatar>
+                  </q-item-section>
 
-        <!--Empty Order-->
-        <div
-          v-else
-          class="text-center absolute-center"
-          style="margin-bottom: 100px"
-        >
-          <q-img
-            no-spinner
-            style="width: 160px; height: 160px"
-            src="~/assets/pesanan-kosong.svg"
-          ></q-img>
-          <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
-        </div>
+                  <q-item-section class="self-center">
+                    <q-item-label class="text-weight-medium">{{
+                      order.customer.name
+                    }}</q-item-label>
+                    <q-item-label caption>
+                      ID pesanan {{ order.id }}
+                    </q-item-label>
+                    <q-item-label caption lines="1" class="q-mb-sm">
+                      {{ moment(order.created_at).format("lll") }}</q-item-label
+                    >
+                  </q-item-section>
+
+                  <q-item-section>
+                    <q-linear-progress
+                      stripe
+                      style="
+                        max-width: 20vw;
+                        border-radius: 50px;
+                        color: #49c26b;
+                      "
+                      class="self-center q-mb-md on-right"
+                      size="25px"
+                      :value="order.percentage / 100"
+                    >
+                      <div class="absolute-full flex flex-center">
+                        <q-badge
+                          style="font-size: 15px"
+                          class="bg-transparent"
+                          text-color="grey-4"
+                          :label="`${parseInt(order.percentage).toFixed(2)}%`"
+                        />
+                      </div>
+                    </q-linear-progress>
+                    <div
+                      class="text-caption text-right"
+                      v-if="order.paid_sum < order.total_sum"
+                    >
+                      Belum Lunas
+                    </div>
+                    <div class="text-caption text-right" v-else>Lunas</div>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+              <template v-slot:loading>
+                <div class="row justify-center q-my-md">
+                  <q-spinner-dots color="primary" size="40px" />
+                </div>
+              </template>
+            </q-infinite-scroll>
+          </div>
+
+          <!--Empty Order-->
+          <div
+            v-else
+            class="text-center absolute-center"
+            style="margin-bottom: 100px"
+          >
+            <q-img
+              no-spinner
+              style="width: 160px; height: 160px"
+              src="~/assets/pesanan-kosong.svg"
+            ></q-img>
+            <div class="text-center text-subtitle2">Tidak Ada Pesanan</div>
+          </div>
         </q-pull-to-refresh>
       </q-page>
     </q-page-container>
@@ -184,6 +199,7 @@
 import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
+import { debounce } from "quasar";
 
 export default {
   computed: {
@@ -201,11 +217,8 @@ export default {
   },
 
   mounted() {
-    if (!!this.Orders.data.data) {
-      this.orders = this.Orders.data;
-    } else {
-      this.getOrders();
-    }
+    this.getOrders();
+    this.searchTransaksi = debounce(this.searchTransaksi, 500);
   },
 
   methods: {
@@ -234,11 +247,19 @@ export default {
       });
     },
     searchTransaksi() {
-      this.$store
-        .dispatch("Orders/searchOrders", { value: this.search })
-        .then((res) => {
-          this.orders = res.data;
-        });
+      if (this.search.length) {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Orders/searchOrders", { value: this.search })
+          .then((res) => {
+            this.orders = res.data;
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      } else {
+        this.getOrders();
+      }
     },
     onLoadRef(index, done) {
       if (this.orders.next_page_url) {

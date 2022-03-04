@@ -2,20 +2,9 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-page-container style="background-color: #fafafa">
       <q-page>
-        <div
-          class="row"
-          style="
-            height: 300px;
-            width: 100vw;
-            background-image: linear-gradient(
-              to top left,
-              #85d9de,
-              #70c7e2,
-              #4ca6e5
-            );
-          "
-        >
+        <div class="row order-background-1">
           <q-img
+            no-loading
             no-spinner
             class="fixed"
             style="
@@ -26,7 +15,6 @@
             "
             src="~/assets/bg-buat-pesanan.svg"
           >
-            
           </q-img>
         </div>
 
@@ -47,7 +35,7 @@
             </div>
 
             <q-form ref="form">
-              <input type="hidden" v-model="customer.id">
+              <input type="hidden" v-model="customer.id" />
               <q-input
                 readonly
                 dense
@@ -107,10 +95,72 @@
           </div>
         </div>
 
+        <!--
+          <div
+          v-if="isLoad == false"
+          class="front q-pb-lg"
+          style="
+            border-radius: 30px 0 0 0;
+            background-color: #fafafa;
+            margin-top: -130px;
+            position: relative;
+          "
+        >
+          <div class="q-pa-lg">
+            <div class="row">
+              <div class="col">
+                <q-skeleton
+                  class="text-h6 text-bold"
+                  style="color: #888888"
+                  type="text"
+                />
+              </div>
+              <div class="col"></div>
+            </div>
+
+            <q-form ref="form">
+              <input type="hidden" v-model="customer.id" />
+              <q-skeleton
+                class="q-pa-xs q-mt-md"
+                style="color: #bababa; text-weight-regular; "
+                type="QInput"
+              />
+
+              <q-skeleton
+                class="q-pa-xs q-mt-md"
+                style="color: #bababa; text-weight-regular"
+                type="QInput"
+              />
+
+              <q-skeleton
+                class="q-pa-xs q-mt-md"
+                style="color: #bababa; text-weight-regular"
+                type="QInput"
+              />
+
+              <q-skeleton
+                height="100px"
+                class="q-pa-xs q-mt-md"
+                style="color: #bababa; text-weight-regular"
+                type="QInput"
+              />
+            </q-form>
+            <div class="text-center q-mt-md">
+              <q-skeleton
+                height="40px"
+                class="full-width"
+                style="color: white; width: 90%; border-radius: 10px"
+                type="QBtn"
+              />
+            </div>
+          </div>
+        </div>
+        -->
+
         <!--Dialog Customers-->
         <q-dialog v-model="dialogListCustomer" position="right">
           <q-card style="width: 350px">
-            <q-card-section>
+            <q-card-section v-if="isLoad == false">
               <q-input
                 label="Cari"
                 class="full-width text-weight-regular"
@@ -121,7 +171,17 @@
                 @update:model-value="filterCustomer(search)"
               />
               <div class="q-pt-sm">
-                <div class="text-caption">Daftar pelanggan</div>
+                <div class="row justify-between">
+                  <div class="text-caption">Daftar pelanggan</div>
+                  <q-btn
+                    v-close-popup
+                    @click="dialogAddCustomer = true"
+                    color="green-6"
+                    flat
+                  >
+                    <div class="text-caption">Tambah</div>
+                  </q-btn>
+                </div>
                 <div class="q-pt-sm">
                   <q-list v-if="customers.length">
                     <q-item v-for="customer in customers" :key="customer.id">
@@ -162,6 +222,40 @@
                 </div>
               </div>
             </q-card-section>
+
+            <q-card-section v-else-if="isLoad == true">
+              <q-skeleton type="QInput" class="full-width" height="30px" />
+              <div class="row q-mt-xs">
+                <div class="col-6">
+                  <q-skeleton type="text" height="25px" />
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3">
+                  <q-skeleton type="text" class="q-ml-md" height="25px" />
+                </div>
+              </div>
+
+              <div class="q-pt-sm">
+                <q-list>
+                  <q-item class="full-width" v-for="a in 4" :key="a">
+                    <div class="col-2">
+                      <q-skeleton round type="circle" size="40px" />
+                    </div>
+                    <div class="col-5">
+                      <div class="row">
+                        <q-skeleton class="q-ml-sm full-width" type="text" />
+                      </div>
+                      <div class="row">
+                        <q-skeleton class="q-ml-sm full-width" type="text" />
+                      </div>
+                    </div>
+                    <div class="col-5">
+                      <q-skeleton class="q-ml-sm" type="text" height="50px" />
+                    </div>
+                  </q-item>
+                </q-list>
+              </div>
+            </q-card-section>
           </q-card>
         </q-dialog>
 
@@ -172,6 +266,7 @@
               <div class="q-pa-md">
                 <q-form ref="form">
                   <q-input
+                    type="email"
                     label="Nama"
                     outlined
                     dense
@@ -235,7 +330,7 @@
         <!--Dialog Employees-->
         <q-dialog v-model="dialogListEmployee" position="left">
           <q-card style="width: 350px">
-            <q-card-section>
+            <q-card-section v-if="isLoad2 == false">
               <q-input
                 label="Cari"
                 class="full-width text-weight-regular"
@@ -282,6 +377,37 @@
                 </div>
               </div>
             </q-card-section>
+
+            <q-card-section v-else-if="isLoad2 == true">
+              <q-skeleton type="QInput" class="full-width" height="30px" />
+              <div class="row q-mt-xs">
+                <div class="col-6">
+                  <q-skeleton type="text" height="25px" />
+                </div>
+                <div class="col-6"></div>
+              </div>
+
+              <div class="q-pt-sm">
+                <q-list>
+                  <q-item class="full-width" v-for="a in 4" :key="a">
+                    <div class="col-2">
+                      <q-skeleton round type="circle" size="40px" />
+                    </div>
+                    <div class="col-5">
+                      <div class="row">
+                        <q-skeleton class="q-ml-sm full-width" type="text" />
+                      </div>
+                      <div class="row">
+                        <q-skeleton class="q-ml-sm full-width" type="text" />
+                      </div>
+                    </div>
+                    <div class="col-5">
+                      <q-skeleton class="q-ml-sm" type="text" height="50px" />
+                    </div>
+                  </q-item>
+                </q-list>
+              </div>
+            </q-card-section>
           </q-card>
         </q-dialog>
       </q-page>
@@ -312,6 +438,8 @@ export default {
       employees_temp: [],
       employee: {},
       cek_customer: false,
+      isLoad: true,
+      isLoad2: true,
     };
   },
   methods: {
@@ -329,17 +457,23 @@ export default {
       this.$router.push("/list-type-of-clothes");
     },
     getCustomers() {
-      this.$store
-        .dispatch("Customer/getCustomersByShop", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.customers = this.customers_temp = res.data.map((item) => {
-            return {
-              name: item.name,
-              id: item.id,
-              contact_number: item.contact_number,
-            };
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Customer/getCustomersByShop", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.customers = this.customers_temp = res.data.map((item) => {
+              return {
+                name: item.name,
+                id: item.id,
+                contact_number: item.contact_number,
+              };
+            });
+          })
+          .finally(() => {
+            this.isLoad = false;
           });
-        });
+      });
     },
     updateCustomer(value) {
       if (value === "") {
@@ -355,16 +489,22 @@ export default {
       this.updateCustomer(val);
     },
     getEmployees() {
-      this.$store
-        .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
-        .then((res) => {
-          this.employees = this.employees_temp = res.data.map((item) => {
-            return {
-              name: item.name,
-              id: item.id,
-            };
+      return new Promise((resolve, reject) => {
+        this.isLoad2 = true;
+        this.$store
+          .dispatch("Employee/getEmployeesByShop", this.Auth.auth.shop.id)
+          .then((res) => {
+            this.employees = this.employees_temp = res.data.map((item) => {
+              return {
+                name: item.name,
+                id: item.id,
+              };
+            });
+          })
+          .finally(() => {
+            this.isLoad2 = false;
           });
-        });
+      });
     },
     updateEmployee(val) {
       if (val === "") {
@@ -380,12 +520,15 @@ export default {
       this.updateEmployee(value);
     },
     storeCustomer() {
-      this.$store.dispatch("Customer/store", this.newCustomer).then((res) => {
-        this.customer = res.data;
-        this.getCustomers();
-      }).catch(err => {
-        this.$q.notify('email sudah ada')
-      })
+      this.$store
+        .dispatch("Customer/store", this.newCustomer)
+        .then((res) => {
+          this.customer = res.data;
+          this.getCustomers();
+        })
+        .catch((err) => {
+          this.$q.notify("email sudah ada");
+        });
     },
   },
   mounted() {
@@ -396,4 +539,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.order-background-1 {
+  height: 300px;
+  width: 100vw;
+  background-image: linear-gradient(to top left, #85d9de, #70c7e2, #4ca6e5);
+}
+</style>

@@ -2,14 +2,14 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px"  @click="$router.push('/make-an-order')">
+        <q-btn flat round size="10px" @click="$router.push('/make-an-order')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Jenis Pakaian</q-toolbar-title
+          >Pilih Jenis Item</q-toolbar-title
         >
       </q-toolbar>
     </q-header>
@@ -19,7 +19,7 @@
           <q-card class="no-shadow">
             <q-card-section>
               <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                   <q-input
                     dense
                     v-model="search"
@@ -72,7 +72,7 @@
         <div v-else-if="isLoad == false && categories.length">
           <q-card
             flat
-            class="q-mt-sm full-width"
+            class="q-mt-sm full-width q-mt-sm"
             v-for="category in categories"
             :key="category.id"
           >
@@ -108,6 +108,22 @@
               </div>
             </q-card-section>
           </q-card>
+
+          <q-btn
+            disable
+            flat
+            no-caps
+            class="full-width q-mt-sm"
+            style="z-index: 999; background-color: #fafafa"
+          >
+            <div
+              style="color: #fafafa"
+              class="text-caption q-mt-sm q-py-md q-pl-sm"
+            >
+              Tampilkan Menu Keranjang
+            </div>
+          </q-btn>
+          <!-- <div style="color: #fafafa">test</div> -->
         </div>
 
         <div v-else>
@@ -120,6 +136,7 @@
           </div>
         </div>
         <!-- <q-page-sticky position="bottom" :offset="[18, 18]"> -->
+        <!-- button tampilkan menu keranjang-->
         <q-btn
           no-caps
           class="full-width q-pt-sm fixed-bottom bg-white"

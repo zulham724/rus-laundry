@@ -7,6 +7,15 @@
     >
       <q-header class="shadow-1">
         <q-toolbar class="bg-white q-py-md">
+          <q-btn flat round size="10px" @click="$router.back()">
+            <q-avatar
+              size="25px"
+              icon="fas fa-arrow-left"
+              style="color: #888888"
+            >
+            </q-avatar
+            >{{}}
+          </q-btn>
           <q-toolbar-title
             class="text-left text-weight-medium"
             style="color: #888888; font-size: 16px"
@@ -140,7 +149,7 @@
                 new Intl.NumberFormat("id-ID", {
                   style: "currency",
                   currency: "IDR",
-                }).format(service.price*service.pivot.quantity)
+                }).format(service.price * service.pivot.quantity)
               }}
             </div>
           </div>
@@ -163,7 +172,7 @@
                 Tanggal Pembayaran
               </div>
               <div class="col-4 q-mx-md" style="color: #31313; font-size: 10px">
-                {{ moment(order.updated_at).format('ll') }}
+                {{ moment(order.updated_at).format("ll") }}
               </div>
 
               <div
@@ -288,7 +297,7 @@ export default {
           "RPP02N"
         );
       } else {
-        this.printDiv('order')
+        this.printDiv("order");
         this.$q.notify("Hanya bisa di android");
       }
     },

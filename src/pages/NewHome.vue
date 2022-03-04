@@ -7,7 +7,12 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#ffecc1,#b4e6ea);
+          background-image: linear-gradient(
+            to top right,
+            #ffffff,
+            #ffecc1,
+            #b4e6ea
+          );
         "
       >
         <div class="row full-width">
@@ -143,17 +148,7 @@
         <!-- Scan Area -->
         <div class="row full-width">
           <div class="col-6">
-            <q-btn
-              @click="ScanAttendance()"
-              style="
-                background-image: linear-gradient(to bottom right, #f6d365, #fda085);
-                width: 100%;
-                height: 50px;
-                color: white;
-              "
-              flat
-              no-caps
-            >
+            <q-btn @click="ScanAttendance()" class="btn-scan-1" flat no-caps>
               <div class="row self-center">
                 <q-img
                   no-spinner
@@ -171,17 +166,7 @@
             </q-btn>
           </div>
           <div class="col-6">
-            <q-btn
-              @click="doScanOrder()"
-              style="
-                background-image: linear-gradient(to bottom right, #4ecebf, #3fafb6);
-                width: 100%;
-                height: 50px;
-                color: white;
-              "
-              flat
-              no-caps
-            >
+            <q-btn @click="doScanOrder()" class="btn-scan-2" flat no-caps>
               <div class="row self-center">
                 <q-img
                   no-spinner
@@ -207,7 +192,12 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#70c7e2,#4ca6e5);
+          background-image: linear-gradient(
+            to top right,
+            #ffffff,
+            #70c7e2,
+            #4ca6e5
+          );
         "
       >
         <div class="row full-width">
@@ -346,7 +336,11 @@
             <q-btn
               @click="ScanAttendance()"
               style="
-                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #f6d365,
+                  #fda085
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -374,7 +368,11 @@
             <q-btn
               @click="doScanOrder()"
               style="
-                background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #4ecebf,
+                  #3fafb6
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -407,7 +405,12 @@
         class="row"
         style="
           min-height: 220px;
-          background-image: linear-gradient(to top right,#ffffff,#505483,#000650);
+          background-image: linear-gradient(
+            to top right,
+            #ffffff,
+            #505483,
+            #000650
+          );
         "
       >
         <div class="row full-width">
@@ -544,7 +547,11 @@
           <div class="col-6">
             <q-btn
               style="
-                background-image: linear-gradient(to bottom right,#f6d365,#fda085);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #f6d365,
+                  #fda085
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -571,7 +578,11 @@
           <div class="col-6">
             <q-btn
               style="
-                background-image: linear-gradient(to bottom right,#4ecebf,#3fafb6);
+                background-image: linear-gradient(
+                  to bottom right,
+                  #4ecebf,
+                  #3fafb6
+                );
                 width: 100%;
                 height: 50px;
                 color: white;
@@ -603,18 +614,11 @@
         <!-- <q-btn class="full-width" flat no-caps dense @click="$router.push('/transaction')"> -->
         <div class="row full-width self-center">
           <div
-            class="col-6 text-weight-medium text-left self-center"
+            class="col-8 text-weight-medium text-left self-center"
             style="color: #313131; font-size: 15px"
           >
-            Transaksi hari ini
+            Antrian Pesanan hari ini
           </div>
-          <!-- <div class="col-6 self-center text-right">
-              <q-icon
-                name="fas fa-angle-right"
-                size="20px"
-                color="black"
-              ></q-icon>
-            </div> -->
         </div>
         <!-- </q-btn> -->
         <div class="text-weight-medium" style="color: #a3a3a3; font-size: 12px">
@@ -623,20 +627,21 @@
         <div
           class="row q-mt-md"
           style="background-color: #ebebeb; border-radius: 5px"
+          @click="$router.push('/transaction')"
         >
           <div
             v-if="this.dailyOrderCounter > 0"
             class="text-weight-medium q-pa-sm"
             style="color: #313131; font-size: 15px"
           >
-            {{ this.dailyOrderCounter }} Pesanan Baru
+            {{ this.dailyOrderCounter }} Antrian Baru
           </div>
           <div
             v-else
             class="text-weight-medium q-pa-sm"
             style="color: #313131; font-size: 15px"
           >
-            Belum Ada Pesanan Hari Ini
+            Belum Ada Antrian Hari Ini
           </div>
         </div>
       </div>
@@ -785,7 +790,7 @@ import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
 import ScanAttendance from "src/components/ScanAttendance.vue";
-import ScanOrder from 'src/components/ScanOrder.vue'
+import ScanOrder from "src/components/ScanOrder.vue";
 import { QrcodeStream } from "qrcode-reader-vue3";
 
 export default {
@@ -822,7 +827,6 @@ export default {
     moment,
     timeChecker() {
       this.backgroundSetter = new Date().getHours();
-      // console.log(this.d.getHours() > 10 && this.d.getHours() < 17)
     },
     getDailyTransaction() {
       this.$store
@@ -830,9 +834,7 @@ export default {
         .then((res) => {
           this.dailyOrderCounter = res.data;
         })
-        .finally(() => {
-          console.log(this.trtest);
-        });
+        .finally(() => {});
     },
     getProfitByDay() {
       return new Promise((resolve, reject) => {
@@ -858,7 +860,6 @@ export default {
           .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
           .then((res) => {
             this.total_spend = res.data;
-            console.log("ini data spend harian", res.data);
           })
           .finally(() => {
             this.isLoad = false;
@@ -923,7 +924,7 @@ export default {
       }
     },
     doScanOrder() {
-      console.log('scan pesanan')
+      console.log("scan pesanan");
       if (this.$q.platform.is.android) {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
@@ -968,4 +969,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.btn-scan-1 {
+  background-image: linear-gradient(to bottom right, #f6d365, #fda085);
+  width: 100%;
+  height: 50px;
+  color: white;
+}
+
+.btn-scan-2 {
+  background-image: linear-gradient(to bottom right, #4ecebf, #3fafb6);
+  width: 100%;
+  height: 50px;
+  color: white;
+}
+</style>

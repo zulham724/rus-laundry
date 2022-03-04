@@ -260,7 +260,7 @@ export default {
   },
   methods: {
     likeList(){
-      product.likes_count 
+      product.likes_count
     },
     getRoutePath() {
       let props = this.$router.resolve({
@@ -271,6 +271,7 @@ export default {
       return location.origin + props.href;
     },
     submitMessage() {
+      // return console.log(encodeURI(this.message))
       this.order.shop_id = this.product.shop.id;
       this.order.customer_id = this.Auth.auth.id;
       this.order.product_id = this.product.id;
@@ -278,6 +279,8 @@ export default {
       this.order.total_price = this.product.price;
 
       this.$store.dispatch("Orders/orderProduct", this.order).then((res) => {
+        this.setTextMessage()
+
         let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
           this.product.shop.user.contact_number
         )}&text=${encodeURI(this.message)}`;
@@ -291,51 +294,36 @@ export default {
       }).format(number);
     },
     formatPhoneNumber(number) {
-      let formatted = number.replace(/\D/g, "");
+      // console.log(typeof(String(number)))
+      let formatted = String(number).replace(/\D/g, "");
 
       if (formatted.startsWith("0")) {
         formatted = "+62" + formatted.substr(1);
       }
 
+      if (formatted.startsWith("62")) {
+        formatted = "+62" + formatted.substr(2);
+      }
+
+
       return formatted;
     },
-    // setPaymentMessage() {
-    //   let str = "Silahkan lakukan pembayaran ke nomor rekening berikut:\n\n";
-    //   if (this.banks.data.length) {
-    //     this.banks.data.forEach((el) => {
-    //       str += `*${el.bank_name} - ${el.bank_office}*\nNorek: ${el.account_number}\nA.n ${el.account_name}\n\n`;
-    //     });
-    //     return str;
-    //   } else {
-    //     return "";
-    //   }
-    // },
     setTextMessage() {
       if (this.order) {
         let url = `${location.origin}/marketplace-detail/${this.product.id}`;
-        // if (this.order.order_status == "UNPAID") {
         let tmp = `
           Order via Whatsapp
           \nNama Produk : ${this.product.tittle}
           \nHarga : ${this.money(this.product.price)}
           \nJumlah : ${1}
           \nUrl : ${url}`;
-        // *\n\n${this.setPaymentMessage()}\nUntuk detail tagihan dapat dilihat di ${this.getRoutePath()}\n\nTerima Kasih
-        //  `;
         this.message = tmp;
-        // } else {
-        //   let tmp = `Halo kak ${this.order.customer_name}\nkami dari *${
-        //     this.product.shop.name ? this.product.shop.name : "..."
-        //   }\n\n......\n\nTerima Kasih
-        //    `;
-        //   this.message = tmp;
-        // }
       }
     },
     async getDetailProduct() {
       await this.$store.dispatch("Product/show", this.productid).then((res) => {
         this.product = res.data;
-        this.getAnotherProducts(res.data.shop.id);  
+        this.getAnotherProducts(res.data.shop.id);
       });
     },
     getAnotherProducts(id) {

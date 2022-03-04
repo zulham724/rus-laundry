@@ -16,7 +16,7 @@
                 flat
                 round
                 size="sm"
-                @click="$router.push('/')"
+                @click="$router.push('/transaction')"
               >
                 <q-avatar
                   size="25px"
@@ -317,12 +317,43 @@
                 <q-item class="q-my-sm">
                   <q-item-section class="self-center">
                     <q-item-label
+                      @click="percobaanService(service)"
                       caption
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
                       >Status Cucian</q-item-label
                     >
+                  </q-item-section>
+
+                  <q-item-section>
+                    <q-linear-progress
+                      stripe
+                      style="
+                        max-width: 30vw;
+                        max-height: 35px;
+                        border-radius: 50px;
+                        color: #49c26b;
+                      "
+                      class="q-mb-md q-mt-lg"
+                      size="10vw"
+                      :value="
+                        service.pivot.service_status_id == 3 ? 100 : progress
+                      "
+                    >
+                      <div class="absolute-full flex flex-center">
+                        <q-badge
+                          style="font-size: 3vw"
+                          class="bg-transparent"
+                          text-color="white "
+                          :label="
+                            service.pivot.service_status_id == 3
+                              ? 100 + '%'
+                              : progress
+                          "
+                        />
+                      </div>
+                    </q-linear-progress>
                   </q-item-section>
 
                   <q-item-section avatar>
@@ -350,14 +381,14 @@
                     <q-item-label
                       class="text-weight-regular q-pt-md"
                       style="color: #c9c9c9; font-size: 15px"
-                      >Status Pembayaran</q-item-label
+                      >Status Pesanan</q-item-label
                     >
                     <q-item-label
                       caption
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ detail_order.status.name }}</q-item-label
+                      >{{ detail_order.status.description }}</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -387,12 +418,22 @@
           </q-carousel>
           <q-btn
             v-if="detail_order.percentage == 100"
-            @click="buttonConfirm()"
+            @click="
+              order.paid_sum < order.total_sum ? makePayment() : buttonConfirm()
+            "
             no-caps
             class="fixed-bottom mbl-child"
-            style="background-color: #49c2c0; color: #fafafa; width: 100%"
+            :style="`background-color: ${
+              order.paid_sum < order.total_sum ? '#49c2c0' : '#66BB6A'
+            }; color: #fafafa; width: 100%`"
           >
-            <div class="q-py-sm text-weight-regular">Konfirmasi Pesanan</div>
+            <div class="q-py-sm text-weight-regular">
+              {{
+                order.paid_sum < order.total_sum
+                  ? "Bayar Pesanan"
+                  : "Konfirmasi"
+              }}
+            </div>
           </q-btn>
 
           <q-dialog v-model="dialogConfirm">
@@ -411,8 +452,7 @@
                   class="text-weight-light text-center q-mt-none"
                   style="width: 300px"
                 >
-                  Transaksi akan diproses selesai dan pelanggan harus membayar
-                  sesuai harga yang tertera
+                  Transaksi akan diproses selesai
                 </div>
               </q-card-section>
 
@@ -552,6 +592,7 @@
 
 <script>
 import SkeletonDetailTransactionComponent from "src/components/SkeletonDetailTransactionComponent";
+import MakePaymentDialogVue from "src/components/MakePaymentDialog";
 export default {
   props: ["orderid"],
   components: {
@@ -559,6 +600,7 @@ export default {
   },
   data() {
     return {
+      progress: 0 * 100 + "%",
       slide: null,
       dialogShare: false,
       dialogConfirm: false,
@@ -566,10 +608,42 @@ export default {
       detail_order: null,
       isLoad: false,
       copy: false,
+      order: null,
     };
   },
 
+  mounted() {
+    this.getDetailOrder();
+    this.link = window.location.href;
+  },
+
   methods: {
+    makePayment() {
+      this.$q
+        .dialog({
+          component: MakePaymentDialogVue,
+
+          // props forwarded to your custom component
+          componentProps: {
+            order: this.order,
+            // ...more..props...
+          },
+        })
+        .onOk((res) => {
+          this.order.payments = res.order.payments;
+          this.order.paid_sum = res.order.paid_sum;
+          console.log("OK", res);
+        })
+        .onCancel(() => {
+          console.log("Cancel");
+        })
+        .onDismiss(() => {
+          console.log("Called on OK or Cancel");
+        });
+    },
+    percobaanService(service) {
+      console.log("ini service", service);
+    },
     confirmService() {
       const payload = {
         id: this.detail_order.id,
@@ -591,11 +665,12 @@ export default {
         .dispatch("Orders/show", this.orderid)
         .then((res) => {
           this.detail_order = res.data;
-          if(res.data.services.length){
+          if (res.data.services.length) {
             this.slide = `slide-${res.data.services[0].id}`;
-            // console.log("haiiii", res.data);
-          }else{
-            this.slide = 'slide-0'
+            this.order = res.data;
+            console.log("haiiii", this.order);
+          } else {
+            this.slide = "slide-0";
           }
         })
         .finally(() => {
@@ -612,10 +687,6 @@ export default {
       // modelValue.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(modelValue);
     },
-  },
-  mounted() {
-    this.getDetailOrder();
-    this.link = window.location.href;
   },
 };
 </script>
