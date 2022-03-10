@@ -31,7 +31,7 @@
       </div>
 
       <div v-else-if="!isLoad && orders.data">
-        <div v-if="!orders.data.length" class="q-pt-lg"> 
+        <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
             <q-img no-spinner src="~/assets/nullicsp.gif" :ratio="1" />
             Belum ada transaksi minggu ini
@@ -54,17 +54,21 @@
               <q-item
                 v-for="order in orders.data"
                 :key="order.id"
-                class="q-my-sm "
+                class="q-my-sm"
                 clickable
                 @click="$router.push(`/detail-transaksi/${order.id}`)"
               >
                 <q-item-section avatar>
-                  <q-avatar> </q-avatar>
+                  <q-avatar
+                    icon="fas fa-box-open"
+                    color="primary"
+                    text-color="white"
+                  />
                 </q-item-section>
 
                 <q-item-section class="self-center">
                   <q-item-label class="text-weight-medium">
-                    {{ order.id }} {{ order.customer.name }}</q-item-label
+                    {{ order.id }} {{ order.customer }}</q-item-label
                   >
                   <q-item-label caption lines="1" class="q-mb-sm">
                     {{ moment(order.updated_at).format("LL") }}</q-item-label
@@ -80,7 +84,7 @@
                     new Intl.NumberFormat("id-ID", {
                       style: "currency",
                       currency: "IDR",
-                    }).format(order.total_sum)
+                    }).format(order.value)
                   }}
                 </q-item-section>
               </q-item>
@@ -121,7 +125,10 @@ export default {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
-          .dispatch("WeeklyTransaction/getOrderShopByWeek", this.Auth.auth.shop.id)
+          .dispatch(
+            "WeeklyTransaction/getOrderShopByWeek",
+            this.Auth.auth.shop.id
+          )
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
@@ -157,5 +164,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

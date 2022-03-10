@@ -51,9 +51,25 @@ const mutations = {
     state.order = null;
     state.data = {};
   },
+  clear() {
+    state.order = null;
+    state.data = null;
+  },
 };
 
 const actions = {
+  savePhoto({ commit }, formData) {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/slave/postorderphoto", formData)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   storePayment({ commit }, payload) {
     return new Promise((resolve, reject) => {
       let access = {
@@ -178,6 +194,42 @@ const actions = {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/filterOrdersOut/${payload.from}/${payload.to}`)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  getOrderStatus({ commit }, state) {
+    return new Promise((resolve, reject) => {
+      api
+        .get("/api/slave/orderstatus")
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  getOrderByStatus({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .get(`/api/slave/getorderbystatus/${id}`)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  getOrderPaymentStatus({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .get(`/api/slave/getorderbypaymentstatus/${id}`)
         .then((res) => {
           resolve(res);
         })

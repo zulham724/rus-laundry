@@ -36,9 +36,9 @@
               label="Cari Pesanan"
               @update:model-value="searchTransaksi()"
             >
+              <!--@click="searchTransaksi(search)"-->
               <q-icon
                 name="search"
-                @click="searchTransaksi()"
                 class="self-center"
                 size="30px"
                 color="grey"
@@ -87,9 +87,9 @@
           </div>
 
           <!-- List Pesanan -->
-          <div v-else-if="isLoad == false && orders.data">
+          <div v-else-if="isLoad == false && ordersState">
             <q-infinite-scroll
-              @load="onLoadRef"
+              @load="ketikaOnLoad"
               :offset="250"
               :scroll-target="scrollTargetRef"
             >
@@ -104,7 +104,7 @@
                 "
               >
                 <q-item
-                  v-for="order in orders.data"
+                  v-for="order in ordersState.data"
                   :key="order.id"
                   class="q-my-sm q-mx-md"
                   clickable
@@ -153,7 +153,7 @@
                         <q-badge
                           style="font-size: 15px"
                           class="bg-transparent"
-                          text-color="grey-4"
+                          text-color="grey-1"
                           :label="`${parseInt(order.percentage).toFixed(2)}%`"
                         />
                       </div>
@@ -179,7 +179,7 @@
           <!--Empty Order-->
           <div
             v-else
-            class="text-center absolute-center"
+            class="text-center self-center full-width window-height"
             style="margin-bottom: 100px"
           >
             <q-img
@@ -213,12 +213,20 @@ export default {
       orders_temp: {},
       isLoad: false,
       d: null,
+      ordersState: null,
+      ordersState_temp: null,
+      searchProduct: null,
     };
   },
 
   mounted() {
-    this.getOrders();
-    this.searchTransaksi = debounce(this.searchTransaksi, 500);
+    if (!this.Orders.data) {
+      this.getOrders();
+    } else {
+      this.ordersState = this.ordersState_temp = this.Orders.data;
+    }
+
+    // this.searchTransaksi = debounce(this.searchTransaksi, 500);
   },
 
   methods: {
@@ -229,7 +237,9 @@ export default {
         this.$store
           .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
           .then((res) => {
-            this.orders = res.data;
+            this.$store.commit("Orders/set_orders", { data: res.data });
+            this.ordersState = this.orders_temp = res.data;
+            // console.log("data order", res.data);
             resolve(res.data);
           })
           .catch((err) => {
@@ -252,7 +262,8 @@ export default {
         this.$store
           .dispatch("Orders/searchOrders", { value: this.search })
           .then((res) => {
-            this.orders = res.data;
+            this.$store.commit("Orders/set_orders", { data: res.data });
+            this.ordersState = this.orders_temp = res.data;
           })
           .finally(() => {
             this.isLoad = false;
@@ -261,14 +272,14 @@ export default {
         this.getOrders();
       }
     },
-    onLoadRef(index, done) {
-      if (this.orders.next_page_url) {
+    ketikaOnLoad(index, done) {
+      if (this.ordersState.next_page_url) {
         this.$store.dispatch("Orders/next").then((res) => {
-          this.orders = {
+          this.ordersState = {
             ...res.data,
-            data: [...this.orders.data, ...res.data.data],
+            data: [...this.ordersState.data, ...res.data.data],
           };
-          // console.log("ini isi res on load setelah diolah", res.data);
+          console.log("ini isi pagination", res.data);
           done();
         });
       } else {

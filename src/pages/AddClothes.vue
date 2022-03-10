@@ -39,7 +39,7 @@
                     outlined
                     @update:model-value="filterCategory"
                     v-model="search"
-                    placeholder="Cari Pakaian"
+                    placeholder="Cari Item"
                   >
                     <q-icon
                       name="search"
@@ -125,7 +125,7 @@
               @click="buttonAddClothes()"
             >
               <div class="text-weight-regular" style="color: white">
-                Tambah Pakaian
+                Tambah Item
               </div>
             </q-btn>
           </div>
@@ -137,7 +137,7 @@
               @click="dialogHapusPakaian = true"
             >
               <div class="text-weight-regular" style="color: white">
-                Hapus Pakaian
+                Hapus Item
               </div>
             </q-btn>
           </div>
@@ -146,14 +146,14 @@
             <q-card>
               <q-card-section>
                 <div class="text-weight-bold text-left" style="font-size: 16px">
-                  Tambah pakaian baru?
+                  Tambah Item baru?
                 </div>
 
                 <div
                   class="text-weight-light text-left q-mt-none"
                   style="width: 300px; font-size: 12px"
                 >
-                  yakin ingin membuat jenis pakaian baru?
+                  yakin ingin membuat jenis Item baru?
                 </div>
               </q-card-section>
 
@@ -185,14 +185,14 @@
             <q-card>
               <q-card-section>
                 <div class="text-weight-bold text-left" style="font-size: 16px">
-                  Hapus Pakaian?
+                  Hapus Item?
                 </div>
 
                 <div
                   class="text-weight-light text-left q-mt-none"
                   style="width: 300px; font-size: 12px"
                 >
-                  yakin ingin menghapus pakaian?
+                  yakin ingin menghapus Item?
                 </div>
               </q-card-section>
 

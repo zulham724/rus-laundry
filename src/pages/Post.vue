@@ -122,7 +122,7 @@
             </q-card>
           </div>
 
-          <div v-else>
+          <div v-else-if="isLoad == false && this.posts">
             <q-infinite-scroll @load="onLoad" :offset="250">
               <!-- Postingan -->
               <q-intersection
@@ -138,6 +138,15 @@
                 ></item-post-component>
               </q-intersection>
             </q-infinite-scroll>
+          </div>
+
+          <div class="text-center q-mt-xl q-pt-xl" v-else>
+            <q-img
+              no-spinner
+              src="~/assets/24815-crying-heart.gif"
+              width="180px"
+            />
+            <div>Belum ada postingan yang dibuat</div>
           </div>
         </q-pull-to-refresh>
       </q-page>

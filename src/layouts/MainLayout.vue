@@ -14,8 +14,7 @@
     >
       <div class="q-gutter-none" style="max-width: 100%">
         <q-tabs v-model="tab" dense class="text-black" indicator-color="teal-6">
-
-        <q-tab name="home" no-caps @click="$router.push('/')"
+          <q-tab name="home" no-caps @click="$router.push('/')"
             ><q-img
               no-spinner
               style="width: 20px; height: 20px"
@@ -30,7 +29,7 @@
             </div>
           </q-tab>
 
-          <q-tab name="transaksi" no-caps @click="$router.push('/transaction')"
+          <q-tab name="transaksi" no-caps @click="getOrderPush"
             ><q-img
               no-spinner
               style="width: 18px; height: 20px"
@@ -96,14 +95,40 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "MainLayout",
   data() {
     return {
       tab: this.$route.name,
-      include: ["HomePage", "AddItemPage", "IncomePage", "TransactionPage", "MenuPage"],
+      include: [
+        "HomePage",
+        "AddItemPage",
+        "IncomePage",
+        "TransactionPage",
+        "MenuPage",
+      ],
     };
   },
   mounted() {},
+
+  computed: {
+    ...mapState(["Auth", "Orders"]),
+  },
+
+  methods: {
+    getOrderPush() {
+      this.$store
+        .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.$store.commit("Orders/set_orders", { data: res.data });
+          this.$router.push("/transaction");
+        })
+        .catch((err) => {
+          alert("terjadi kesalahan");
+        });
+    },
+  },
 };
 </script>

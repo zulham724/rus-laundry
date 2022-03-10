@@ -1,4 +1,4 @@
- <template>
+<template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container style="background-color: #fafafa">
       <q-header>
@@ -28,8 +28,8 @@
           <q-item-label
             class="q-pl-md q-py-md text-weight-bold"
             style="color: #888888"
-            >Berdasarkan Tanggal Masuk</q-item-label
-          >
+            >Berdasarkan Tanggal Masuk
+          </q-item-label>
           <q-separator size="5px"></q-separator>
 
           <q-item
@@ -401,13 +401,58 @@
           </q-item>
         </q-list>
 
-        <q-inner-loading
-        :showing="loading"
-        label="Please wait..."
-        label-class="text-teal"
-        label-style="font-size: 1.1em"
-        />
+        <q-list
+          separator
+          dense
+          class="q-mx-xs q-mt-md shadow-1"
+          style="background-color: #ffffff"
+        >
+          <q-item-label
+            class="q-pl-md q-py-md text-weight-bold"
+            style="color: #888888"
+            >Berdasarkan Status Pesanan</q-item-label
+          >
+          <q-separator size="5px"></q-separator>
 
+          <q-item
+            clickable
+            @click="getOrderByStatus(order_status.id)"
+            v-for="order_status in order_statuses"
+            :key="order_status.id"
+          >
+            <q-item-section class="q-my-md">
+              {{ order_status.name }}
+            </q-item-section>
+          </q-item>
+        </q-list>
+
+        <q-list
+          separator
+          dense
+          class="q-mx-xs q-mt-md shadow-1"
+          style="background-color: #ffffff"
+        >
+          <q-item-label
+            class="q-pl-md q-py-md text-weight-bold"
+            style="color: #888888"
+            >Berdasarkan Status Pembayaran</q-item-label
+          >
+          <q-separator size="5px"></q-separator>
+
+          <q-item clickable @click="getOrderByPaymentStatus(1)">
+            <q-item-section class="q-my-md"> Lunas </q-item-section>
+          </q-item>
+          <q-item clickable @click="getOrderByPaymentStatus(0)">
+            <q-item-section class="q-my-md"> Belum Lunas </q-item-section>
+          </q-item>
+        </q-list>
+
+        <q-inner-loading
+          :showing="loading"
+          label="Please wait..."
+          label-class="text-teal"
+          label-style="font-size: 1.1em"
+        />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -419,9 +464,12 @@ export default {
   data() {
     return {
       loading: false,
+      order_statuses: [],
     };
   },
-  mounted() {},
+  mounted() {
+    this.getOrderStatus();
+  },
   methods: {
     moment,
     filterOrdersIn(from, to) {
@@ -429,7 +477,7 @@ export default {
         from: from,
         to: to,
       };
-      this.loading = true
+      this.loading = true;
       this.$store.dispatch("Orders/filterOrdersIn", payload).then((res) => {
         this.$store.commit("Orders/set_orders", { data: res.data });
         this.$router.push("/transaction");
@@ -440,11 +488,46 @@ export default {
         from: from,
         to: to,
       };
-      this.loading = true
+      this.loading = true;
       this.$store.dispatch("Orders/filterOrdersOut", payload).then((res) => {
         this.$store.commit("Orders/set_orders", { data: res.data });
+        console.log("data sebelum dikirm", res.data);
         this.$router.push("/transaction");
       });
+    },
+    getOrderStatus() {
+      // console.log("halo dunia");
+      this.$store
+        .dispatch("Orders/getOrderStatus")
+        .then((res) => {
+          this.order_statuses = res.data;
+          // console.log("ini data percobaan", res.data);
+        })
+        .catch((err) => {
+          alert("terjadi kesalahan");
+        });
+    },
+    getOrderByStatus(id) {
+      this.$store
+        .dispatch("Orders/getOrderByStatus", id)
+        .then((res) => {
+          this.$store.commit("Orders/set_orders", { data: res.data });
+          this.$router.push("/transaction");
+        })
+        .catch((err) => {
+          alert("terjadi kesalahan");
+        });
+    },
+    getOrderByPaymentStatus(id) {
+      this.$store
+        .dispatch("Orders/getOrderPaymentStatus", id)
+        .then((res) => {
+          this.$store.commit("Orders/set_orders", { data: res.data });
+          this.$router.push("/transaction");
+        })
+        .catch((err) => {
+          alert("terjadi kesalahan");
+        });
     },
   },
 };

@@ -5,3 +5,6 @@ const STORAGE_URL = "http://192.168.1.10:8000/storage";
 
 const CLIENT_ID = "2";
 const CLIENT_SECRET = "N62KQsBzDyc4npIW1pIMkBRygQgRuyyNxas0P3PK";
+
+const height = screen.height;
+const width = screen.width;

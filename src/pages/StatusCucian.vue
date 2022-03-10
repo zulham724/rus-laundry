@@ -99,6 +99,7 @@
             <q-btn
               @click="updateStatusService()"
               flat
+              :disable="btnDisable"
               rounded
               no-caps
               style="
@@ -111,6 +112,7 @@
               class="text-weight-regular"
             >
               <div class="q-pa-sm">Proses</div>
+              <q-spinner v-if="btnDisable" color="black" :thickness="2" />
             </q-btn>
           </div>
 
@@ -119,6 +121,7 @@
               v-show="order.service_status.status.id < 3"
               @click="updateStatusService()"
               flat
+              :disable="btnDisable"
               no-caps
               style="
                 color: #fafafa;
@@ -129,8 +132,9 @@
               "
               class="text-weight-regular"
             >
-              <div class="q-pa-sm">Selesai</div></q-btn
-            >
+              <div v-if="!btnDisable" class="q-pa-sm">Selesai</div>
+              <q-spinner v-if="btnDisable" color="black" :thickness="2" />
+            </q-btn>
           </div>
         </div>
       </q-page>
@@ -161,6 +165,7 @@ export default {
       progress: 0 * 100 + "%",
       text: "",
       order: null,
+      btnDisable: false,
     };
   },
 
@@ -177,24 +182,32 @@ export default {
       };
       this.$store.dispatch("Orders/getStatus", payload).then((res) => {
         this.order = res.data;
-        console.log("ini data", res.data);
+        console.log("Ini Data Cucian", res.data);
       });
     },
     updateStatusService() {
+      this.btnDisable = true;
       let service_status_id;
       if (this.order.service_status.service_status_id == 1) {
         service_status_id = 2;
       } else {
         service_status_id = 3;
       }
+
       // console.log(service_status_id)
       const payload = {
         id: this.order.service_status.id,
         service_status_id: service_status_id,
       };
-      this.$store.dispatch("Services/updateStatus", payload).then((res) => {
-        this.getStatusService();
-      });
+      this.$store
+        .dispatch("Services/updateStatus", payload)
+        .then((res) => {
+          this.btnDisable = true;
+          this.getStatusService();
+        })
+        .finally(() => {
+          this.btnDisable = false;
+        });
     },
   },
 

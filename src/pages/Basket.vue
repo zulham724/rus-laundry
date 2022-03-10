@@ -36,7 +36,7 @@
                   {{ category.name }}
                 </div>
               </div>
-              <div class="col-8">
+              <div class="col-8" v-if="category.service_unit.name == 'Kg'">
                 <q-btn
                   class="q-ma-sm float-right"
                   @click="tambahkg(c)"
@@ -55,6 +55,37 @@
                 <q-btn
                   class="q-ma-sm float-right"
                   @click="kurangkg(c)"
+                  flat
+                  style="background-color: #eaeaea"
+                >
+                  <q-icon
+                    name="fas fa-minus"
+                    style="height: 5px; width: 5px"
+                  ></q-icon>
+                </q-btn>
+              </div>
+              <div
+                class="col-8"
+                v-else-if="category.service_unit.name == 'Pcs'"
+              >
+                <q-btn
+                  class="q-ma-sm float-right"
+                  @click="tambahpcs(c)"
+                  flat
+                  style="background-color: #d72929; color: white"
+                >
+                  <q-icon
+                    name="fas fa-plus"
+                    style="height: 5px; width: 5px"
+                  ></q-icon>
+                </q-btn>
+                <div class="float-right q-pa-sm text-weight-medium text-h5">
+                  {{ category.quantity }}
+                </div>
+
+                <q-btn
+                  class="q-ma-sm float-right"
+                  @click="kurangpcs(c)"
                   flat
                   style="background-color: #eaeaea"
                 >
@@ -121,15 +152,6 @@
           <div class="col-12 q-pt-lg" v-if="this.Orders.order.total_price">
             <q-card class="q-pa-sm shadow-5">
               <q-card-section>
-                <div class="row full-width justify-center">
-                  <q-btn v-if="!payment" flat @click="paymentDialog = true"
-                    >Tambah Pembayaran</q-btn
-                  >
-                  <q-btn v-else flat @click="paymentDialog = true">
-                    Pembayaran sejumlah RP.
-                    {{ payment.toLocaleString() }} dimasukan (KLIK UNTUK UBAH)
-                  </q-btn>
-                </div>
                 <div class="text-caption">Total Harga</div>
                 <div class="text-subtitle1">
                   {{
@@ -142,19 +164,45 @@
                 <div class="col-12">
                   <q-card class="no-shadow">
                     <q-card-section class="text-left q-pa-none">
-                      <q-btn
-                        dense
-                        flat
-                        :icon-right="
-                          expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-                        "
-                        color="grey-6"
-                        @click="expanded = !expanded"
-                      >
-                        <div class="text-caption" style="color: #888888">
-                          Estimasi Pesanan
+                      <div class="row">
+                        <div class="col-6">
+                          <q-btn
+                            dense
+                            flat
+                            :icon-right="
+                              expanded
+                                ? 'keyboard_arrow_up'
+                                : 'keyboard_arrow_down'
+                            "
+                            color="grey-6"
+                            @click="expanded = !expanded"
+                          >
+                            <div class="text-caption" style="color: #888888">
+                              Estimasi Pesanan
+                            </div>
+                          </q-btn>
                         </div>
-                      </q-btn>
+                        <div class="col-6 text-right">
+                          <q-btn
+                            v-if="!payment"
+                            class="bg-cyan-5 text-grey-1"
+                            size="sm"
+                            flat
+                            @click="paymentDialog = true"
+                            >Tambah Pembayaran</q-btn
+                          >
+                          <q-btn
+                            size="sm"
+                            v-else
+                            flat
+                            @click="paymentDialog = true"
+                          >
+                            Pembayaran sejumlah RP.
+                            {{ payment.toLocaleString() }} dimasukan (KLIK UNTUK
+                            UBAH)
+                          </q-btn>
+                        </div>
+                      </div>
                     </q-card-section>
 
                     <q-slide-transition>
@@ -269,6 +317,19 @@ export default {
         this.paymentDialog = false;
       }
     },
+    tambahpcs(index) {
+      this.Orders.order.charts[index].quantity += 1;
+      this.getPrice();
+    },
+    kurangpcs(index) {
+      this.Orders.order.charts[index].quantity -= 1;
+      if (this.Orders.order.charts[index].quantity <= 1) {
+        this.$store.commit("Orders/remove_order_chart", {
+          id: this.Orders.order.charts[index].id,
+        });
+      }
+      this.getPrice();
+    },
     tambahkg(index) {
       this.Orders.order.charts[index].quantity += 0.1;
       this.getPrice();
@@ -284,6 +345,7 @@ export default {
     },
     getOrderServiceCategory() {
       this.Orders.order.charts = this.Orders.order.charts.map((category) => {
+        console.log("this orders service category", this.Orders.order.charts);
         if (category.quantity) {
           return category;
         } else {

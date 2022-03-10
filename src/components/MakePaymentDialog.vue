@@ -7,23 +7,27 @@
       -->
       <q-card-section>
         <div class="row" v-if="order.payments.length">
-          <div>Riwayat Pembayaran</div>
-          <div>Total terbayar Rp. {{ order.paid_sum.toLocaleString() }}</div>
-          <div>Total tagihan Rp. {{ order.total_sum.toLocaleString() }}</div>
-          <div>
-            Sisa bayar Rp.
-            {{
-              (
-                parseInt(order.total_sum) - parseInt(order.paid_sum)
-              ).toLocaleString()
-            }}
+          <div class="col-12">
+            <div class="text-caption">Riwayat Pembayaran</div>
           </div>
-          <div v-for="payment in order.payments" :key="payment.id">
-            {{ payment.name }} - Rp. {{ payment.value.toLocaleString() }}
+          <div class="col-12">
+            <div class="text-caption">
+              Total terbayar Rp. {{ order.paid_sum.toLocaleString() }}
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="text-caption">
+              Total tagihan Rp. {{ order.total_sum.toLocaleString() }}
+            </div>
+          </div>
+          <div class="col-12">
+            <div v-for="payment in order.payments" :key="payment.id">
+              {{ payment.name }} - Rp. {{ payment.value.toLocaleString() }}
+            </div>
           </div>
         </div>
         <div v-else>
-          <div>Belum ada riwayat pembayaran</div>
+          <div class="text-caption">Belum ada riwayat pembayaran</div>
         </div>
         <q-form>
           <q-input

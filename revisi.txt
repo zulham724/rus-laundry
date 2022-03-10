@@ -1,3 +1,4 @@
+👍👍👍
 + halaman input new clothes judul menjadi tambah item
 + halaman package list first waktu pengerjaan menjadi number
 + halaman add package tombol tambah diganti di bawah
@@ -17,11 +18,28 @@
 + halaman tambah pesanan beri skeleton ketika loading data list customer [tidak ada loading karena data di mounted]
 + halaman tambah pesanan beri skeleton ketika loading data list karyawan [tidak ada loading karena data di mounted]
 + halaman transaksi di beri filter status pembayaran di list (belum bayar, bayar sebagian, lunas) & filter berdasarkan status pembayaran
++ waktu postingan tidak ada postingan d beri gambar kosong
++ tombol tambah di tambah item ditaruh di bawah
++ filter transaksi status order pending/ onProcess/ complete/ accepted
++ tombol kembali kekecilan waktu selesai pesan dan animasi nya terlalu lama[tinggal menghapus background logo]
++ kalau tambah paket jenis pcs tambah nya +=1 kalau kg += 0.1
++ filter transaksi lunas belum lunas
++ status pesanan dikerjakan kalau sudah dikerjakan
++ waktu konfirmasi bisa masukan foto pengambilan barang
++ halaman basket ada tombol tambah pembayaran (bayar nanti, dp , dan lunas) [belum ada design]
++ buat halaman preview pesanan bagi para customer
++ ketika klik bottom bar transaksi (langsung ambil data order)
++ ketika log out, data yang di index / state di reset
 
-? buat halaman preview pesanan bagi para customer [belum ada design]
-? halaman basket ada tombol tambah pembayaran (bayar nanti, dp , dan lunas) [belum ada design]
-? halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
+👽 👽 👽
+- halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
 
-- halaman keranjang error jika ada item yang tidak memiliki paket
+👎👎👎
 - halaman berikan softdelete pada item dan paket
+- halaman keranjang error jika ada item yang tidak memiliki paket
+- waktu back jangan close app
+
+
+
+
 

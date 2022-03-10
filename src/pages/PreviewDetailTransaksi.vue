@@ -11,20 +11,6 @@
             no-spinner
           >
             <q-toolbar class="bg-transparent">
-              <q-btn
-                :ripple="true"
-                flat
-                round
-                size="sm"
-                @click="$router.push('/transaction')"
-              >
-                <q-avatar
-                  size="25px"
-                  icon="fas fa-arrow-left"
-                  style="color: #888888"
-                >
-                </q-avatar>
-              </q-btn>
               <q-toolbar-title
                 class="text-left text-weight-medium"
                 style="color: #888888; font-size: 16px"
@@ -58,7 +44,7 @@
             navigation-active-icon="local_laundry_service"
             navigation-position="top"
             navigation
-            class="bg-transparent text-white shadow-4 rounded-borders q-pa-none q-mb-lg"
+            class="bg-transparent text-white shadow-4 rounded-borders q-pa-none"
           >
             <q-carousel-slide
               :name="`slide-${service.id}`"
@@ -83,12 +69,7 @@
                 </div>
                 <div class="col-6">
                   <div class="row justify-end">
-                    <q-btn
-                      no-caps
-                      dense
-                      flat
-                      @click="$router.push('/order-code')"
-                    >
+                    <q-btn no-caps dense flat disable>
                       <div
                         class="text-weight-regular text-center q-px-xs"
                         style="
@@ -103,14 +84,7 @@
                     </q-btn>
 
                     <!-- Button Share -->
-                    <q-btn
-                      dense
-                      round
-                      size="13px"
-                      ripple
-                      flat
-                      @click="buttonShare()"
-                    >
+                    <q-btn disable dense round size="13px" ripple flat>
                       <q-icon
                         size="20px"
                         color="grey-8"
@@ -318,7 +292,7 @@
                     <q-item-label
                       class="text-weight-regular"
                       style="color: #c9c9c9; font-size: 12px"
-                      >Foto Konfirmasi Pesanan</q-item-label
+                      >Status foto</q-item-label
                     >
                     <q-item-label
                       caption
@@ -340,9 +314,14 @@
                     </q-item-label>
                   </q-item-section>
                   <q-space></q-space>
-                  <q-item-section avatar @click="dialogPreviewPhoto()">
+                  <q-item-section avatar>
                     <q-avatar size="30px" class="bg-transparent">
-                      <q-img src="~/assets/foto.svg" />
+                      <q-icon
+                        name="fas fa-camera"
+                        size="20px"
+                        color="light-blue-4"
+                        no-spinner
+                      />
                     </q-avatar>
                   </q-item-section>
                 </q-item>
@@ -389,15 +368,7 @@
                   </q-item-section>
 
                   <q-item-section avatar>
-                    <q-btn
-                      round
-                      flat
-                      @click="
-                        $router.push(
-                          `/${detail_order.id}/status-cucian/${service.id}`
-                        )
-                      "
-                    >
+                    <q-btn disable round flat>
                       <q-avatar size="30px" class="bg-transparent">
                         <q-img
                           src="~/assets/icon-status-cucian.svg"
@@ -447,25 +418,6 @@
               </q-list>
             </q-carousel-slide>
           </q-carousel>
-          <q-btn
-            v-if="detail_order.percentage == 100"
-            @click="
-              order.paid_sum < order.total_sum ? makePayment() : buttonConfirm()
-            "
-            no-caps
-            class="fixed-bottom mbl-child"
-            :style="`background-color: ${
-              order.paid_sum < order.total_sum ? '#49c2c0' : '#66BB6A'
-            }; color: #fafafa; width: 100%`"
-          >
-            <div class="q-py-sm text-weight-regular">
-              {{
-                order.paid_sum < order.total_sum
-                  ? "Bayar Pesanan"
-                  : "Konfirmasi"
-              }}
-            </div>
-          </q-btn>
 
           <q-dialog v-model="dialogConfirm">
             <q-card>
@@ -489,20 +441,20 @@
 
               <q-card-actions class="text-primary" vertical>
                 <q-btn
-                  @click="confirmService()"
+                  disable
                   no-caps
                   flat
                   label="Konfirmasi Transaksi"
                   style="background-color: #49c2c0; color: white"
                 />
                 <q-btn
-                  @click="$router.push(`/postorderphoto/${order.id}`)"
                   no-caps
                   flat
                   label="Tambahkan Bukti Foto"
                   style="background-color: #49c2c0; color: white"
                 />
                 <q-btn
+                  disable
                   no-caps
                   flat
                   label="Batal"
@@ -528,6 +480,7 @@
                   <!-- Button Close -->
                   <div class="col-4 text-right">
                     <q-btn
+                      disable
                       flat
                       round
                       v-ripple
@@ -553,6 +506,7 @@
                 <div class="row justify-center">
                   <!-- Button Facebook -->
                   <q-btn
+                    disable
                     round
                     size="20px"
                     outline
@@ -568,6 +522,7 @@
 
                   <!-- Button Instagram -->
                   <q-btn
+                    disable
                     round
                     size="20px"
                     outline
@@ -579,6 +534,7 @@
 
                   <!-- Button WhatsApp -->
                   <q-btn
+                    disable
                     round
                     size="20px"
                     outline
@@ -589,7 +545,14 @@
                   </q-btn>
 
                   <!-- Button Telegram -->
-                  <q-btn round size="20px" outline color="blue" class="q-mx-xs">
+                  <q-btn
+                    disable
+                    round
+                    size="20px"
+                    outline
+                    color="blue"
+                    class="q-mx-xs"
+                  >
                     <q-avatar
                       icon="fab fa-telegram-plane"
                       size="30px"
@@ -608,10 +571,10 @@
                     ref="copy"
                   >
                     <q-btn
+                      disable
                       class="self-center q-px-xl"
                       label="Copy"
                       color="deep-purple-13"
-                      @click="copyLink()"
                     />
                     <template v-slot:prepend>
                       <q-icon name="fas fa-link" />

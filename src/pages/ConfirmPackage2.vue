@@ -4,8 +4,9 @@
       <q-page>
         <div class="text-center q-pt-lg">
           <q-img
+            no-loading
             no-spinner
-            src="~/assets/confirm-package-unscreen.gif"
+            src="~/assets/50465-done.gif"
             style="width: 80vw"
           />
         </div>
@@ -15,13 +16,14 @@
         </div>
 
         <div class="col-12 text-center absolute-bottom q-pb-lg">
+          <br />
           <q-btn
             no-caps
             dense
             @click="$router.push('/order-code')"
             label="Cetak kode pesanan"
-            class="bg-white text-weight-regular q-py-sm q-px-sm"
-            style="font-size: 20px; border-radius: 10px"
+            class="bg-white text-weight-regular q-py-xs q-px-sm"
+            style="font-size: 18px; border-radius: 6px"
           />
           <br />
           <q-btn
@@ -30,8 +32,7 @@
             label="kembali"
             flat
             color="green-5"
-            size="sm"
-            style="font-size: 14px"
+            style="font-size: 18px"
           />
         </div>
       </q-page>

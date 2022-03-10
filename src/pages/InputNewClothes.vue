@@ -9,9 +9,8 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Tambah Jenis Pakaian</q-toolbar-title
+          >Tambah Jenis Item</q-toolbar-title
         >
-        <q-btn flat color="grey-6" label="Tambah" size="md" @click="inputClothesType()"/>
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
@@ -20,7 +19,7 @@
           borderless
           v-model="clothes_type"
           class="q-pl-md q-my-md text-weight-regular"
-          label="Jenis Pakaian"
+          label="Jenis Item"
           style="background-color: #ffffff; color: #888888; font-size: 16px"
         />
 
@@ -77,6 +76,19 @@
             </q-btn-dropdown> -->
           </div>
         </q-card>
+
+        <div class="fixed-bottom" style="z-index: 1">
+          <q-btn
+            @click="inputClothesType()"
+            :ripple="{ color: 'orange' }"
+            flat
+            no-caps
+            class="full-width"
+            style="background-color: #49c2c0"
+            label="Tambah"
+            text-color="grey-1"
+          />
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -88,7 +100,7 @@ export default {
     return {
       service_units: [],
       selectedUnit: null,
-      clothes_type: null
+      clothes_type: null,
     };
   },
   mounted() {
@@ -105,17 +117,16 @@ export default {
         });
       });
     },
-    inputClothesType(){
+    inputClothesType() {
       const payload = {
         name: this.clothes_type,
-        service_unit_id: this.selectedUnit.id
-      }
-      this.$store.dispatch("ServiceCategories/store", payload).then(res => {
-        this.$router.push('/add-clothes')
-        this.$q.notify("Berhasil menambah jenis pakaian")
-      })
+        service_unit_id: this.selectedUnit.id,
+      };
+      this.$store.dispatch("ServiceCategories/store", payload).then((res) => {
+        this.$router.push("/add-clothes");
+        this.$q.notify("Berhasil menambah jenis Item");
+      });
     },
-    
   },
 };
 </script>

@@ -4,16 +4,7 @@
       <!--Header Pagi-->
       <div
         v-if="backgroundSetter >= 0 && backgroundSetter <= 10"
-        class="row"
-        style="
-          min-height: 220px;
-          background-image: linear-gradient(
-            to top right,
-            #ffffff,
-            #ffecc1,
-            #b4e6ea
-          );
-        "
+        class="row bg-pagi"
       >
         <div class="row full-width">
           <!--Waktu sekarang-->
@@ -158,7 +149,7 @@
                 ></q-img>
                 <div
                   class="text-weight-medium self-center q-pl-sm"
-                  style="color: white; font-size: 14px"
+                  style="color: black; font-size: 14px"
                 >
                   Scan Absen
                 </div>
@@ -189,16 +180,8 @@
       <!--Header Siang-->
       <div
         v-else-if="backgroundSetter >= 11 && backgroundSetter <= 17"
-        class="row"
-        style="
-          min-height: 220px;
-          background-image: linear-gradient(
-            to top right,
-            #ffffff,
-            #70c7e2,
-            #4ca6e5
-          );
-        "
+        class="row bg-siang"
+        style="min-height: 220px"
       >
         <div class="row full-width">
           <!--Waktu sekarang-->
@@ -333,21 +316,7 @@
         <!-- Scan Area -->
         <div class="row full-width">
           <div class="col-6">
-            <q-btn
-              @click="ScanAttendance()"
-              style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #f6d365,
-                  #fda085
-                );
-                width: 100%;
-                height: 50px;
-                color: white;
-              "
-              flat
-              no-caps
-            >
+            <q-btn @click="ScanAttendance()" class="btn-scan-1" flat no-caps>
               <div class="row self-center">
                 <q-img
                   no-spinner
@@ -365,21 +334,7 @@
             </q-btn>
           </div>
           <div class="col-6">
-            <q-btn
-              @click="doScanOrder()"
-              style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #4ecebf,
-                  #3fafb6
-                );
-                width: 100%;
-                height: 50px;
-                color: white;
-              "
-              flat
-              no-caps
-            >
+            <q-btn class="btn-scan-2" @click="doScanOrder()" flat no-caps>
               <div class="row self-center">
                 <q-img
                   no-spinner
@@ -402,16 +357,7 @@
       <!--Header Malam-->
       <div
         v-else-if="backgroundSetter >= 18 && backgroundSetter <= 23"
-        class="row"
-        style="
-          min-height: 220px;
-          background-image: linear-gradient(
-            to top right,
-            #ffffff,
-            #505483,
-            #000650
-          );
-        "
+        class="row bg-malam"
       >
         <div class="row full-width">
           <!--Waktu sekarang-->
@@ -545,20 +491,7 @@
         <!-- Scan Area -->
         <div class="row full-width">
           <div class="col-6">
-            <q-btn
-              style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #f6d365,
-                  #fda085
-                );
-                width: 100%;
-                height: 50px;
-                color: white;
-              "
-              flat
-              no-caps
-            >
+            <q-btn class="btn-scan-1" flat no-caps>
               <div class="row self-center">
                 <q-img
                   no-spinner
@@ -576,20 +509,7 @@
             </q-btn>
           </div>
           <div class="col-6">
-            <q-btn
-              style="
-                background-image: linear-gradient(
-                  to bottom right,
-                  #4ecebf,
-                  #3fafb6
-                );
-                width: 100%;
-                height: 50px;
-                color: white;
-              "
-              flat
-              no-caps
-            >
+            <q-btn class="btn-scan-2" flat no-caps>
               <div class="row self-center">
                 <q-img
                   no-spinner
@@ -971,16 +891,31 @@ export default {
 
 <style>
 .btn-scan-1 {
-  background-image: linear-gradient(to bottom right, #f6d365, #fda085);
+  background: linear-gradient(to bottom right, #f6d365, #fda085);
   width: 100%;
   height: 50px;
   color: white;
 }
 
 .btn-scan-2 {
-  background-image: linear-gradient(to bottom right, #4ecebf, #3fafb6);
+  background: linear-gradient(to bottom right, #4ecebf, #3fafb6);
   width: 100%;
   height: 50px;
   color: white;
+}
+
+.bg-pagi {
+  min-height: 220px;
+  background: linear-gradient(to top right, #ffffff, #ffecc1, #b4e6ea);
+}
+
+.bg-siang {
+  min-height: 220px;
+  background: linear-gradient(to top right, #ffffff, #70c7e2, #4ca6e5);
+}
+
+.bg-malam {
+  min-height: 220px;
+  background: linear-gradient(to top right, #ffffff, #505483, #000650);
 }
 </style>

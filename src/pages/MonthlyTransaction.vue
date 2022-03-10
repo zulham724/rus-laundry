@@ -58,12 +58,16 @@
                 @click="$router.push(`/detail-transaksi/${order.id}`)"
               >
                 <q-item-section avatar>
-                  <q-avatar> </q-avatar>
+                  <q-avatar
+                    icon="fas fa-box-open"
+                    color="primary"
+                    text-color="white"
+                  />
                 </q-item-section>
 
                 <q-item-section class="self-center">
                   <q-item-label class="text-weight-medium">
-                    {{ order.id }} {{ order.customer.name }}</q-item-label
+                    {{ order.id }} {{ order.customer }}</q-item-label
                   >
                   <q-item-label caption lines="1" class="q-mb-sm">
                     {{ moment(order.updated_at).format("LL") }}</q-item-label
@@ -79,7 +83,7 @@
                     new Intl.NumberFormat("id-ID", {
                       style: "currency",
                       currency: "IDR",
-                    }).format(order.total_sum)
+                    }).format(order.value)
                   }}
                 </q-item-section>
               </q-item>
@@ -141,6 +145,7 @@ export default {
           )
           .then((res) => {
             this.orders = res.data;
+            console.log("data order", this.orders);
             resolve(res.data);
           })
           .catch((err) => {
@@ -173,5 +178,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
