@@ -371,7 +371,6 @@
                 flat
                 label="Lanjutkan"
                 color="white"
-                v-close-popup
                 @click="popupComponent()"
               />
             </q-card-actions>
