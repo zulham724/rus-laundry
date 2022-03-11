@@ -1,7 +1,7 @@
 <template>
   <q-dialog ref="dialog">
     <q-card class="full-width">
-      <q-img v-if="src" :src="`${STORAGE_URL}/${src}`" />
+      <q-img v-if="src" :src="src" />
     </q-card>
   </q-dialog>
 </template>

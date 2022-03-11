@@ -4,6 +4,7 @@
       <q-page class="window-height">
         <div style="height: 100vh; width: 100vw">
           <camera
+            v-if="!$q.platform.is.mobile"
             ref="camera"
             id="camera"
             class="full-width full-height mbl-child justify-center align-center"
@@ -11,6 +12,9 @@
           >
             <div class="mbl-child">
               <div v-if="url" class="text-center fixed-center mbl-child">
+                <img class="mbl-child" :src="url" />
+              </div>
+              <div v-if="cordovaPic" class="text-center fixed-center mbl-child">
                 <img class="mbl-child" :src="url" />
               </div>
               <div
@@ -41,7 +45,11 @@
                   </q-btn>
                 </div>
                 <div class="col">
-                  <q-btn round @click="takePhoto" class="self-center">
+                  <q-btn
+                    round
+                    @click="takePhoto"
+                    class="self-center"
+                  >
                     <q-img
                       src="~/assets/Group5172.png"
                       style="height: 60px; width: 60px"
@@ -73,6 +81,7 @@
 </template>
 
 <script>
+import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent.vue";
 export default {
   props: ["order_id"],
   data() {
@@ -87,13 +96,48 @@ export default {
     };
   },
   mounted() {
-    console.log("screen", screen);
-    this.$refs.camera.devices(["videoinput"]).then((res) => {
-      console.log("devices", res);
-      this.devices = res;
-    });
+    if (this.$q.platform.is.mobile) {
+      this.cordovaCam();
+    }
+    console.log(!this.$q.platform.is.mobile)
+    if (!this.$q.platform.is.mobile) {
+      console.log("screen", screen);
+      this.$refs.camera.devices(["videoinput"]).then((res) => {
+        console.log("devices", res);
+        this.devices = res;
+      });
+    }
   },
   methods: {
+    cordovaCam() {
+      navigator.camera.getPicture(this.androidSuccess, this.androidFail, {
+        quality: 50,
+        saveToPhotoAlbum: false,
+        destinationType: Camera.DestinationType.DATA_URL,
+      });
+    },
+    androidSuccess(imageURI) {
+      // var image = cordovaPic;
+      // image.src = imageUrl;
+      let blob = this.getBlob(imageURI, ".jpg")
+      const url = URL.createObjectURL(blob);
+      console.log("url", url);
+      this.$q.dialog({
+        component:PreviewPhotoComponentVue,
+        componentProps:{
+          src:url
+        }
+      })
+      console.log(blob)
+      // let blob;
+      this.blob = blob
+      this.savePhoto();
+    },
+    androidFail(message) {
+      // alert('gagal gan')
+      console.log('terjadi kesalahan')
+      this.$router.back();
+    },
     reset() {
       this.url = null;
     },
@@ -137,6 +181,31 @@ export default {
         this.$q.notify("Berhasil simpan foto");
         this.$router.back();
       });
+    },
+    getBlob(b64Data, contentType, sliceSize = 512) {
+      contentType = contentType || "";
+      sliceSize = sliceSize || 512;
+      let byteCharacters = atob(b64Data);
+      let byteArrays = [];
+
+      for (
+        let offset = 0;
+        offset < byteCharacters.length;
+        offset += sliceSize
+      ) {
+        let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        let byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        let byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+      }
+      let blob = new Blob(byteArrays, { type: contentType });
+      return blob;
     },
   },
 };

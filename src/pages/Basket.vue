@@ -183,6 +183,7 @@
                           </q-btn>
                         </div>
                         <div class="col-6 text-right">
+                          <!--
                           <q-btn
                             v-if="!payment"
                             class="bg-cyan-5 text-grey-1"
@@ -198,9 +199,10 @@
                             @click="paymentDialog = true"
                           >
                             Pembayaran sejumlah RP.
-                            {{ payment.toLocaleString() }} dimasukan (KLIK UNTUK
+                            {{ this.Orders.order.payment.toLocaleString() }} dimasukan (KLIK UNTUK
                             UBAH)
                           </q-btn>
+                          -->
                         </div>
                       </div>
                     </q-card-section>
@@ -226,10 +228,20 @@
                 </div>
               </q-card-section>
             </q-card>
-            <div class="q-pa-lg">
+            <div class="q-pa-lg" v-if="n != false">
               <q-btn
                 :disable="loading"
                 @click="store()"
+                class="full-width"
+                style="border-radius: 10px"
+                color="grey-7"
+                label="Buat Pesanan"
+              />
+            </div>
+            <div class="q-pa-lg">
+              <q-btn
+                :disable="loading"
+                @click="alert = true"
                 class="full-width"
                 style="border-radius: 10px"
                 color="grey-7"
@@ -272,6 +284,190 @@
           </q-card>
         </q-dialog>
 
+        <q-dialog v-model="alert" position="bottom">
+          <q-card class="" style="border-radius: 20px 20px 0px 0px">
+            <q-card-section>
+              <q-carousel
+                height="10%"
+                animated
+                swipeable
+                v-model="slide"
+                infinite
+                :autoplay="autoplay"
+                transition-prev="slide-right"
+                transition-next="slide-left"
+                @mouseenter="autoplay = false"
+                @mouseleave="autoplay = true"
+              >
+                <q-carousel-slide :name="1" class="text-center">
+                  <q-img
+                    src="~/assets/right-arrow1.png"
+                    width="150px"
+                    height="150px"
+                  />
+                  <div class="q-mb-md">
+                    Pesanan bisa di bayar nanti dan anda bisa skip langkah ini.
+                  </div>
+                  <div></div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="2" class="text-center">
+                  <q-img
+                    src="~/assets/credit-card-payment2.png"
+                    width="150px"
+                    height="150px"
+                  />
+                  <div class="q-mb-md">
+                    Pesanan bisa dibayar di muka. Lanjutkan untuk memasukan
+                    nominal uang muka
+                  </div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="3" class="text-center">
+                  <q-img
+                    src="~/assets/money-bag1.png"
+                    width="150px"
+                    height="150px"
+                  />
+                  <div style="margin-bottom: -5px">
+                    Pesanan bisa dibayar sekarang. Lanjutkan untuk mengisi
+                    nominal sesuai dengan harga pesanan
+                  </div>
+                </q-carousel-slide>
+              </q-carousel>
+            </q-card-section>
+
+            <!--
+            <q-card-section class="q-pt-none">
+                  <q-img
+                    src="~/assets/Ellipse175.png"
+                    width="10px"
+                    height="10px"
+                  />
+                  <q-img
+                    src="~/assets/Ellipse176.png"
+                    width="10px"
+                    height="10px"
+                  />
+                  <q-img
+
+                    src="~/assets/Ellipse176.png"
+                    width="10px"
+                    height="10px"
+                  />
+            </q-card-section>
+            -->
+
+            <q-card-actions>
+              <q-btn
+                class="full-width"
+                flat
+                label="Lewati"
+                color="black"
+                @click="store()"
+              />
+            </q-card-actions>
+            <q-card-actions>
+              <q-btn
+                class="bg-teal-14 full-width"
+                flat
+                label="Lanjutkan"
+                color="white"
+                v-close-popup
+                @click="popupComponent()"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
+        <q-dialog v-model="paymentDialogDetail" persistent>
+          <q-card class="full-width" style="border-radius: 20px">
+            <q-card-section>
+              <div class="row text-center">
+                <div class="col-10 text-left" text-h5>
+                  <div>Total Harga</div>
+                  <div
+                    v-if="this.Orders.order.total_price"
+                    style="font-size: 28px; font-weight: bold"
+                  >
+                    {{
+                      new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(this.Orders.order.total_price)
+                    }}
+                  </div>
+                  <div
+                    v-if="!this.Orders.order.total_price"
+                    style="font-size: 28px; font-weight: bold"
+                  >
+                    Kosong
+                  </div>
+                </div>
+
+                <div class="col-2">
+                  <q-btn @click="this.payment = null" round flat v-close-popup>
+                    <q-avatar>
+                      <img
+                        src="~/assets/x.png"
+                        style="width: 35%; height: 35%"
+                      />
+                    </q-avatar>
+                  </q-btn>
+                </div>
+              </div>
+            </q-card-section>
+
+            <!-- Img ketika memasukkan nominal -->
+            <div v-if="!this.payment" class="text-center">
+              <q-img
+                src="~/assets/coding1.png"
+                style="width: 100px; height: 100px"
+              />
+              <div class="q-my-md" style="font-size: 16px; font-weight: bold">
+                Masukkan nominal form di bawah
+              </div>
+            </div>
+
+            <!-- Img ketika inputan lunas -->
+            <div v-if="this.payment == this.Orders.order.total_price" class="text-center">
+              <q-img
+                src="~/assets/payment-method1.png"
+                style="width: 100px; height: 100px"
+              />
+              <div class="q-my-md" style="font-size: 16px; font-weight: bold; color:#7ED396">
+                Pembayaran Lunas
+              </div>
+            </div>
+
+            <!-- Img ketika inputan tidak lunas -->
+            <div v-if="this.payment != this.Orders.order.total_price && this.payment > 0" class="text-center">
+              <q-img
+                src="~/assets/installment1.png"
+                style="width: 100px; height: 100px"
+              />
+              <div class="q-my-md" style="font-size: 16px; font-weight: bold; color:#8B8484">
+                Bayar Sebagian
+              </div>
+            </div>
+
+            <q-input
+              type="number"
+              @keypress="isNumber($event)"
+              v-model="payment"
+              square
+              color="black"
+              outlined
+              label="Masukkan Nominal"
+            />
+            <div
+              @click="submitPayment() "
+              class="bg-teal-14 text-center q-py-md"
+              style="color: #fff"
+            >
+              Lanjutkan
+            </div>
+          </q-card>
+        </q-dialog>
+
         <!-- end dialog payment  -->
       </q-page>
     </q-page-container>
@@ -280,19 +476,36 @@
 
 <script>
 import { mapState } from "vuex";
+import { ref } from "vue";
+import SubmitPaymentComponentVue from "src/components/SubmitPaymentComponent";
+
 export default {
   computed: {
     ...mapState(["Orders"]),
   },
   data() {
     return {
+      n: false,
+      y: true,
+      //hanya untuk test
+
+      slide: ref(1),
+      autoplay: ref(true),
+      alert: false,
       expanded: false,
       loading: false,
       paymentDialog: false,
+      paymentDialogDetail: false,
       payment: null,
+      btnConfirmPayment: false,
     };
   },
   methods: {
+    popupComponent(){
+      this.$q.dialog({
+        component: SubmitPaymentComponentVue,
+      })
+    },
     isNumber(evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -309,11 +522,13 @@ export default {
     submitPayment() {
       if (this.payment > this.Orders.order.total_price) {
         this.$q.notify("Pembayaran melebihi batas");
+      } else if(!this.payment){
+        this.$q.notify("Masukkan jumlah yang ingin dibayar");
       } else {
         this.$q.notify("Pembayaran dimasukan");
         this.payment = parseInt(this.payment);
         this.Orders.order.payment = this.payment;
-        // console.log(this.payment);
+        console.log('ini jumlah order', this.Orders.order.payment)
         this.paymentDialog = false;
       }
     },

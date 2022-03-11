@@ -450,7 +450,9 @@
           <q-btn
             v-if="detail_order.percentage == 100"
             @click="
-              order.paid_sum < order.total_sum ? makePayment() : buttonConfirm()
+              order.paid_sum < order.total_sum
+                ? PaymentComponent()
+                : buttonConfirm()
             "
             no-caps
             class="fixed-bottom mbl-child"
@@ -459,11 +461,7 @@
             }; color: #fafafa; width: 100%`"
           >
             <div class="q-py-sm text-weight-regular">
-              {{
-                order.paid_sum < order.total_sum
-                  ? "Bayar Pesanan"
-                  : "Konfirmasi"
-              }}
+              {{ order.paid_sum < order.total_sum ? "Bayar" : "Konfirmasi" }}
             </div>
           </q-btn>
 
@@ -632,6 +630,8 @@
 import SkeletonDetailTransactionComponent from "src/components/SkeletonDetailTransactionComponent";
 import MakePaymentDialogVue from "src/components/MakePaymentDialog";
 import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent";
+import SubmitPaymentComponentVue from "src/components/SubmitPaymentComponent.vue";
+import SecondaryPaymentComponentVue from "src/components/secondaryPaymentComponent.vue";
 import { useQuasar } from "quasar";
 
 export default {
@@ -650,6 +650,7 @@ export default {
       isLoad: false,
       copy: false,
       order: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
 
@@ -659,13 +660,32 @@ export default {
   },
 
   methods: {
+    PaymentComponent() {
+      if (this.order.payments.length == 0) {
+        this.$q.dialog({
+          component: PreviewPhotoComponentVue,
+        });
+      } else {
+        this.$q.dialog({
+          component: SecondaryPaymentComponentVue,
+
+          componentProps: {
+            orderSend: this.order,
+          },
+        }).onOk((res) => {
+          this.order.payments = res.order.payments;
+          this.order.paid_sum = res.order.paid_sum;
+          console.log("OK", res);
+        })
+      }
+    },
     dialogPreviewPhoto() {
       this.$q.dialog({
         component: PreviewPhotoComponentVue,
 
         // props forwarded to your custom component
         componentProps: {
-          src: this.order.photo.src,
+          src: `${STORAGE_URL}/${this.order.photo.src}`,
           // ...more..props...
         },
       });

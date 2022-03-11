@@ -132,7 +132,7 @@
               "
               class="text-weight-regular"
             >
-              <div v-if="!btnDisable" class="q-pa-sm">Selesai</div>
+              <div class="q-pa-sm">Selesai</div>
               <q-spinner v-if="btnDisable" color="black" :thickness="2" />
             </q-btn>
           </div>

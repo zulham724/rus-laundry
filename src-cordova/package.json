@@ -21,12 +21,16 @@
       "cordova-plugin-btprinter": {},
       "cordova-plugin-qr-barcode-scanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
       }
     }
   },
   "devDependencies": {
     "cordova-browser": "^6.0.0",
     "cordova-plugin-btprinter": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
+    "cordova-plugin-camera": "^6.0.0",
     "cordova-plugin-qr-barcode-scanner": "^8.0.3"
   }
 }
