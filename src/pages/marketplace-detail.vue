@@ -4,6 +4,7 @@
       <q-page v-if="product">
         <q-carousel animated v-model="slide" arrows navigation>
           <q-carousel-slide
+            class="bg-grey-5"
             v-for="(image, i) in product.images"
             :key="image.id"
             :name="i"
@@ -50,7 +51,7 @@
           {{ product.tittle }}
         </div>
         <div
-         v-if="!product.likes_count"
+          v-if="!product.likes_count"
           class="text-caption q-ml-sm"
           style="font-size: 10px; color: #cdcdcd"
         >
@@ -176,12 +177,20 @@
               class="q-pb-xl q-mx-sm"
               @click="detailProduct(another_product.id)"
             >
-              <img
+              <q-img
                 v-if="another_product.images.length"
                 class="bg-red"
                 :src="STORAGE_URL + `/` + another_product.images[0].src"
                 style="height: 150px"
-              />
+              >
+                <template v-slot:error>
+                  <div
+                    class="absolute-full flex flex-center bg-grey-5 text-white"
+                  >
+                    Gagal mendapatkan Gambar
+                  </div>
+                </template>
+              </q-img>
               <img v-else class="bg-red" style="height: 150px" />
               <div
                 class="text-caption text-weight-medium q-pl-xs"
@@ -253,14 +262,15 @@ export default {
       STORAGE_URL: STORAGE_URL,
       message: "",
       order: {},
+      APP_URL: APP_URL
     };
   },
   mounted() {
     this.detailProduct(this.productid);
   },
   methods: {
-    likeList(){
-      product.likes_count
+    likeList() {
+      product.likes_count;
     },
     getRoutePath() {
       let props = this.$router.resolve({
@@ -279,7 +289,7 @@ export default {
       this.order.total_price = this.product.price;
 
       this.$store.dispatch("Orders/orderProduct", this.order).then((res) => {
-        this.setTextMessage()
+        this.setTextMessage();
 
         let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
           this.product.shop.user.contact_number
@@ -305,12 +315,11 @@ export default {
         formatted = "+62" + formatted.substr(2);
       }
 
-
       return formatted;
     },
     setTextMessage() {
       if (this.order) {
-        let url = `${location.origin}/marketplace-detail/${this.product.id}`;
+        let url = `${this.APP_URL}/marketplace-detail/${this.product.id}`;
         let tmp = `
           Order via Whatsapp
           \nNama Produk : ${this.product.tittle}
@@ -324,6 +333,7 @@ export default {
       await this.$store.dispatch("Product/show", this.productid).then((res) => {
         this.product = res.data;
         this.getAnotherProducts(res.data.shop.id);
+        console.log('ini data', res.data)
       });
     },
     getAnotherProducts(id) {

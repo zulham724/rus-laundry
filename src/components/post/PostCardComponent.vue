@@ -1,19 +1,19 @@
 <template>
-  <div style="height: 100%; width: 100%">
+  <div class=" mbl-child " style="height: 100%; width: 100%">
     <div
       class="q-py-md"
       v-if="post != null"
       :ref="`post_${post.id}`"
       style="height: 100%"
     >
-      <div class="row q-px-md">
-        <div class="col-2">
+      <div class="row q-mx-sm">
+        <div class="col-2  self-center">
           <!-- Image profile -->
           <q-avatar size="60px" style="background-color: #888888">
             <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar>
         </div>
-        <div class="col-8 q-pl-sm">
+        <div class="col-8 q-pl-sm self-center">
           <!-- Nama Profile -->
           <div
             class="text-weight-medium"
@@ -29,7 +29,7 @@
             {{ moment(post.created_at).locale("id").fromNow() }}
           </div>
         </div>
-        <div class="col-2 text-right">
+        <div class="col-2 text-right self-center">
           <!-- Button option -->
           <q-btn dense flat round @click="buttonOption()">
             <q-icon name="fas fa-ellipsis-v" size="16px"></q-icon>
@@ -38,12 +38,12 @@
       </div>
 
       <!-- Isi post -->
-      <div class="row q-px-md">
+      <div class="row  q-mt-sm q-mx-sm">
         <div
           class="q-py-sm text-weight-medium text-justify"
           style="font-size: 15px; color: #5a5656"
         >
-          <div>
+          <div class="col-12 self-center" >
             <span v-if="!readMoreActivated"
               >{{ post.body.slice(0, 130) }}
             </span>
@@ -62,7 +62,7 @@
         </div>
       </div>
       <!-- Isi video/foto -->
-      <div class="full-width full-height q-py-xs q-px-md mbl-child">
+      <div class="full-width full-height  mbl-child">
         <div v-if="post.files.length">
           <q-carousel
             v-model="slide"
@@ -90,6 +90,13 @@
                 :src="storageUrl + `/` + file.src"
                 style="width: 100%; height: 100%"
               >
+                <template v-slot:error>
+                  <div
+                    class="absolute-full flex flex-center bg-grey-5 text-white"
+                  >
+                    Gagal mendapatkan Gambar
+                  </div>
+                </template>
               </q-img>
             </q-carousel-slide>
           </q-carousel>
@@ -97,7 +104,7 @@
       </div>
 
       <!-- Button like, comment, show -->
-      <div class="row">
+      <div class="row q-mx-sm" style="">
         <div class="row col-2 self-center">
           <q-btn
             dense
@@ -137,7 +144,7 @@
             {{ post.comments_count }}
           </div>
         </div>
-        <div class="row col-3 self-center">
+        <div class="row col-2 self-center">
           <q-btn dense round flat size="18px" color="grey" icon="visibility">
           </q-btn>
           <div
@@ -352,7 +359,7 @@ export default {
     ...mapState(["Auth"]),
   },
   data() {
-    return {      
+    return {
       slide: 0,
       dialogOption: false,
       dialogShare: false,

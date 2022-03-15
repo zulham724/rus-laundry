@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="mbl" view="lHh lpR fFf">
     <q-header>
       <q-toolbar class="bg-white shadow-1">
         <q-btn
@@ -35,13 +35,13 @@
           </div>
 
           <!-- 1 Notif card -->
-          <div v-for="n in 3" :key="n" class="row q-mb-lg">
-            <div class="col-2 q-pa-xs self-center">
+          <div v-for="n in 3" :key="n" class="row q-mb-lg full-width">
+            <div class="col-2 q-pa-xs self-center ">
               <q-avatar size="50px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>
               </q-avatar>
             </div>
-            <div class="col-7 row self-center q-pr-sm">
+            <div class="col-7 row self-center  q-pr-sm">
               <div
                 class="text-weight-bold"
                 style="color: #3a3838; font-size: 17px; width: auto"
@@ -61,9 +61,9 @@
                 Menambah postingan baru.
               </div>
             </div>
-            <div class="col-3 text-right self-center" style="display: block">
+            <div class="col-3 text-right  self-center" style="display: block">
               <!-- Preview image post -->
-              <div v-if="previewImage = true">
+              <div  v-if="previewImage = true">
                 <q-avatar
                   square
                   size="50px"
@@ -106,7 +106,7 @@
           </div>
 
           <!-- 1 Notif card -->
-          <div v-for="n in 3" :key="n" class="row q-mb-lg">
+          <div v-for="n in 3" :key="n" class="row q-mb-lg full-width">
             <div class="col-2 q-pa-xs self-center">
               <q-avatar size="50px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>
@@ -177,7 +177,7 @@
           </div>
 
           <!-- 1 Notif card -->
-          <div v-for="n in 3" :key="n" class="row q-mb-lg">
+          <div v-for="n in 3" :key="n" class="row q-mb-lg full-width">
             <div class="col-2 q-pa-xs self-center">
               <q-avatar size="50px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>

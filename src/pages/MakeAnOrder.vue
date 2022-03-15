@@ -542,7 +542,7 @@ export default {
 <style>
 .order-background-1 {
   height: 300px;
-  width: 100vw;
+  width: 100%;
   background-image: linear-gradient(to top left, #85d9de, #70c7e2, #4ca6e5);
 }
 </style>

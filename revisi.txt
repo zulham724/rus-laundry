@@ -30,12 +30,19 @@
 + buat halaman preview pesanan bagi para customer
 + ketika klik bottom bar transaksi (langsung ambil data order)
 + ketika log out, data yang di index / state di reset
++ halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
++ basket push confirm order
++ centang confirm order
++ course of home (di mbl)
++ notification (di mbl)
++ marketplace home (gambar error, kalo tidak ada lokasi tidak usah ada icon)
++ community (merapikan posisi)
 
 👽 👽 👽
-- halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
+- marketplace detail (jika tidak ada gambar kasih gambar lain, berikan img error produk lain) ⛔ img nya carousel 
 
 👎👎👎
-- halaman berikan softdelete pada item dan paket
+- halaman berikan softdelete pada item dan paket 
 - halaman keranjang error jika ada item yang tidak memiliki paket
 - waktu back jangan close app
 

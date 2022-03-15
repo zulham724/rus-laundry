@@ -78,9 +78,9 @@
               order.service_status.service_status_id == 3 ? 100 : progress
             "
           >
-            <div class="absolute-full flex flex-center">
+            <div class="absolute-full flex flex-center self-center">
               <q-badge
-                style="font-size: 3vw"
+                style="font-size: 20px"
                 class="bg-transparent"
                 text-color="white "
                 :label="

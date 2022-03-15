@@ -361,6 +361,7 @@
                 class="full-width"
                 flat
                 label="Lewati"
+                :disable="btnDisable == true"
                 color="black"
                 @click="store()"
               />
@@ -427,23 +428,38 @@
             </div>
 
             <!-- Img ketika inputan lunas -->
-            <div v-if="this.payment == this.Orders.order.total_price" class="text-center">
+            <div
+              v-if="this.payment == this.Orders.order.total_price"
+              class="text-center"
+            >
               <q-img
                 src="~/assets/payment-method1.png"
                 style="width: 100px; height: 100px"
               />
-              <div class="q-my-md" style="font-size: 16px; font-weight: bold; color:#7ED396">
+              <div
+                class="q-my-md"
+                style="font-size: 16px; font-weight: bold; color: #7ed396"
+              >
                 Pembayaran Lunas
               </div>
             </div>
 
             <!-- Img ketika inputan tidak lunas -->
-            <div v-if="this.payment != this.Orders.order.total_price && this.payment > 0" class="text-center">
+            <div
+              v-if="
+                this.payment != this.Orders.order.total_price &&
+                this.payment > 0
+              "
+              class="text-center"
+            >
               <q-img
                 src="~/assets/installment1.png"
                 style="width: 100px; height: 100px"
               />
-              <div class="q-my-md" style="font-size: 16px; font-weight: bold; color:#8B8484">
+              <div
+                class="q-my-md"
+                style="font-size: 16px; font-weight: bold; color: #8b8484"
+              >
                 Bayar Sebagian
               </div>
             </div>
@@ -458,9 +474,10 @@
               label="Masukkan Nominal"
             />
             <div
-              @click="submitPayment() "
+              @click="submitPayment()"
               class="bg-teal-14 text-center q-py-md"
               style="color: #fff"
+              :disable="btnDisable == true"
             >
               Lanjutkan
             </div>
@@ -488,6 +505,7 @@ export default {
       y: true,
       //hanya untuk test
 
+      btnDisable: false,
       slide: ref(1),
       autoplay: ref(true),
       alert: false,
@@ -500,10 +518,10 @@ export default {
     };
   },
   methods: {
-    popupComponent(){
+    popupComponent() {
       this.$q.dialog({
         component: SubmitPaymentComponentVue,
-      })
+      });
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;
@@ -520,15 +538,28 @@ export default {
     },
     submitPayment() {
       if (this.payment > this.Orders.order.total_price) {
-        this.$q.notify("Pembayaran melebihi batas");
-      } else if(!this.payment){
-        this.$q.notify("Masukkan jumlah yang ingin dibayar");
+        this.btnDisable = true;
+        this.$q.notify({
+          position: "top",
+          message: "Pembayaran melebihi batas",
+        });
+        this.btnDisable = true;
+      } else if (!this.payment) {
+        this.$q.notify({
+          position: "top",
+          message: "Masukkan jumlah yang ingin di bayar",
+        });
       } else {
-        this.$q.notify("Pembayaran dimasukan");
+        this.btnDisable = true;
+        this.$q.notify({
+          position: "top",
+          message: "Pembayaran dimasukkan",
+        });
         this.payment = parseInt(this.payment);
         this.Orders.order.payment = this.payment;
-        console.log('ini jumlah order', this.Orders.order.payment)
+        // console.log('ini jumlah order', this.Orders.order.payment)
         this.paymentDialog = false;
+        btnDisable = false;
       }
     },
     tambahpcs(index) {
@@ -583,18 +614,25 @@ export default {
       this.payment = this.Orders.order.payment;
     },
     store() {
+      this.btnDisable = true;
       this.loading = true;
       let order = this.Orders.order;
       this.$store
         .dispatch("Orders/store", order)
         .then((res) => {
-          this.$q.notify("Berhasil");
+          this.btnDisable = true;
+          this.$q.notify({
+            position: "top",
+            message: "Berhasil membuat pesanan",
+          });
           this.$router.push("/confirm-order");
         })
         .finally(() => {
+          this.btnDisable = false;
           this.loading = false;
         });
     },
+    showNotif() {},
   },
   mounted() {
     this.getOrderServiceCategory();

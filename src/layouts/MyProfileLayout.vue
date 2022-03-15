@@ -20,7 +20,8 @@
           </q-tab>
 
           <q-tab name="like" no-caps @click="$router.push('/my-profile-like')"
-            ><q-img
+            >
+            <q-img
               class="q-pa-sm"
               no-spinner
               style="width: 20px; height: 18px"

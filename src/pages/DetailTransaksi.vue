@@ -370,13 +370,12 @@
                       class="q-mb-md q-mt-lg"
                       size="10vw"
                       :value="
-                        service.pivot.service_status_id == 3 ? 100 : progress
-                      "
+                        service.pivot.service_status_id == 3 ? 100 : progress"
                     >
-                      <div class="absolute-full flex flex-center">
+                      <div class="absolute-full flex flex-center self-center ">
                         <q-badge
-                          style="font-size: 3vw"
-                          class="bg-transparent"
+                          style="font-size: 20px"
+                          class="bg-transparent "
                           text-color="white "
                           :label="
                             service.pivot.service_status_id == 3
@@ -582,6 +581,7 @@
                     outline
                     color="green-8"
                     class="q-mx-xs"
+                    @click="submitMessage()"
                   >
                     <q-avatar icon="fab fa-whatsapp" size="30px"></q-avatar>
                   </q-btn>
@@ -630,7 +630,7 @@
 import SkeletonDetailTransactionComponent from "src/components/SkeletonDetailTransactionComponent";
 import MakePaymentDialogVue from "src/components/MakePaymentDialog";
 import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent";
-import SubmitPaymentComponentVue from "src/components/SubmitPaymentComponent.vue";
+import SubmitPaymentComponentVue from "src/components/DetailFirstPaymentComponent.vue";
 import SecondaryPaymentComponentVue from "src/components/secondaryPaymentComponent.vue";
 import { useQuasar } from "quasar";
 
@@ -651,32 +651,80 @@ export default {
       copy: false,
       order: null,
       STORAGE_URL: STORAGE_URL,
+      APP_URL: APP_URL,
+      statusCucian:null,
+      message: ""
     };
   },
 
   mounted() {
     this.getDetailOrder();
-    this.link = window.location.href;
+    this.link = `${this.APP_URL}/preview-detail-transaksi/${this.orderid}`
   },
 
   methods: {
+    submitMessage() {
+        this.setTextMessage();
+
+        let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
+          this.order.customer.contact_number
+        )}&text=${encodeURI(this.message)}`;
+        window.open(url, "_blank");
+    },
+    setTextMessage() {
+      if (this.order) {
+        let url = `${this.APP_URL}/preview-detail-transaksi/${this.order.id}`;
+        let tmp = `
+          Status Cucian - Laundry Digital
+          \ID Pesanan : ${this.order.id}
+          \nDapat dilihat di halaman dibawah ini
+          \nUrl : ${url}`;
+        this.message = tmp;
+      }
+    },
+    formatPhoneNumber(number) {
+      // console.log(typeof(String(number)))
+      let formatted = String(number).replace(/\D/g, "");
+
+      if (formatted.startsWith("0")) {
+        formatted = "+62" + formatted.substr(1);
+      }
+
+      if (formatted.startsWith("62")) {
+        formatted = "+62" + formatted.substr(2);
+      }
+
+      return formatted;
+    },
     PaymentComponent() {
       if (this.order.payments.length == 0) {
-        this.$q.dialog({
-          component: PreviewPhotoComponentVue,
-        });
-      } else {
-        this.$q.dialog({
-          component: SecondaryPaymentComponentVue,
+        this.$q
+          .dialog({
+            component: SubmitPaymentComponentVue,
 
-          componentProps: {
-            orderSend: this.order,
-          },
-        }).onOk((res) => {
-          this.order.payments = res.order.payments;
-          this.order.paid_sum = res.order.paid_sum;
-          console.log("OK", res);
-        })
+            componentProps: {
+              orderSend: this.order,
+            },
+          })
+          .onOk((res) => {
+            this.order.payments = res.order.payments;
+            this.order.paid_sum = res.order.paid_sum;
+            console.log("OK", res);
+          });
+      } else {
+        this.$q
+          .dialog({
+            component: SecondaryPaymentComponentVue,
+
+            componentProps: {
+              orderSend: this.order,
+            },
+          })
+          .onOk((res) => {
+            this.order.payments = res.order.payments;
+            this.order.paid_sum = res.order.paid_sum;
+            console.log("OK", res);
+          });
       }
     },
     dialogPreviewPhoto() {
@@ -761,6 +809,7 @@ export default {
       // modelValue.select();
       // modelValue.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(modelValue);
+      this.$q.notify('Link tersalin')
     },
   },
 };

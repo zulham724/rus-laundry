@@ -14,7 +14,7 @@
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
-      <q-page>
+      <q-page class="mbl-child"> 
         <div class="q-my-sm">
           <q-card class="no-shadow">
             <q-card-section>
@@ -139,7 +139,7 @@
         <!-- button tampilkan menu keranjang-->
         <q-btn
           no-caps
-          class="full-width q-pt-sm fixed-bottom bg-white"
+          class="mbl-child q-pt-sm fixed-bottom bg-white"
           to="/basket"
           style="z-index: 999"
         >

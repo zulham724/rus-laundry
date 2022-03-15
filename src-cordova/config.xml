@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="laundrymaster.ardata.co.id" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Quasar App</name>
+    <name>Laundry Digital</name>
     <description>By CV Ardata Media</description>
-    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
-        Apache Cordova Team
+    <author email="ardata.indonesia@gmail.com" href="https://ardata.co.id">
+        CV ARDATA MEDIA
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
@@ -11,4 +11,5 @@
     <allow-navigation href="about:*" />
     <allow-navigation href="http://192.168.1.10:8082" />
     <allow-navigation href="http://192.168.1.12:8082" />
+    <icon density="mdpi" height="57" platform="ios" src="res/icon.png" width="57" />
 </widget>

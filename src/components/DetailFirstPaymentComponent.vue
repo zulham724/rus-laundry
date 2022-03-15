@@ -1,47 +1,14 @@
 <template>
-  <q-dialog v-model="fixed" ref="dialog">
-    <q-card class="full-width full-height">
+  <q-dialog
+    v-model="dialogDisable"
+    ref="dialog"
+    @hide="onDialogHide"
+    persistent
+  >
+    <q-card class="full-width" style="border-radius: 20px">
       <q-card-section>
-        <div class="row">
-          <div class="col-2 text-center self-center">
-            <!-- Img ketika memasukkan nominal -->
-            <div v-if="!this.payment" class="text-center">
-              <q-img
-                src="~/assets/coding1.png"
-                style="width: 80%; height: 80%"
-              />
-            </div>
-
-            <!-- Img ketika inputan lunas -->
-            <div
-              v-if="
-                this.payment ==
-                this.orderSend.total_sum - this.orderSend.paid_sum
-              "
-              class="text-center"
-            >
-              <q-img
-                src="~/assets/payment-method1.png"
-                style="width: 80%; height: 80%"
-              />
-            </div>
-
-            <!-- Img ketika inputan tidak lunas -->
-            <div
-              v-if="
-                this.payment !=
-                  this.orderSend.total_sum - this.orderSend.paid_sum &&
-                this.payment > 0
-              "
-              class="text-center"
-            >
-              <q-img
-                src="~/assets/installment1.png"
-                style="width: 80%; height: 80%"
-              />
-            </div>
-          </div>
-          <div class="col-8 text-left" text-h5>
+        <div class="row text-center">
+          <div class="col-10 text-left" text-h5>
             <div>Sisa Tagihan</div>
             <div
               v-if="this.orderSend"
@@ -55,7 +22,7 @@
               }}
             </div>
             <div
-              v-if="!this.orderSend.total_sum"
+              v-if="!this.orderSend"
               style="font-size: 28px; font-weight: bold"
             >
               Kosong
@@ -72,50 +39,71 @@
         </div>
       </q-card-section>
 
-      <q-separator />
+      <!-- Img ketika memasukkan nominal -->
+      <div v-if="!this.payment" class="text-center">
+        <q-img src="~/assets/coding1.png" style="width: 100px; height: 100px" />
+        <div class="q-my-md" style="font-size: 16px; font-weight: bold">
+          Masukkan nominal form di bawah
+        </div>
+      </div>
 
-      <q-card-section style="max-height: 70%" class="scroll">
-        <q-list>
-          <q-item v-for="item in orderSend.payments" :key="item.id">
-            <div class="col text-left">{{ item.name }}</div>
-            <div
-              class="col text-right"
-              style="font-size: 20px; font-weight: bold"
-            >
-              {{
-                new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                }).format(item.value)
-              }}
-            </div>
-          </q-item>
-        </q-list>
-      </q-card-section>
-
-      <q-separator />
-
-      <div class="fixed-bottom mbl-child">
-        <q-input
-          type="number"
-          @keypress="isNumber($event)"
-          v-model="payment"
-          square
-          color="black"
-          class="bg-white"
-          outlined
-          label="Masukkan Nominal"
-          :disable="btnDisable == true"
+      <!-- Img ketika inputan lunas -->
+      <div
+        v-if="
+          this.payment == this.orderSend.total_sum - this.orderSend.paid_sum
+        "
+        class="text-center"
+      >
+        <q-img
+          src="~/assets/payment-method1.png"
+          style="width: 100px; height: 100px"
         />
         <div
-          @click="doPayment()"
-          class="bg-teal-14 text-center q-py-md"
-          style="color: #fff"
-          :disable="btnDisable == true"
+          class="q-my-md"
+          style="font-size: 16px; font-weight: bold; color: #7ed396"
         >
-          Lanjutkan
-          <q-spinner v-if="btnDisable" color="black" :thickness="2" />
+          Pembayaran Lunas
         </div>
+      </div>
+
+      <!-- Img ketika inputan tidak lunas -->
+      <div
+        v-if="
+          this.payment != this.orderSend.total_sum - this.orderSend.paid_sum &&
+          this.payment > 0
+        "
+        class="text-center"
+      >
+        <q-img
+          src="~/assets/installment1.png"
+          style="width: 100px; height: 100px"
+        />
+        <div
+          class="q-my-md"
+          style="font-size: 16px; font-weight: bold; color: #8b8484"
+        >
+          Bayar Sebagian
+        </div>
+      </div>
+
+      <q-input
+        type="number"
+        @keypress="isNumber($event)"
+        v-model="payment"
+        square
+        color="black"
+        outlined
+        label="Masukkan Nominal"
+        :disable="btnDisable == true"
+      />
+      <div
+        @click="doPayment()"
+        class="bg-teal-14 text-center q-py-md"
+        style="color: #fff"
+        :disable="btnDisable == true"
+      >
+        Lanjutkan
+        <q-spinner v-if="btnDisable" color="black" :thickness="2" />
       </div>
     </q-card>
   </q-dialog>
@@ -123,7 +111,6 @@
 
 <script>
 import { mapState } from "vuex";
-import { ref } from "vue";
 
 export default {
   props: ["orderSend"],
@@ -132,16 +119,15 @@ export default {
   },
   data() {
     return {
-      fixed: ref(false),
       payment: null,
       dialog: false,
-      value: null,
       btnDisable: false,
+      dialogDisable: true,
     };
   },
-  mounted() {},
+
   methods: {
-    doPayment() {
+    doPayment() {p
       let sisabayar =
         parseInt(this.orderSend.total_sum) - parseInt(this.orderSend.paid_sum);
       if (this.payment <= sisabayar) {
@@ -196,16 +182,19 @@ export default {
       }
     },
     store() {
-      this.loading = true;
+      this.dialogDisable = true;
+      this.btnDisable = true;
       let order = this.Orders.order;
       this.$store
         .dispatch("Orders/store", order)
         .then((res) => {
-          this.$q.notify("Berhasil");
-          this.$router.push("/confirm-order");
+          this.dialogDisable = true;
+          this.btnDisable = true;
         })
         .finally(() => {
-          this.loading = false;
+          this.dialogDisable = false;
+          this.btnDisable = false;
+          this.$q.notify("Berhasil");
         });
     },
     // following method is REQUIRED

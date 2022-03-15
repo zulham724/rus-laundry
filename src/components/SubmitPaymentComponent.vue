@@ -1,5 +1,5 @@
 <template>
-  <q-dialog ref="dialog" @hide="onDialogHide" persistent>
+  <q-dialog v-model="dialogDisable" ref="dialog" @hide="onDialogHide" persistent>
     <q-card class="full-width" style="border-radius: 20px">
       <q-card-section>
         <div class="row text-center">
@@ -84,15 +84,20 @@
         color="black"
         outlined
         label="Masukkan Nominal"
+        :disable="btnDisable == true"
       />
-      <div
+      <q-btn
         @click="submitPayment()"
-        v-close-popup
-        class="bg-teal-14 text-center q-py-md"
+        class="bg-teal-14 text-center q-py-md full-width"
         style="color: #fff"
+        :disable="btnDisable == true"
       >
-        Lanjutkan
-      </div>
+        <div>
+          Lanjutkan
+        </div>
+        
+        <q-spinner v-if="btnDisable" color="black" :thickness="2" />
+      </q-btn>
     </q-card>
   </q-dialog>
 </template>
@@ -102,15 +107,17 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-      ...mapState(["Orders"])
+    ...mapState(["Orders"]),
   },
   data() {
     return {
       payment: null,
       dialog: false,
+      btnDisable: false,
+      dialogDisable:true,
     };
   },
-  
+
   methods: {
     isNumber(evt) {
       evt = evt ? evt : window.event;
@@ -126,32 +133,55 @@ export default {
       }
     },
     submitPayment() {
+      console.log('click')
+      this.btnDisable = true;
       if (this.payment > this.Orders.order.total_price) {
-        this.$q.notify("Pembayaran melebihi batas");
+        this.btnDisable = true;
+        this.$q.notify({
+          position: "top",
+          message: "Pembayaran melebihi batas",
+        });
+        this.btnDisable = true;
       } else if (!this.payment) {
-        this.$q.notify("Masukkan jumlah yang ingin dibayar");
+        this.btnDisable = true;
+        this.$q.notify({
+          position: "top",
+          message: "Masukkan jumlah yang ingin di bayar",
+        });
+        this.btnDisable = false;
       } else {
-        this.$q.notify("Pembayaran dimasukan");
+        this.btnDisable = true;
+        this.$q.notify({
+          position: "top",
+          message: "Pembayaran dimasukkan",
+        });
         this.payment = parseInt(this.payment);
         this.Orders.order.payment = this.payment;
-        console.log("ini jumlah order", this.Orders.order.payment);
+        // console.log("ini jumlah order", this.Orders.order.payment);
         //---
         this.store();
+        this.btnDisbale = false;
       }
-
-
     },
     store() {
-      this.loading = true;
+      this.btnDisable = true
+      this.dialogDisable = true
       let order = this.Orders.order;
       this.$store
         .dispatch("Orders/store", order)
         .then((res) => {
-          this.$q.notify("Berhasil");
-          this.$router.push("/confirm-order");
+          this.btnDisable = true;
+          this.dialogDisable = true
+          this.$q.notify({
+          position: "top",
+          message: "Berhasil",
+        });
         })
         .finally(() => {
-          this.loading = false;
+          this.dialogDisable = false
+          this.$router.push("/confirm-order");
+          this.btnDisable = false;
+          
         });
     },
     // following method is REQUIRED

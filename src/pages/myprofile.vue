@@ -1,36 +1,42 @@
 <template>
   <q-layout class="mbl">
     <div class="fixed-top" style="z-index: 999">
-    <q-header class="bg-transparent">
-      <q-toolbar class="bg-white shadow-1">
-        <q-btn
-          @click="$router.push('/')"
-          no-caps
-          class="q-pa-md"
-          flat
-          style="color: white"
-        >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #9b27f1">
-          </q-icon>
-        </q-btn>
-
-        <q-toolbar-title
-          class="text-left text-weight-medium text-subtitle2"
-          style="color: black; font-size: 16px"
-          >Nama pengguna lain</q-toolbar-title
-        >
-
-        <!-- Button option -->
-        <q-btn no-caps outline dense style="color: #898585" @click="$router.push('/edit-profile')">
-          <div
-            class="text-weight-medium q-px-sm"
-            style="color: #898585; font-size: 13px"
+      <q-header class="bg-transparent">
+        <q-toolbar class="bg-white shadow-1">
+          <q-btn
+            @click="$router.push('/')"
+            no-caps
+            class="q-pa-md"
+            flat
+            style="color: white"
           >
-            Edit profil
-          </div>
-        </q-btn>
-      </q-toolbar>
-    </q-header>
+            <q-icon size="25px" name="fas fa-arrow-left" style="color: #9b27f1">
+            </q-icon>
+          </q-btn>
+
+          <q-toolbar-title
+            class="text-left text-weight-medium text-subtitle2"
+            style="color: black; font-size: 16px"
+            >Nama pengguna lain</q-toolbar-title
+          >
+
+          <!-- Button option -->
+          <q-btn
+            no-caps
+            outline
+            dense
+            style="color: #898585"
+            @click="$router.push('/edit-profile')"
+          >
+            <div
+              class="text-weight-medium q-px-sm"
+              style="color: #898585; font-size: 13px"
+            >
+              Edit profil
+            </div>
+          </q-btn>
+        </q-toolbar>
+      </q-header>
     </div>
     <q-page-container>
       <q-page class="">
@@ -103,6 +109,61 @@
         </div>
         <q-separator></q-separator>
 
+        <!--tabs postingan, like, dan video pribadi-->
+        <q-tabs
+          v-model="tab"
+          class="text-black"
+          indicator-color="purple-6"
+          switch-indicator
+        >
+          <q-tab
+            class="col-4 self-center"
+            name="profile-other"
+            no-caps
+            @click="$router.push('/my-profile')"
+            >
+            <q-img
+              class="q-pa-sm"
+              no-spinner
+              style="width: 20px; height: 22px"
+              :src="tab == 'profile-other'? require('../assets/profile-other-active.svg'): require('../assets/profile-other.svg')"
+            ></q-img>
+          </q-tab>
+
+          <q-tab
+            class="col-4 self-center"
+            name="like"
+            no-caps
+            @click="$router.push('/my-profile-like')"
+          >
+            <q-img
+              class="q-pa-sm"
+              no-spinner
+              style="width: 20px; height: 18px"
+              :src="tab == 'like'? require('../assets/profile-like-active.svg'): require('../assets/profile-like.svg')"
+            ></q-img>
+          </q-tab>
+
+          <q-tab
+            class="col-4 self-center"
+            name="private"
+            no-caps
+            @click="$router.push('/my-profile-like')"
+            ><q-img
+              class="q-pa-sm"
+              no-spinner
+              style="width: 18px; height: 21px"
+              :src="tab == 'private'? require('../assets/my-profile-private.svg'): require('../assets/my-profile-private.svg')"
+            ></q-img>
+          </q-tab>
+        </q-tabs>
+
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="hari">
+            <daily-transaction></daily-transaction>
+          </q-tab-panel>
+        </q-tab-panels>
+
         <div>
           <q-infinite-scroll @load="onLoad" :offset="250">
             <!-- Postingan -->
@@ -154,7 +215,6 @@
             />
           </q-fab>
         </q-page-sticky>
-
       </q-page>
     </q-page-container>
   </q-layout>

@@ -10,8 +10,8 @@
         "
       >
         <div class="row full-width q-px-md">
-        <div class="col-1 self-center text-center">
-          <q-btn
+          <div class="col-1 self-center text-center">
+            <q-btn
               @click="$router.push('/')"
               no-caps
               dense
@@ -25,7 +25,7 @@
               >
               </q-icon>
             </q-btn>
-        </div>
+          </div>
           <div class="col-9 self-center justify-center">
             <q-input
               dense
@@ -122,14 +122,23 @@
                   class="q-pb-md q-mx-sm q-my-sm"
                   @click="$router.push(`/marketplace-detail/${product.id}`)"
                 >
-                  <img
+                  
+                  <q-img
                     v-if="product.images.length"
                     class="bg-red"
                     :src="STORAGE_URL + `/` + product.images[0].src"
                     style="height: 150px"
-                  />
+                  >
+                    <template v-slot:error>
+                      <div
+                        class="absolute-full flex flex-center bg-grey-5 text-white"
+                      >
+                        Gagal mendapatkan Gambar
+                      </div>
+                    </template>
+                  </q-img>
 
-                  <img v-else class="bg-red" style="height: 150px" />
+                  <img v-else class="bg-blue" style="height: 150px" />
                   <div
                     class="text-caption text-weight-medium q-pl-xs"
                     style="color: #5f5f5f"
@@ -147,7 +156,7 @@
                       }).format(product.price)
                     }}
                   </div>
-                  <div class="text-caption q-pl-xs">
+                  <div class="text-caption q-pl-xs" v-if="product.shop.user.home">
                     <q-icon name="fas fa-map-marker-alt" color="red" />{{
                       product.shop.user.home_address
                     }}
@@ -156,150 +165,149 @@
               </div>
             </div>
           </div>
-        
 
-        <!-- Dialog Welcome -->
-        <q-dialog v-model="dialogWelcome" persistent>
-          <q-card class="full-width">
-            <!-- Gif Warning -->
-            <div class="justify-center full-width">
-              <div class="row justify-center q-pt-sm">
-                <q-img
-                  no-spinner
-                  src="~/assets/alert_gif.gif"
-                  style="width: 100px"
-                ></q-img>
-              </div>
-
-              <div
-                class="row text-weight-medium q-pt-md text-center justify-center"
-                style="color: #393939; font-size: 17px"
-              >
-                SELAMAT DATANG DI MARKETPLACE
-              </div>
-              <div
-                class="row q-px-sm text-weight-medium text-center q-pt-md"
-                style="color: #747474; font-size: 12px"
-              >
-                NOTE: Segala bentuk transaksi di marketplace merupakan tanggung
-                jawab pengguna. Laundry digital tidak bertanggung jawab jika
-                terdapat penipuan di dalam transaksi.
-              </div>
-            </div>
-
-            <!-- Button confirm -->
-            <div class="row justify-end q-pa-md">
-              <q-btn dense flat no-caps v-close-popup @click="openDialogWA()">
-                <div
-                  class="text-weight-bold"
-                  style="color: #393939; font-size: 14px"
-                >
-                  Oke
+          <!-- Dialog Welcome -->
+          <q-dialog v-model="dialogWelcome" persistent>
+            <q-card class="full-width">
+              <!-- Gif Warning -->
+              <div class="justify-center full-width">
+                <div class="row justify-center q-pt-sm">
+                  <q-img
+                    no-spinner
+                    src="~/assets/alert_gif.gif"
+                    style="width: 100px"
+                  ></q-img>
                 </div>
-              </q-btn>
-            </div>
-          </q-card>
-        </q-dialog>
 
-        <!-- Dialog Whatsapp -->
-        <q-dialog v-model="dialogWhatsapp" persistent>
-          <q-card class="full-width">
-            <!-- Gif Warning -->
-            <div class="justify-center">
-              <div class="row justify-center q-pt-sm">
-                <q-img
-                  no-spinner
-                  src="~/assets/wa_gif.gif"
-                  style="width: 100px"
-                ></q-img>
-              </div>
-
-              <div
-                class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
-                style="color: #393939; font-size: 17px"
-              >
-                MASUKAN NOMOR WHATSAPP
-              </div>
-              <div
-                class="row q-px-sm text-weight-medium text-center q-pt-md"
-                style="color: #747474; font-size: 12px"
-              >
-                Silahkan masukan nomor WhatsApp aktif. Nomor tsb akan digunakan
-                sebagai media transaksi oleh penjual dan pembeli.
-              </div>
-            </div>
-
-            <!-- Button -->
-            <div class="row justify-end q-pa-md">
-              <!-- Button Abaikan -->
-              <q-btn dense flat no-caps v-close-popup>
                 <div
-                  class="text-weight-bold"
-                  style="color: #393939; font-size: 14px"
+                  class="row text-weight-medium q-pt-md text-center justify-center"
+                  style="color: #393939; font-size: 17px"
                 >
-                  Abaikan
+                  SELAMAT DATANG DI MARKETPLACE
                 </div>
-              </q-btn>
-              <!-- Button Input wa -->
-              <q-btn
-                dense
-                flat
-                no-caps
-                class="q-ml-sm"
-                @click="$router.push('/marketplace-input-whatsapp')"
-              >
                 <div
-                  class="text-weight-bold"
-                  style="color: #393939; font-size: 14px"
+                  class="row q-px-sm text-weight-medium text-center q-pt-md"
+                  style="color: #747474; font-size: 12px"
                 >
-                  Lanjutkan
+                  NOTE: Segala bentuk transaksi di marketplace merupakan
+                  tanggung jawab pengguna. Laundry digital tidak bertanggung
+                  jawab jika terdapat penipuan di dalam transaksi.
                 </div>
-              </q-btn>
-            </div>
-          </q-card>
-        </q-dialog>
-
-        <!-- Dialog After input Whatsapp -->
-        <q-dialog v-model="dialogAfterInputWhatsapp" persistent>
-          <q-card class="full-width">
-            <!-- Gif Warning -->
-            <div class="justify-center">
-              <div class="row justify-center q-pt-sm">
-                <q-img
-                  no-spinner
-                  src="~/assets/wa_gif.gif"
-                  style="width: 100px"
-                ></q-img>
               </div>
 
-              <div
-                class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
-                style="color: #393939; font-size: 17px"
-              >
-                NOMOR TELAH DITAMBAHKAN
+              <!-- Button confirm -->
+              <div class="row justify-end q-pa-md">
+                <q-btn dense flat no-caps v-close-popup @click="openDialogWA()">
+                  <div
+                    class="text-weight-bold"
+                    style="color: #393939; font-size: 14px"
+                  >
+                    Oke
+                  </div>
+                </q-btn>
               </div>
-              <div
-                class="row q-px-sm text-weight-medium text-center q-pt-md"
-                style="color: #747474; font-size: 12px"
-              >
-                Nomor Whatsapp kamu berhasil di tambahkan. jika kamu mau
-                merubahnya bisa akses di menu nomor Whatsapp.
-              </div>
-            </div>
+            </q-card>
+          </q-dialog>
 
-            <!-- Button confirm -->
-            <div class="row justify-end q-pa-md">
-              <q-btn dense flat no-caps v-close-popup>
+          <!-- Dialog Whatsapp -->
+          <q-dialog v-model="dialogWhatsapp" persistent>
+            <q-card class="full-width">
+              <!-- Gif Warning -->
+              <div class="justify-center">
+                <div class="row justify-center q-pt-sm">
+                  <q-img
+                    no-spinner
+                    src="~/assets/wa_gif.gif"
+                    style="width: 100px"
+                  ></q-img>
+                </div>
+
                 <div
-                  class="text-weight-bold"
-                  style="color: #393939; font-size: 14px"
+                  class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
+                  style="color: #393939; font-size: 17px"
                 >
-                  Oke
+                  MASUKAN NOMOR WHATSAPP
                 </div>
-              </q-btn>
-            </div>
-          </q-card>
-        </q-dialog>
+                <div
+                  class="row q-px-sm text-weight-medium text-center q-pt-md"
+                  style="color: #747474; font-size: 12px"
+                >
+                  Silahkan masukan nomor WhatsApp aktif. Nomor tsb akan
+                  digunakan sebagai media transaksi oleh penjual dan pembeli.
+                </div>
+              </div>
+
+              <!-- Button -->
+              <div class="row justify-end q-pa-md">
+                <!-- Button Abaikan -->
+                <q-btn dense flat no-caps v-close-popup>
+                  <div
+                    class="text-weight-bold"
+                    style="color: #393939; font-size: 14px"
+                  >
+                    Abaikan
+                  </div>
+                </q-btn>
+                <!-- Button Input wa -->
+                <q-btn
+                  dense
+                  flat
+                  no-caps
+                  class="q-ml-sm"
+                  @click="$router.push('/marketplace-input-whatsapp')"
+                >
+                  <div
+                    class="text-weight-bold"
+                    style="color: #393939; font-size: 14px"
+                  >
+                    Lanjutkan
+                  </div>
+                </q-btn>
+              </div>
+            </q-card>
+          </q-dialog>
+
+          <!-- Dialog After input Whatsapp -->
+          <q-dialog v-model="dialogAfterInputWhatsapp" persistent>
+            <q-card class="full-width">
+              <!-- Gif Warning -->
+              <div class="justify-center">
+                <div class="row justify-center q-pt-sm">
+                  <q-img
+                    no-spinner
+                    src="~/assets/wa_gif.gif"
+                    style="width: 100px"
+                  ></q-img>
+                </div>
+
+                <div
+                  class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
+                  style="color: #393939; font-size: 17px"
+                >
+                  NOMOR TELAH DITAMBAHKAN
+                </div>
+                <div
+                  class="row q-px-sm text-weight-medium text-center q-pt-md"
+                  style="color: #747474; font-size: 12px"
+                >
+                  Nomor Whatsapp kamu berhasil di tambahkan. jika kamu mau
+                  merubahnya bisa akses di menu nomor Whatsapp.
+                </div>
+              </div>
+
+              <!-- Button confirm -->
+              <div class="row justify-end q-pa-md">
+                <q-btn dense flat no-caps v-close-popup>
+                  <div
+                    class="text-weight-bold"
+                    style="color: #393939; font-size: 14px"
+                  >
+                    Oke
+                  </div>
+                </q-btn>
+              </div>
+            </q-card>
+          </q-dialog>
         </q-pull-to-refresh>
       </q-page>
     </q-page-container>
@@ -354,7 +362,7 @@ export default {
           .dispatch("Product/index")
           .then((res) => {
             this.products = this.products_temp = res.data;
-            resolve(res.data); 
+            resolve(res.data);
           })
           .catch((err) => {
             reject(err);

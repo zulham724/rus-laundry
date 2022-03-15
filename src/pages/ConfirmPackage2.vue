@@ -6,8 +6,8 @@
           <q-img
             no-loading
             no-spinner
-            src="~/assets/50465-done.gif"
-            style="width: 80vw"
+            src="~/assets/output-onlinegiftools.gif"
+            style="width: 100%"
           />
         </div>
 

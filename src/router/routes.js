@@ -78,19 +78,11 @@ const routes = [
     ],
   },
 
+  
+
   {
     path: "/my-profile",
-    component: () => import("layouts/MyProfileLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/myprofile.vue"),
-      },
-      {
-        path: "/my-profile-like",
-        component: import("pages/MyProfileLike.vue"),
-      },
-    ],
+    component: () => import("pages/myprofile.vue"),
   },
 
   {
@@ -366,6 +358,7 @@ const routes = [
     path: "/confirm-order",
     component: () => import("src/pages/ConfirmPackage2.vue"),
   },
+
 
   {
     path: "/invoice-page/:orderid",

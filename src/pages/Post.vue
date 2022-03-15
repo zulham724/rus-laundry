@@ -63,7 +63,7 @@
             </q-avatar>
           </div>
         </div>
-        <div class="row q-px-md">
+        <div class="row q-px-md ">
           <!-- Search -->
           <q-input
             @click="$router.push('/search')"
@@ -129,7 +129,7 @@
                 :ref="`intersection_${post.id}`"
                 v-for="post in Post.posts.data"
                 :key="post.id"
-                :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+                :style="`min-height:${getItemPostHeight(post)}; `"
               >
                 <item-post-component
                   v-on:update-height="updateHeight(post)"

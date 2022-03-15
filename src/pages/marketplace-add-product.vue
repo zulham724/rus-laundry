@@ -1,4 +1,4 @@
- <template>
+<template>
   <q-layout class="mbl">
     <div class="fixed-top" style="z-index: 999">
       <q-header class="text-center shadow-1">
@@ -88,13 +88,21 @@
             v-for="(product, p) in products"
             :key="product.id"
           >
-            <q-card class="q-pa-md">
-              <img
+            <q-card class="q-pa-md"
+              ><q-img
                 v-if="product.images.length"
                 class="bg-grey"
                 :src="STORAGE_URL + `/` + product.images[0].src"
                 style="height: 150px"
-              />
+              >
+                <template v-slot:error>
+                  <div
+                    class="absolute-full flex flex-center bg-grey-5 text-white"
+                  >
+                    Gagal mendapatkan Gambar
+                  </div>
+                </template>
+              </q-img>
               <img v-else class="bg-red" style="height: 150px" />
               <div
                 class="text-caption text-weight-medium q-pl-xs"
@@ -102,17 +110,7 @@
               >
                 {{ product.tittle }}
               </div>
-              <div
-                class="text-caption text-weight-regular q-pl-xs"
-                style="color: #c5c5c5"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(product.price)
-                }}
-              </div>
+              
               <div
                 class="text-subtitle2 text-weight-medium q-pl-xs"
                 style="color: #161952"
@@ -124,7 +122,7 @@
                   }).format(product.price)
                 }}
               </div>
-              <div class="text-caption q-pl-xs">
+              <div class="text-caption q-pl-xs" v-if="product.shop.user.home_address">
                 <q-icon name="fas fa-map-marker-alt" color="red" />{{
                   product.shop.user.home_address
                 }}
@@ -298,8 +296,7 @@ export default {
   },
   methods: {
     deleteProduct(id, index) {
-      this.$store.dispatch("Product/destroy", id)
-      .then((res) => {
+      this.$store.dispatch("Product/destroy", id).then((res) => {
         this.products.splice(index, 1);
         this.$q.notify("Berhasil");
       });
@@ -310,6 +307,7 @@ export default {
         this.$store
           .dispatch("Product/getProductByShop")
           .then((res) => {
+            console.log('product', res.data)
             this.products = this.products_temp = res.data;
           })
           .catch((err) => {
@@ -344,5 +342,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

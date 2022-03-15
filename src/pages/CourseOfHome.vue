@@ -6,6 +6,7 @@
     <div
       class="full-width"
       style="
+      
         height: 180px;
         background-color: #fafafa;
         z-index: 999;
@@ -14,7 +15,7 @@
     >
       <!-- Background blue -->
       <div
-        class="full-width fixed-top"
+        class="mbl-child fixed-top"
         style="
           z-index: 200;
           height: 150px;
