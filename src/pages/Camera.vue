@@ -114,6 +114,7 @@ export default {
         quality: 50,
         saveToPhotoAlbum: false,
         destinationType: Camera.DestinationType.DATA_URL,
+        correctOrientation: true
       });
     },
     androidSuccess(imageURI) {

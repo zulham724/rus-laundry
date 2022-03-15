@@ -59,129 +59,13 @@
             </div>
           </div>
         </div>
-        <!--info saldo-->
-        <div
-          class="full-width row bg-white"
-          style="opacity: 0.8; height: 100px"
-        >
-          <div
-            class="col-6 q-px-sm self-center"
-            style="
-              border-right: solid;
-              border-width: 2px;
-              border-color: #f3f3f3;
-              opacity: 1;
-            "
-          >
-            <div class="full-width">
-              <div
-                class="text-weight-medium"
-                style="color: #313131; font-size: 15px"
-              >
-                Saldo masuk hari ini
-              </div>
-              <div
-                class="text-weight-medium"
-                style="color: #a3a3a3; font-size: 12px"
-              >
-                {{ moment().format("DD MMMM YYYY") }}
-              </div>
-              <div v-if="isLoad">
-                <q-skeleton type="text" />
-              </div>
-              <div
-                v-else
-                class="text-weight-bold"
-                style="color: #313131; font-size: 18px"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(total_profit)
-                }}
-              </div>
-            </div>
-          </div>
-          <div class="col-6 q-px-sm self-center" style="opacity: 1">
-            <div class="full-width">
-              <div
-                class="text-weight-medium"
-                style="color: #313131; font-size: 15px"
-              >
-                Saldo keluar hari ini
-              </div>
-              <div
-                class="text-weight-medium"
-                style="color: #a3a3a3; font-size: 12px"
-              >
-                {{ moment().format("DD MMMM YYYY") }}
-              </div>
-              <div v-if="isLoad">
-                <q-skeleton type="text" />
-              </div>
-              <div
-                v-else
-                class="text-weight-bold"
-                style="color: #313131; font-size: 18px"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(total_spend)
-                }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scan Area -->
-        <div class="row full-width">
-          <div class="col-6">
-            <q-btn @click="ScanAttendance()" class="btn-scan-1" flat no-caps>
-              <div class="row self-center">
-                <q-img
-                  no-spinner
-                  src="~/assets/icon_scan_button.svg"
-                  class="self-center"
-                  style="width: 40px"
-                ></q-img>
-                <div
-                  class="text-weight-medium self-center q-pl-sm"
-                  style="color: black; font-size: 14px"
-                >
-                  Scan Absen
-                </div>
-              </div>
-            </q-btn>
-          </div>
-          <div class="col-6">
-            <q-btn @click="doScanOrder()" class="btn-scan-2" flat no-caps>
-              <div class="row self-center">
-                <q-img
-                  no-spinner
-                  src="~/assets/icon_scan_barcode.svg"
-                  class="self-center justify-center"
-                  style="width: 50px; height: 40px; color: white"
-                ></q-img>
-                <div
-                  class="text-weight-medium self-center q-pl-sm"
-                  style="color: white; font-size: 14px"
-                >
-                  Scan Barang
-                </div>
-              </div>
-            </q-btn>
-          </div>
-        </div>
+        <saldo-scan class="full-width"></saldo-scan>
       </div>
 
       <!--Header Siang-->
       <div
         v-else-if="backgroundSetter >= 11 && backgroundSetter <= 17"
         class="row bg-siang"
-        style="min-height: 220px"
       >
         <div class="row full-width">
           <!--Waktu sekarang-->
@@ -236,122 +120,7 @@
             </div>
           </div>
         </div>
-        <!--info saldo-->
-        <div
-          class="full-width row bg-white"
-          style="opacity: 0.8; height: 100px"
-        >
-          <div
-            class="col-6 q-px-sm self-center"
-            style="
-              border-right: solid;
-              border-width: 2px;
-              border-color: #f3f3f3;
-              opacity: 1;
-            "
-          >
-            <div class="full-width">
-              <div
-                class="text-weight-medium"
-                style="color: #313131; font-size: 15px"
-              >
-                Saldo masuk hari ini
-              </div>
-              <div
-                class="text-weight-medium"
-                style="color: #a3a3a3; font-size: 12px"
-              >
-                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
-              </div>
-              <div v-if="isLoad">
-                <q-skeleton type="text" />
-              </div>
-              <div
-                v-else
-                class="text-weight-bold"
-                style="color: #313131; font-size: 18px"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(total_profit)
-                }}
-              </div>
-            </div>
-          </div>
-          <div class="col-6 q-px-sm self-center" style="opacity: 1">
-            <div class="full-width">
-              <div
-                class="text-weight-medium"
-                style="color: #313131; font-size: 15px"
-              >
-                Saldo keluar hari ini
-              </div>
-              <div
-                class="text-weight-medium"
-                style="color: #a3a3a3; font-size: 12px"
-              >
-                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
-              </div>
-              <div v-if="isLoad">
-                <q-skeleton type="text" />
-              </div>
-              <div
-                v-else
-                class="text-weight-bold"
-                style="color: #313131; font-size: 18px"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(total_spend)
-                }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scan Area -->
-        <div class="row full-width">
-          <div class="col-6">
-            <q-btn @click="ScanAttendance()" class="btn-scan-1" flat no-caps>
-              <div class="row self-center">
-                <q-img
-                  no-spinner
-                  src="~/assets/icon_scan_button.svg"
-                  class="self-center"
-                  style="width: 40px"
-                ></q-img>
-                <div
-                  class="text-weight-medium self-center q-pl-sm"
-                  style="color: white; font-size: 14px"
-                >
-                  Scan Absen
-                </div>
-              </div>
-            </q-btn>
-          </div>
-          <div class="col-6">
-            <q-btn class="btn-scan-2" @click="doScanOrder()" flat no-caps>
-              <div class="row self-center">
-                <q-img
-                  no-spinner
-                  src="~/assets/icon_scan_barcode.svg"
-                  class="self-center justify-center"
-                  style="width: 50px; height: 40px; color: white"
-                ></q-img>
-                <div
-                  class="text-weight-medium self-center q-pl-sm"
-                  style="color: white; font-size: 14px"
-                >
-                  Scan Barang
-                </div>
-              </div>
-            </q-btn>
-          </div>
-        </div>
+        <saldo-scan class="full-width"></saldo-scan>
       </div>
 
       <!--Header Malam-->
@@ -412,121 +181,7 @@
             </div>
           </div>
         </div>
-        <!--info saldo-->
-        <div
-          class="full-width row bg-white"
-          style="opacity: 0.8; height: 100px"
-        >
-          <div
-            class="col-6 q-px-sm self-center"
-            style="
-              border-right: solid;
-              border-width: 2px;
-              border-color: #f3f3f3;
-              opacity: 1;
-            "
-          >
-            <div class="full-width">
-              <div
-                class="text-weight-medium"
-                style="color: #313131; font-size: 15px"
-              >
-                Saldo masuk hari ini
-              </div>
-              <div
-                class="text-weight-medium"
-                style="color: #a3a3a3; font-size: 12px"
-              >
-                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
-              </div>
-              <div v-if="isLoad">
-                <q-skeleton type="text" />
-              </div>
-              <div
-                class="text-weight-bold"
-                style="color: #313131; font-size: 18px"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(total_profit)
-                }}
-              </div>
-            </div>
-          </div>
-          <div class="col-6 q-px-sm self-center" style="opacity: 1">
-            <div class="full-width">
-              <div
-                class="text-weight-medium"
-                style="color: #313131; font-size: 15px"
-              >
-                Saldo keluar hari ini
-              </div>
-              <div
-                class="text-weight-medium"
-                style="color: #a3a3a3; font-size: 12px"
-              >
-                {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
-              </div>
-              <div v-if="isLoad">
-                <q-skeleton type="text" />
-              </div>
-              <div
-                v-else
-                class="text-weight-bold"
-                style="color: #313131; font-size: 18px"
-              >
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(total_spend)
-                }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scan Area -->
-        <div class="row full-width">
-          <div class="col-6">
-            <q-btn class="btn-scan-1" flat no-caps>
-              <div class="row self-center">
-                <q-img
-                  no-spinner
-                  src="~/assets/icon_scan_button.svg"
-                  class="self-center"
-                  style="width: 40px"
-                ></q-img>
-                <div
-                  class="text-weight-medium self-center q-pl-sm"
-                  style="color: white; font-size: 14px"
-                >
-                  Scan Absen
-                </div>
-              </div>
-            </q-btn>
-          </div>
-          <div class="col-6">
-            <q-btn class="btn-scan-2" flat no-caps>
-              <div class="row self-center">
-                <q-img
-                  no-spinner
-                  src="~/assets/icon_scan_barcode.svg"
-                  class="self-center justify-center"
-                  style="width: 50px; height: 40px; color: white"
-                ></q-img>
-                <div
-                  class="text-weight-medium self-center q-pl-sm"
-                  style="color: white; font-size: 14px"
-                >
-                  Scan Barang
-                </div>
-              </div>
-            </q-btn>
-          </div>
-        </div>
+        <saldo-scan class="full-width"></saldo-scan>
       </div>
 
       <!-- Transaksi Hari ini -->
@@ -711,6 +366,7 @@ import moment from "moment";
 import { mapState } from "vuex";
 import ScanAttendance from "src/components/ScanAttendance.vue";
 import ScanOrder from "src/components/ScanOrder.vue";
+import SaldoScan from "src/components/InfoSaldoComponent.vue";
 import { QrcodeStream } from "qrcode-reader-vue3";
 
 export default {
@@ -718,6 +374,9 @@ export default {
   keepalive: true,
   computed: {
     ...mapState(["Auth", "Orders"]),
+  },
+  components: {
+    "saldo-scan": SaldoScan,
   },
 
   data() {

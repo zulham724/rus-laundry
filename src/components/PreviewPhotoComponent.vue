@@ -1,6 +1,6 @@
 <template>
   <q-dialog ref="dialog">
-    <q-card class="full-width">
+    <q-card class="full-width ">
       <q-img v-if="src" :src="src" />
     </q-card>
   </q-dialog>
@@ -54,4 +54,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.rotation {
+  transform: rotate(90deg);
+}
+</style>

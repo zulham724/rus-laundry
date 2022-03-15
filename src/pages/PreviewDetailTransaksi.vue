@@ -314,14 +314,9 @@
                     </q-item-label>
                   </q-item-section>
                   <q-space></q-space>
-                  <q-item-section avatar>
+                  <q-item-section avatar @click="dialogPreviewPhoto()">
                     <q-avatar size="30px" class="bg-transparent">
-                      <q-icon
-                        name="fas fa-camera"
-                        size="20px"
-                        color="light-blue-4"
-                        no-spinner
-                      />
+                      <q-img src="~/assets/foto.svg" />
                     </q-avatar>
                   </q-item-section>
                 </q-item>

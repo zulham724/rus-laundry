@@ -37,14 +37,22 @@
 + notification (di mbl)
 + marketplace home (gambar error, kalo tidak ada lokasi tidak usah ada icon)
 + community (merapikan posisi)
++ kamera miring gan (harusnya sudah, sudah di rotate)
 
 👽 👽 👽
-- marketplace detail (jika tidak ada gambar kasih gambar lain, berikan img error produk lain) ⛔ img nya carousel 
-
-👎👎👎
 - halaman berikan softdelete pada item dan paket 
 - halaman keranjang error jika ada item yang tidak memiliki paket
 - waktu back jangan close app
+
+👎👎👎
+- marketplace detail (jika tidak ada gambar kasih gambar lain, berikan img error produk lain) ⛔ img nya carousel 
+
+- waktu kirim pesan wa, jika nomor tidak ada nol . . format di tambahkan kode negara
+- tampilah new home (pemasukan pengeluaran berantakan)
+- waktu cetak jika printer belum tersambung, (pergi ke halaman sambungkan printer)
+- halaman printer waktu refresh masih stuck 
+- cetak invoice belum bisa print
+- proses ketika mencetak belum ada (bingung ini sudah print atau belum)
 
 
 
