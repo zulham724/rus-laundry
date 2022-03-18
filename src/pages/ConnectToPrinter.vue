@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round  @click="$router.back()">
+        <q-btn flat round @click="$router.back()">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #49c2c0">
           </q-avatar>
         </q-btn>
@@ -18,7 +18,7 @@
       <q-pull-to-refresh>
         <q-page>
           <div class="q-py-md q-px-md" style="color: #888888; font-size: 17px">
-            Printer Baru
+            Perangkat yang Tersedia
           </div>
           <q-list>
             <q-item v-for="(printer, p) in printers" :key="p" class="bg-white">
@@ -32,7 +32,8 @@
                   </div>
                 </q-item-label>
                 <q-item-label caption>
-                  <div>Paired</div>
+                  <div v-if="printer.connect_status">Terhubung</div>
+                  <div v-else>Tersedia</div>
                 </q-item-label>
               </q-item-section>
               <q-item-section side>
@@ -40,11 +41,19 @@
                   <q-icon name="fas fa-ellipsis-v" size="18px" />
                   <q-menu auto-close :offset="[-20, 0]">
                     <q-list style="min-width: 100px">
-                      <q-item clickable @click="connectPrinter(printer.name)">
-                        <q-item-section>Sambung</q-item-section>
+                      <q-item
+                        v-if="!printer.connect_status"
+                        clickable
+                        @click="connectPrinter(printer.name)"
+                      >
+                        <q-item-section>Sambung Perangkat</q-item-section>
                       </q-item>
-                      <q-item clickable @click="disconnectPrinter(printer.name)">
-                        <q-item-section>Putus</q-item-section>
+                      <q-item
+                        v-else
+                        clickable
+                        @click="disconnectPrinter(printer.name)"
+                      >
+                        <q-item-section>Putus Perangkat</q-item-section>
                       </q-item>
                     </q-list>
                   </q-menu>
@@ -53,10 +62,14 @@
             </q-item>
           </q-list>
           <div class="q-py-md q-px-md" style="color: #888888; font-size: 17px">
-            Riwayat Printer
+            Riwayat
           </div>
           <q-list>
-            <q-item v-for="(history_printer, hp) in Printer.history_printers" :key="hp" class="bg-white">
+            <q-item
+              v-for="(history_printer, hp) in Printer.history_printers"
+              :key="hp"
+              class="bg-white"
+            >
               <q-item-section avatar>
                 <q-img src="~/assets/image5.svg" width="32px" />
               </q-item-section>
@@ -67,12 +80,8 @@
                   </div>
                 </q-item-label>
                 <q-item-label caption>
-                  <div v-if="history_printer.status_pairing">
-                    Terhubung
-                  </div>
-                  <div v-else>
-                    Terputus
-                  </div>
+                  <div v-if="history_printer.connect_status">Terhubung</div>
+                  <div v-else>Terputus</div>
                 </q-item-label>
               </q-item-section>
               <q-item-section side>
@@ -80,11 +89,19 @@
                   <q-icon name="fas fa-ellipsis-v" size="18px" />
                   <q-menu auto-close :offset="[-20, 0]">
                     <q-list style="min-width: 100px">
-                      <q-item clickable @click="connectPrinter(history_printer.name)">
-                        <q-item-section>Sambung</q-item-section>
+                      <q-item
+                        v-if="!history_printer.connect_status"
+                        clickable
+                        @click="connectPrinter(history_printer.name)"
+                      >
+                        <q-item-section>Sambung Perangkat</q-item-section>
                       </q-item>
-                      <q-item clickable @click=" disconnectPrinter(history_printer.name)">
-                        <q-item-section>Putus</q-item-section>
+                      <q-item
+                        v-else
+                        clickable
+                        @click="disconnectPrinter(history_printer.name)"
+                      >
+                        <q-item-section>Putus Perangkat</q-item-section>
                       </q-item>
                     </q-list>
                   </q-menu>
@@ -107,55 +124,27 @@ export default {
   data() {
     return {
       printers: [],
+      histories: [],
     };
   },
   mounted() {
-    this.$store.dispatch("Printer/getListPrinter").then(res => {
-      this.printers = res
-      console.log(this.Printer.history_printers)
-      this.$store.dispatch("Printer/checkingConnectStatus", res)
-    })
+    this.init()
   },
   methods: {
+    init() {
+      this.$store.dispatch('Printer/run').then(res=>{
+        this.printers = res.available
+      })
+    },
     connectPrinter(name) {
-      window.BTPrinter.connect(
-        (data) => {
-          console.log("Connected");
-          console.log(data);
-          this.printers.forEach((item) => {
-            if(item.name == name){
-              console.log("Status berubah")
-              item.status_pairing = true
-              this.$store.commit("Printer/update_connect_status_printer", {printer: item})
-            }
-          })
-        },
-        (err) => {
-          console.log("Error");
-          console.log(err);
-        },
-        name
-      );
+      this.$store.dispatch("Printer/connect",name).then(res=>{
+        this.printers = res.available
+      })
     },
     disconnectPrinter(name) {
-      window.BTPrinter.disconnect(
-        (data) => {
-          console.log("Disconnected");
-          console.log(data);
-          this.printers.forEach((item) => {
-            if(item.name == name){
-               console.log("Status berubah")
-              item.status_pairing = false
-              this.$store.commit("Printer/update_connect_status_printer", {printer: item})
-            }
-          })
-        },
-        (err) => {
-          console.log("Error");
-          console.log(err);
-        },
-        name
-      );
+      this.$store.dispatch('Printer/disconnect',name).then(res=>{
+        this.printers = res.available
+      })
     },
   },
 };

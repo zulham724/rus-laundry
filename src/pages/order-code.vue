@@ -1,33 +1,41 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header class="bg-transparent">
-      <q-btn
-        @click="$router.back()"
-        flat
-        class="bg-transparent text-subtitle2 text-weight-light float-left q-pa-md"
-      >
-        <q-icon name="fas fa-arrow-left" />
-      </q-btn>
-      <div class="text-subtitle2 q-pl-md float-left q-pt-sm q-pa-md">
-        Kode Pesanan
+      <div class="row">
+        <div class="col-2">
+          <q-btn
+            @click="$router.back()"
+            flat
+            class="text-subtitle2 text-weight-light float-left q-pa-md"
+          >
+            <q-icon name="fas fa-arrow-left" />
+          </q-btn>
+        </div>
+        <div class="col-10">
+          <div class="text-subtitle2q-pl-md float-left q-pt-sm q-pa-md">
+            Kode Pesanan
+          </div>
+        </div>
       </div>
     </q-header>
     <q-page-container
       style="background-image: linear-gradient(to top left, #179ce7, #a3f2f1)"
     >
       <q-page v-if="order">
-        <div class="q-pl-lg q-pt-xl text-white text-body1">
-          Cetak Kode QR untuk <br />
-          Merubah Status Pesanan
-        </div>
-
         <div
-          class="bg-grey-1 shadow-7"
-          style="border-radius: 5px"
+          class="bg-white q-mx-sm shadow-7"
+          style="border-radius: 15px"
           ref="order"
           id="order"
         >
-          <div class="text-grey text-caption q-pl-md q-pt-sm">No Pesanan</div>
+          <div class="full-width text-center">
+            <q-img
+              src="~/assets/laundry-digital-logo.png"
+              width="20%"
+              class="q-my-md"
+            />
+          </div>
+          <div class="q-pl-md">No Pesanan</div>
           <div class="text-subtitle1 q-pl-md">
             {{ order.id }}
           </div>
@@ -38,41 +46,73 @@
               :qid="order.id"
             ></vue-qr>
           </div>
-          <div class="text-caption q-pl-md q-pt-md text-grey">
-            Nama Pelanggan
+          <div class="row">
+            <div class="col">
+              <div class="text-caption q-pl-md text-grey">Nama Pelanggan</div>
+              <div class="q-pl-md text-weight-medium">
+                {{ order.customer.name }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="text-caption q-pl-md text-grey">
+                Tanggal Pemesanan
+              </div>
+              <div class="q-pl-md text-weight-medium">
+                {{ moment(order.created_at).format("ll") }}
+              </div>
+            </div>
           </div>
-          <div class="q-pl-md text-weight-medium">
-            {{ order.customer.name }}
+
+          <div class="row">
+            <div class="col">
+              <div class="text-caption q-pl-md text-grey">No Telepon</div>
+              <div class="q-pl-md text-weight-medium">
+                {{ order.customer.contact_number }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="text-caption q-pl-md text-grey">Total Harga</div>
+              <div class="q-pl-md text-weight-medium">
+                {{ order.total_sum }}
+              </div>
+            </div>
           </div>
-          <div class="text-caption q-pl-md q-pt-sm text-grey">Paket</div>
-          <div
-            v-for="service in order.services"
-            :key="service.id"
-            class="q-pl-md q-pb-md text-weight-medium"
-          >
-            <div class="q-py-xs">- {{ service.name }}</div>
+
+          <div class="row">
+            <div class="col q-py-md">
+              <div class="text-center text-grey">
+                Cek status pesanan anda melalui link dibawah
+              </div>
+              <div class="text-center text-weight-medium">
+                http://trojanvirus.123!!!@9(U)/installer.com
+              </div>
+            </div>
           </div>
         </div>
         <div class="text-center q-pa-sm">
           <q-btn
-            @click="printOrder()"
+            @click="buttonConfirm()"
+            :disable="loading"
             no-caps
-            class="bg-grey-9"
+            class="bg-grey-9 q-mt-sm"
             dense
-            style="width: 368px; height: 45px; border-radius: 10px"
+            style="width: 80%; height: 45px; border-radius: 10px"
           >
             <div class="text-white">Cetak</div>
           </q-btn>
         </div>
+        <div class="bg-red"></div>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import moment from "moment";
 import vueQr from "vue-qr/src/packages/vue-qr.vue";
 import * as htmlToImage from "html-to-image";
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+import MustConnectPrinterComponentVue from "src/components/MustConnectPrinterComponent.vue";
 
 export default {
   components: {
@@ -81,9 +121,13 @@ export default {
   data() {
     return {
       order: null,
+      loading: false,
     };
   },
   methods: {
+    moment() {
+      return moment();
+    },
     getOrder() {
       this.$store.dispatch("Orders/getOrder").then((res) => {
         this.order = res.data;
@@ -103,27 +147,32 @@ export default {
 
       document.body.innerHTML = originalContents;
     },
-    printOrder() {
-      // this.$store.commit("Orders/delete_order");
-      // this.$router.push("/make-an-order");
-      // this.print()
+    buttonConfirm() {
       if (this.$q.platform.is.android) {
-        window.BTPrinter.connect(
-          (data) => {
-            console.log("connecting");
-            console.log(data);
-            this.print();
-          },
-          (err) => {
-            console.log("Error");
-            console.log(err);
-          },
-          "RPP02N"
-        );
+        this.$store
+          .dispatch("Printer/run")
+          .then((res) => {
+            if (res.connected) {
+              this.print()
+            } else {
+              this.dialogPrinterMustConnect();
+            }
+          })
+          .catch((err) => {
+            this.dialogPrinterMustConnect();
+          });
       } else {
-        this.printDiv("order");
-        this.$q.notify("Hanya bisa di android");
+        this.printDiv()
       }
+    },
+    //untuk menampilkan dialog harus konek ke printer
+    dialogPrinterMustConnect() {
+      this.$q.dialog({
+        component: MustConnectPrinterComponentVue,
+        componentProps: {
+          sendId: this.id,
+        },
+      });
     },
     print() {
       htmlToImage
@@ -136,18 +185,7 @@ export default {
         .then((dataUrl) => {
           // let res = this.imageToDataUri(dataUrl,300,300)
           // console.log(dataUrl)
-          window.BTPrinter.printBase64(
-            function (data) {
-              console.log("Printing");
-              console.log(data);
-            },
-            function (err) {
-              console.log("Error");
-              console.log(err);
-            },
-            dataUrl,
-            1
-          );
+          this.$store.dispatch("Printer/print",dataUrl)
         });
     },
     imageToDataUri(img, width, height) {
@@ -172,5 +210,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

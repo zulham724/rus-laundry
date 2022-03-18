@@ -18,7 +18,14 @@
                 <img class="mbl-child" :src="url" />
               </div>
               <div
-                class="fixed-top mbl-child row text-center q-py-xs q-px-sm bg-white"
+                class="
+                  fixed-top
+                  mbl-child
+                  row
+                  text-center
+                  q-py-xs q-px-sm
+                  bg-white
+                "
               >
                 <div class="col-2">
                   <q-btn round flat @click="this.$router.back()">
@@ -45,11 +52,7 @@
                   </q-btn>
                 </div>
                 <div class="col">
-                  <q-btn
-                    round
-                    @click="takePhoto"
-                    class="self-center"
-                  >
+                  <q-btn round @click="takePhoto" class="self-center">
                     <q-img
                       src="~/assets/Group5172.png"
                       style="height: 60px; width: 60px"
@@ -75,6 +78,12 @@
             </div>
           </camera>
         </div>
+        <q-inner-loading
+          :showing="!!uploadProgres"
+          :label="`Uploading... ${uploadProgres}%`"
+          label-class="text-teal"
+          label-style="font-size: 1.1em"
+        />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -93,13 +102,14 @@ export default {
       height: height,
       width: width,
       disableSave: false,
+      uploadProgres: 0,
     };
   },
   mounted() {
     if (this.$q.platform.is.mobile) {
       this.cordovaCam();
     }
-    console.log(!this.$q.platform.is.mobile)
+    console.log(!this.$q.platform.is.mobile);
     if (!this.$q.platform.is.mobile) {
       console.log("screen", screen);
       this.$refs.camera.devices(["videoinput"]).then((res) => {
@@ -114,29 +124,29 @@ export default {
         quality: 50,
         saveToPhotoAlbum: false,
         destinationType: Camera.DestinationType.DATA_URL,
-        correctOrientation: true
+        correctOrientation: true,
       });
     },
     androidSuccess(imageURI) {
       // var image = cordovaPic;
       // image.src = imageUrl;
-      let blob = this.getBlob(imageURI, ".jpg")
+      let blob = this.getBlob(imageURI, ".jpg");
       const url = URL.createObjectURL(blob);
       console.log("url", url);
-      this.$q.dialog({
-        component:PreviewPhotoComponentVue,
-        componentProps:{
-          src:url
-        }
-      })
-      console.log(blob)
+      // this.$q.dialog({
+      //   component: PreviewPhotoComponentVue,
+      //   componentProps: {
+      //     src: url,
+      //   },
+      // });
+      // console.log(blob);
       // let blob;
-      this.blob = blob
+      this.blob = blob;
       this.savePhoto();
     },
     androidFail(message) {
       // alert('gagal gan')
-      console.log('terjadi kesalahan')
+      console.log("terjadi kesalahan");
       this.$router.back();
     },
     reset() {
@@ -172,16 +182,34 @@ export default {
     },
     savePhoto() {
       //proses simpan
+      const dismiss = this.$q.notify({
+        position: "bottom",
+        message: `Foto sedang diupload. mohon tunggu`,
+        timeout: 0,
+      });
       this.disableSave = true;
+      this.uploadProgres = 0;
       let file = new File([this.blob], "foto pengambilan barang.jpeg");
       let formData = new FormData();
       formData.append("photo", file);
       formData.append("order_id", this.order_id);
-      this.$store.dispatch("Orders/savePhoto", formData).then((res) => {
-        this.disableSave = true;
-        this.$q.notify("Berhasil simpan foto");
-        this.$router.back();
-      });
+      this.$store
+        .dispatch("Orders/savePhoto", {
+          formData: formData,
+          opt: {
+            onUploadProgress: (progres) => {
+              console.log(parseInt(progres).toFixed(2));
+              this.uploadProgres = parseInt(progres).toFixed(2);
+            },
+          },
+        })
+        .then((res) => {
+          this.uploadProgres = null;
+          this.disableSave = true;
+          dismiss();
+          this.$q.notify("Berhasil simpan foto");
+          this.$router.back();
+        });
     },
     getBlob(b64Data, contentType, sliceSize = 512) {
       contentType = contentType || "";

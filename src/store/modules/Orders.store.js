@@ -1,4 +1,6 @@
-import { api } from "boot/axios";
+import {
+  api
+} from "boot/axios";
 
 const state = {
   data: {},
@@ -58,10 +60,25 @@ const mutations = {
 };
 
 const actions = {
-  savePhoto({ commit }, formData) {
+  savePhoto({
+    commit
+  }, {
+    formData,
+    opt
+  }) {
+    console.log('opt', opt)
+    console.log('formData',formData)
     return new Promise((resolve, reject) => {
       api
-        .post("/api/slave/postorderphoto", formData)
+        .post("/api/slave/postorderphoto", formData, {
+          onUploadProgress: (progressEvent) => {
+            let uploadProgres =
+              (progressEvent.loaded / progressEvent.total) * 100;
+            console.log(uploadProgres)
+            opt.onUploadProgress(uploadProgres)
+            // console.log(send)
+          },
+        })
         .then((res) => {
           resolve(res);
         })
@@ -70,7 +87,9 @@ const actions = {
         });
     });
   },
-  storePayment({ commit }, payload) {
+  storePayment({
+    commit
+  }, payload) {
     return new Promise((resolve, reject) => {
       let access = {
         value: payload.value,
@@ -85,12 +104,16 @@ const actions = {
         });
     });
   },
-  reset({ commit }) {
+  reset({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       commit("reset");
     });
   },
-  updateStatus({ commit }, orderStatus) {
+  updateStatus({
+    commit
+  }, orderStatus) {
     return new Promise((resolve, reject) => {
       api
         .post(`/api/slave/updateOrderStatus`, orderStatus)
@@ -102,7 +125,9 @@ const actions = {
         });
     });
   },
-  dailyTransactionCounter({ commit }, shopId) {
+  dailyTransactionCounter({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/dailyTransactionCounter/${shopId}`)
@@ -114,7 +139,9 @@ const actions = {
         });
     });
   },
-  getOrdersByShop({ commit }, shopId) {
+  getOrdersByShop({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/shop/${shopId}/getOrdersByShop`)
@@ -130,7 +157,9 @@ const actions = {
         });
     });
   },
-  getOrdersReportByShop({ commit }, shopId) {
+  getOrdersReportByShop({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/shop/${shopId}/getOrdersReportByShop`)
@@ -142,7 +171,9 @@ const actions = {
         });
     });
   },
-  index({ commit }) {
+  index({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/order`)
@@ -154,7 +185,9 @@ const actions = {
         });
     });
   },
-  store({ commit }, formData) {
+  store({
+    commit
+  }, formData) {
     return new Promise((resolve, reject) => {
       api
         .post(`/api/slave/order`, formData)
@@ -166,7 +199,9 @@ const actions = {
         });
     });
   },
-  orderProduct({ commit }, formData) {
+  orderProduct({
+    commit
+  }, formData) {
     return new Promise((resolve, reject) => {
       api
         .post(`/api/slave/orderproduct`, formData)
@@ -178,7 +213,9 @@ const actions = {
         });
     });
   },
-  filterOrdersIn({ commit }, payload) {
+  filterOrdersIn({
+    commit
+  }, payload) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/filterOrdersIn/${payload.from}/${payload.to}`)
@@ -190,7 +227,9 @@ const actions = {
         });
     });
   },
-  filterOrdersOut({ commit }, payload) {
+  filterOrdersOut({
+    commit
+  }, payload) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/filterOrdersOut/${payload.from}/${payload.to}`)
@@ -202,7 +241,9 @@ const actions = {
         });
     });
   },
-  getOrderStatus({ commit }, state) {
+  getOrderStatus({
+    commit
+  }, state) {
     return new Promise((resolve, reject) => {
       api
         .get("/api/slave/orderstatus")
@@ -214,7 +255,9 @@ const actions = {
         });
     });
   },
-  getOrderByStatus({ commit }, id) {
+  getOrderByStatus({
+    commit
+  }, id) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getorderbystatus/${id}`)
@@ -226,7 +269,9 @@ const actions = {
         });
     });
   },
-  getOrderPaymentStatus({ commit }, id) {
+  getOrderPaymentStatus({
+    commit
+  }, id) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getorderbypaymentstatus/${id}`)
@@ -238,7 +283,9 @@ const actions = {
         });
     });
   },
-  show({ commit }, orderId) {
+  show({
+    commit
+  }, orderId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/order/${orderId}`)
@@ -250,7 +297,9 @@ const actions = {
         });
     });
   },
-  update({ commit }, payload) {
+  update({
+    commit
+  }, payload) {
     return new Promise((resolve, reject) => {
       const acces = {
         _method: "update",
@@ -266,7 +315,9 @@ const actions = {
         });
     });
   },
-  delete({ commit }, orderId) {
+  delete({
+    commit
+  }, orderId) {
     return new Promise((resolve, reject) => {
       const acces = {
         _method: "delete",
@@ -284,7 +335,9 @@ const actions = {
         });
     });
   },
-  filterReport({ commit }, payload) {
+  filterReport({
+    commit
+  }, payload) {
     return new Promise((resolve, reject) => {
       api
         .post(`/api/slave/shop/order/report`, payload)
@@ -296,7 +349,9 @@ const actions = {
         });
     });
   },
-  getStatus({ commit }, dataOrder) {
+  getStatus({
+    commit
+  }, dataOrder) {
     return new Promise((resolve, reject) => {
       api
         .post(`/api/slave/getOrderServiceStatus`, dataOrder)
@@ -308,7 +363,9 @@ const actions = {
         });
     });
   },
-  searchOrders({ commit }, value) {
+  searchOrders({
+    commit
+  }, value) {
     return new Promise((resolve, reject) => {
       api
         .post(`/api/slave/searchOrders`, value)
@@ -320,7 +377,9 @@ const actions = {
         });
     });
   },
-  getOrder({ commit }) {
+  getOrder({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getorder`)
@@ -332,7 +391,10 @@ const actions = {
         });
     });
   },
-  next({ commit, state }) {
+  next({
+    commit,
+    state
+  }) {
     return new Promise((resolve, reject) => {
       api
         .get(`${state.data.next_page_url}`)
@@ -347,7 +409,9 @@ const actions = {
         });
     });
   },
-  countProfitOrdersByDay({ commit }, shopId) {
+  countProfitOrdersByDay({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getCountProfitOrdersByDay/${shopId}`)
@@ -359,7 +423,9 @@ const actions = {
         });
     });
   },
-  countSpendOrdersByDay({ commit }, shopId) {
+  countSpendOrdersByDay({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getCountSpendOrdresByDay/${shopId}`)
@@ -371,7 +437,9 @@ const actions = {
         });
     });
   },
-  countProfitOrdersByWeek({ commit }, shopId) {
+  countProfitOrdersByWeek({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getCountProfitOrdersByWeek/${shopId}`)
@@ -383,7 +451,9 @@ const actions = {
         });
     });
   },
-  countSpendOrdersByWeek({ commit }, shopId) {
+  countSpendOrdersByWeek({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getCountSpendOrdresByWeek/${shopId}`)
@@ -395,7 +465,9 @@ const actions = {
         });
     });
   },
-  countProfitOrdersByMonth({ commit }, shopId) {
+  countProfitOrdersByMonth({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getCountProfitOrdersByMonth/${shopId}`)
@@ -407,7 +479,9 @@ const actions = {
         });
     });
   },
-  countSpendOrdersByMonth({ commit }, shopId) {
+  countSpendOrdersByMonth({
+    commit
+  }, shopId) {
     return new Promise((resolve, reject) => {
       api
         .get(`/api/slave/getCountSpendOrdresByMonth/${shopId}`)

@@ -548,7 +548,7 @@
                 </div>
 
                 <div class="row justify-center">
-                  <!-- Button Facebook -->
+                  <!-- Button Facebook 
                   <q-btn
                     round
                     size="20px"
@@ -561,9 +561,9 @@
                       icon="fab fa-facebook-f"
                       size="30px"
                     ></q-avatar>
-                  </q-btn>
+                  </q-btn> -->
 
-                  <!-- Button Instagram -->
+                  <!-- Button Instagram
                   <q-btn
                     round
                     size="20px"
@@ -572,7 +572,7 @@
                     class="q-mx-xs"
                   >
                     <q-avatar icon="fab fa-instagram" size="30px"></q-avatar>
-                  </q-btn>
+                  </q-btn>  -->
 
                   <!-- Button WhatsApp -->
                   <q-btn
@@ -586,14 +586,14 @@
                     <q-avatar icon="fab fa-whatsapp" size="30px"></q-avatar>
                   </q-btn>
 
-                  <!-- Button Telegram -->
+                  <!-- Button Telegram 
                   <q-btn round size="20px" outline color="blue" class="q-mx-xs">
                     <q-avatar
                       icon="fab fa-telegram-plane"
                       size="30px"
                     ></q-avatar>
-                  </q-btn>
-                </div>
+                  </q-btn> -->
+                </div> 
 
                 <!-- Link Share -->
                 <q-card-actions class="justify-center">

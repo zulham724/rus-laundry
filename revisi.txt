@@ -1,58 +1,78 @@
-👍👍👍
-+ halaman input new clothes judul menjadi tambah item
-+ halaman package list first waktu pengerjaan menjadi number
-+ halaman add package tombol tambah diganti di bawah
-+ halaman make an order langsung ada tombol tambah pelanggan
-+ halaman list type of clothes judul menjadi jenis item
-+ halaman list type of clothes padding bawah masih menutupi
-+ halaman home bagian info pesanan baru di beri router push
-+ halaman transaksi diberi pull refresh dan skeleton
-+ halaman detail transaksi ketika cetak kode pesanan router back diperbaiki
-+ halaman status cucian tombol proses paket diperbaiki
-+ halaman detail transaksi di tampilkan status cucian per barang
-+ halaman invoice tambahkan tombol back
-+ halaman home belum ada antrian hari ini untuk monitor transaksi
-+ halaman basket (bisa diketik dan juga di pencet & jika kg kelipatan 1)
-+ halaman confirm order tombol cetak kode pesanan diperbaiki
-+ halaman make an order bagian email (harus email)
-+ halaman tambah pesanan beri skeleton ketika loading data list customer [tidak ada loading karena data di mounted]
-+ halaman tambah pesanan beri skeleton ketika loading data list karyawan [tidak ada loading karena data di mounted]
-+ halaman transaksi di beri filter status pembayaran di list (belum bayar, bayar sebagian, lunas) & filter berdasarkan status pembayaran
-+ waktu postingan tidak ada postingan d beri gambar kosong
-+ tombol tambah di tambah item ditaruh di bawah
-+ filter transaksi status order pending/ onProcess/ complete/ accepted
-+ tombol kembali kekecilan waktu selesai pesan dan animasi nya terlalu lama[tinggal menghapus background logo]
-+ kalau tambah paket jenis pcs tambah nya +=1 kalau kg += 0.1
-+ filter transaksi lunas belum lunas
-+ status pesanan dikerjakan kalau sudah dikerjakan
-+ waktu konfirmasi bisa masukan foto pengambilan barang
-+ halaman basket ada tombol tambah pembayaran (bayar nanti, dp , dan lunas) [belum ada design]
-+ buat halaman preview pesanan bagi para customer
-+ ketika klik bottom bar transaksi (langsung ambil data order)
-+ ketika log out, data yang di index / state di reset
-+ halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
-+ basket push confirm order
-+ centang confirm order
-+ course of home (di mbl)
-+ notification (di mbl)
-+ marketplace home (gambar error, kalo tidak ada lokasi tidak usah ada icon)
-+ community (merapikan posisi)
-+ kamera miring gan (harusnya sudah, sudah di rotate)
+@ Selesai 👍
+    + halaman input new clothes judul menjadi tambah item
+    + halaman package list first waktu pengerjaan menjadi number
+    + halaman add package tombol tambah diganti di bawah
+    + halaman make an order langsung ada tombol tambah pelanggan
+    + halaman list type of clothes judul menjadi jenis item
+    + halaman list type of clothes padding bawah masih menutupi
+    + halaman home bagian info pesanan baru di beri router push
+    + halaman transaksi diberi pull refresh dan skeleton
+    + halaman detail transaksi ketika cetak kode pesanan router back diperbaiki
+    + halaman status cucian tombol proses paket diperbaiki
+    + halaman detail transaksi di tampilkan status cucian per barang
+    + halaman invoice tambahkan tombol back
+    + halaman home belum ada antrian hari ini untuk monitor transaksi
+    + halaman basket (bisa diketik dan juga di pencet & jika kg kelipatan 1)
+    + halaman confirm order tombol cetak kode pesanan diperbaiki
+    + halaman make an order bagian email (harus email)
+    + halaman tambah pesanan beri skeleton ketika loading data list customer [tidak ada loading karena data di mounted]
+    + halaman tambah pesanan beri skeleton ketika loading data list karyawan [tidak ada loading karena data di mounted]
+    + halaman transaksi di beri filter status pembayaran di list (belum bayar, bayar sebagian, lunas) & filter berdasarkan status pembayaran
+    + waktu postingan tidak ada postingan d beri gambar kosong
+    + tombol tambah di tambah item ditaruh di bawah
+    + filter transaksi status order pending/ onProcess/ complete/ accepted
+    + tombol kembali kekecilan waktu selesai pesan dan animasi nya terlalu lama[tinggal menghapus background logo]
+    + kalau tambah paket jenis pcs tambah nya +=1 kalau kg += 0.1
+    + filter transaksi lunas belum lunas
+    + status pesanan dikerjakan kalau sudah dikerjakan
+    + waktu konfirmasi bisa masukan foto pengambilan barang
+    + halaman basket ada tombol tambah pembayaran (bayar nanti, dp , dan lunas) [belum ada design]
+    + buat halaman preview pesanan bagi para customer
+    + ketika klik bottom bar transaksi (langsung ambil data order)
+    + ketika log out, data yang di index / state di reset
+    + halaman detail transaksi tombol tambah pembayaran (tombol bayar ketika belum lunas) [belum ada design]
+    + basket push confirm order
+    + centang confirm order
+    + course of home (di mbl)
+    + notification (di mbl)
+    + marketplace home (gambar error, kalo tidak ada lokasi tidak usah ada icon)
+    + community (merapikan posisi)
+    + kamera miring gan (harusnya sudah, sudah di rotate)
+    + waktu kirim pesan wa, jika nomor tidak ada nol . . format di tambahkan kode negara
+    + halaman cetak invoice update
+    + cetak invoice belum bisa print
+    + waktu back jangan close app
+    + tampilan baru halaman connect to printer
+    + perbaiki halaman must connect to printer (di pisah juga)
+    + proses ketika mencetak belum ada (bingung ini sudah print atau belum)
+    + halaman invoice package, list printer
+    + halaman invoice package, list paired device
+    + tombol tutup invoice package ketika sudah connect printer
 
-👽 👽 👽
-- halaman berikan softdelete pada item dan paket 
-- halaman keranjang error jika ada item yang tidak memiliki paket
-- waktu back jangan close app
+@ Proses 🚂
+    
 
-👎👎👎
-- marketplace detail (jika tidak ada gambar kasih gambar lain, berikan img error produk lain) ⛔ img nya carousel 
+@ Bingung 👽
+    - tampilan new home diperbaiki (masih ada jarak misterius antara info saldo dan antrian pesanan hari ini)
+    - tambah logo laundry di halaman profile-account-setting (saya bingung, ada halamannya tapi di figma tidak ada designnya)
+    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
 
-- waktu kirim pesan wa, jika nomor tidak ada nol . . format di tambahkan kode negara
-- tampilah new home (pemasukan pengeluaran berantakan)
-- waktu cetak jika printer belum tersambung, (pergi ke halaman sambungkan printer)
-- halaman printer waktu refresh masih stuck 
-- cetak invoice belum bisa print
-- proses ketika mencetak belum ada (bingung ini sudah print atau belum)
+@ Belum Tersentuh 👎
+    - halaman berikan softdelete pada item dan paket 
+    - halaman keranjang error jika ada item yang tidak memiliki paket
+    - waktu cetak jika printer belum tersambung, (sambungkan ke printer)
+
+    - halaman printer waktu refresh masih stuck
+    - tampilan halaman profile-account-settings 
+
+   
+    
+    
+
+
+    
+    
+
 
 
 

@@ -127,7 +127,7 @@ export default {
   },
 
   methods: {
-    doPayment() {p
+    doPayment() {
       let sisabayar =
         parseInt(this.orderSend.total_sum) - parseInt(this.orderSend.paid_sum);
       if (this.payment <= sisabayar) {

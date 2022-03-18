@@ -122,7 +122,6 @@
                   class="q-pb-md q-mx-sm q-my-sm"
                   @click="$router.push(`/marketplace-detail/${product.id}`)"
                 >
-                  
                   <q-img
                     v-if="product.images.length"
                     class="bg-red"
@@ -156,7 +155,10 @@
                       }).format(product.price)
                     }}
                   </div>
-                  <div class="text-caption q-pl-xs" v-if="product.shop.user.home">
+                  <div
+                    class="text-caption q-pl-xs"
+                    v-if="product.shop.user.home"
+                  >
                     <q-icon name="fas fa-map-marker-alt" color="red" />{{
                       product.shop.user.home_address
                     }}

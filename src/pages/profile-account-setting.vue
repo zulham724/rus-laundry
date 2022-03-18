@@ -1,16 +1,23 @@
 <template>
   <q-layout class="mbl">
-    <q-header class="bg-transparent">
-      <div class="absolute q-pt-md">
-        <q-btn dense flat no-caps @click="$router.push('/menu')"
-          ><q-icon name="fas fa-arrow-left" color="white" />
-          <div class="text-subtitle1 q-pl-md text-white">Pengaturan Akun</div>
-        </q-btn>
-      </div>
-      <img style="width: 100%" src="~/assets/bg-atas-setting.svg" />
-    </q-header>
     <q-page-container>
-      <q-page>
+      <q-page class="">
+        <!-- button back & judul pengaturan akun -->
+        <div class="q-pt-md q-px-md row">
+          <div class="col-1">
+            <q-btn dense flat no-caps @click="$router.push('/menu')">
+              <q-icon name="fas fa-arrow-left" color="black" />
+            </q-btn>
+          </div>
+          <div class="col-11 self-center">
+            <div class="text-subtitle1 q-pl-md text-black">Pengaturan Akun</div>
+          </div>
+        </div>
+
+        <div class="q-my-md q-mx-xl text-center">
+          <q-img src="~/assets/Group5656.png" width="40%" />
+        </div>
+
         <q-form>
           <div>
             <div
@@ -22,6 +29,7 @@
             <q-input
               placeholder="Ketik username disini..."
               class="relative-center q-px-md"
+              style="background-color:#F0F3FD"
               outlined
               type="text"
               :rules="[(val) => !!val || 'mohon diisi']"
@@ -129,5 +137,4 @@
 export default {};
 </script>
 
-<style>
-</style>
+<style></style>

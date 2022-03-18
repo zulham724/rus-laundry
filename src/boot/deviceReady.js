@@ -1,8 +1,13 @@
 import store from "./../store";
-export default ({ app, router, store, Vue }) => {
-    document.addEventListener("deviceready", onDeviceReady, false);
-
+export default async ({
+      app,
+      router,
+      store,
+      Vue
+}) => {
     function onDeviceReady() {
         console.log('cordova siap')
     }
+    await document.addEventListener("deviceready", onDeviceReady, false);
+
 };

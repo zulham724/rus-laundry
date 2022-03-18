@@ -185,7 +185,7 @@
       </div>
 
       <!-- Transaksi Hari ini -->
-      <div class="shadow-1 bg-white q-mt-sm q-pa-md">
+      <div class="shadow-1 bg-white q-pa-md">
         <!-- <q-btn class="full-width" flat no-caps dense @click="$router.push('/transaction')"> -->
         <div class="row full-width self-center">
           <div
@@ -313,48 +313,48 @@
       </div>
 
       <!--Kategori Layanan-->
-      <div class="full-width">
-        <q-img
-          no-spinner
-          src="~/assets/bg_kategori_layanan_new.svg"
-          width="100vw"
-          height="220px"
-          class="row full-width"
-        >
-          <div
-            class="row full-width full-height bg-transparent justify-end q-pa-none self-center"
-          >
-            <div class="col-2 bg-transparent self-start">
-              <q-img
-                no-spinner
-                src="~/assets/logo_kategori_layanan.svg"
-                width="70px"
-              ></q-img>
-            </div>
-            <div
-              class="col-5 bg-transparent text-center justify-center self-center"
+      <div class="q-mt-xs q-pa-md" style="background-color: white">
+        <div class="q-pb-xs text-weight-medium">Kategori Layanan</div>
+        <div class="row">
+          <!--Button item-->
+          <div class="col-6 text-center q-px-xs" style="height: 180px">
+            <q-btn
+              @click="$router.push('/course-of-home')"
+              no-caps
+              class="shadow-2 full-height full-width"
               style="border-radius: 10px"
             >
-              <q-img
-                @click="$router.push('/add-clothes')"
-                no-spinner
-                src="~/assets/card_item.svg"
-              ></q-img>
-            </div>
-            <div
-              class="col-5 bg-transparent self-center"
-              style="border-radius: 20px"
-            >
-              <q-img
-                @click="$router.push('/package-list-first')"
-                no-spinner
-                src="~/assets/card_layanan.svg"
-                width="100%"
-                height="100%"
-              ></q-img>
-            </div>
+              <div class="self-center text-center">
+                <q-img
+                  no-spinner
+                  src="~/assets/Group5579.png"
+                  width="150px"
+                  height="170px"
+                >
+                </q-img>
+              </div>
+            </q-btn>
           </div>
-        </q-img>
+          <!--Button layanan-->
+          <div class="col-6 text-center q-px-xs" style="height: 180px">
+            <q-btn
+              @click="$router.push('/community')"
+              no-caps
+              class="shadow-2 full-height full-width"
+              style="border-radius: 10px"
+            >
+              <div class="self-center text-center">
+                <q-img
+                  no-spinner
+                  src="~/assets/Group5579.png"
+                  width="150px"
+                  height="170px"
+                >
+                </q-img>
+              </div>
+            </q-btn>
+          </div>
+        </div>
       </div>
     </q-page>
   </q-layout>
