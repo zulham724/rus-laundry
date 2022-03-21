@@ -15,7 +15,7 @@
               <div class="col-2">
                 <!-- Button back -->
                 <q-btn
-                  @click="$router.push('/course-of-home')"
+                  @click="$router.back()"
                   no-caps
                   class="q-pa-sm"
                   flat

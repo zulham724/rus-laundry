@@ -109,10 +109,13 @@ export default {
       this.$store
         .dispatch("Spend/store", this.newSpend)
         .then((res) => {
-          resolve(res.data);
         })
         .finally(() => {
           this.$router.push(`/income`);
+          this.$q.notify({
+          position: "top",
+          message: "Berhasil menyimpan data",
+        });
         });
     },
   },

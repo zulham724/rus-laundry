@@ -2,8 +2,8 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" to="/add-clothes">
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+        <q-btn flat round size="10px" @click="$router.back()">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
         <q-toolbar-title

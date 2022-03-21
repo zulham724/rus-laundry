@@ -226,6 +226,7 @@ export default {
       this.ordersState = this.ordersState_temp = this.Orders.data;
     }
 
+    console.log(this.ordersState.data);
     // this.searchTransaksi = debounce(this.searchTransaksi, 500);
   },
 

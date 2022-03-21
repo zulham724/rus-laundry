@@ -239,7 +239,7 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ detail_order.services[0].pivot.quantity }}
+                      >{{ detail_order.services[0].quantity }}
                       {{
                         detail_order.services[0].category.service_unit.name
                       }}</q-item-label
@@ -344,7 +344,7 @@
                       class="q-mb-md q-mt-lg"
                       size="10vw"
                       :value="
-                        service.pivot.service_status_id == 3 ? 100 : progress
+                        service.service_status_id == 3 ? 100 : progress
                       "
                     >
                       <div class="absolute-full flex flex-center">
@@ -353,7 +353,7 @@
                           class="bg-transparent"
                           text-color="white "
                           :label="
-                            service.pivot.service_status_id == 3
+                            service.service_status_id == 3
                               ? 100 + '%'
                               : progress
                           "

@@ -68,17 +68,6 @@
                     >
                       <q-item-section> Kemarin </q-item-section>
                     </q-item>
-                    <q-item
-                      clickable
-                      @click="
-                        filterOrdersIn(
-                          moment().format('DD-MM-yyyy'),
-                          moment().add(1, 'days').format('DD-MM-yyyy')
-                        )
-                      "
-                    >
-                      <q-item-section> Besok </q-item-section>
-                    </q-item>
                   </q-list>
                 </q-card-section>
               </q-card>
@@ -126,23 +115,6 @@
                     >
                       <q-item-section> Minggu Kemarin </q-item-section>
                     </q-item>
-                    <q-item
-                      clickable
-                      @click="
-                        filterOrdersIn(
-                          moment()
-                            .add(7, 'days')
-                            .startOf('week')
-                            .format('DD-MM-yyyy'),
-                          moment()
-                            .add(7, 'days')
-                            .endOf('week')
-                            .format('DD-MM-yyyy')
-                        )
-                      "
-                    >
-                      <q-item-section> Minggu Besok </q-item-section>
-                    </q-item>
                   </q-list>
                 </q-card-section>
               </q-card>
@@ -186,23 +158,7 @@
                     >
                       <q-item-section> Bulan Kemarin </q-item-section>
                     </q-item>
-                    <q-item
-                      clickable
-                      @click="
-                        filterOrdersIn(
-                          moment()
-                            .add(1, 'month')
-                            .startOf('month')
-                            .format('DD-MM-yyyy'),
-                          moment()
-                            .add(1, 'month')
-                            .endOf('month')
-                            .format('DD-MM-yyyy')
-                        )
-                      "
-                    >
-                      <q-item-section> Bulan Besok </q-item-section>
-                    </q-item>
+                    
                   </q-list>
                 </q-card-section>
               </q-card>
@@ -259,17 +215,6 @@
                     >
                       <q-item-section> Kemarin </q-item-section>
                     </q-item>
-                    <q-item
-                      clickable
-                      @click="
-                        filterOrdersOut(
-                          moment().format('DD-MM-yyyy'),
-                          moment().add(1, 'days').format('DD-MM-yyyy')
-                        )
-                      "
-                    >
-                      <q-item-section> Besok </q-item-section>
-                    </q-item>
                   </q-list>
                 </q-card-section>
               </q-card>
@@ -317,23 +262,6 @@
                     >
                       <q-item-section> Minggu Kemarin </q-item-section>
                     </q-item>
-                    <q-item
-                      clickable
-                      @click="
-                        filterOrdersOut(
-                          moment()
-                            .add(7, 'days')
-                            .startOf('week')
-                            .format('DD-MM-yyyy'),
-                          moment()
-                            .add(7, 'days')
-                            .endOf('week')
-                            .format('DD-MM-yyyy')
-                        )
-                      "
-                    >
-                      <q-item-section> Minggu Besok </q-item-section>
-                    </q-item>
                   </q-list>
                 </q-card-section>
               </q-card>
@@ -376,23 +304,6 @@
                       "
                     >
                       <q-item-section> Bulan Kemarin </q-item-section>
-                    </q-item>
-                    <q-item
-                      clickable
-                      @click="
-                        filterOrdersOut(
-                          moment()
-                            .add(1, 'month')
-                            .startOf('month')
-                            .format('DD-MM-yyyy'),
-                          moment()
-                            .add(1, 'month')
-                            .endOf('month')
-                            .format('DD-MM-yyyy')
-                        )
-                      "
-                    >
-                      <q-item-section> Bulan Besok </q-item-section>
                     </q-item>
                   </q-list>
                 </q-card-section>

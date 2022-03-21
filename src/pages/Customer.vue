@@ -24,15 +24,15 @@
       <q-pull-to-refresh @refresh="refresh">
         <q-page>
           <div class="column">
-            <div class="row bg-white q-py-lg">
+            <div class="row q-py-lg q-px-md">
               <!-- Search -->
-              <div>
+              <div class="row col-12">
                 <q-input
                   dense
                   v-model="search"
                   @update:model-value="filterCustomer(search)"
                   rounded
-                  class="text-weight-regular q-pl-lg"
+                  class="text-weight-regular"
                   type="search"
                   style="color: #bababa; font-size: 15px; width: 100%"
                   outlined
@@ -46,13 +46,11 @@
                   />
                 </q-input>
               </div>
-              <div class="col-4"></div>
-              <div class="col-9"></div>
-              <div class="col-3">
+              <div class="row col-12 q-mt-md justify-end">
                 <q-btn
                   dense
                   class="self-right"
-                  style="color: #888888; margin-bottom: -30px; height: 10px"
+                  style="color: #888888; height: 10px"
                   no-caps
                   flat
                   :label="selectall ? 'Batal' : 'Pilih Semua'"
@@ -68,7 +66,7 @@
                 <q-item
                   v-for="n in 8"
                   :key="n"
-                  class="row bg-white shadow-2 q-mx-lg q-mb-md"
+                  class="row bg-white shadow-2  q-mb-md"
                   style="height: 65px; border-radius: 5px"
                 >
                   <q-item-section avatar>
@@ -85,14 +83,14 @@
             </div>
 
             <div v-else-if="isLoad == false && customers.length">
-              <q-list class="bg-white">
+              <q-list class="bg-white justify-center">
                 <q-item
-                  @click="$router.push(`/detail-customer/${customer.id}`)"
                   clickable
                   v-for="(customer, c) in customers"
                   :key="c"
-                  class="row bg-white shadow-2 q-mx-lg q-mb-md"
-                  style="height: 65px; border-radius: 5px"
+                  class="row bg-white shadow-2 q-mb-md"
+                  style="height: 65px; border-radius: 5px;"
+                  @click="$router.push(`/detail-customer/${customer.id}`)"
                 >
                   <q-item-section avatar>
                     <q-avatar square size="">
@@ -121,7 +119,12 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-6">
-                      <div>{{  customers.filter((item) => item.checked).length }} item yang dipilih</div>
+                      <div>
+                        {{
+                          customers.filter((item) => item.checked).length
+                        }}
+                        item yang dipilih
+                      </div>
                     </div>
                     <div class="col-6">
                       <div class="row justify-end">
@@ -171,6 +174,7 @@ export default {
               item.checked = false;
               return item;
             });
+            console.log('testing ', res)
             resolve(res.data);
           })
           .catch((err) => {
@@ -187,52 +191,50 @@ export default {
       if (value == "") {
         this.customers = this.customers_temp;
       }
+      const needle = value.toLowerCase();
+      this.customers = this.customers_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
     },
     filterCustomer(val) {
       this.update(val);
     },
 
-     deleteCustomers() {
+    deleteCustomers() {
       let customers = this.customers
-      .filter((item) => item.checked)
-      .map((item) => item.id);
-      console.log(customers)
-      this.$store
-        .dispatch("Customer/destroy", customers)
-        .then((res) => {
-          this.customers = this.customers.filter(
-            (item) => !item.checked               
-          );
-          this.deletebutton = false
-          this.$q.notify("Berhasil");
-        });
+        .filter((item) => item.checked)
+        .map((item) => item.id);
+      console.log(customers);
+      this.$store.dispatch("Customer/destroy", customers).then((res) => {
+        this.customers = this.customers.filter((item) => !item.checked);
+        this.deletebutton = false;
+        this.$q.notify("Berhasil");
+      });
     },
 
     selectAll() {
       this.customers.forEach((item) => {
         if (this.selectall) {
           item.checked = false;
-          this.deletebutton = false
+          this.deletebutton = false;
         } else if (!this.selectall) {
           item.checked = true;
-          this.deletebutton = true
-        } 
-  
+          this.deletebutton = true;
+        }
       });
       this.selectall = !this.selectall;
-
     },
     dialogDelete() {
-      let check = this.customers.filter((item) => item.checked).length
-      if(check > 0){
-        this.deletebutton = true
-      }else {
-        this.deletebutton = false
+      let check = this.customers.filter((item) => item.checked).length;
+      if (check > 0) {
+        this.deletebutton = true;
+      } else {
+        this.deletebutton = false;
       }
     },
     checklist() {
       this.customers = this.customers.filter(checkcustomer);
-      function checkcustomer (customer){
+      function checkcustomer(customer) {
         if (customer) {
         } else if (!item.checked) {
           deletebutton = true;

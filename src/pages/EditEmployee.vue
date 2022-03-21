@@ -1,53 +1,76 @@
 <template>
   <q-layout>
     <q-header>
-      <q-toolbar class="bg-white shadow-1">
-        <q-btn @click="$router.push('/employee')" no-caps class="q-pa-md" flat style="color: white">
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+      <q-toolbar style="background-color: #49c2c0">
+        <q-btn
+          @click="$router.back()"
+          no-caps
+          class="q-pa-md"
+          flat
+          style="color: white"
+        >
+          <q-icon size="25px" name="fas fa-arrow-left" style="color: #white">
           </q-icon>
         </q-btn>
 
         <q-toolbar-title
           class="text-left text-subtitle2"
-          style="color: #888888; font-size: 16px"
+          style="color: white; font-size: 16px"
           >Edit Data Karyawan</q-toolbar-title
         >
       </q-toolbar>
     </q-header>
     <q-page-container>
       <q-page v-if="employee">
-        <div class="text-center">
-          <q-avatar class="q-ma-xl" size="150px">
-            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner/>
+        <div class="text-center q-py-md" style="background-color: #49c2c0">
+          <q-avatar size="150px" color="grey-4">
+            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
           </q-avatar>
         </div>
 
-        <q-input
-          class="q-mx-lg q-py-sm"
-          rounded
-          outlined
-          label="Nama"
-          v-model="employee.name"
-        />
-        <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" />
-        <q-input
-          class="q-mx-lg q-py-sm"
-          rounded
-          outlined
-          type="number"
-          label="No Telephone"
-          v-model="employee.contact_number"
-        />
-        <q-input
-          class="q-mx-lg q-py-sm"
-          rounded
-          outlined
-          label="Alamat Email"
-          v-model="employee.email"
-        />
+        <div class="q-mt-lg q-mx-sm q-gutter-y-md">
+          <q-input
+            input-class="q-pa-sm q-px-md text-weight-medium"
+            input-style="color: #888888; background-color: #F1F3FD; border-radius: 10px; font-size: medium"
+            placeholder="Nama"
+            v-model="employee.name"
+          />
+          <q-input
+            input-class="q-pa-sm q-px-md text-weight-medium"
+            input-style="color: #888888; background-color: #F1F3FD; border-radius: 10px; font-size: medium"
+            placeholder="Jabatan"
+            v-model="jabatan"
+            readonly 
+          />
+          <q-input
+            input-class="q-pa-sm q-px-md text-weight-medium"
+            input-style="color: #888888; background-color: #F1F3FD; border-radius: 10px; font-size: medium"
+            type="number"
+            placeholder="No Telephone"
+            v-model="employee.contact_number"
+          />
+          <q-input
+            input-class="q-pa-sm q-px-md text-weight-medium"
+            input-style="color: #888888; background-color: #F1F3FD; border-radius: 10px; font-size: medium"
+            placeholder="Alamat Email"
+            v-model="employee.email"
+          />
+        </div>
+
+        <div class="q-mt-md q-mx-sm">
+          <q-btn
+            @click="update()"
+            no-caps
+            style="width: 100%; background-color: #49c2c0; font-size: large"
+          >
+            <div class="q-pa-sm text-weight-medium" style="color: #fafafa">
+              Simpan
+            </div>
+          </q-btn>
+        </div>
       </q-page>
 
-      <q-footer>
+      <!--  <q-footer>
         <q-btn
           @click="update()"
           class="q-py-md"
@@ -56,7 +79,7 @@
         >
           Simpan Perubahan
         </q-btn>
-      </q-footer>
+      </q-footer>  -->
     </q-page-container>
   </q-layout>
 </template>
@@ -67,6 +90,7 @@ export default {
   data() {
     return {
       employee: null,
+      jabatan: "Karyawan",
     };
   },
   methods: {
@@ -76,11 +100,11 @@ export default {
       });
     },
     update() {
-      let id = this.employee.id
-      this.$store.dispatch("Employee/update", this.employee).then(res => {
-        this.$router.push(`/detail-employee/${id}`)
-        this.$q.notify("Berhasil")
-      })
+      let id = this.employee.id;
+      this.$store.dispatch("Employee/update", this.employee).then((res) => {
+        this.$router.push(`/detail-employee/${id}`);
+        this.$q.notify("Berhasil");
+      });
     },
   },
   mounted() {

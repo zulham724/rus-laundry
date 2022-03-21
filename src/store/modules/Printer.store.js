@@ -90,22 +90,24 @@ const actions = {
       );
     });
   },
-  disconnect({dispatch},name) {
+  disconnect({ dispatch }, name) {
     return new Promise((resolve, reject) => {
       window.BTPrinter.disconnect(
         (data) => {
           console.log("Disconnected");
           console.log(data);
-          dispatch("run").then(res=>{
-            resolve(res)
-          }).catch(err=>{
-            reject(err)
-          })
+          dispatch("run")
+            .then((res) => {
+              resolve(res);
+            })
+            .catch((err) => {
+              reject(err);
+            });
         },
         (err) => {
           console.log("Error");
           console.log(err);
-          reject(err)
+          reject(err);
         },
         name
       );
@@ -125,13 +127,12 @@ const actions = {
 
           names.forEach((item, i) => {
             console.log(device_types[i]);
-            if (device_types[i] == 3) {
-              printers.push({
-                name: item,
-                mac_address: mac_addresses[i],
-                device_type: device_types[i],
-              });
-            }
+
+            printers.push({
+              name: item,
+              mac_address: mac_addresses[i],
+              device_type: device_types[i],
+            });
           });
 
           printers.forEach((item) => {

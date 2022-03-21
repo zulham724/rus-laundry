@@ -1,9 +1,9 @@
 <template>
   <q-layout class="mbl">
     <q-header class="shadow-1">
-      <q-toolbar class="bg-white q-py-md">
+      <q-toolbar class="bg-white q-py-sm">
         <q-btn flat round size="10px" @click="$router.back()">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #49c2c0">
+          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #3A3838">
           </q-avatar>
         </q-btn>
         <q-toolbar-title
@@ -11,7 +11,15 @@
           style="color: #5a5656; font-size: 16px"
           >Buat Postingan</q-toolbar-title
         >
-        <q-btn no-caps flat color="grey" @click="store()" class="text-right">
+        <q-btn
+          no-caps
+          :disable="loading"
+          :loading="loading"
+          flat
+          color="grey"
+          @click="store()"
+          class="text-right"
+        >
           <div class="text-weight-medium text-subtitle2" style="color: #5a5656">
             Posting
           </div>
@@ -20,34 +28,27 @@
     </q-header>
     <q-page-container>
       <q-page>
-        <div class="row">
-          <div class="col-8 q-pt-lg q-pb-md q-pl-sm q-pr-lg">
+        <div class="row q-mt-lg q-mx-md">
+          <div class="col-7">
             <div
-              class="row q-pa-sm q-pl-md"
-              style="
-                width: 80%;
-                border-radius: 20px 0 20px 0;
-                background-color: #f7f7f7;
-              "
+              class="row q-pa-sm"
+              style="border-radius: 20px 0 20px 0; background-color: #f7f7f7"
             >
-              <q-avatar class="q-mt-xs" size="30px"
-                ><img src="~/assets/Avatar.png"
-              /></q-avatar>
-              <div class="q-pl-sm column">
-                <div class="text-weight-medium" style="font-size: 12px">
-                  Indonesia Laundry
-                </div>
-                <div
-                  class="text-caption text-weight-medium"
-                  style="color: #b1b1b1; font-size: 10px"
-                >
-                
-                </div>
+              <q-avatar size="30px">
+              <!-- <img :src="`${STORAGE_URL}/${Auth.auth.avatar}`" /> -->
+                <img src="~/assets/Avatar.png" />
+              </q-avatar>
+              <div
+                class="q-pl-sm self-center text-weight-bold"
+                style="font-size: small"
+              >
+                {{ Auth.auth.shop.name }}
               </div>
             </div>
           </div>
-          <div class="col-4 q-pt-lg">
+          <div class="col-5 justify-end text-right">
             <q-btn-dropdown
+              dense
               flat
               no-caps
               style="
@@ -81,16 +82,16 @@
         <div class="row">
           <div class="q-pb-xl" style="height: 200px; width: 100%">
             <q-form ref="form">
-            <q-input
-              :disable="loading"
-              class="q-px-md"
-              placeholder="Apa yang kamu pikirkan hari ini"
-              borderless
-              v-model="post.body"
-              style="width: 100%"
-              autogrow
-              :rules="[ val => val && val.length > 0 || 'Silahkan masukan sesuatu']"
-            />
+              <q-input
+                :disable="loading"
+                class="q-px-md"
+                placeholder="Apa yang kamu pikirkan hari ini"
+                borderless
+                v-model="post.body"
+                style="width: 100%"
+                autogrow
+                :rules="[(val) => (val && val.length > 0) || '']"
+              />
             </q-form>
             <div class="row">
               <div v-for="(file, f) in images_videos" :key="f" class="q-pa-md">
@@ -230,9 +231,11 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
 export default {
   data() {
     return {
+      dataUser: {},
       value1: false,
       value2: false,
       dialog: false,
@@ -242,7 +245,11 @@ export default {
       files: [],
       isMultipleFile: true,
       post: {},
+      STORAGE_URL: STORAGE_URL,
     };
+  },
+  computed: {
+    ...mapState(["Auth"]),
   },
   methods: {
     cek() {
@@ -282,8 +289,9 @@ export default {
       this.images_videos.splice(index, 1);
     },
     store() {
-      this.$refs.form.validate().then((success) =>{
-        if(success){
+      this.loading = true;
+      this.$refs.form.validate().then((success) => {
+        if (success) {
           let formData = new FormData();
           this.files.forEach((file) => {
             formData.append("files[]", file);
@@ -295,11 +303,13 @@ export default {
           this.$store.dispatch("Post/store", formData).then((res) => {
             this.$router.push("/community");
             this.$q.notify("Berhasil");
+            this.loading = false;
           });
-        }else{
-          alert('gagal')
+        } else {
+          this.$q.notify("Gagal");
+          this.loading = false;
         }
-      })
+      });
     },
   },
 };

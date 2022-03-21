@@ -9,7 +9,7 @@
           flat
           style="color: white"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #49c2c0">
+          <q-icon size="25px" name="fas fa-arrow-left" style="color: #3A3838">
           </q-icon>
         </q-btn>
 
@@ -22,7 +22,7 @@
     </q-header>
 
     <q-page-container>
-      <q-page class="q-ma-md">
+      <q-page class="q-pa-sm">
         <!-- Notification of today -->
         <div class="row">
           <div class="row col-12 q-px-sm">

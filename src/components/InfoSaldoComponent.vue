@@ -55,7 +55,7 @@
           >
             {{ moment().locale("ID").format("dddd, DD MMMM YYYY") }}
           </div>
-          <div v-if="isLoad">
+          <div v-if="isLoad2">
             <q-skeleton type="text" />
           </div>
           <div
@@ -124,8 +124,10 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      total_spend: 0,
-      total_profit: 0,
+      total_spend: null,
+      total_profit: null,
+      isLoad: false,
+      isLoad2: false,
     };
   },
   computed: {
@@ -143,7 +145,9 @@ export default {
         this.$store
           .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
           .then((res) => {
+            
             this.total_profit = res.data;
+            console.log('total profit', this.total_profit)
             resolve(res.data);
           })
           .catch((err) => {
@@ -156,14 +160,14 @@ export default {
     },
     getSpendToday() {
       return new Promise((resolve, reject) => {
-        this.isLoad = true;
+        this.isLoad2 = true;
         this.$store
           .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
           .then((res) => {
             this.total_spend = res.data;
           })
           .finally(() => {
-            this.isLoad = false;
+            this.isLoad2 = false;
           });
       });
     },

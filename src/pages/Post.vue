@@ -2,13 +2,13 @@
   <q-layout style="background-color: #fafafa">
     <div class="fixed-top bg-white" style="z-index: 999">
       <q-header style="background-color: #ffffff" class="q-pb-md">
-        <div class="row q-pa-md self-center bg-white">
+        <div class="row q-ma-sm self-center">
           <div
             class="col-5 row text-weight-medium self-center"
-            style="color: #3a3838; font-size: 20px"
+            style="color: #3a3838; "
           >
             <q-btn
-              @click="$router.push('/')"
+              @click="$router.back()"
               no-caps
               dense
               flat
@@ -17,13 +17,13 @@
               <q-icon
                 size="20px"
                 name="fas fa-arrow-left"
-                style="color: #9b27f1"
+                style="color: #3A3838"
               >
               </q-icon>
             </q-btn>
-            <div class="q-pl-sm">Postingan</div>
+            <div class="q-pl-sm" style="font-size: larger">Postingan</div>
           </div>
-          <div class="col-5 text-right">
+          <div class="col-5 text-center self-center  ">
             <q-btn flat dense no-caps @click="$router.push('/make-post')">
               <div
                 class="row justify-center q-px-sm q-py-xs"
@@ -36,26 +36,26 @@
                   style="color: #000000"
                 />
                 <div
-                  class="text-weight-medium q-pl-sm"
-                  style="font-size: 13px; color: #3a3838"
+                  class="text-weight-medium q-pl-xs"
+                  style="font-size: small; color: #3a3838"
                 >
                   Buat postingan
                 </div>
               </div>
             </q-btn>
           </div>
-          <div class="col-1 text-center self-center">
+          <div class="col-1 text-center self-center ">
             <q-btn dense round flat @click="$router.push('/notification')">
               <q-icon
                 name="far fa-bell"
-                sizes="20px"
+                sizes="18px"
                 style="color: #888888"
               ></q-icon>
             </q-btn>
           </div>
-          <div class="col-1 text-center q-px-xs self-center">
+          <div class="col-1 text-center  self-center">
             <q-avatar
-              size="35px"
+              size="30px"
               style="background-color: #888888"
               @click="$router.push('/my-profile')"
             >
@@ -189,7 +189,7 @@ export default {
             .then((res) => {
               this.posts = res.data;
               resolve(res.data);
-              console.log("ini data post", res.data);
+              // console.log("ini data post", res.data);
             })
             .catch((err) => {
               reject(err);
@@ -206,12 +206,12 @@ export default {
     },
     updateHeight(post) {
       // this.$refs["intersection_"+post.id].$el.style.minHeight=post.size.height;
-      console.log(post.size.height);
+      // console.log(post.size.height);
       this.$refs["intersection_" + post.id][0].$el.style.minHeight =
         post.size.height + "px";
       // let $ref=this.$refs["intersection_"+post.id];
       // console.log($ref)
-      console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
+      // console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
       // alert(post.size.height)
     },
     onLoad(index, done) {

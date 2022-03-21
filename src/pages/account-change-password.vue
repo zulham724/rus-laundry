@@ -53,6 +53,17 @@
             label="Lupa kata sandi ?"
           />
         </div>
+        <div class=" text-center q-mt-md">
+          <q-btn
+            @click="$router.back()"
+            flat
+            dense
+            no-caps
+            class="q-py-sm"
+            style="color: #ffffff; width: 80%; background-color:#49C2C0"
+            label="Ubah"
+          />
+        </div>
 
         
       </q-page>

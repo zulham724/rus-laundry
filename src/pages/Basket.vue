@@ -7,7 +7,7 @@
           flat
           round
           size="10px"
-          @click="$router.push('/list-type-of-clothes')"
+          @click="$router.back()"
         >
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
@@ -543,7 +543,7 @@ export default {
           position: "top",
           message: "Pembayaran melebihi batas",
         });
-        this.btnDisable = true;
+        this.btnDisable = false;
       } else if (!this.payment) {
         this.$q.notify({
           position: "top",

@@ -48,22 +48,35 @@
     + halaman invoice package, list printer
     + halaman invoice package, list paired device
     + tombol tutup invoice package ketika sudah connect printer
+    + seluruh fungsi halaman berhubungan dengan printer (dicarry pak azwar)
+    + tampilan halaman profile-account-settings 
+    + waktu cetak jika printer belum tersambung, (sambungkan ke printer)
+    + tampilan new home diperbaiki (masih ada jarak misterius antara info saldo dan antrian pesanan hari ini)
+    + tambah logo laundry di halaman profile-account-setting (saya bingung, ada halamannya tapi di figma tidak ada designnya)
+    + perbaiki halaman secondary payment component lebih rapi dan perkecil font size
 
 @ Proses 🚂
     
 
 @ Bingung 👽
-    - tampilan new home diperbaiki (masih ada jarak misterius antara info saldo dan antrian pesanan hari ini)
-    - tambah logo laundry di halaman profile-account-setting (saya bingung, ada halamannya tapi di figma tidak ada designnya)
     - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
 
 @ Belum Tersentuh 👎
     - halaman berikan softdelete pada item dan paket 
     - halaman keranjang error jika ada item yang tidak memiliki paket
-    - waktu cetak jika printer belum tersambung, (sambungkan ke printer)
 
-    - halaman printer waktu refresh masih stuck
-    - tampilan halaman profile-account-settings 
+    - halaman detail transaksi, jika paket/layanan sudah di delete halaman akan menjadi blank putih, dikarenakan layanan kosong
+    - ketika memilih paket ambil yang is_available nya 1
+    - ketika hendak memesan pesanan laundry, atribut yang ada di tabel service seperti name, description, price, and process time juga dimasukan ke table services
+    - waktu ngestore, di package tambahkan service_unit dan category
+
+    - halaman make-an-order, dialog saat penambahan pelanggan & karyawan belum responsive, juga harus diisi
+    - halaman addspend, harus diisi 
+    
+   
+
+    
+    
 
    
     

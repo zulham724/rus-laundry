@@ -23,12 +23,13 @@
       <q-page>
         <q-input
           placeholder="Masukkan email pemulihan"
-          class="q-mt-md q-px-md"
+          class="q-mt-md q-mx-md q-py-none"
           :rules="[(val) => !!val || 'mohon diisi']"
           outlined
           type="text"
+          style="background-color: #F0F3FD"
         />
-        <div class="text-center">
+        <div class="text-center q-mt-sm">
           <q-btn
             @click="dialogSend = true"
             class="q-mt-xs text-center"
@@ -50,7 +51,7 @@
                 Email Terkirim
               </div>
               <div
-                class="q-px-lg row text-center text-weight-medium"
+                class="q-px-md row text-center text-weight-medium"
                 style="color: #747474; font-size: 12px"
               >
                 Kami telah mengirimkan email ke example@gmail.com yang berisi
@@ -59,7 +60,7 @@
 
               <div class="row full-width justify-end q-pt-md q-gutter-x-sm">
                 <!--Button Ubah-->
-                <q-btn no-caps dense flat v-close-popup @click="$router.push('/profile-account-setting')">
+                <q-btn class=" q-mr-md" no-caps dense flat v-close-popup @click="$router.push('/profile-account-setting')">
                   <div
                     class="text-weight-bold q-px-xs"
                     style="color: #393939; font-size: 14px"

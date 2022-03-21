@@ -84,7 +84,7 @@
                 Cek status pesanan anda melalui link dibawah
               </div>
               <div class="text-center text-weight-medium">
-                http://trojanvirus.123!!!@9(U)/installer.com
+                google.com 
               </div>
             </div>
           </div>

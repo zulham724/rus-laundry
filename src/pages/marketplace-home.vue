@@ -12,7 +12,7 @@
         <div class="row full-width q-px-md">
           <div class="col-1 self-center text-center">
             <q-btn
-              @click="$router.push('/')"
+              @click="$router.back()"
               no-caps
               dense
               flat

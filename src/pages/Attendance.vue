@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat dense @click="$router.push('/employee')">
+        <q-btn flat dense @click="$router.back()">
           <q-icon name="fas fa-arrow-left" style="color: #888888"> </q-icon>
         </q-btn>
         <q-toolbar-title

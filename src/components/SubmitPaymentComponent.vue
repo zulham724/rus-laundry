@@ -44,7 +44,7 @@
 
       <!-- Img ketika inputan lunas -->
       <div
-        v-if="this.payment == this.Orders.order.total_price"
+        v-if="this.payment == this.Orders.order.total_price || this.payment > this.Orders.order.total_price"
         class="text-center"
       >
         <q-img
@@ -61,7 +61,7 @@
 
       <!-- Img ketika inputan tidak lunas -->
       <div
-        v-if="this.payment != this.Orders.order.total_price && this.payment > 0"
+        v-if="this.payment != this.Orders.order.total_price && this.payment > 0 && this.payment < this.Orders.order.total_price"
         class="text-center"
       >
         <q-img
@@ -141,7 +141,7 @@ export default {
           position: "top",
           message: "Pembayaran melebihi batas",
         });
-        this.btnDisable = true;
+        this.btnDisable = false;
       } else if (!this.payment) {
         this.btnDisable = true;
         this.$q.notify({

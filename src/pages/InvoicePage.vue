@@ -4,7 +4,8 @@
       class="mbl"
       view="lHh lpR fFf"
       style="background-color: #fafafa"
-    >
+    > 
+    <!-- tombol back dan judul invoice pesanan -->
       <q-header class="shadow-1">
         <q-toolbar class="bg-white q-py-md">
           <q-btn flat round size="10px" @click="$router.back()">
@@ -129,13 +130,13 @@
                   style: "currency",
                   currency: "IDR",
                 }).format(service.price)
-              }}/{{ service.category.service_unit.name }}
+              }}/{{ service.service_unit }}
             </div>
             <div
               class="col-3 text-weight-regular text-center"
               style="font-size: 10px; color: #313131"
             >
-              {{ service.pivot.quantity }}
+              {{ service.quantity }}
             </div>
             <div
               class="col-3 text-weight-regular text-center"
@@ -145,7 +146,7 @@
                 new Intl.NumberFormat("id-ID", {
                   style: "currency",
                   currency: "IDR",
-                }).format(service.price * service.pivot.quantity)
+                }).format(service.price * service.quantity)
               }}
             </div>
           </div>
@@ -274,6 +275,7 @@ export default {
   mounted() {
     this.getOrder().then((res) => {
       // console.log(this.$refs.printpage.$el.clientHeight);
+      console.log('ini data order',this.order);
     });
 
 

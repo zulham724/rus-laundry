@@ -16,7 +16,7 @@
                 flat
                 round
                 size="sm"
-                @click="$router.push('/transaction')"
+                @click="$router.back()"
               >
                 <q-avatar
                   size="25px"
@@ -243,7 +243,7 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ service.category.name }}</q-item-label
+                      >{{ service.category }}</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -265,9 +265,9 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ detail_order.services[0].pivot.quantity }}
+                      >{{ detail_order.services[0].quantity }}
                       {{
-                        detail_order.services[0].category.service_unit.name
+                        detail_order.services[0].service_unit
                       }}</q-item-label
                     >
                   </q-item-section>
@@ -370,15 +370,16 @@
                       class="q-mb-md q-mt-lg"
                       size="10vw"
                       :value="
-                        service.pivot.service_status_id == 3 ? 100 : progress"
+                        service.service_status_id == 3 ? 100 : progress
+                      "
                     >
-                      <div class="absolute-full flex flex-center self-center ">
+                      <div class="absolute-full flex flex-center self-center">
                         <q-badge
                           style="font-size: 20px"
-                          class="bg-transparent "
+                          class="bg-transparent"
                           text-color="white "
                           :label="
-                            service.pivot.service_status_id == 3
+                            service.service_status_id == 3
                               ? 100 + '%'
                               : progress
                           "
@@ -593,7 +594,7 @@
                       size="30px"
                     ></q-avatar>
                   </q-btn> -->
-                </div> 
+                </div>
 
                 <!-- Link Share -->
                 <q-card-actions class="justify-center">
@@ -652,33 +653,31 @@ export default {
       order: null,
       STORAGE_URL: STORAGE_URL,
       APP_URL: APP_URL,
-      statusCucian:null,
-      message: ""
+      statusCucian: null,
+      message: "",
     };
   },
 
   mounted() {
     this.getDetailOrder();
-    this.link = `${this.APP_URL}/preview-detail-transaksi/${this.orderid}`
+    this.link = `${this.APP_URL}/preview-detail-transaksi/${this.orderid}`;
   },
 
   methods: {
     submitMessage() {
-        this.setTextMessage();
+      this.setTextMessage();
 
-        let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
-          this.order.customer.contact_number
-        )}&text=${encodeURI(this.message)}`;
-        window.open(url, "_blank");
+      let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
+        this.order.customer.contact_number
+      )}&text=${encodeURI(this.message)}`;
+      window.open(url, "_blank");
     },
     setTextMessage() {
       if (this.order) {
         let url = `${this.APP_URL}/preview-detail-transaksi/${this.order.id}`;
         let tmp = `
-          Status Cucian - Laundry Digital
-          \ID Pesanan : ${this.order.id}
-          \nDapat dilihat di halaman dibawah ini
-          \nUrl : ${url}`;
+          Halo -----. Terimakasih telah melakukan pemesanan di -----. Yuk cek proses pesanan kamu di sini 
+          \n Url : ${url}`;
         this.message = tmp;
       }
     },
@@ -809,7 +808,7 @@ export default {
       // modelValue.select();
       // modelValue.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(modelValue);
-      this.$q.notify('Link tersalin')
+      this.$q.notify("Link tersalin");
     },
   },
 };

@@ -1,10 +1,10 @@
 <template>
   <q-layout class="mbl">
     <q-page>
-      <div class="row q-pa-md">
+      <div class="row q-gutter-x-sm q-pa-md">
         <div class="col-1 self-center">
           <q-btn dense  no-caps flat @click="$router.back()">
-            <q-icon size="20px" name="fas fa-arrow-left" style="color: #9b27f1">
+            <q-icon size="20px" name="fas fa-arrow-left" style="color: #3A3838">
             </q-icon>
           </q-btn>
         </div>
@@ -162,12 +162,12 @@ export default {
     },
     updateHeight(post) {
       // this.$refs["intersection_"+post.id].$el.style.minHeight=post.size.height;
-      console.log(post.size.height);
+      // console.log(post.size.height);
       this.$refs["intersection_" + post.id][0].$el.style.minHeight =
         post.size.height + "px";
       // let $ref=this.$refs["intersection_"+post.id];
       // console.log($ref)
-      console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
+      // console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
       // alert(post.size.height)
     },
     onLoad(index, done) {

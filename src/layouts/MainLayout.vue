@@ -119,6 +119,8 @@ export default {
 
   methods: {
     getOrderPush() {
+      // this.$store.commit('Orders/delete_order')
+      
       this.$store
         .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
         .then((res) => {

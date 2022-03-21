@@ -45,7 +45,7 @@
             <div>Sisa Tagihan</div>
             <div
               v-if="this.orderSend"
-              style="font-size: 28px; font-weight: bold"
+              style="font-size: 16px; font-weight: bold"
             >
               {{
                 new Intl.NumberFormat("id-ID", {
@@ -56,7 +56,7 @@
             </div>
             <div
               v-if="!this.orderSend.total_sum"
-              style="font-size: 28px; font-weight: bold"
+              style="font-size: 16px; font-weight: bold"
             >
               Kosong
             </div>
@@ -77,10 +77,10 @@
       <q-card-section style="max-height: 70%" class="scroll">
         <q-list>
           <q-item v-for="item in orderSend.payments" :key="item.id">
-            <div class="col text-left">{{ item.name }}</div>
+            <div class="col-2 self-center text-left">{{ item.name }}</div>
             <div
-              class="col text-right"
-              style="font-size: 20px; font-weight: bold"
+              class="col-10 text-right self-center"
+              style="font-size: 16px; font-weight: bold"
             >
               {{
                 new Intl.NumberFormat("id-ID", {
@@ -90,6 +90,30 @@
               }}
             </div>
           </q-item>
+
+          <!-- digunakan untuk menciptakan padding bawah -->
+          <div class="fixed-bottom">
+            <q-input
+              disable
+              type="number"
+              @keypress="isNumber($event)"
+              v-model="payment"
+              square
+              color="black"
+              class="bg-white q-mx-lg"
+              outlined
+              label="Masukkan Nominal"
+            />
+            <div
+              @click="doPayment()"
+              class="bg-teal-14 text-center q-py-md q-mb-xl q-mx-lg"
+              style="color: #fff; border-radius: 0px 0px 5px 5px"
+              disable
+            >
+              Lanjutkan
+              <q-spinner v-if="btnDisable" color="black" :thickness="2" />
+            </div>
+          </div>
         </q-list>
       </q-card-section>
 
@@ -102,15 +126,15 @@
           v-model="payment"
           square
           color="black"
-          class="bg-white"
+          class="bg-white q-mx-lg"
           outlined
           label="Masukkan Nominal"
           :disable="btnDisable == true"
         />
         <div
           @click="doPayment()"
-          class="bg-teal-14 text-center q-py-md"
-          style="color: #fff"
+          class="bg-teal-14 text-center q-py-md q-mb-xl q-mx-lg"
+          style="color: #fff; border-radius: 0px 0px 5px 5px"
           :disable="btnDisable == true"
         >
           Lanjutkan

@@ -159,7 +159,7 @@
 
         <!--Dialog Customers-->
         <q-dialog v-model="dialogListCustomer" position="right">
-          <q-card style="width: 350px">
+          <q-card style="width: 90%">
             <q-card-section v-if="isLoad == false">
               <q-input
                 label="Cari"
@@ -329,7 +329,7 @@
 
         <!--Dialog Employees-->
         <q-dialog v-model="dialogListEmployee" position="left">
-          <q-card style="width: 350px">
+          <q-card style="width: 350px%">
             <q-card-section v-if="isLoad2 == false">
               <q-input
                 label="Cari"

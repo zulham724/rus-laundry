@@ -15,7 +15,7 @@
               <div class="col-1">
                 <!-- Button back -->
                 <q-btn
-                  @click="$router.push('/profile-of-course')"
+                  @click="$router.back()"
                   no-caps
                   class="q-pa-sm"
                   flat
@@ -49,7 +49,7 @@
             <div class="full-height q-ml-sm" style="display: block; background-color: #26E745; width: 2px">
             </div>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <q-list v-for="n in 11" :key="n" class="q-py-sm">
               <q-item clickable class="bg-white shadow-2 q-py-md" style="border-radius: 5px">
                 <q-item-section avatar>
@@ -88,7 +88,7 @@
                       background-color: #ff843e;
                       border-radius: 20px;
                       width: auto;
-                      font-size: 12px;
+                      font-size: small;
                       color: white;
                     "
                   >

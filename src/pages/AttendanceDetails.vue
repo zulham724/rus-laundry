@@ -8,7 +8,7 @@
           ripple="false"
           flat
           style="color: white"
-          to="/attendance"
+          @click="$router.back()"
         >
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
@@ -171,7 +171,7 @@
             </div>
           </div>
 
-          <q-btn no-caps flat class="full-width bg-white" @click="buttonDate()">
+          <q-btn no-caps flat class="full-width bg-white">
             <div
               class="col-10 text-left text-weight-medium q-pl-md"
               style="color: #888888"

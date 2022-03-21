@@ -7,8 +7,9 @@
             flat
             round
             size="10px"
-            @click="$router.push(`/detail-transaksi/${orderid}`)"
+            @click="$router.back()"
           >
+          <!-- @click="$router.push(`/detail-transaksi/${orderid}`)" -->
             <q-avatar
               size="25px"
               icon="fas fa-arrow-left"
@@ -30,7 +31,7 @@
         <div class="col-12">
           <div class="text-caption text-grey-6">Jenis pakaian</div>
           <div class="text-subtitle1" style="color: #7fcfdc">
-            {{ order.services[0].category.name }}
+            {{ order.services[0].category }}
           </div>
         </div>
         <div class="col-12">

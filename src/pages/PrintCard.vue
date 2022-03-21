@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #ffffff">
     <q-header>
       <q-toolbar class="bg-white shadow-3">
-        <q-btn no-caps flat style="color: white" @click="$router.push(`/detail-employee/${employee.id}`)">
+        <q-btn no-caps flat style="color: white" @click="$router.back()">
           <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
@@ -10,23 +10,22 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Print ID Card</q-toolbar-title
+          >Cetak ID Card</q-toolbar-title
         >
       </q-toolbar>
     </q-header>
     <q-page-container>
       <q-page v-if="employee">
-        <q-card flat class="q-mt-lg bg-white" style="">
+        <q-card flat class="q-mt-lg bg-white q-mx-md" style="">
           <div class="row">
-            <div class="col-4">
-              <q-avatar class="q-pl-sm" size="80px">
-                <q-img src="~/assets/Avatar.png" no-spinner/>
+            <div >
+              <q-avatar size="80px">
+                <q-img src="~/assets/Avatar.png" no-spinner />
               </q-avatar>
             </div>
-            <div class="col-8">
-              <div class="q-ml-md q-mr-xl">
+            <div class="q-px-md">
                 <div
-                  class="q-mt-sm text-center text-weight-medium"
+                  class="q-mt-sm text-center text-weight-medium q-px-sm"
                   style="
                     background-color: #4cd4f2;
                     border-radius: 3px;
@@ -35,52 +34,51 @@
                 >
                   Karyawan
                 </div>
-              </div>
               <div
-                class="q-ml-md q-pt-xs text-weight-medium"
+                class="q-pt-xs text-weight-medium"
                 style="color: #4cd4f2"
               >
                 Nomor ID
               </div>
-              <div class="q-ml-md text-weight-medium" style="color: #756a6a">
+              <div class="text-weight-medium" style="color: #756a6a">
                 {{ employee.id }}
               </div>
             </div>
           </div>
           <div
-            class="q-mt-xl q-ml-md text-weight-medium"
+            class="q-mt-xl  text-weight-medium"
             style="color: #4cd4f2"
           >
             Nama
           </div>
           <div
-            class="q-ml-md text-subtitle2 text-weight-medium"
+            class=" text-subtitle2 text-weight-medium"
             style="color: #756a6a"
           >
             {{ employee.name }}
           </div>
 
           <div
-            class="q-mt-sm q-ml-md text-weight-medium"
+            class="q-mt-sm  text-weight-medium"
             style="color: #4cd4f2"
           >
             No telephone
           </div>
           <div
-            class="q-ml-md text-subtitle2 text-weight-medium"
+            class="text-subtitle2 text-weight-medium"
             style="color: #756a6a"
           >
             {{ employee.contact_number }}
           </div>
 
           <div
-            class="q-mt-sm q-ml-md text-weight-medium"
+            class="q-mt-sm  text-weight-medium"
             style="color: #4cd4f2"
           >
             Email
           </div>
           <div
-            class="q-ml-md text-subtitl text-weight-medium"
+            class=" text-subtitl text-weight-medium"
             style="color: #756a6a"
           >
             {{ employee.email }}
@@ -92,14 +90,15 @@
           >
             Code QR untuk absen
           </div>
-
-          <div class="text-center q-mt-sm">
-            <q-img src="~/assets/qr-card-print.svg" no-spinner/>
+          <div class="row col-12 q-mt-sm  text-center justify-center">
+            <div style="width: 150px; height: 150px; z-index: 999">
+              <q-img src="~/assets/qr-card-print.svg" no-spinner />
+            </div>
           </div>
         </q-card>
         <div class="row">
-          <div class="col-12 text-center absolute" style="margin-top: -30px">
-            <q-img src="~/assets/bg-card.svg" no-spinner/>
+          <div class="col-12 text-center absolute-bottom" style="margin-bottom: -50px">
+            <q-img src="~/assets/bg-card.svg" no-spinner />
           </div>
         </div>
       </q-page>
@@ -160,7 +159,7 @@
 
 <script>
 export default {
-  props:["employeeid"],
+  props: ["employeeid"],
   data() {
     return {
       dialogPrintCard: false,
@@ -172,15 +171,15 @@ export default {
     buttonPrintCard() {
       this.dialogPrintCard = true;
     },
-    getEmployee(){
-      this.$store.dispatch('Employee/show', this.employeeid).then(res => {
-        this.employee = res.data
-      })
+    getEmployee() {
+      this.$store.dispatch("Employee/show", this.employeeid).then((res) => {
+        this.employee = res.data;
+      });
     },
   },
-  mounted(){
-    this.getEmployee()
-  }
+  mounted() {
+    this.getEmployee();
+  },
 };
 </script>
 

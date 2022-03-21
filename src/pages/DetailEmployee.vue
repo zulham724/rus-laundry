@@ -1,17 +1,30 @@
 <template>
   <q-layout>
     <q-header>
-      <q-toolbar class="bg-white shadow-1">
-        <q-btn to="/employee" no-caps class="q-pa-md" flat style="color: white">
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+      <q-toolbar style="background-color: #49c2c0">
+        <q-btn
+          @click="$router.back()"
+          no-caps
+          class="q-pa-md"
+          flat
+          style="color: white"
+        >
+          <q-icon size="25px" name="fas fa-arrow-left" style="color: white">
           </q-icon>
         </q-btn>
         <q-toolbar-title
           class="text-left text-subtitle2"
-          style="color: #888888; font-size: 16px"
+          style="color: white; font-size: 16px"
           >Info Karyawan</q-toolbar-title
         >
-        <q-btn no-caps flat color="black" @click="this.dialogDelete = true">
+        <q-btn
+          :disable="loading"
+          :loading="loading"
+          no-caps
+          flat
+          color="white"
+          @click="this.dialogDelete = true"
+        >
           <div class="text-weight-bold">Hapus</div>
         </q-btn>
 
@@ -55,96 +68,114 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page class="q-mt-xl" v-if="employee">
-        <div class="text-center">
-          <q-avatar size="150px">
+      <q-page v-if="employee">
+        <div class="text-center q-py-md" style="background-color: #49c2c0">
+          <q-avatar size="150px" color="grey-4">
             <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
           </q-avatar>
         </div>
 
         <div
-          class="row q-mx-lg q-mt-xl text-weight-regular"
-          style="font-size: 15px; color: #313131"
+          class="row q-mx-lg q-mt-xl text-weight-medium"
+          style="font-size: 15px; color: #888888"
         >
           Nama
         </div>
         <div
-          class="row q-mx-lg text-weight-regular"
-          style="font-size: 18px; color: #888888"
+          class="row q-mx-lg text-weight-medium"
+          style="font-size: 18px; color: #313131"
         >
           {{ employee.name }}
         </div>
         <div
-          class="row q-mx-lg q-mt-xs text-weight-regular"
-          style="font-size: 15px; color: #313131"
+          class="row q-mx-lg q-mt-xs text-weight-medium"
+          style="font-size: 15px; color: #888888"
         >
           Jabatan
         </div>
         <div
-          class="row q-mx-lg text-weight-regular"
-          style="font-size: 18px; color: #888888"
+          class="row q-mx-lg text-weight-medium"
+          style="font-size: 18px; color: #313131"
         >
           Karyawan
         </div>
         <div
-          class="row q-mx-lg q-mt-xs text-weight-regular"
-          style="font-size: 15px; color: #313131"
+          class="row q-mx-lg q-mt-xs text-weight-medium"
+          style="font-size: 15px; color: #888888"
         >
           No Telephone
         </div>
         <div
-          class="row q-mx-lg text-weight-regular"
-          style="font-size: 18px; color: #888888"
+          class="row q-mx-lg text-weight-medium"
+          style="font-size: 18px; color: #313131"
         >
           {{ employee.contact_number }}
         </div>
         <div
-          class="row q-mx-lg q-mt-xs text-weight-regular"
-          style="font-size: 15px; color: #313131"
+          class="row q-mx-lg q-mt-xs text-weight-medium"
+          style="font-size: 15px; color: #888888"
         >
           Email
         </div>
         <div
-          class="row q-mx-lg text-weight-regular"
-          style="font-size: 18px; color: #888888"
+          class="row q-mx-lg text-weight-medium"
+          style="font-size: 18px; color: #313131"
         >
           {{ employee.email }}
         </div>
         <div
-          class="row q-mx-lg q-mt-xs text-weight-regular"
-          style="font-size: 15px; color: #313131"
+          class="row q-mx-lg q-mt-xs text-weight-medium"
+          style="font-size: 15px; color: #888888"
         >
           Id Karyawawn
         </div>
         <div
-          class="row q-mx-lg text-weight-regular"
-          style="font-size: 18px; color: #888888"
+          class="row q-mx-lg text-weight-medium"
+          style="font-size: 18px; color: #313131"
         >
           {{ employee.id }}
         </div>
 
-        <q-btn
-          @click="$router.push(`/${employee.id}/print-card`)"
-          class="shadow-2 absolute-bottom-right q-mb-lg q-mr-md bg-white"
-          no-caps
-          style="border-radius: 10px 10px 10px 10px"
-        >
-          <div class="text-weight-regular" style="font-size: 13px">
-            Cetak Id Card
-          </div>
-        </q-btn>
+        <!-- Button  -->
+        <div class="row q-mx-sm q-mt-sm q-gutter-y-md">
+          <!-- Button edit -->
+          <q-btn
+            dense
+            flat
+            @click="$router.push(`/${employee.id}/edit-employee`)"
+            no-caps
+            style="
+              width: 100%;
+              background-color: #49c2c0;
+              color: #fafafa;
+              border-radius: 5px;
+            "
+          >
+            <div class="q-py-sm" style="font-size: medium">Edit Info</div>
+          </q-btn>
+
+          <!-- Button cetak kartu -->
+          <q-btn
+          class="shadow-2"
+            dense
+            flat
+             @click="$router.push(`/${employee.id}/print-card`)"
+            no-caps
+            style="
+              width: 100%;
+              background-color: #ffffff;
+              color: #49c2c0;
+              border-radius: 5px;
+            "
+          >
+            <div class="q-py-sm" style="font-size: medium">Cetak Kartu</div>
+          </q-btn>
+        </div>
+
+        
       </q-page>
 
-      <q-footer>
-        <q-btn
-          @click="$router.push(`/${employee.id}/edit-employee`)"
-          class="q-py-md"
-          no-caps
-          style="width: 100%; background-color: #49c2c0; color: #fafafa"
-        >
-          Edit Info
-        </q-btn>
-      </q-footer>
+      
     </q-page-container>
   </q-layout>
 </template>
@@ -154,6 +185,7 @@ export default {
   props: ["employeeid"],
   data() {
     return {
+      loading: false,
       dialogDelete: false,
       employee: null,
     };
@@ -170,10 +202,16 @@ export default {
       });
     },
     deleteEmployee() {
-      this.$store.dispatch("Employee/destroy", this.employee.id).then((res) => {
-        this.$router.push(`/employee`);
-        this.$q.notify("Berhasil");
-      });
+      this.loading = true;
+      this.$store
+        .dispatch("Employee/destroy", this.employee.id)
+        .then((res) => {
+          this.$router.push(`/employee`);
+          this.$q.notify("Berhasil");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
 
     buttonPrintCard() {

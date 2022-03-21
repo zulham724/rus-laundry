@@ -69,13 +69,13 @@ const routes = [
   },
   {
     path: "/community",
-    component: () => import("layouts/SubLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/Post.vue"),
-      },
-    ],
+    component: () => import("pages/Post.vue"),
+    // children: [
+    //   {
+    //     path: "",
+    //     component: () => import("pages/Post.vue"),
+    //   },
+    // ],
   },
 
   
@@ -238,6 +238,12 @@ const routes = [
   {
     path: "/preview-detail-transaksi/:orderid",
     component: () => import("pages/PreviewDetailTransaksi.vue"),
+    props: true,
+  },
+
+  {
+    path: "/preview-detail-transaksi-2/:orderid",
+    component: () => import("pages/PreviewDetailTransaksi2.vue"),
     props: true,
   },
 

@@ -28,7 +28,7 @@
         <div class="row q-pt-lg">
           <div class="col-1 text-right self-center q-pl-sm">
              <q-btn
-              @click="$router.push('/')"
+              @click="$router.back()"
               no-caps
               dense
               flat
@@ -43,13 +43,13 @@
             </q-btn>
           </div>
           <div class="col-2 text-center q-pl-sm">
-            <q-avatar size="60px" style="background-color: #888888">
+            <q-avatar size="60px" style="background-color: #888888" @click="$router.push('/profile-of-course')">
               <q-img no-spinner src="~/assets/Avatar.png"></q-img>
             </q-avatar>
           </div>
           <div class="col-6 self-center q-pl-sm ">
             <div
-              @click="$router.push('/profile-of-course')"
+              
               class="row text-weight-medium q-pb-xs"
               style="font-size: 20px; color: white"
             >

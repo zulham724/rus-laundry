@@ -246,7 +246,7 @@
 
                 <div
                   class="text-weight-medium q-pt-md text-center"
-                  style="color: #313131; font-size: 15px"
+                  style="color: #313131; font-size: small"
                 >
                   Kursus
                 </div>
@@ -274,7 +274,7 @@
 
                 <div
                   class="text-weight-medium q-pt-md text-center"
-                  style="color: #313131; font-size: 15px"
+                  style="color: #313131; font-size: small"
                 >
                   Postingan
                 </div>
@@ -302,7 +302,7 @@
 
                 <div
                   class="text-weight-medium q-pt-md text-center"
-                  style="color: #313131; font-size: 15px"
+                  style="color: #313131; font-size: small"
                 >
                   Marketplace
                 </div>
@@ -317,9 +317,9 @@
         <div class="q-pb-xs text-weight-medium">Kategori Layanan</div>
         <div class="row">
           <!--Button item-->
-          <div class="col-6 text-center q-px-xs" style="height: 180px">
+          <div class="col-6 text-center q-px-md" style="height: 180px">
             <q-btn
-              @click="$router.push('/course-of-home')"
+              @click="$router.push('/add-clothes')"
               no-caps
               class="shadow-2 full-height full-width"
               style="border-radius: 10px"
@@ -336,9 +336,9 @@
             </q-btn>
           </div>
           <!--Button layanan-->
-          <div class="col-6 text-center q-px-xs" style="height: 180px">
+          <div class="col-6 text-center q-px-md" style="height: 180px">
             <q-btn
-              @click="$router.push('/community')"
+              @click="$router.push('package-list-first')"
               no-caps
               class="shadow-2 full-height full-width"
               style="border-radius: 10px"
@@ -346,7 +346,7 @@
               <div class="self-center text-center">
                 <q-img
                   no-spinner
-                  src="~/assets/Group5579.png"
+                  src="~/assets/Group5580.png"
                   width="150px"
                   height="170px"
                 >
