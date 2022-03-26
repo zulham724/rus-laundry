@@ -23,7 +23,7 @@
     <q-page-container>
       <q-pull-to-refresh @refresh="refresh">
         <q-page>
-          <div class="column">
+          <div>
             <div class="row q-py-lg q-px-md">
               <!-- Search -->
               <div class="row col-12">
@@ -62,7 +62,7 @@
 
             <!-- Skeleton -->
             <div v-if="isLoad">
-              <q-list class="bg-white">
+              <q-list class="bg-white q-px-sm">
                 <q-item
                   v-for="n in 8"
                   :key="n"
@@ -82,8 +82,8 @@
               </q-list>
             </div>
 
-            <div v-else-if="isLoad == false && customers.length">
-              <q-list class="bg-white justify-center">
+            <div v-else-if="isLoad == false && customers.length" >
+              <q-list class="bg-white justify-center q-px-sm">
                 <q-item
                   clickable
                   v-for="(customer, c) in customers"

@@ -26,6 +26,7 @@
                 ></q-img>
               </div>
               <div
+                v-if="dataAuth"
                 class="row col justify-end"
                 style="border-radius: 0px 50px 50px 0px"
               >
@@ -38,6 +39,14 @@
                     Selamat Pagi
                   </div>
                   <div
+                    v-if="dataAuth.name"
+                    class="text-weight-medium"
+                    style="color: #313131; font-size: 13px"
+                  >
+                    {{ dataAuth.name }}
+                  </div>
+                  <div
+                    v-if="!dataAuth.name"
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
@@ -48,11 +57,7 @@
                 <!--Avatar-->
                 <div class="self-center q-pl-sm">
                   <q-avatar>
-                    <q-img
-                      no-spinner
-                      src="~/assets/ld.png"
-                      size="40px"
-                    ></q-img>
+                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -87,6 +92,7 @@
                 ></q-img>
               </div>
               <div
+                v-if="dataAuth"
                 class="row col justify-end"
                 style="border-radius: 0px 50px 50px 0px"
               >
@@ -99,21 +105,33 @@
                     Selamat Siang
                   </div>
                   <div
+                    v-if="dataAuth.name"
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
-                    IndonesiaLaundry
+                    {{ dataAuth.name }}
+                  </div>
+                  <div
+                    v-if="!dataAuth.name"
+                    class="text-weight-medium"
+                    style="color: #313131; font-size: 13px"
+                  >
+                    Laundry Digital
                   </div>
                 </div>
 
                 <!--Avatar-->
-                <div class="self-center q-pl-sm">
+                <div v-if="!dataAuth.avatar" class="self-center q-pl-sm">
                   <q-avatar>
-                    <q-img
-                      no-spinner
-                      src="~/assets/Avatar.png"
-                      size="40px"
-                    ></q-img>
+                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
+                  </q-avatar>
+                </div>
+                <div v-else-if="dataAuth.avatar" class="self-center q-pl-sm">
+                  <q-avatar v-if="dataAuth.avatar == 'users/default.png'">
+                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
+                  </q-avatar>
+                  <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
+                    <q-img no-spinner :src="dataAuth.avatar" size="40px"></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -148,6 +166,7 @@
                 ></q-img>
               </div>
               <div
+                v-if="dataAuth"
                 class="row col justify-end"
                 style="border-radius: 0px 50px 50px 0px"
               >
@@ -160,21 +179,26 @@
                     Selamat Malam
                   </div>
                   <div
+                    v-if="dataAuth.name"
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
-                    IndonesiaLaundry
+                    {{ dataAuth.name }}
                   </div>
+                  <div
+                    v-if="!dataAuth.name"
+                    class="text-weight-medium"
+                    style="color: #313131; font-size: 13px"
+                  >
+                    Laundry Digital
+                  </div>
+                  
                 </div>
 
                 <!--Avatar-->
                 <div class="self-center q-pl-sm">
                   <q-avatar>
-                    <q-img
-                      no-spinner
-                      src="~/assets/Avatar.png"
-                      size="40px"
-                    ></q-img>
+                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -393,10 +417,14 @@ export default {
       isLoad2: false,
       //ini untuk menyimpan data pesanan baru
       dailyOrderCounter: null,
+      //ini untuk menyimpan data auth
+      dataAuth: null,
     };
   },
 
   mounted() {
+    this.dataAuth = this.Auth.auth;
+    console.log('dataAuth', this.dataAuth);
     this.timeChecker();
     this.getProfitByDay();
     this.getSpendToday();

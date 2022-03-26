@@ -71,7 +71,8 @@
       <q-page v-if="employee">
         <div class="text-center q-py-md" style="background-color: #49c2c0">
           <q-avatar size="150px" color="grey-4">
-            <q-img v-if="employee.avatar == 'users/default.png'" no-spinner src="~/assets/Avatar.png"></q-img>
+            <q-img v-if="!employee.avatar" no-spinner src="~/assets/ld.png"></q-img>
+            <q-img v-if="employee.avatar == 'users/default.png'" no-spinner src="~/assets/ld.png"></q-img>
             <q-img v-else :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
           </q-avatar>
         </div>

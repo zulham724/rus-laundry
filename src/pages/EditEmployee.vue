@@ -29,7 +29,7 @@
                 employee.avatar == 'users/default.png' && encodedImage == null
               "
               no-spinner
-              src="~/assets/Avatar.png"
+              src="~/assets/ld.png"
             ></q-img>
             <q-img
               v-else-if="

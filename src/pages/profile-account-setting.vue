@@ -14,8 +14,8 @@
           </div>
         </div>
 
-        <div class="q-my-md q-mx-xl text-center">
-          <q-avatar @click="openMedia()" style="width">
+        <div class="q-py-md q-px-xl text-center">
+          <q-avatar @click="openMedia()" style="width:100px; height:100px">
             <q-img src="~/assets/Group5656.png" />
           </q-avatar>
         </div>

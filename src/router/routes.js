@@ -408,8 +408,19 @@ const routes = [
   },
 
   {
+    path: "/attendance-menu",
+    component: () => import("src/pages/AttendanceMenu.vue"),
+  },
+
+  {
     path: "/attendance-details/:employeeid",
     component: () => import("src/pages/AttendanceDetails.vue"),
+    props: true,
+  },
+
+  {
+    path: "/attendance-details-menu/:employeeid",
+    component: () => import("src/pages/AttendanceDetailsMenu.vue"),
     props: true,
   },
 

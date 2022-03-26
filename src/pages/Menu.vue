@@ -138,7 +138,7 @@
             class="q-py-md"
             clickable
             style="background-color: #ffffff"
-            @click="$router.push('/attendance')"
+            @click="$router.push('/attendance-menu')"
           >
             <q-item-section avatar class="self-center">
               <q-avatar square size="40px">

@@ -82,16 +82,18 @@
 
 @ Bingung 👽
     - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
+    - halaman edit akun foto profile (emit ketika foto sudah di crop masih belum bisa)
 
 @ Belum Tersentuh 👎
     - halaman attendance-details belum bisa pilih bulan tahun
     - halaman invoice-page bug
-
+    - ada foto sebelum cucian dikerjakan atau baru masuk (menunggu desain)
     - waktu salin link, cuman bisa di web di android belum bisa
-    - halaman edit akun foto profile
-    - ada foto sebelum cucian dikerjakan atau baru masuk
     - tambah satuan dudukan untuk sofa (bilangan bulat -> 1,2,3 dst)
     - tambah satuan m2 untuk karpet (pecahan -> 0.1 , 0.2 , 0.3 dst)
+    
+    
+
     - fungsi pengaturan akun cukup 1 saja di bagian menu
     - halaman utama laundry digital diganti nama toko
     - yang bisa bikin postingan dan buat produk hanya akun OWNER saja
