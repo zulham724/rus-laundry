@@ -10,7 +10,7 @@
         <q-toolbar class="bg-white q-py-md">
           <q-btn flat round size="10px" @click="$router.back()">
             <q-avatar
-              size="25px"
+              size="20px"
               icon="fas fa-arrow-left"
               style="color: #888888"
             >

@@ -55,7 +55,7 @@
         </div>
         <div class=" text-center q-mt-md">
           <q-btn
-            @click="$router.back()"
+            @click="$router.push('/profile-account-setting')"
             flat
             dense
             no-caps

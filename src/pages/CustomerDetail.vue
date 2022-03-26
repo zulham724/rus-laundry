@@ -3,7 +3,7 @@
     <q-header>
       <q-toolbar class="bg-white shadow-2">
         <q-btn flat dense @click="$router.back()">
-          <q-icon name="fas fa-arrow-left" style="color: #888888"> </q-icon>
+          <q-icon name="fas fa-arrow-left" style="color: #888888" size="20px"> </q-icon>
         </q-btn>
         <q-toolbar-title>
           <div class="text-subtitle2 text-grey">Detail Pelanggan</div>
@@ -89,7 +89,7 @@
                       <table style="width: 100%">
                         <thead>
                           <tr class="text-grey-4 text-caption">
-                            <th class="text-left">Jenis Pakaian</th>
+                            <th class="text-left">Jenis Item</th>
                             <th class="text-center">jenis Paket</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-right">Harga</th>

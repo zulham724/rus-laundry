@@ -3,7 +3,7 @@
     <q-header class="text-center">
       <q-toolbar class="bg-white">
         <q-btn flat round @click="$router.back()">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #49c2c0">
+          <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #49c2c0">
           </q-avatar>
         </q-btn>
         <q-toolbar-title

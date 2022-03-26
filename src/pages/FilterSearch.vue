@@ -3,9 +3,9 @@
     <q-page-container style="background-color: #fafafa">
       <q-header>
         <q-toolbar class="bg-white q-py-md">
-          <q-btn flat round size="10px" @click="$router.back()">
+          <q-btn flat round size="10px" @click="$router.push('/transaction')">
             <q-avatar
-              size="25px"
+              size="20px"
               icon="fas fa-arrow-left"
               style="color: #888888"
             >

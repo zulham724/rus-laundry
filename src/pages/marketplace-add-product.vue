@@ -3,8 +3,8 @@
     <div class="fixed-top" style="z-index: 999">
       <q-header class="text-center shadow-1">
         <q-toolbar class="bg-white">
-          <q-btn flat round @click="$router.push('/marketplace-detail-user')">
-            <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
+          <q-btn flat round @click="$router.back()">
+            <q-avatar size="20px" icon="fas fa-arrow-left" style="color: black">
             </q-avatar>
           </q-btn>
           <q-toolbar-title
@@ -127,7 +127,7 @@
                   product.shop.user.home_address
                 }}
               </div>
-              <div class="text-center">
+              <div class="text-center q-gutter-y-xs">
                 <q-btn
                   padding="none"
                   flat
@@ -136,7 +136,7 @@
                     background-color: #9b27f1;
                     width: 90%;
                     color: white;
-                    font-size: 10px;
+                    font-size: 12px;
                   "
                   no-caps
                   label="Edit produk"
@@ -200,7 +200,7 @@
                     background-color: #ababab;
                     width: 90%;
                     color: white;
-                    font-size: 10px;
+                    font-size: 12px;
                   "
                   no-caps
                   @click="dialog_deleteProduct = true"

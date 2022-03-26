@@ -5,7 +5,7 @@
         <div class="col-1 justify-center self-center">
           <!-- Button back -->
           <q-btn
-            @click="$router.back()"
+            @click="$router.push('/menu')"
             no-caps
             dense
             flat
@@ -147,7 +147,8 @@
             style="border-radius: 5px 5px 5px 5px"
           >
             <q-avatar size="60px">
-              <q-img no-spinner src="~/assets/Avatar.png"></q-img>
+              <q-img v-if="employee.avatar == 'users/default.png'" no-spinner src="~/assets/ld.png"></q-img>
+              <q-img v-else :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
             </q-avatar>
             <div class="text-weight-medium" style="font-size: 8px">
               {{ employee.name }}
@@ -255,6 +256,7 @@ export default {
             this.employees = this.employees_temp = res.data.map((item) => {
               return item;
             });
+            console.log('data', res.data)
             resolve(res.data);
           })
           .catch((err) => {
@@ -290,10 +292,12 @@ export default {
           this.$store
             .dispatch("Employee/attendanceIn", parseInt(result.text))
             .then((res) => {
+              console.log(res.data)
               this.$router.push(`/employee`);
               this.$q.notify("Berhasil Absen");
             })
             .catch((err) => {
+              // alert('woi muncul dong')
               this.dialogAttendance = true;
             });
         },
@@ -321,6 +325,7 @@ export default {
           this.$store
             .dispatch("Employee/attendanceOut", parseInt(result.text))
             .then((res) => {
+              console.log(res.data)
               this.$router.push(`/employee`);
               this.$q.notify("Berhasil Absen");
             })
@@ -349,6 +354,7 @@ export default {
   },
   mounted() {
     this.getEmployees();
+    // this.dialogAttendance = true;
   },
 };
 </script>

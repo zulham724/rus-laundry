@@ -123,7 +123,7 @@
               outlined
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please type something',
+                (val) => (val && val.length > 0) || '',
               ]"
               v-model="product.tittle"
               placeholder="Masukkan nama produk"
@@ -145,7 +145,7 @@
               style="width: 95%"
               outlined
               lazy-rules
-              :rules="[(val) => val || 'Please type something']"
+              :rules="[(val) => val  || '']"
               v-model.number="product.price"
               placeholder="Masukkan harga produk"
             />
@@ -167,10 +167,10 @@
               outlined
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please type something',
+                (val) => (val && val.length > 0 ) || '',
               ]"
               v-model="product.description"
-              placeholder="Masukkan nama produk"
+              placeholder="Masukkan Deskripsi produk"
             />
           </div>
           <div class="q-ml-lg q-mt-lg text-weight-medium">Detail Produk</div>
@@ -192,7 +192,7 @@
               style="width: 95%"
               outlined
               lazy-rules
-              :rules="[(val) => val || 'Please type something']"
+              :rules="[(val) => val || '']"
               v-model.number="product.weight"
               placeholder="Masukkan berat produk"
             />
@@ -210,7 +210,7 @@
             style="width: 95%"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
+              (val) => (val && val.length > 0) || '',
             ]"
             outlined
             :model-value="

@@ -41,7 +41,7 @@
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
-                    IndonesiaLaundry
+                    Laundry Digital
                   </div>
                 </div>
 
@@ -50,7 +50,7 @@
                   <q-avatar>
                     <q-img
                       no-spinner
-                      src="~/assets/Avatar.png"
+                      src="~/assets/ld.png"
                       size="40px"
                     ></q-img>
                   </q-avatar>
@@ -276,7 +276,7 @@
                   class="text-weight-medium q-pt-md text-center"
                   style="color: #313131; font-size: small"
                 >
-                  Postingan
+                  Komunitas
                 </div>
               </div>
             </q-btn>

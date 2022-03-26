@@ -109,14 +109,15 @@
               </div>
             </div>
           </div>
-          <div class="fixed-bottom" v-if="!chooseMode" style="z-index: 1">
+          <div class="text-center fixed-bottom" v-if="!chooseMode" style="z-index: 1">
             <q-btn
               :ripple="{ color: 'orange' }"
               @click="dialog_addPackage = true"
               flat
               no-caps
-              class="full-width"
-              style="background-color: #49c2c0"
+              class="mbl-child full-width"
+              
+              style="background-color: #49c2c0; "
             >
               <div class="text-subtitl2" style="color: white">Tambah Paket</div>
               <q-dialog v-model="dialog_addPackage" persistent>
@@ -144,16 +145,16 @@
               </q-dialog>
             </q-btn>
           </div>
-          <div class="fixed-bottom" v-else>
+          <div class="fixed-bottom text-center" v-else>
             <q-btn
               :ripple="{ color: 'orange' }"
               @click="dialog_deletePackage = true"
               flat
               no-caps
-              class="full-width"
-              style="background-color: #d72929"
+              class="full-width mbl-child"
+              style="background-color: #d72929;"
             >
-              <div class="text-subtitl2" style="color: white">Hapus Paket</div>
+              <div class="text-subtitl2 mbl-child" style="color: white; ">Hapus Paket</div>
               <q-dialog v-model="dialog_deletePackage" persistent>
                 <q-card>
                   <q-card-section class="justify-start">

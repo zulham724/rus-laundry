@@ -3,13 +3,13 @@
     <q-header>
       <q-toolbar style="background-color: #49c2c0">
         <q-btn
-          @click="$router.back()"
+          @click="$router.push('/employee')"
           no-caps
           class="q-pa-md"
           flat
           style="color: white"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: white">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: white">
           </q-icon>
         </q-btn>
         <q-toolbar-title
@@ -71,7 +71,8 @@
       <q-page v-if="employee">
         <div class="text-center q-py-md" style="background-color: #49c2c0">
           <q-avatar size="150px" color="grey-4">
-            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
+            <q-img v-if="employee.avatar == 'users/default.png'" no-spinner src="~/assets/Avatar.png"></q-img>
+            <q-img v-else :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
           </q-avatar>
         </div>
 
@@ -156,7 +157,7 @@
 
           <!-- Button cetak kartu -->
           <q-btn
-          class="shadow-2"
+          class="shadow-2 q-mb-sm"
             dense
             flat
              @click="$router.push(`/${employee.id}/print-card`)"

@@ -7,9 +7,9 @@
           class="q-pa-md"
           flat
           style="color: white"
-          @click="$router.back()"
+          @click="$router.push('/menu')"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
 

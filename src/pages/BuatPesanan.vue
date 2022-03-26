@@ -36,7 +36,7 @@
               <img src="~/assets/cart-pesanan.svg" />
             </q-icon>
           </div>
-          <!-- Button Jenis Pakaian -->
+          <!-- Button Jenis Item -->
           <div class="row justify-center">
             <q-btn :ripple="false" flat style="max-width: 80vw">
               <img class="full-width" src="~/assets/jenis-pakaian-card.png" />

@@ -1,7 +1,7 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-layout style="background-color: #fafafa">
-    <div class="fixed-top bg-white" style="z-index: 999">
-      <q-header style="background-color: #ffffff" class="q-pb-md">
+    <div class="fixed-top bg-white mbl-child" style="z-index: 999;">
+      <q-header style="background-color: #ffffff;" class="q-pb-md">
         <div class="row q-ma-sm self-center">
           <div
             class="col-5 row text-weight-medium self-center"
@@ -87,6 +87,7 @@
         </div>
       </q-header>
     </div>
+
     <q-page-container>
       <q-page class="q-mt-sm bg-white">
         <q-pull-to-refresh @refresh="refresh">

@@ -15,7 +15,7 @@
             to="/home"
           >
             <div style="color: #808080; margin-left: 15px">
-              Pilih Jenis Pakaian
+              Pilih Jenis Item
             </div>
           </q-btn>
         </q-card>

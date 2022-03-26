@@ -3,7 +3,7 @@
     <q-header>
       <q-toolbar class="bg-white shadow-3">
         <q-btn no-caps flat style="color: white" @click="$router.back()">
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
 
@@ -18,26 +18,23 @@
       <q-page v-if="employee">
         <q-card flat class="q-mt-lg bg-white q-mx-md" style="">
           <div class="row">
-            <div >
+            <div>
               <q-avatar size="80px">
                 <q-img src="~/assets/Avatar.png" no-spinner />
               </q-avatar>
             </div>
             <div class="q-px-md">
-                <div
-                  class="q-mt-sm text-center text-weight-medium q-px-sm"
-                  style="
-                    background-color: #4cd4f2;
-                    border-radius: 3px;
-                    color: white;
-                  "
-                >
-                  Karyawan
-                </div>
               <div
-                class="q-pt-xs text-weight-medium"
-                style="color: #4cd4f2"
+                class="q-mt-sm text-center text-weight-medium q-px-sm"
+                style="
+                  background-color: #4cd4f2;
+                  border-radius: 3px;
+                  color: white;
+                "
               >
+                Karyawan
+              </div>
+              <div class="q-pt-xs text-weight-medium" style="color: #4cd4f2">
                 Nomor ID
               </div>
               <div class="text-weight-medium" style="color: #756a6a">
@@ -45,42 +42,24 @@
               </div>
             </div>
           </div>
-          <div
-            class="q-mt-xl  text-weight-medium"
-            style="color: #4cd4f2"
-          >
+          <div class="q-mt-xl text-weight-medium" style="color: #4cd4f2">
             Nama
           </div>
-          <div
-            class=" text-subtitle2 text-weight-medium"
-            style="color: #756a6a"
-          >
+          <div class="text-subtitle2 text-weight-medium" style="color: #756a6a">
             {{ employee.name }}
           </div>
 
-          <div
-            class="q-mt-sm  text-weight-medium"
-            style="color: #4cd4f2"
-          >
+          <div class="q-mt-sm text-weight-medium" style="color: #4cd4f2">
             No telephone
           </div>
-          <div
-            class="text-subtitle2 text-weight-medium"
-            style="color: #756a6a"
-          >
+          <div class="text-subtitle2 text-weight-medium" style="color: #756a6a">
             {{ employee.contact_number }}
           </div>
 
-          <div
-            class="q-mt-sm  text-weight-medium"
-            style="color: #4cd4f2"
-          >
+          <div class="q-mt-sm text-weight-medium" style="color: #4cd4f2">
             Email
           </div>
-          <div
-            class=" text-subtitl text-weight-medium"
-            style="color: #756a6a"
-          >
+          <div class="text-subtitl text-weight-medium" style="color: #756a6a">
             {{ employee.email }}
           </div>
 
@@ -90,14 +69,21 @@
           >
             Code QR untuk absen
           </div>
-          <div class="row col-12 q-mt-sm  text-center justify-center">
+          <div class="row col-12 q-mt-sm text-center justify-center">
             <div style="width: 150px; height: 150px; z-index: 999">
-              <q-img src="~/assets/qr-card-print.svg" no-spinner />
+              <vue-qr
+              :text="employee.id.toString()"
+              :callback="getData"
+              :qid="employee.id"
+            ></vue-qr>
             </div>
           </div>
         </q-card>
         <div class="row">
-          <div class="col-12 text-center absolute-bottom" style="margin-bottom: -50px">
+          <div
+            class="col-12 text-center absolute-bottom"
+            style="margin-bottom: -50px"
+          >
             <q-img src="~/assets/bg-card.svg" no-spinner />
           </div>
         </div>
@@ -158,8 +144,13 @@
 </template>
 
 <script>
+import vueQr from "vue-qr/src/packages/vue-qr.vue";
+
 export default {
   props: ["employeeid"],
+  components: {
+    vueQr,
+  },
   data() {
     return {
       dialogPrintCard: false,
@@ -168,6 +159,10 @@ export default {
   },
 
   methods: {
+    getData(dataUrl, id) {
+      console.log(dataUrl, id);
+    },
+    
     buttonPrintCard() {
       this.dialogPrintCard = true;
     },

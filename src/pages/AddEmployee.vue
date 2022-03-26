@@ -1,16 +1,15 @@
 <template>
   <q-layout>
     <q-header>
-    
       <q-toolbar class="bg-white shadow-1">
         <q-btn
           no-caps
           class="q-pa-md"
           flat
           style="color: white"
-          @click="$router.back()"
+          @click="$router.push('/employee')"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
 
@@ -25,9 +24,20 @@
       <q-page>
         <q-form ref="form">
           <div class="text-center">
-            <q-avatar class="q-ma-xl" size="150px">
-              <q-img no-spinner src="~/assets/empty-avatar.svg" />
+            <q-avatar @click="openMedia()" class="q-ma-xl" size="150px">
+              <q-img
+                v-if="!encodedImage"
+                no-spinner
+                src="~/assets/empty-avatar.svg"
+              />
+              <q-img v-else no-spinner :src="encodedImage" />
             </q-avatar>
+            <!-- <q-avatar class="q-ma-xl" size="150px">
+              <q-img  no-spinner v-for="pict in encodedImage" :key="pict.id" :src="encodedImage.src" />
+            </q-avatar> -->
+            <!-- <q-avatar class="q-ma-xl" size="150px">
+              <q-img  no-spinner :src="encodedImage" />
+            </q-avatar> -->
           </div>
 
           <q-input
@@ -40,7 +50,14 @@
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
           />
-          <q-input class="q-mx-lg q-py-sm" rounded outlined label="Jabatan" model-value="Karyawan" readonly/>
+          <q-input
+            class="q-mx-lg q-py-sm"
+            rounded
+            outlined
+            label="Jabatan"
+            model-value="Karyawan"
+            readonly
+          />
           <q-input
             v-model="employee.contact_number"
             class="q-mx-lg q-py-md"
@@ -114,31 +131,76 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+      <q-file
+        ref="addImages"
+        @update:model-value="previewImages"
+        v-show="false"
+        multiple
+      ></q-file>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import { toBase64, jsonToFormData } from "./../helpers";
 export default {
   data() {
     return {
+      imgSrc: null,
+      photo: {
+        images: [],
+      },
+      encodedImage: null,
       dialogAdd: false,
       employee: {},
     };
   },
 
   methods: {
+    openMedia() {
+      this.$refs.addImages.pickFiles();
+    },
     store() {
+      //   let res = jsonToFormData(this.employee)
+      // console.log(res.values())
+      // console.log(this.employee)
       this.$refs.form.validate().then((success) => {
         if (success) {
-          this.$store.dispatch("Employee/store", this.employee).then((res) => {
+          let res = jsonToFormData(this.employee);
+          this.$store.dispatch("Employee/store", res).then((res) => {
             this.$router.push("/employee");
             this.$q.notify("Berhasil");
+          });
+        } else {
+          this.$q.notify({
+            position: "top",
+            message: "Lengkapi Data",
           });
         }
       });
     },
+    async previewImages(files) {
+      if (files.length > 1) {
+        this.$q.notify("Hanya bisa menambahkan 1 foto");
+      } else {
+        console.log("sebelum base 64", files);
+        this.employee.avatar = files[0];
+        let promise = toBase64(files[0]);
+        promise.then((res) => {
+          console.log("setelah base 64", res.src);
+          this.encodedImage = res.src;
+        });
+        // let array = [];
+        // await files.forEach((images, i) => {
+        //   array[i] = this.toBase64(images);
+        // });
+
+        // Promise.all(array).then((res) => {
+        //   this.encodedImage = res;
+        //   console.log('ini endoded image',this.encodedImage);
+        // });
+      }
+    },
   },
 };
 </script>
-

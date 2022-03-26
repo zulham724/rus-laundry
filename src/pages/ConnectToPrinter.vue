@@ -2,8 +2,8 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round @click="$router.back()">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #49c2c0">
+        <q-btn flat round @click="$router.push('/menu')">
+          <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #49c2c0">
           </q-avatar>
         </q-btn>
         <q-toolbar-title

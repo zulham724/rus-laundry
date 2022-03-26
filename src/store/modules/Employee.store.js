@@ -41,9 +41,18 @@ const actions = {
             })
         })
     },
-    store({ commit }, employee) {
+    updateImage({ commit }, employee){
         return new Promise((resolve, reject) => {
-            api.post(`/api/slave/employee`, employee).then(res => {
+            api.post(`/api/slave/employee/updateImage/${employee.id}`, employee).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    store({ commit }, formData) {
+        return new Promise((resolve, reject) => {
+            api.post(`/api/slave/employee`, formData).then(res => {
                 resolve(res)
             }).catch(err => {
                 reject(err)

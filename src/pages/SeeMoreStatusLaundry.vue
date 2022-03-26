@@ -23,7 +23,7 @@
     </q-page-container>
     <q-page class="q-mt-xl">
       <div class="row q-ml-lg" style="color: #d0caca; font-size: 12px">
-        Jenis Pakaian
+        Jenis Item
       </div>
       <div class="row q-ml-lg" style="color: #7fcfdc">Pakaian Halus</div>
       <div class="row q-ml-lg" style="color: #d0caca; font-size: 12px">

@@ -86,6 +86,36 @@ const routes = [
   },
 
   {
+    path: "/home-owner",
+    component: () => import("pages/HomeOwner.vue"),
+  },
+
+  {
+    path: "/profile-owner",
+    component: () => import("pages/ProfileOwner.vue"),
+  },
+
+  {
+    path: "/cabang-owner",
+    component: () => import("pages/CabangOwner.vue"),
+  },
+
+  {
+    path: "/absensi-owner",
+    component: () => import("pages/AbsensiOwner.vue"),
+  },
+
+  {
+    path: "/affiliate-owner",
+    component: () => import("pages/AffiliateOwner.vue"),
+  },
+
+  {
+    path: "/paket-owner",
+    component: () => import("pages/PaketOwner.vue"),
+  },
+
+  {
     path: "/profile-other",
     component: () => import("layouts/ProfileOtherLayout.vue"),
     children: [

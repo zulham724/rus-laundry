@@ -1,4 +1,4 @@
-<template >
+  <template >
 <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <!-- Header -->
   <q-page>
@@ -28,6 +28,7 @@
         <div class="row q-pt-lg">
           <div class="col-1 text-right self-center q-pl-sm">
              <q-btn
+             round
               @click="$router.back()"
               no-caps
               dense

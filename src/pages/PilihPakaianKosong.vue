@@ -18,7 +18,7 @@
               class="text-weight-medium"
               style="color: #808080; margin-left: 15px"
             >
-              Pilih Jenis Pakaian
+              Pilih Jenis item
             </div>
           </q-btn>
         </q-card>
@@ -29,7 +29,7 @@
               class="text-weight-regular float-left"
               style="color: grey; font-size: 2vh"
             >
-              Tambah Jenis Pakaian
+              Tambah Jenis Item
             </div>
           </q-btn>
         </q-card>

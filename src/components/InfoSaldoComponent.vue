@@ -145,9 +145,8 @@ export default {
         this.$store
           .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
           .then((res) => {
-            
             this.total_profit = res.data;
-            console.log('total profit', this.total_profit)
+            console.log("total profit", this.total_profit);
             resolve(res.data);
           })
           .catch((err) => {
@@ -177,10 +176,12 @@ export default {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
             this.$store
-              .dispatch("attendance/show", parseInt(result.text))
+              .dispatch("Attendance/storeAttendance", parseInt(result.text))
               .then((res) => {
+                this.$q.notify("berhasil absen");
                 this.$router.push(
                   `/attendance-details/${parseInt(result.text)}`
+                  // "/transaction"
                 );
               });
           },
@@ -218,7 +219,10 @@ export default {
             this.$store
               .dispatch("Orders/show", parseInt(result.text))
               .then((res) => {
-                this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
+                // this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
+                this.$router.push(
+                  `/preview-detail-transaksi-2/${parseInt(result.text)}`
+                );
               });
           },
           (error) => {

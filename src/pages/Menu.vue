@@ -1,29 +1,5 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
-    <div class="fixed-top" style="z-index: 999">
-      <q-header class="bg-transparent">
-        <div
-          class="text-center"
-          style="
-            border-radius: 0px 0px 0px 70px;
-            background-image: linear-gradient(
-              to bottom right,
-              #1ca9f9,
-              #b761ec
-            );
-          "
-        >
-          <q-img
-            no-spinner
-            src="~/assets/header-menu.png"
-            alt="header-menu"
-            class="shadow-1"
-            style="border-radius: 0px 0px 0px 70px; height: 230px"
-          >
-          </q-img>
-        </div>
-      </q-header>
-    </div>
     <q-page-container style="background-color: #fafafa">
       <q-page style="background-color: #fafafa">
         <q-list

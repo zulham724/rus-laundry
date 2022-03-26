@@ -210,14 +210,14 @@
                     <q-item-label
                       class="text-weight-regular"
                       style="color: #c9c9c9; font-size: 12px"
-                      >Jenis Pakaian</q-item-label
+                      >Jenis Item</q-item-label
                     >
                     <q-item-label
                       caption
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ service.category.name }}</q-item-label
+                      >{{ service.category }}</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -241,7 +241,7 @@
                       style="font-size: 14px"
                       >{{ detail_order.services[0].quantity }}
                       {{
-                        detail_order.services[0].category.service_unit.name
+                        detail_order.services[0].service_unit
                       }}</q-item-label
                     >
                   </q-item-section>
@@ -678,10 +678,11 @@ export default {
         .dispatch("Orders/show", this.orderid)
         .then((res) => {
           this.detail_order = res.data;
+          console.log('ini detail_order', this.detail_order);
           if (res.data.services.length) {
             this.slide = `slide-${res.data.services[0].id}`;
             this.order = res.data;
-            console.log("Ini Data Pelanggan", this.order);
+            console.log("Ini order", this.order);
           } else {
             this.slide = "slide-0";
           }

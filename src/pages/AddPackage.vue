@@ -2,8 +2,8 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-header>
       <q-toolbar class="bg-white q-py-md">
-        <q-btn flat round size="10px" @click="$router.back()">
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
+        <q-btn flat round size="10px" @click="$router.push('/package-list-first')">
+          <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
         <q-toolbar-title
@@ -68,7 +68,7 @@
           class="q-my-sm q-px-md text-caption bg-white"
           style="color: silver"
         >
-          Jenis Pakaian
+          Jenis Item
         </q-card>
 
         <q-card flat class="q-mt-sm full-width">

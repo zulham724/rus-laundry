@@ -9,7 +9,7 @@
           flat
           style="color: white"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #white">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #white">
           </q-icon>
         </q-btn>
 
@@ -23,8 +23,26 @@
     <q-page-container>
       <q-page v-if="employee">
         <div class="text-center q-py-md" style="background-color: #49c2c0">
-          <q-avatar size="150px" color="grey-4">
-            <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
+          <q-avatar @click="openMedia()" size="150px" color="grey-4">
+            <q-img
+              v-if="
+                employee.avatar == 'users/default.png' && encodedImage == null
+              "
+              no-spinner
+              src="~/assets/Avatar.png"
+            ></q-img>
+            <q-img
+              v-else-if="
+                employee.avatar != 'users/default.png' && encodedImage == null
+              "
+              :src="`${$storageUrl}/${employee.avatar}`"
+              no-spinner
+            />
+            <q-img
+              v-else-if="encodedImage != null"
+              no-spinner
+              :src="encodedImage"
+            />
           </q-avatar>
         </div>
 
@@ -40,7 +58,7 @@
             input-style="color: #888888; background-color: #F1F3FD; border-radius: 10px; font-size: medium"
             placeholder="Jabatan"
             v-model="jabatan"
-            readonly 
+            readonly
           />
           <q-input
             input-class="q-pa-sm q-px-md text-weight-medium"
@@ -68,35 +86,61 @@
             </div>
           </q-btn>
         </div>
+        <q-file
+          ref="addImages"
+          @update:model-value="previewImages"
+          v-show="false"
+          multiple
+        ></q-file>
       </q-page>
-
-      <!--  <q-footer>
-        <q-btn
-          @click="update()"
-          class="q-py-md"
-          no-caps
-          style="width: 100%; background-color: #49c2c0"
-        >
-          Simpan Perubahan
-        </q-btn>
-      </q-footer>  -->
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import { toBase64, jsonToFormData } from "./../helpers";
+
 export default {
   props: ["employeeid"],
   data() {
     return {
       employee: null,
       jabatan: "Karyawan",
+      encodedImage: null,
     };
   },
   methods: {
+    openMedia() {
+      this.$refs.addImages.pickFiles();
+    },
+    async previewImages(files) {
+      if (files.length > 1) {
+        this.$q.notify("Hanya bisa menambahkan 1 foto");
+      } else {
+        console.log("sebelum base 64", files);
+        this.employee.avatar = files[0];
+        let promise = toBase64(files[0]);
+        promise.then((res) => {
+          // console.log("setelah base 64", res.src);
+          this.encodedImage = res.src;
+          console.log('ini encoded img', this.encodedImage)
+        });
+        this.updateImages();
+      }
+      
+    },
+    updateImages() {
+      const payload = {
+        id: this.employee.id,
+        formData: jsonToFormData(this.employee)
+      }
+      console.log('data employee update', this.employee)
+      this.$store.dispatch(`Employee/updateImage`, payload);
+    },
     getEmployee() {
       this.$store.dispatch("Employee/show", this.employeeid).then((res) => {
         this.employee = res.data;
+        console.log('data karyawan', this.employee)
       });
     },
     update() {

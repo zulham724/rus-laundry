@@ -95,71 +95,9 @@
           </div>
         </div>
 
-        <!--
-          <div
-          v-if="isLoad == false"
-          class="front q-pb-lg"
-          style="
-            border-radius: 30px 0 0 0;
-            background-color: #fafafa;
-            margin-top: -130px;
-            position: relative;
-          "
-        >
-          <div class="q-pa-lg">
-            <div class="row">
-              <div class="col">
-                <q-skeleton
-                  class="text-h6 text-bold"
-                  style="color: #888888"
-                  type="text"
-                />
-              </div>
-              <div class="col"></div>
-            </div>
-
-            <q-form ref="form">
-              <input type="hidden" v-model="customer.id" />
-              <q-skeleton
-                class="q-pa-xs q-mt-md"
-                style="color: #bababa; text-weight-regular; "
-                type="QInput"
-              />
-
-              <q-skeleton
-                class="q-pa-xs q-mt-md"
-                style="color: #bababa; text-weight-regular"
-                type="QInput"
-              />
-
-              <q-skeleton
-                class="q-pa-xs q-mt-md"
-                style="color: #bababa; text-weight-regular"
-                type="QInput"
-              />
-
-              <q-skeleton
-                height="100px"
-                class="q-pa-xs q-mt-md"
-                style="color: #bababa; text-weight-regular"
-                type="QInput"
-              />
-            </q-form>
-            <div class="text-center q-mt-md">
-              <q-skeleton
-                height="40px"
-                class="full-width"
-                style="color: white; width: 90%; border-radius: 10px"
-                type="QBtn"
-              />
-            </div>
-          </div>
-        </div>
-        -->
-
         <!--Dialog Customers-->
-        <q-dialog v-model="dialogListCustomer" position="right">
-          <q-card style="width: 90%">
+        <q-dialog v-model="dialogListCustomer">
+          <q-card  class="full-width">
             <q-card-section v-if="isLoad == false">
               <q-input
                 label="Cari"
@@ -328,8 +266,8 @@
         </q-dialog>
 
         <!--Dialog Employees-->
-        <q-dialog v-model="dialogListEmployee" position="left">
-          <q-card style="width: 350px%">
+        <q-dialog v-model="dialogListEmployee">
+          <q-card class="full-width">
             <q-card-section v-if="isLoad2 == false">
               <q-input
                 label="Cari"
@@ -449,6 +387,14 @@ export default {
     },
     setEmployee(employee) {
       this.employee = employee;
+    },
+    cekdata() {
+      // let cekgan = this.jsonToFormData(this.product);
+      if (!this.customer.name || this.customer.contact_number) {
+        console.log("isi dulu gan");
+      } else if (!this.product) {
+        console.log("sip gan");
+      }
     },
     saveOrder() {
       this.order.customer_id = this.customer.id;

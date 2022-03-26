@@ -2,7 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-header class="text-center">
       <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.back()">
+        <q-btn flat round @click="$router.push('/income')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #49c2c0">
           </q-avatar>
         </q-btn>
@@ -16,7 +16,7 @@
           class="text-left text-weight-medium"
           style="color: #5a5656; font-size: 15px"
         >
-          <q-btn @click="storeSpend()" no-caps dense flat>
+          <q-btn @click="cekData()" no-caps dense flat>
             <div>Simpan</div></q-btn
           >
         </q-item-section>
@@ -31,12 +31,16 @@
               outlined
               label="Nama Pengeluaran"
               v-model="newSpend.name"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || '']"
             />
             <q-input
               class="q-px-sm q-py-md"
               outlined
               v-model="newSpend.created_at"
               type="date"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || '']"
             />
             <q-input
               class="q-px-sm q-py-md"
@@ -44,6 +48,8 @@
               label="Jumlah Pengeluaran"
               type="number"
               v-model="newSpend.value"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || '']"
             />
             <q-input
               class="q-px-sm q-py-md"
@@ -51,6 +57,8 @@
               label="Deskripsi"
               type="textarea"
               v-model="newSpend.note"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || '']"
             />
           </q-form>
         </q-page>
@@ -105,17 +113,28 @@ export default {
     };
   },
   methods: {
+    cekData() {
+      this.$refs.form.validate().then((success) => {
+        if (success) {
+          this.storeSpend();
+        } else {
+          this.$q.notify({
+          position: "top",
+          message: "Lengkapi data",
+        });
+        }
+      });
+    },
     storeSpend() {
       this.$store
         .dispatch("Spend/store", this.newSpend)
-        .then((res) => {
-        })
+        .then((res) => {})
         .finally(() => {
           this.$router.push(`/income`);
           this.$q.notify({
-          position: "top",
-          message: "Berhasil menyimpan data",
-        });
+            position: "top",
+            message: "Berhasil menyimpan data",
+          });
         });
     },
   },

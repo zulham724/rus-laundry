@@ -17,9 +17,9 @@
           dense
           class="absolute-top-left q-mt-md q-ml-md bg-blue-6"
           style="background-color: RGB(0, 0, 50%)"
-          size="15px"
+          
         >
-          <q-icon color="white" name="fas fa-arrow-left" />
+          <q-icon color="white" name="fas fa-arrow-left" size="20px"/>
         </q-btn>
         <label style="font-family: roboto; font-size: 23px" class="q-pl-sm">
           {{

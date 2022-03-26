@@ -4,13 +4,13 @@
       <q-toolbar class="bg-white">
         <q-btn
           no-caps
-          class="q-pa-md"
+          class="q-pa-sm"
           ripple="false"
           flat
           style="color: white"
-          @click="$router.back()"
+          @click="$router.push('/attendance')"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #888888">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
         </q-btn>
         <div class="text-subtitle2" style="color: #808080; margin-left: 15px">
@@ -315,6 +315,7 @@ export default {
           .dispatch("Attendance/getEmployeeAttendances", this.employeeid)
           .then((res) => {
             this.attendances = res.data;
+            console.log('data kehadiran', this.attendances)
             resolve(res);
           })
           .catch((err) => {

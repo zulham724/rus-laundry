@@ -22,7 +22,7 @@
                   style="color: white"
                 >
                   <q-icon
-                    size="25px"
+                    size="20px"
                     name="fas fa-arrow-left"
                     style="color: #ffffff"
                   >

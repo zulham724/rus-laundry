@@ -14,10 +14,10 @@
               rounded
               flat
               size="12px"
-              @click="$router.back()"
+              @click="$router.push('/marketplace-home')"
               class="q-px-sm"
               style="background-color: #9b27f1"
-              ><q-icon color="white" name="fas fa-arrow-left" />
+              ><q-icon color="white" name="fas fa-arrow-left" size="20px"/>
               <div class="q-pl-sm text-body1 self-center">Toko Anda</div>
             </q-btn>
           </div>

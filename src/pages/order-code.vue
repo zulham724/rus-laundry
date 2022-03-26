@@ -8,7 +8,7 @@
             flat
             class="text-subtitle2 text-weight-light float-left q-pa-md"
           >
-            <q-icon name="fas fa-arrow-left" />
+            <q-icon name="fas fa-arrow-left" size="20px"/>
           </q-btn>
         </div>
         <div class="col-10">
@@ -84,7 +84,7 @@
                 Cek status pesanan anda melalui link dibawah
               </div>
               <div class="text-center text-weight-medium">
-                google.com 
+                {{link}}
               </div>
             </div>
           </div>
@@ -122,6 +122,8 @@ export default {
     return {
       order: null,
       loading: false,
+      link: null,
+      APP_URL: APP_URL,
     };
   },
   methods: {
@@ -131,7 +133,8 @@ export default {
     getOrder() {
       this.$store.dispatch("Orders/getOrder").then((res) => {
         this.order = res.data;
-        console.log(this.order);
+        console.log('asd',this.order);
+        this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
       });
     },
     getData(dataUrl, id) {
@@ -206,6 +209,7 @@ export default {
   },
   mounted() {
     this.getOrder();
+    
   },
 };
 </script>

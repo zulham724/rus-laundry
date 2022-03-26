@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%; width: 100%">
+  <div  style="height: 100%; width: 100%">
     <div
       class="q-py-md"
       v-if="post != null"

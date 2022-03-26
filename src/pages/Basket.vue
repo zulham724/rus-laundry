@@ -9,7 +9,7 @@
           size="10px"
           @click="$router.back()"
         >
-          <q-avatar size="25px" icon="fas fa-arrow-left" style="color: #888888">
+          <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
         </q-btn>
         <q-toolbar-title
@@ -253,7 +253,7 @@
         <div v-else>
           <div class="text-center q-ma-xl">
             <img
-              src="~/assets/keranjang-kosong.svg"
+              src="~/assets/krj.png"
               style="width: 175px; height: 175px; margin-top: 50px"
             />
           </div>

@@ -20,7 +20,7 @@
           class="q-mx-md q-mt-md text-weight-regular"
           style="color: #d0caca; font-size: 12px"
         >
-          Jenis Pakaian
+          Jenis Item
         </div>
         <div
           class="q-mx-md text-weight-regular"

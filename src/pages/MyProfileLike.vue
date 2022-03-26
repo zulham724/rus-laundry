@@ -9,7 +9,7 @@
           flat
           style="color: white"
         >
-          <q-icon size="25px" name="fas fa-arrow-left" style="color: #9b27f1">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #9b27f1">
           </q-icon>
         </q-btn>
 

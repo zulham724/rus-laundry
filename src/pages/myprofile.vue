@@ -4,13 +4,13 @@
       <q-header class="bg-transparent">
         <q-toolbar class="bg-white shadow-1">
           <q-btn
-            @click="$router.push('/')"
+            @click="$router.back()"
             no-caps
             class="q-pa-md"
             flat
             style="color: white"
           >
-            <q-icon size="25px" name="fas fa-arrow-left" style="color: #9b27f1">
+            <q-icon size="20px" name="fas fa-arrow-left" style="color: #9b27f1">
             </q-icon>
           </q-btn>
 

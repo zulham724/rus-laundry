@@ -18,6 +18,16 @@ const actions = {
         });
     });
   },
+  storeAttendance({commit}, employeeid){
+    return new Promise((resolve, reject) => {
+      api.post(`/api/slave/attendances`,{id:employeeid})
+      .then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
   // Fungsi buat mengkalkulasi total absen hari ini dengan total karyawan
   monthlyAttendanceReport1({ commit }, shopId) {
     return new Promise((resolve, reject) => {

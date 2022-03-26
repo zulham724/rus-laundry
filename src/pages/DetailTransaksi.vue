@@ -16,10 +16,10 @@
                 flat
                 round
                 size="sm"
-                @click="$router.back()"
+                @click="$router.push('/transaction')"
               >
                 <q-avatar
-                  size="25px"
+                  size="20px"
                   icon="fas fa-arrow-left"
                   style="color: #888888"
                 >
@@ -222,13 +222,13 @@
                   </q-item-section>
                   <q-space></q-space>
                   <q-item-section avatar>
-                    <q-avatar size="30px" class="bg-transparent">
+                    
                       <q-img
                         src="~/assets/icon-cuci-detail.svg"
-                        style="width: 5vh"
+                        style="width: 30px"
                         no-spinner
                       />
-                    </q-avatar>
+                    
                   </q-item-section>
                 </q-item>
                 <q-item class="q-my-sm">
@@ -236,7 +236,7 @@
                     <q-item-label
                       class="text-weight-regular"
                       style="color: #c9c9c9; font-size: 12px"
-                      >Jenis Pakaian</q-item-label
+                      >Jenis Item</q-item-label
                     >
                     <q-item-label
                       caption
@@ -248,9 +248,9 @@
                   </q-item-section>
                   <q-space></q-space>
                   <q-item-section avatar>
-                    <q-avatar size="30px" class="bg-transparent">
-                      <q-img src="~/assets/icon-baju.svg" no-spinner />
-                    </q-avatar>
+                    
+                      <q-img src="~/assets/msc.svg" no-spinner width="30px"/>
+                    
                   </q-item-section>
                 </q-item>
                 <q-item class="q-my-sm">
@@ -273,13 +273,13 @@
                   </q-item-section>
                   <q-space></q-space>
                   <q-item-section avatar>
-                    <q-avatar size="30px" class="bg-transparent">
+                    
                       <q-img
                         src="~/assets/icon-kilogram.svg"
-                        style="width: 5vh"
+                        style="width: 30px"
                         no-spinner
                       />
-                    </q-avatar>
+                    
                   </q-item-section>
                 </q-item>
                 <!-- <q-item class="q-my-sm">
@@ -660,7 +660,7 @@ export default {
 
   mounted() {
     this.getDetailOrder();
-    this.link = `${this.APP_URL}/preview-detail-transaksi/${this.orderid}`;
+    this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.orderid}`;
   },
 
   methods: {
@@ -674,7 +674,7 @@ export default {
     },
     setTextMessage() {
       if (this.order) {
-        let url = `${this.APP_URL}/preview-detail-transaksi/${this.order.id}`;
+        let url = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
         let tmp = `
           Halo -----. Terimakasih telah melakukan pemesanan di -----. Yuk cek proses pesanan kamu di sini 
           \n Url : ${url}`;

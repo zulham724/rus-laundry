@@ -11,7 +11,7 @@
           >
           <!-- @click="$router.push(`/detail-transaksi/${orderid}`)" -->
             <q-avatar
-              size="25px"
+              size="20px"
               icon="fas fa-arrow-left"
               style="color: #888888"
             >
@@ -29,7 +29,7 @@
       <q-separator></q-separator>
       <q-page style="background-color: #ffffff" class="q-pa-md" v-if="order">
         <div class="col-12">
-          <div class="text-caption text-grey-6">Jenis pakaian</div>
+          <div class="text-caption text-grey-6">Jenis Item</div>
           <div class="text-subtitle1" style="color: #7fcfdc">
             {{ order.services[0].category }}
           </div>
