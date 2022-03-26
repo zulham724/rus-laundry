@@ -36,26 +36,26 @@
                 </div>
               </q-btn>
             </div>
-          </div>  
+          </div>
 
           <div
             v-if="tabParent == 'pendapatan'"
             class="text-weight-bold text-left"
             style="color: white; font-size: 36px"
-          > 
+          >
             {{
               new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
               }).format(total_profit)
             }}
-          </div>  
+          </div>
 
           <div
             v-if="tabParent == 'pengeluaran'"
             class="text-weight-bold text-left"
             style="color: white; font-size: 36px"
-          > 
+          >
             {{
               new Intl.NumberFormat("id-ID", {
                 style: "currency",
@@ -104,7 +104,10 @@
         ></pendapatan-transaction>
       </q-tab-panel>
       <q-tab-panel name="pengeluaran" class="q-pa-none q-ma-none">
-        <pengeluaran-transaction class="full-width"></pengeluaran-transaction>
+        <pengeluaran-transaction
+          v-on:save-callback="getTotalProfit"
+          class="full-width"
+        ></pengeluaran-transaction>
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
@@ -149,7 +152,13 @@ export default {
       return moment();
     },
     getTotalProfit(value) {
-      this.total_profit = value;
+      this.total_profit = 0;
+      console.log(this.total_profit);
+      this.$nextTick().then(() => {
+        this.total_profit = value;
+        this.total_spend = value;
+        console.log(this.total_profit);
+      });
     },
     getOrders() {
       return new Promise((resolve, reject) => {
@@ -170,42 +179,42 @@ export default {
     },
     getSpendToday() {
       this.$store
-        .dispatch("Orders/countSpendOrdersByDay", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceToday", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_spend = res.data;
         });
     },
     getProfitByDay() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceToday", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
         });
     },
     getSpendWeekly() {
       this.$store
-        .dispatch("Orders/countSpendOrdersByWeek", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceWeekly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_spend = res.data;
         });
     },
     getProfitByWeek() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByWeek", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceWeekly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
         });
     },
     getSpendMonthly() {
       this.$store
-        .dispatch("Orders/countSpendOrdersByMonth", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceMonthly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_spend = res.data;
         });
     },
     getProfitByMonth() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByMonth", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceMonthly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
         });

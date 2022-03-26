@@ -241,7 +241,7 @@ export default {
     },
     getProfitByDay() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceToday", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
           this.$emit('save-callback', res.data)
@@ -249,7 +249,7 @@ export default {
     },
     getProfitByWeek() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByWeek", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceWeekly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
           this.$emit('save-callback', res.data)
@@ -257,7 +257,7 @@ export default {
     },
     getProfitByMonth() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByMonth", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceMonthly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
           this.$emit('save-callback', res.data)

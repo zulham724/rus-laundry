@@ -1,4 +1,4 @@
-// const API_URL = "http://10.10.124.122:8000";
+// const API_URL = "http://192.168.1.7:8000";
 // const STORAGE_URL = "http://localhost:8000/storage";
 // const API_URL = "http://localhost:8000";
 const API_URL = "https://api.laundrydigital.co.id";

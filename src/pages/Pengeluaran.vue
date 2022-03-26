@@ -49,7 +49,6 @@
         />-->
     </q-tabs>
 
-
     <!-- List Pesanan -->
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="hari">
@@ -216,6 +215,12 @@ export default {
     moment() {
       return moment();
     },
+    getTotalProfit() {
+      this.total_profit = 0;
+      this.$nextTick().then(() => {
+        this.total_profit;
+      });
+    },
     getOrders() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
@@ -235,23 +240,26 @@ export default {
     },
     getProfitByDay() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByDay", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceToday", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          this.$emit("save-callback", res.data);
         });
     },
     getProfitByWeek() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByWeek", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceWeekly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          this.$emit("save-callback", res.data);
         });
     },
     getProfitByMonth() {
       this.$store
-        .dispatch("Orders/countProfitOrdersByMonth", this.Auth.auth.shop.id)
+        .dispatch("Orders/getBalanceMonthly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
+          this.$emit("save-callback", res.data);
         });
     },
     refresh(done) {

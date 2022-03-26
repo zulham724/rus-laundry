@@ -493,6 +493,33 @@ const actions = {
         });
     });
   },
+  getBalanceToday({commit},shopId) {
+    return new Promise((resolve, reject) => {
+        api.get(`/api/slave/getBalanceToday/${shopId}`).then((res) => {
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        });
+      })
+  },
+  getBalanceWeekly({commit},shopId) {
+    return new Promise((resolve, reject) => {
+        api.get(`/api/slave/getBalanceWeekly/${shopId}`).then((res) => {
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        });
+      })
+  },
+  getBalanceMonthly({commit},shopId) {
+    return new Promise((resolve, reject) => {
+        api.get(`/api/slave/getBalanceMonthly/${shopId}`).then((res) => {
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        });
+      })
+  }
 };
 
 const getters = {};
