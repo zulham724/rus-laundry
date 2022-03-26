@@ -281,26 +281,39 @@
 
             <q-card-section class="q-pt-sm">
               <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">
-                  Rp 1.000.000
+              <div class="text-h6">Rp 1.000.000</div>
+              <div>
+                Unggah Bukti Pembayaran Jika Anda Salah Input No.Rekening
               </div>
-              <div>Unggah Bukti Pembayaran Jika Anda Salah Input No.Rekening</div>
             </q-card-section>
 
             <q-card-actions align="left">
-              <q-btn flat label="Konfirmasi" @click="payment2 = true" rounded  style="background-color: #6295FF" color="white" v-close-popup />
-              <q-btn flat label="Batal" rounded  style="background-color: #7E8385" color="white" v-close-popup />
+              <q-btn
+                flat
+                label="Konfirmasi"
+                @click="payment2 = true"
+                rounded
+                style="background-color: #6295ff"
+                color="white"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Batal"
+                rounded
+                style="background-color: #7e8385"
+                color="white"
+                v-close-popup
+              />
             </q-card-actions>
           </q-card>
         </q-dialog>
 
         <q-dialog v-model="payment2" persistent position="bottom">
           <q-card>
-            <q-card-section
-              class="text-center"
-            >
+            <q-card-section class="text-center">
               <div class="text-black">
-                Segera lakukan pembayaran dalam waktu : 
+                Segera lakukan pembayaran dalam waktu :
               </div>
             </q-card-section>
             <q-card-section
@@ -308,7 +321,8 @@
               style="background-color: #b43f3f"
             >
               <div class="text-white">
-                Layanan pembayaran Anda akan berakhir dalam : 24 Jam <br> Jika melebihi 24 Jam Maka akan EXPIRED!
+                Layanan pembayaran Anda akan berakhir dalam : 24 Jam <br />
+                Jika melebihi 24 Jam Maka akan EXPIRED!
               </div>
             </q-card-section>
             <q-card-section class="q-pt-sm">
@@ -316,26 +330,36 @@
               <div class="text-h6">3047530475036506034</div>
               <q-btn
                 no-caps
-                rounded
-                text-color="white"
-                label="Salin No Rekening"
                 style="background-color: #ddca1d"
-              />
-            </q-card-section>
+              >
+                <q-avatar square size="15px">
+                  <q-img src="~/assets/cp.png" />
+                </q-avatar>
+              </q-btn>
 
-            <q-separator color="grey" class="q-mx-sm" />
-
-            <q-card-section class="q-pt-sm">
               <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">
-                  Rp 1.000.000
-              </div>
-              <div>Unggah Bukti Pembayaran Jika Anda Salah Input No.Rekening</div>
+              <div class="text-h6">Rp 1.000.000</div>
             </q-card-section>
+
+           
 
             <q-card-actions align="left">
-              <q-btn flat label="Konfirmasi" rounded  style="background-color: #6295FF" color="white" v-close-popup />
-              <q-btn flat label="Batal" rounded  style="background-color: #7E8385" color="white" v-close-popup />
+              <q-btn
+                flat
+                label="Konfirmasi"
+                rounded
+                style="background-color: #6295ff"
+                color="white"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Batal"
+                rounded
+                style="background-color: #7e8385"
+                color="white"
+                v-close-popup
+              />
             </q-card-actions>
           </q-card>
         </q-dialog>

@@ -95,6 +95,11 @@
     - fungsi pengaturan akun cukup 1 saja di bagian menu
     - halaman utama laundry digital diganti nama toko
     - yang bisa bikin postingan dan buat produk hanya akun OWNER saja
+    - avatar nya semua ambil di auth avatar, jangan statis
+    - edit nama itu = edit nama toko
+
+    - edit account -> pertama cek device (mobile / pc) -> kalo (mobile) cek galeri / ambil foto kemudian crop
+                                                       -> kalo (pc) ambil foto kemudian crop
 
     
     

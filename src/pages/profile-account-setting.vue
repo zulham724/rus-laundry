@@ -6,7 +6,7 @@
         <div class="q-pt-md q-px-md row">
           <div class="col-1">
             <q-btn dense flat no-caps @click="$router.push('/menu')">
-              <q-icon name="fas fa-arrow-left" color="black" size="20px"/>
+              <q-icon name="fas fa-arrow-left" color="black" size="20px" />
             </q-btn>
           </div>
           <div class="col-11 self-center">
@@ -15,10 +15,12 @@
         </div>
 
         <div class="q-my-md q-mx-xl text-center">
-          <q-img src="~/assets/Group5656.png" width="40%" />
+          <q-avatar @click="openMedia()" style="width">
+            <q-img src="~/assets/Group5656.png" />
+          </q-avatar>
         </div>
 
-        <q-form v-if="dataAccount">
+        <q-form ref="form" v-if="dataAccount">
           <div>
             <div
               class="text-caption text-weight-medium q-pl-md"
@@ -55,23 +57,6 @@
               color="white"
             />
           </div>
-          <div>
-            <div
-              class="text-caption q-pl-md text-weight-medium"
-              style="color: #888888"
-            >
-              Kata sandi
-            </div>
-            <q-input
-              disable
-              placeholder="Ketik kata sandi disini...."
-              class="relative-center q-mx-md q-py-none"
-              style="background-color: #c4c4c4"
-              :rules="[(val) => !!val || 'mohon diisi']"
-              outlined
-              type="password"
-            />
-          </div>
           <div v-if="dataAccount.shop">
             <div
               class="text-caption q-pl-md text-weight-medium"
@@ -93,7 +78,7 @@
 
         <div class="q-pt-md text-center">
           <q-btn
-          flat
+            flat
             @click="$router.push('/account-change-password')"
             dense
             no-caps
@@ -103,11 +88,11 @@
             <div class="row full-width">
               <div class="col-2 text-left">
                 <q-avatar square class="bg-white">
-                  <q-img src="~/assets/key.png" width="40%"/>
+                  <q-img src="~/assets/key.png" width="40%" />
                 </q-avatar>
               </div>
               <div
-                class="col-10  self-center text-left q-pl-sm"
+                class="col-10 self-center text-left q-pl-sm"
                 style="color: #000; font-size: medium"
               >
                 Ganti kata sandi
@@ -115,21 +100,24 @@
             </div>
           </q-btn>
           <q-btn
-            @click="$router.push('/account-forget-password')"
+            @click="store()"
             flat
             dense
             no-caps
             class="q-py-sm q-mt-md q-mb-md"
             style="color: #ffffff; width: 90%; background-color: #49c2c0"
           >
-            <div
-              class="col-10 text-h6 self-center"
-              style="color: #fff"
-            >
+            <div class="col-10 text-h6 self-center" style="color: #fff">
               Simpan
             </div>
           </q-btn>
         </div>
+        <q-file
+          ref="addImages"
+          @update:model-value="previewImages"
+          v-show="false"
+          multiple
+        ></q-file>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -137,9 +125,68 @@
 
 <script>
 import { mapState } from "vuex";
+import { toBase64, jsonToFormData } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
+
 export default {
   computed: {
     ...mapState(["Auth"]),
+  },
+  methods: {
+    async previewImages(files) {
+      if (files.length > 1) {
+        this.$q.notify("Hanya bisa menambahkan 1 foto");
+      } else {
+        console.log("sebelum base 64", files);
+        this.employee.avatar = files[0];
+        let promise = toBase64(files[0]);
+        promise.then((res) => {
+          console.log("setelah base 64", this.employee.avatar);
+        });
+      }
+    },
+
+    openMedia() {
+      this.$refs.addImages.pickFiles();
+    },
+    async previewImages(files) {
+      if (files.length > 1) {
+        this.$q.notify("Hanya bisa menambahkan 1 foto");
+      } else {
+        console.log("sebelum base 64", files);
+        this.dataAccount.avatar = files[0];
+        let promise = toBase64(files[0]);
+        promise.then((res) => {
+          console.log("setelah base 64", res.src);
+          this.encodedImage = res.src;
+          this.$q.dialog({
+            component: CropPhotoComponent,
+
+            componentProps: {
+              ImgBS64: res.src,
+            }
+          }).onCrop((data) => {
+            console.log('halo',data)
+          });
+        });
+      }
+    },
+    store() {
+      this.$refs.form.validate().then((success) => {
+        if (success) {
+          let res = jsonToFormData(this.dataAccount);
+          this.$store.dispatch("Employee/store", res).then((res) => {
+            this.$router.push("/employee");
+            this.$q.notify("Berhasil");
+          });
+        } else {
+          this.$q.notify({
+            position: "top",
+            message: "Lengkapi Data",
+          });
+        }
+      });
+    },
   },
   mounted() {
     this.dataAccount = this.Auth.auth;
@@ -149,6 +196,7 @@ export default {
       this.dataAccount.shop.description
     );
   },
+
   data() {
     return {
       dataAccount: {},

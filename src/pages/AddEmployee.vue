@@ -161,9 +161,6 @@ export default {
       this.$refs.addImages.pickFiles();
     },
     store() {
-      //   let res = jsonToFormData(this.employee)
-      // console.log(res.values())
-      // console.log(this.employee)
       this.$refs.form.validate().then((success) => {
         if (success) {
           let res = jsonToFormData(this.employee);
@@ -190,15 +187,7 @@ export default {
           console.log("setelah base 64", res.src);
           this.encodedImage = res.src;
         });
-        // let array = [];
-        // await files.forEach((images, i) => {
-        //   array[i] = this.toBase64(images);
-        // });
 
-        // Promise.all(array).then((res) => {
-        //   this.encodedImage = res;
-        //   console.log('ini endoded image',this.encodedImage);
-        // });
       }
     },
   },
