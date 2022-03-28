@@ -64,6 +64,7 @@
             <q-btn
               @click="doChangePassword()"
               :disabled="loading"
+              :loading="loading"
               flat
               dense
               no-caps

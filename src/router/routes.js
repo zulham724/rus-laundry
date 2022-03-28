@@ -142,6 +142,12 @@ const routes = [
   },
 
   {
+    path: "/postpreorderphoto/:service_id",
+    component: () => import("pages/CameraPreitem.vue"),
+    props: true,
+  },
+
+  {
     path: "/course-of-home",
     component: () => import("pages/CourseOfHome.vue"),
   },

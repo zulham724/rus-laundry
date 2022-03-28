@@ -119,6 +119,7 @@
           </q-btn>
           <q-btn
             @click="updateAccount()"
+            :loading="Loading == true"
             flat
             dense
             no-caps
@@ -159,6 +160,7 @@ export default {
       },
       srcAvatar: "",
       STORAGE_URL: STORAGE_URL,
+      Loading: false
     };
   },
   mounted() {
@@ -237,12 +239,15 @@ export default {
     },
     updateAccount() {
       // let id = this.employee.id;
-      console.log("data sebleum simpan", this.dataAccount);
+      console.log("data sebelum simpan", this.dataAccount);
+      this.Loading = true;
       this.$store
         .dispatch("Auth/updateAccount", this.dataAccount)
         .then((res) => {
           this.$q.notify("Berhasil");
-        });
+        }).finally(()=> {
+          this.Loading = false;
+        })
     },
   },
 };

@@ -131,7 +131,40 @@
                     </div>
                   </q-card-section>
                 </q-card>
-               
+                <q-card class="q-mt-sm no-shadow">
+                  <q-btn
+                    v-if="!category.pre_order_photo"
+                    @click="$router.push(`/postpreorderphoto/${category.id}`)"
+                    class="full-width"
+                    color="white"
+                    style="background-color: #49c2c0"
+                    flat
+                    label="Ambil Gambar"
+                  />
+                  <div class="row" v-if="category.pre_order_photo">
+                    <div class="col">
+                      <q-btn
+                        @click="
+                          $router.push(`/postpreorderphoto/${category.id}`)
+                        "
+                        class="full-width"
+                        style="background-color: #fff; color:#888888"
+                        flat
+                        label="Ganti Gambar"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-btn
+                        @click="dialogPreviewPhoto(category.pre_order_photo)"
+                        class="full-width"
+                        color="white"
+                        style="background-color: #7ed396"
+                        flat
+                        label="Lihat Gambar"
+                      />
+                    </div>
+                  </div>
+                </q-card>
               </div>
             </div>
             <div v-else>
@@ -229,16 +262,7 @@
                 </div>
               </q-card-section>
             </q-card>
-            <div class="q-pa-lg" v-if="n != false">
-              <q-btn
-                :disable="loading"
-                @click="store()"
-                class="full-width"
-                style="border-radius: 10px"
-                color="grey-7"
-                label="Buat Pesanan"
-              />
-            </div>
+
             <div class="q-pa-lg">
               <q-btn
                 :disable="loading"
@@ -363,6 +387,7 @@
                 flat
                 label="Lewati"
                 :disable="btnDisable == true"
+                :loading="btnDisable"
                 color="black"
                 @click="store()"
               />
@@ -495,6 +520,8 @@
 import { mapState } from "vuex";
 import { ref } from "vue";
 import SubmitPaymentComponentVue from "src/components/SubmitPaymentComponent";
+import { toBase64, jsonToFormData } from "./../helpers";
+import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent";
 
 export default {
   computed: {
@@ -502,7 +529,6 @@ export default {
   },
   data() {
     return {
-      n: false,
       y: true,
       //hanya untuk test
 
@@ -516,9 +542,24 @@ export default {
       paymentDialogDetail: false,
       payment: null,
       btnConfirmPayment: false,
+      bs64: null,
     };
   },
   methods: {
+    dialogPreviewPhoto(value) {
+      console.log("ini value", value);
+      let promise = toBase64(value);
+      promise.then((res) => {
+        console.log("setelah base 64", res);
+        this.$q.dialog({
+          component: PreviewPhotoComponentVue,
+
+          componentProps: {
+            src: res.src,
+          },
+        });
+      });
+    },
     popupComponent() {
       this.$q.dialog({
         component: SubmitPaymentComponentVue,
@@ -618,8 +659,11 @@ export default {
       this.btnDisable = true;
       this.loading = true;
       let order = this.Orders.order;
+      console.log("order sebelum formData", order);
+      let formData = jsonToFormData(order);
+      console.log("order sesudah formData ", formData);
       this.$store
-        .dispatch("Orders/store", order)
+        .dispatch("Orders/store", formData)
         .then((res) => {
           this.btnDisable = true;
           this.$q.notify({

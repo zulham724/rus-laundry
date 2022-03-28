@@ -91,6 +91,7 @@
         class="bg-teal-14 text-center q-py-md full-width"
         style="color: #fff"
         :disable="btnDisable == true"
+        :loading="btnDisable"
       >
         <div>
           Lanjutkan

@@ -310,6 +310,39 @@
                     <q-item-label
                       class="text-weight-regular"
                       style="color: #c9c9c9; font-size: 12px"
+                      >Foto Item</q-item-label
+                    >
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      v-if="service.pre_order_photo"
+                    >
+                      Sudah Ada Bukti Foto
+                    </q-item-label>
+                    <q-item-label
+                      caption
+                      lines="1"
+                      class="text-weight-bold"
+                      style="font-size: 14px"
+                      v-if="!service.pre_order_photo"
+                    >
+                      Belum ada Foto 
+                    </q-item-label>
+                  </q-item-section>
+                  <q-space></q-space>
+                  <q-item-section avatar @click="dialogPreviewPhoto(`${STORAGE_URL}/${service.pre_order_photo.src}`)">
+                    <q-avatar size="30px" class="bg-transparent">
+                      <q-img src="~/assets/gbr2.svg" />
+                    </q-avatar>
+                  </q-item-section>
+                </q-item>
+                <q-item class="q-my-sm">
+                  <q-item-section class="self-center">
+                    <q-item-label
+                      class="text-weight-regular"
+                      style="color: #c9c9c9; font-size: 12px"
                       >Foto Konfirmasi Pesanan</q-item-label
                     >
                     <q-item-label
@@ -332,7 +365,7 @@
                     </q-item-label>
                   </q-item-section>
                   <q-space></q-space>
-                  <q-item-section avatar @click="dialogPreviewPhoto()">
+                  <q-item-section avatar @click="dialogPreviewPhoto(`${STORAGE_URL}/${order.photo.src}`)">
                     <q-avatar size="30px" class="bg-transparent">
                       <q-img src="~/assets/foto.svg" />
                     </q-avatar>
@@ -658,6 +691,7 @@ export default {
   },
 
   mounted() {
+    
     this.getDetailOrder();
     this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.orderid}`;
   },
@@ -725,13 +759,14 @@ export default {
           });
       }
     },
-    dialogPreviewPhoto() {
+    dialogPreviewPhoto(src) {
+      console.log(src)
       this.$q.dialog({
         component: PreviewPhotoComponentVue,
-
+        
         // props forwarded to your custom component
         componentProps: {
-          src: `${STORAGE_URL}/${this.order.photo.src}`,
+          src: src,
           // ...more..props...
         },
       });
