@@ -20,6 +20,16 @@ const mutations = {
     },
     update_phone_number(state, payload) {
         state.auth.contact_number = payload.contact_number
+    },
+    update_avatar(state, payload) {
+        state.auth.avatar = payload.avatar
+    },
+    update_account(state, payload) {
+        state.auth.name = payload.name
+        // toko
+        state.auth.shop.name = payload.shop.name
+        state.auth.shop.description = payload.shop.description
+        
     }
 };
 
@@ -66,7 +76,37 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    updateAvatar({commit},formData){
+        return new Promise((resolve,reject)=>{
+            api.post('/api/slave/updateavatar', formData).then(res => {
+                commit('update_avatar', {avatar:res.data.avatar})
+                resolve(res)
+            }).catch(err=>{
+                reject(err)
+            })
+        })
+    },
+    updateAccount({commit}, Account){
+        return new Promise((resolve,reject)=>{
+            api.post(`/api/slave/updateaccount/${Account.id}`, Account).then(res => {
+                commit('update_account',res.data)
+                resolve(res)
+            }).catch(err=>{
+                reject(err)
+            })
+        })
+    },
+    changePassword({commit}, password){
+        return new Promise((resolve,reject)=>{
+            api.post(`/api/slave/changepassword`, password).then(res => {
+                resolve(res)
+            }).catch(err=>{
+                reject(err)
+            })
+        })
     }
+    
 };
 
 const getters = {

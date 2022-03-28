@@ -56,42 +56,8 @@ export default {
   props: ["ImgBS64"],
   emits: [
     // REQUIRED; need to specify some events that your
-    // component will emit through useDialogPluginComponent()
-    ...useDialogPluginComponent.emits,
+    'ok','hide','crop'
   ],
-  setup() {
-    // REQUIRED; must be called inside of setup()
-    const { dialogRef, onDialogHide, onDialogOK, onDialogCancel, onCrop } =
-      useDialogPluginComponent();
-    // dialogRef      - Vue ref to be applied to QDialog
-    // onDialogHide   - Function to be used as handler for @hide on QDialog
-    // onDialogOK     - Function to call to settle dialog with "ok" outcome
-    //                    example: onDialogOK() - no payload
-    //                    example: onDialogOK({ /*.../* }) - with payload
-    // onDialogCancel - Function to call to settle dialog with "cancel" outcome
-
-    return {
-      // This is REQUIRED;
-      // Need to inject these (from useDialogPluginComponent() call)
-      // into the vue scope for the vue html template
-      dialogRef,
-      onDialogHide,
-      onCrop,
-
-      // other methods that we used in our vue html template;
-      // these are part of our example (so not required)
-      onOKClick() {
-        // on OK, it is REQUIRED to
-        // call onDialogOK (with optional payload)
-        onDialogOK();
-        // or with payload: onDialogOK({ ... })
-        // ...and it will also hide the dialog automatically
-      },
-
-      // we can passthrough onDialogCancel directly
-      onCancelClick: onDialogCancel,
-    };
-  },
 
   computed: {
     ...mapState(["Orders"]),
@@ -119,7 +85,8 @@ export default {
       // get image data for post processing, e.g. upload or setting image src
       let croppedImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
       // console.log("cropped img", croppedImg);
-      this.$emit("crop-photo", croppedImg);
+      // this.$emit("crop-photo", croppedImg);
+      this.onOKClick(croppedImg);
       //   this.$store.commit("Profile/set_image", { data: this.cropImg });
     },
     isNumber(evt) {
@@ -204,11 +171,11 @@ export default {
       this.$emit("hide");
     },
 
-    onOKClick() {
+    onOKClick(dataUrl) {
       // on OK, it is REQUIRED to
       // emit "ok" event (with optional payload)
       // before hiding the QDialog
-      this.$emit("ok");
+      this.$emit("ok",{dataUrl:dataUrl});
       // or with payload: this.$emit('ok', { ... })
 
       // then hiding dialog
@@ -216,7 +183,7 @@ export default {
     },
 
     onCancelClick() {
-      // we just need to hide dialog
+      // we just need to hide the dialog
       this.hide();
     },
   },

@@ -39,11 +39,11 @@
                     Selamat Pagi
                   </div>
                   <div
-                    v-if="dataAuth.name"
+                    v-if="dataAuth.shop.name"
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
-                    {{ dataAuth.name }}
+                    {{ dataAuth.shop.name }}
                   </div>
                   <div
                     v-if="!dataAuth.name"
@@ -54,10 +54,18 @@
                   </div>
                 </div>
 
-                <!--Avatar-->
-                <div class="self-center q-pl-sm">
+               <!--Avatar-->
+                <div v-if="!dataAuth.avatar" class="self-center q-pl-sm">
                   <q-avatar>
                     <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
+                  </q-avatar>
+                </div>
+                <div v-else-if="dataAuth.avatar" class="self-center q-pl-sm">
+                  <q-avatar v-if="dataAuth.avatar == 'users/default.png'">
+                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
+                  </q-avatar>
+                  <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
+                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -105,11 +113,11 @@
                     Selamat Siang
                   </div>
                   <div
-                    v-if="dataAuth.name"
+                    v-if="dataAuth.shop.name"
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
-                    {{ dataAuth.name }}
+                    {{ dataAuth.shop.name }}
                   </div>
                   <div
                     v-if="!dataAuth.name"
@@ -131,7 +139,7 @@
                     <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
                   </q-avatar>
                   <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
-                    <q-img no-spinner :src="dataAuth.avatar" size="40px"></q-img>
+                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -183,7 +191,7 @@
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
                   >
-                    {{ dataAuth.name }}
+                    {{ dataAuth.shop.name }}
                   </div>
                   <div
                     v-if="!dataAuth.name"
@@ -196,9 +204,17 @@
                 </div>
 
                 <!--Avatar-->
-                <div class="self-center q-pl-sm">
+                <div v-if="!dataAuth.avatar" class="self-center q-pl-sm">
                   <q-avatar>
                     <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
+                  </q-avatar>
+                </div>
+                <div v-else-if="dataAuth.avatar" class="self-center q-pl-sm">
+                  <q-avatar v-if="dataAuth.avatar == 'users/default.png'">
+                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
+                  </q-avatar>
+                  <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
+                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -419,6 +435,7 @@ export default {
       dailyOrderCounter: null,
       //ini untuk menyimpan data auth
       dataAuth: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
 

@@ -124,9 +124,7 @@
                       v-if="dates.filter((date) => !date.status).length"
                     >
                       {{
-                        (dates.filter((date) => !date.status).length /
-                          dates.length) *
-                        100
+                        (dates.filter((date) => !date.status).length /dates.length) *100
                       }}%
                     </div>
                     <div v-else>0%</div>
@@ -273,6 +271,9 @@ export default {
     this.init();
   },
   methods: {
+    toFixedHadir(){
+      console.log('value', value)
+    },
     init(done) {
       this.getAttendances()
         .then((res) => {
@@ -315,7 +316,7 @@ export default {
           .dispatch("Attendance/getEmployeeAttendances", this.employeeid)
           .then((res) => {
             this.attendances = res.data;
-            console.log('data kehadiran', this.attendances)
+            console.log("data kehadiran", this.attendances);
             resolve(res);
           })
           .catch((err) => {

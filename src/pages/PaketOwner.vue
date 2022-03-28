@@ -363,6 +363,65 @@
             </q-card-actions>
           </q-card>
         </q-dialog>
+
+        <q-dialog v-model="payment3" persistent>
+          <q-card>
+            <q-card-section class="text-center">
+              <div class="text-black">
+                <q-avatar>
+                  <q-img
+                    src="~/assets/ctg2.png"
+                  />
+                </q-avatar>
+              </div>
+            </q-card-section>
+            <q-card-section
+              class="text-center"
+              style="background-color: #b43f3f"
+            >
+              <div class="text-white">
+                Layanan pembayaran Anda akan berakhir dalam : 24 Jam <br />
+                Jika melebihi 24 Jam Maka akan EXPIRED!
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-sm">
+              <div>Kode Pembayaran :</div>
+              <div class="text-h6">3047530475036506034</div>
+              <q-btn
+                no-caps
+                style="background-color: #ddca1d"
+              >
+                <q-avatar square size="15px">
+                  <q-img src="~/assets/cp.png" />
+                </q-avatar>
+              </q-btn>
+
+              <div>Jumlah Yang Harus Dibayarkan :</div>
+              <div class="text-h6">Rp 1.000.000</div>
+            </q-card-section>
+
+           
+
+            <q-card-actions align="left">
+              <q-btn
+                flat
+                label="Konfirmasi"
+                rounded
+                style="background-color: #6295ff"
+                color="white"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Batal"
+                rounded
+                style="background-color: #7e8385"
+                color="white"
+                v-close-popup
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -375,7 +434,8 @@ export default {
   data() {
     return {
       payment1: ref(false),
-      payment2: ref(true),
+      payment2: ref(false),
+      payment3: ref(true),
     };
   },
   mounted() {},

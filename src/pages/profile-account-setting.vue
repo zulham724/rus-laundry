@@ -15,8 +15,8 @@
         </div>
 
         <div class="q-py-md q-px-xl text-center">
-          <q-avatar @click="openMedia()" style="width:100px; height:100px">
-            <q-img src="~/assets/Group5656.png" />
+          <q-avatar @click="openMedia()" style="width: 100px; height: 100px">
+            <q-img :src="srcAvatar" />
           </q-avatar>
         </div>
 
@@ -26,10 +26,28 @@
               class="text-caption text-weight-medium q-pl-md"
               style="color: #888888"
             >
-              Username
+              Nama Akun
             </div>
             <q-input
               v-model="dataAccount.name"
+              placeholder="Ketik username disini..."
+              class="relative-center q-mx-md q-py-none"
+              style="background-color: #f0f3fd"
+              outlined
+              type="text"
+              :rules="[(val) => !!val || 'mohon diisi']"
+            />
+          </div>
+          <div>
+            <div
+              class="text-caption text-weight-medium q-pl-md"
+              style="color: #888888"
+            >
+              Nama Toko
+            </div>
+            <q-input
+              v-if="dataAccount.shop"
+              v-model="dataAccount.shop.name"
               placeholder="Ketik username disini..."
               class="relative-center q-mx-md q-py-none"
               style="background-color: #f0f3fd"
@@ -100,7 +118,7 @@
             </div>
           </q-btn>
           <q-btn
-            @click="store()"
+            @click="updateAccount()"
             flat
             dense
             no-caps
@@ -125,12 +143,33 @@
 
 <script>
 import { mapState } from "vuex";
-import { toBase64, jsonToFormData } from "./../helpers";
+import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
 import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 
 export default {
   computed: {
     ...mapState(["Auth"]),
+  },
+  data() {
+    return {
+      dataAccount: {
+        shop: {
+          name: "",
+        },
+      },
+      srcAvatar: "",
+      STORAGE_URL: STORAGE_URL,
+    };
+  },
+  mounted() {
+    this.dataAccount = this.Auth.auth;
+    console.log("ini adalah data account", this.dataAccount);
+    console.log(
+      "ini adalah data account shop",
+      this.dataAccount.shop.description
+    );
+    this.srcAvatar = `${this.STORAGE_URL}/${this.Auth.auth.avatar}`;
+    console.log("avatar", this.srcAvatar);
   },
   methods: {
     async previewImages(files) {
@@ -159,48 +198,52 @@ export default {
         promise.then((res) => {
           console.log("setelah base 64", res.src);
           this.encodedImage = res.src;
-          this.$q.dialog({
-            component: CropPhotoComponent,
+          this.$q
+            .dialog({
+              component: CropPhotoComponent,
 
-            componentProps: {
-              ImgBS64: res.src,
-            }
-          }).onCrop((data) => {
-            console.log('halo',data)
-          });
+              componentProps: {
+                ImgBS64: res.src,
+              },
+            })
+            .onOk((data) => {
+              console.log("gambar ter crop dengan base64 ", data.dataUrl);
+              let file = base64ToFile(data.dataUrl, "avatar");
+              console.log("lalu diubah jadi file, ", file);
+              this.dataAccount.avatar = file;
+              this.updateAvatar();
+            });
         });
       }
     },
-    store() {
-      this.$refs.form.validate().then((success) => {
-        if (success) {
-          let res = jsonToFormData(this.dataAccount);
-          this.$store.dispatch("Employee/store", res).then((res) => {
-            this.$router.push("/employee");
-            this.$q.notify("Berhasil");
-          });
-        } else {
-          this.$q.notify({
-            position: "top",
-            message: "Lengkapi Data",
-          });
-        }
+    updateAvatar() {
+      this.$q.notify({
+        color: "primary",
+        textColor: "white",
+        icon: "cloud_upload",
+        message: "Uploading...",
+      });
+      let formData = new FormData();
+      formData.append("avatar", this.dataAccount.avatar);
+      this.$store.dispatch("Auth/updateAvatar", formData).then((res) => {
+        this.srcAvatar = `${this.STORAGE_URL}/${res.data.avatar}`;
+        this.$q.notify({
+          color: "positive",
+          textColor: "white",
+          icon: "cloud_upload",
+          message: "Uploaded",
+        });
       });
     },
-  },
-  mounted() {
-    this.dataAccount = this.Auth.auth;
-    console.log("ini adalah data account", this.dataAccount);
-    console.log(
-      "ini adalah data account shop",
-      this.dataAccount.shop.description
-    );
-  },
-
-  data() {
-    return {
-      dataAccount: {},
-    };
+    updateAccount() {
+      // let id = this.employee.id;
+      console.log("data sebleum simpan", this.dataAccount);
+      this.$store
+        .dispatch("Auth/updateAccount", this.dataAccount)
+        .then((res) => {
+          this.$q.notify("Berhasil");
+        });
+    },
   },
 };
 </script>

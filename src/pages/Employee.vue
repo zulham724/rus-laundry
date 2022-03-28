@@ -147,8 +147,7 @@
             style="border-radius: 5px 5px 5px 5px"
           >
             <q-avatar size="60px">
-              <q-img v-if="employee.avatar == 'users/default.png'" no-spinner src="~/assets/ld.png"></q-img>
-              <q-img v-else :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
+              <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
             </q-avatar>
             <div class="text-weight-medium" style="font-size: 8px">
               {{ employee.name }}

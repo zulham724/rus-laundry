@@ -222,13 +222,11 @@
                   </q-item-section>
                   <q-space></q-space>
                   <q-item-section avatar>
-                    
-                      <q-img
-                        src="~/assets/icon-cuci-detail.svg"
-                        style="width: 30px"
-                        no-spinner
-                      />
-                    
+                    <q-img
+                      src="~/assets/icon-cuci-detail.svg"
+                      style="width: 30px"
+                      no-spinner
+                    />
                   </q-item-section>
                 </q-item>
                 <q-item class="q-my-sm">
@@ -248,9 +246,7 @@
                   </q-item-section>
                   <q-space></q-space>
                   <q-item-section avatar>
-                    
-                      <q-img src="~/assets/msc.svg" no-spinner width="30px"/>
-                    
+                    <q-img src="~/assets/msc.svg" no-spinner width="30px" />
                   </q-item-section>
                 </q-item>
                 <q-item class="q-my-sm">
@@ -266,20 +262,16 @@
                       class="text-weight-bold"
                       style="font-size: 14px"
                       >{{ detail_order.services[0].quantity }}
-                      {{
-                        detail_order.services[0].service_unit
-                      }}</q-item-label
+                      {{ detail_order.services[0].service_unit }}</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
                   <q-item-section avatar>
-                    
-                      <q-img
-                        src="~/assets/icon-kilogram.svg"
-                        style="width: 30px"
-                        no-spinner
-                      />
-                    
+                    <q-img
+                      src="~/assets/icon-kilogram.svg"
+                      style="width: 30px"
+                      no-spinner
+                    />
                   </q-item-section>
                 </q-item>
                 <!-- <q-item class="q-my-sm">
@@ -369,9 +361,7 @@
                       "
                       class="q-mb-md q-mt-lg"
                       size="10vw"
-                      :value="
-                        service.service_status_id == 3 ? 100 : progress
-                      "
+                      :value="service.service_status_id == 3 ? 100 : progress"
                     >
                       <div class="absolute-full flex flex-center self-center">
                         <q-badge
@@ -607,10 +597,18 @@
                     ref="copy"
                   >
                     <q-btn
+                      v-if="$q.platform.is.desktop"
                       class="self-center q-px-xl"
                       label="Copy"
                       color="deep-purple-13"
                       @click="copyLink()"
+                    />
+                    <q-btn
+                      v-if="$q.platform.is.mobile"
+                      class="self-center q-px-xl"
+                      label="Copy"
+                      color="deep-purple-13"
+                      @click="copyLinkMbl()"
                     />
                     <template v-slot:prepend>
                       <q-icon name="fas fa-link" />
@@ -634,6 +632,7 @@ import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent";
 import SubmitPaymentComponentVue from "src/components/DetailFirstPaymentComponent.vue";
 import SecondaryPaymentComponentVue from "src/components/secondaryPaymentComponent.vue";
 import { useQuasar } from "quasar";
+import { Platform } from "quasar";
 
 export default {
   props: ["orderid"],
@@ -676,7 +675,7 @@ export default {
       if (this.order) {
         let url = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
         let tmp = `
-          Halo -----. Terimakasih telah melakukan pemesanan di -----. Yuk cek proses pesanan kamu di sini 
+          Halo -----. Terimakasih telah melakukan pemesanan di -----. Yuk cek proses pesanan kamu di sini
           \n Url : ${url}`;
         this.message = tmp;
       }
@@ -804,11 +803,18 @@ export default {
     },
     copyLink() {
       var modelValue = this.$refs.copy.modelValue;
-      // console.log(this.$refs.copy);
-      // modelValue.select();
-      // modelValue.setSelectionRange(0, 99999);
+
       navigator.clipboard.writeText(modelValue);
       this.$q.notify("Link tersalin");
+    },
+    copyLinkMbl() {
+      var text = this.link;
+
+      cordova.plugins.clipboard.copy(text);
+
+      this.$q.notify("Link tersalin");
+
+      cordova.plugins.clipboard.paste(function (text) {});
     },
   },
 };
