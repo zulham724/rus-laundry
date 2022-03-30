@@ -228,6 +228,7 @@ export default {
       let formData = new FormData();
       formData.append("avatar", this.dataAccount.avatar);
       this.$store.dispatch("Auth/updateAvatar", formData).then((res) => {
+        console.log('ini res', res)
         this.srcAvatar = `${this.STORAGE_URL}/${res.data.avatar}`;
         this.$q.notify({
           color: "positive",

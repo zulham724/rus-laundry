@@ -328,11 +328,13 @@
                       style="font-size: 14px"
                       v-if="!service.pre_order_photo"
                     >
-                      Belum ada Foto 
+                      Belum ada Foto
                     </q-item-label>
                   </q-item-section>
                   <q-space></q-space>
-                  <q-item-section avatar @click="dialogPreviewPhoto(`${STORAGE_URL}/${service.pre_order_photo.src}`)">
+                  <q-item-section
+                    avatar
+                    @click="dialogPreviewPhoto(`${STORAGE_URL}/${service.pre_order_photo.src}`)">
                     <q-avatar size="30px" class="bg-transparent">
                       <q-img src="~/assets/gbr2.svg" />
                     </q-avatar>
@@ -365,7 +367,10 @@
                     </q-item-label>
                   </q-item-section>
                   <q-space></q-space>
-                  <q-item-section avatar @click="dialogPreviewPhoto(`${STORAGE_URL}/${order.photo.src}`)">
+                  <q-item-section
+                    avatar
+                    @click="
+                      dialogPreviewPhoto(`${STORAGE_URL}/${order.photo.src}`)">
                     <q-avatar size="30px" class="bg-transparent">
                       <q-img src="~/assets/foto.svg" />
                     </q-avatar>
@@ -691,7 +696,6 @@ export default {
   },
 
   mounted() {
-    
     this.getDetailOrder();
     this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.orderid}`;
   },
@@ -760,16 +764,17 @@ export default {
       }
     },
     dialogPreviewPhoto(src) {
-      console.log(src)
-      this.$q.dialog({
-        component: PreviewPhotoComponentVue,
-        
-        // props forwarded to your custom component
-        componentProps: {
-          src: src,
-          // ...more..props...
-        },
-      });
+      console.log('src', src)
+        this.$q.dialog({
+          component: PreviewPhotoComponentVue,
+
+          // props forwarded to your custom component
+          componentProps: {
+            src: src,
+            // ...more..props...
+          },
+        });
+    
     },
     makePayment() {
       this.$q
@@ -845,11 +850,13 @@ export default {
     copyLinkMbl() {
       var text = this.link;
 
-      cordova.plugins.clipboard.copy(text);
-
-      this.$q.notify("Link tersalin");
-
-      cordova.plugins.clipboard.paste(function (text) {});
+      // window.cordova.plugins.clipboard.copy({
+      //     type: "text", // default, so not needed for text
+      //     data: text
+      // }, (res) => {
+      //     console.log(res);
+      // });
+      this.$notify('Link tersalin');
     },
   },
 };

@@ -2,9 +2,19 @@
   <q-layout view="lHh lpR fFf" class="mbl" style="background-color: #fafafa">
     <q-page-container class="front">
       <q-page>
-        <div class="text-center" style="background-image: linear-gradient(to bottom right, #67BFF0, #B6E5FB);">
+        <div
+          class="text-center"
+          style="
+            background-image: linear-gradient(
+              to bottom right,
+              #67bff0,
+              #b6e5fb
+            );
+          "
+        >
           <q-img no-spinner src="~/assets/header-login.jpg" alt="login-anim" />
         </div>
+
         <div
           class="front"
           style="
@@ -14,10 +24,14 @@
             position: relative;
           "
         >
-          <div class="q-mx-lg q-my-sm">
-            <div class="text-bold text-h4" style="padding-top: 20px">
-              Login
-            </div>
+          <div class=" text-right q-px-lg">
+            <q-avatar  class="front " style="background-color:#fafafa; margin-top: -25px" size="65px">
+              <img src="~/assets/ldlg.svg" />
+            </q-avatar>
+          </div>
+
+          <div class="q-mx-lg q-mb-sm">
+            <div class="text-bold text-h4" >Login</div>
             Halo Selamat Datang Kembali
           </div>
 
@@ -55,34 +69,25 @@
                 @click="doLogin()"
                 :disable="loading"
                 :class="`shadow-1`"
-                class="q-mt-lg"
+                class="q-mt-lg q-py-sm"
                 no-caps
                 unelevated
                 rounded
-                style="
-                  width: 90%;
-                  background-color: #49c2c0;
-                  color: #ffffff;
-                "
+                style="width: 90%; background-color: #49c2c0; color: #ffffff"
                 size="2vh"
               >
-                <div class="ellipsis text-weight-reguler">Login</div>
+                <div class="ellipsis text-h6 text-weight-reguler">Login</div>
               </q-btn>
 
-              <div class="q-py-md text-weight-thin" >
-                Atau, lanjutkan dengan
-              </div>
+              <!--
+              <div class="q-py-md text-weight-thin">Atau, lanjutkan dengan</div>
               <q-btn
                 :disable="loading"
                 :class="`shadow-1`"
                 no-caps
                 unelevated
                 rounded
-                style="
-                  width: 90%;
-                  background-color: #ffffff;
-                  color: #888888;
-                "
+                style="width: 90%; background-color: #ffffff; color: #888888"
                 size="2vh"
               >
                 <div class="q-mr-md">
@@ -97,6 +102,7 @@
                   Login Dengan Akun Google
                 </div>
               </q-btn>
+              -->
             </q-form>
           </div>
         </div>
@@ -110,7 +116,7 @@ import { ref } from "vue";
 import { mapState } from "vuex";
 
 export default {
-  name:'LoginPage',
+  name: "LoginPage",
   data() {
     return {
       credential: {
@@ -135,7 +141,7 @@ export default {
               this.$router.push("/");
             })
             .catch((err) => {
-              this.$q.notify("terjadi kesalahan")
+              this.$q.notify("terjadi kesalahan");
               console.log(err);
             })
             .finally(() => {
