@@ -1,6 +1,35 @@
 <template>
-  <q-layout>
-    <q-header class="fixed-top">
+  <q-layout class="mbl" view="lHh lpR fFf">
+    <div class="fixed-top shadow-2" style="z-index: 999">
+      <q-header elevated>
+        <div
+          class="row full-width q-py-sm justify-center"
+          style="background-color: #1c309b"
+        >
+          <div class="col-4 q-px-sm self-center">
+            <q-btn flat round size="10px" @click="$router.back()">
+              <q-avatar
+                size="20px"
+                icon="fas fa-arrow-left"
+                style="color: #fff"
+              >
+              </q-avatar>
+            </q-btn>
+          </div>
+          <div
+            v-if="content"
+            class="col-4 self-center text-weight-medium text-center text-white"
+            style="font-size: 20px"
+          >
+            {{ content.tittle }}
+          </div>
+          <div class="col-4 self-center text-right q-px-sm">
+            
+          </div>
+        </div>
+      </q-header>
+    </div>
+    <!-- <q-header class="fixed-top">
       <q-toolbar class="shadow-1" style="background-color: #1c309b">
         <q-btn
           @click="$router.back()"
@@ -17,13 +46,35 @@
           v-if="content"
           class="text-left text-weight-medium text-subtitle2"
           style="color: white; font-size: 16px"
-          >{{content.tittle}}</q-toolbar-title
+          >{{ content.tittle }}</q-toolbar-title
         >
       </q-toolbar>
-    </q-header>
+    </q-header> -->
     <q-page v-if="content">
+      <div
+          class="row full-width q-py-sm justify-center"
+          style="background-color: #1c309b"
+        >
+          <div class="col-8 q-px-sm self-center">
+            <q-btn flat round size="10px" @click="$router.back()">
+              <q-avatar
+                size="20px"
+                icon="fas fa-arrow-left"
+                style="color: #fff"
+              >
+              </q-avatar>
+            </q-btn>
+          </div>
+          <div
+            class="col-4 self-center text-weight-medium text-center text-white"
+            style="font-size: 20px"
+          >
+            
+          </div>
+          
+        </div>
       <!-- Video/foto -->
-      <div class="full-width bg-grey" style="height: 250px">
+      <div v-if="content.video" class="full-width bg-grey" style="height: 250px">
         <vue-plyr v-if="content.video">
           <video :src="STORAGE_URL + `/` + content.video.src"></video>
         </vue-plyr>
@@ -43,7 +94,7 @@
       </div>
 
       <!-- Materi berikutnya -->
-      <div class="fixed-bottom" v-if="next_content">
+      <div class="fixed-bottom mbl-child" v-if="next_content">
         <div
           class="text-weight-bold q-px-md"
           style="color: #5f5959; font-size: 10px"
@@ -101,10 +152,7 @@
                 </div>
                 <div
                   class="col q-px-sm q-py-xs"
-                  style="
-                  background-color: #0c1e7f;
-                  border-radius: 5px 0 0 0;
-                "
+                  style="background-color: #0c1e7f; border-radius: 5px 0 0 0"
                 >
                   {{ next_content.duration }} menit
                 </div>

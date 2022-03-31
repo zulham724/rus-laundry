@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="mbl" view="lHh lpR fFf"> 
     <q-page-container>
       <q-page>
         <!-- Header -->
@@ -33,19 +33,22 @@
                 class="text-left text-weight-bold bg-transparent q-mt-xl q-ml-md"
                 style="color: #fff; font-size: 20px; max-width: 250px"
               >
-                Latihan dasar laundry untuk pemula
+                {{ module.tittle }}
               </div>
 
               <!-- Info -->
               <div
-                class="row full-width q-pa-md text-weight-medium self-center q-mx-xl q-mt-sm"
-                style="background-color: #ffd53f; border-radius: 5px"
+                class="row full-width q-pa-md text-weight-medium self-center  q-mt-sm"
+                style="background-color: #ffd53f; border-radius: 5px; "
               >
                 <div class="col-6 text-left">
                   <div style="color: white; font-size: 13px">Waktu kursus</div>
                   <!-- Waktu course -->
-                  <div style="color: black; font-size: 10px">
+                  <div v-if="module.sum_duration" style="color: black; font-size: 10px">
                     {{ module.sum_duration }} menit
+                  </div>
+                  <div v-else style="color: black; font-size: 10px">
+                    Tidak ada waktu
                   </div>
                 </div>
                 <!-- Progress -->
@@ -59,7 +62,7 @@
                     :thickness="0.22"
                     track-color="white"
                   >
-                    0/{{ value }}
+                    {{ module.count_content_is_read }}/{{ module.count_contents }}
                   </q-circular-progress>
                 </div>
                 <div class="col-4">
@@ -67,7 +70,7 @@
                     style="color: #fdfdfe; font-size: 10px"
                     class="text-left q-pb-xs"
                   >
-                    Materi
+                    Materi 
                   </div>
                   <div class="row" style="color: #5a5656; font-size: 7px">
                     <!-- video -->
@@ -77,7 +80,7 @@
                       style="color: #5a5656"
                     ></q-icon>
                     <div class="q-pl-sm">
-                      {{ module.count_contents_video }} video
+                      {{ module.count_content_video }} video
                     </div>
 
                     <!-- Text/materi -->
@@ -88,7 +91,7 @@
                       class="q-pl-md"
                     ></q-icon>
                     <div class="q-pl-sm">
-                      {{ module.count_contents_teks }} materi
+                      {{ module.count_content_text }} materi
                     </div>
                   </div>
                 </div>
@@ -177,6 +180,7 @@
             {{ content.type }} 
           </div>
           <div
+          v-if="content.sum_duration"
             class="col text-weight-medium q-py-xs"
             style="
               color: #fff;
@@ -186,6 +190,18 @@
             "
           >
             {{ content.sum_duration }} menit
+          </div>
+          <div
+            v-else
+            class="col text-weight-medium q-py-xs"
+            style="
+              color: #fff;
+              background-color: #0c1e7f;
+              border-radius: 0 0 0 0;
+              font-size: 11px;
+            "
+          >
+            Tidak ada waktu
           </div>
         </div></div>
           <q-separator></q-separator>

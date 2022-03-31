@@ -1,7 +1,7 @@
 <template>
   <q-layout class="mbl">
     <div class="fixed-top" style="z-index: 999">
-      <q-header class="bg-transparent">
+      <q-header class="bg-transparent" v-if="dataAuth">
         <q-toolbar class="bg-white shadow-1">
           <q-btn
             @click="$router.back()"
@@ -14,14 +14,14 @@
             </q-icon>
           </q-btn>
 
-          <q-toolbar-title
+          <q-toolbar-title v-if="dataAuth.shop.name"
             class="text-left text-weight-medium text-subtitle2"
             style="color: black; font-size: 16px"
-            >Nama pengguna lain</q-toolbar-title
+            >{{dataAuth.shop.name}}</q-toolbar-title
           >
 
           <!-- Button option -->
-          <q-btn
+          <!-- <q-btn
             no-caps
             outline
             dense
@@ -34,7 +34,7 @@
             >
               Edit profil
             </div>
-          </q-btn>
+          </q-btn> -->
         </q-toolbar>
       </q-header>
     </div>
@@ -42,17 +42,28 @@
       <q-page class="">
         <div class="q-pa-md q-mb-lg">
           <div class="row">
-            <div class="col-4 text-left">
-              <q-avatar size="80px" style="background-color: #888888">
+            <div class="col-4 text-left" v-if="dataAuth">
+              <!--Avatar-->
+                <div v-if="!dataAuth.avatar" class="self-center">
+                  <q-avatar @click="$router.push('/my-profile')" size="80px" style="background-color: #888888">
+                    <q-img no-spinner src="~/assets/ld.png" ></q-img>
+                  </q-avatar>
+                </div>
+                <div v-else-if="dataAuth.avatar" class="self-center ">
+                  <q-avatar @click="$router.push('/my-profile')" v-if="dataAuth.avatar != 'users/default.png'" size="80px" style="background-color: #888888">
+                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" ></q-img>
+                  </q-avatar>
+                </div>
+              <!-- <q-avatar size="80px" style="background-color: #888888">
                 <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-              </q-avatar>
+              </q-avatar> -->
             </div>
-            <div class="col-8">
+            <div class="col-8" >
               <div
                 class="text-weight-medium text-right q-pb-sm"
                 style="color: #919193; font-size: 15px"
               >
-                Cabang Kudus
+                Cabang
               </div>
               <div
                 class="row col-12 q-px-sm q-py-xs"
@@ -94,17 +105,15 @@
             </div>
           </div>
 
-          <div
+          <div 
             class="q-pt-sm text-weight-medium"
             style="color: #3a3838; font-size: 15px"
           >
-            Bio
+            Tentang toko
           </div>
-          <div
-            class="q-pt-xs text-weight-medium"
-            style="color: #898585; font-size: 16px; width: 70vw"
-          >
-            Laundry Indonesia layanan laundry paling jos gandos
+          <div v-if="dataAuth" class="q-pt-xs text-weight-medium"
+            style="color: #898585; font-size: 16px; width: 70vw">
+            {{dataAuth.shop.name}}
           </div>
         </div>
         <q-separator></q-separator>
@@ -232,16 +241,21 @@ export default {
   },
 
   computed: {
-    ...mapState(["Post"]),
+    ...mapState(["Post","Auth"]),
   },
 
   data() {
     return {
       posts: {},
+      //ini untuk menyimpan data auth
+      dataAuth: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
 
   mounted() {
+    this.dataAuth = this.Auth.auth;
+    console.log(this.dataAuth);
     this.getAllPosts();
   },
 

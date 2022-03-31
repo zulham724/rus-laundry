@@ -48,13 +48,33 @@
               </template>
             </q-input>
           </div>
-          <div class="col-2 self-center text-center">
-            <q-avatar
+          <div class="col-2 self-center text-center" v-if="dataAuth">
+            <!--Avatar-->
+            <div v-if="!dataAuth.avatar" class="self-center">
+              <q-avatar
+                size="50px"
+                style="background-color: #888888"
+              >
+                <q-img no-spinner src="~/assets/ld.png"></q-img>
+              </q-avatar>
+            </div>
+            <div v-else-if="dataAuth.avatar" class="self-center">
+              <q-avatar
+                size="50px"
+                style="background-color: #888888"
+              >
+                <q-img
+                  no-spinner
+                  :src="STORAGE_URL + `/` + dataAuth.avatar"
+                ></q-img>
+              </q-avatar>
+            </div>
+            <!-- <q-avatar
               size="50px"
               @click="$router.push('/marketplace-detail-user')"
             >
               <q-img src="~/assets/Avatar.png" no-spinner />
-            </q-avatar>
+            </q-avatar> -->
           </div>
         </div>
       </q-header>
@@ -328,14 +348,17 @@ export default {
       dialogWelcome: true,
       dialogWhatsapp: false,
       dialogAfterInputWhatsapp: false,
-      STORAGE_URL: STORAGE_URL,
       products: [],
       products_temp: [],
       search: "",
       emptySearch: false,
+      //ini untuk menyimpan data auth
+      dataAuth: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {
+    this.dataAuth = this.Auth.auth;
     this.getProducts();
   },
   methods: {

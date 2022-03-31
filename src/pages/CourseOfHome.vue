@@ -27,7 +27,7 @@
             <div class="col-1 text-right self-center q-pl-sm">
               <q-btn
                 round
-                @click="$router.back()"
+                @click="$router.push('/')"
                 no-caps
                 dense
                 flat
@@ -42,14 +42,26 @@
               </q-btn>
             </div>
             <div class="col-2 text-center q-pl-sm">
-              <q-avatar
+              <!--Avatar-->
+                <div v-if="!Auth.auth.avatar" class="self-center">
+                  <q-avatar style="background-color: #888888">
+                    <q-img no-spinner src="~/assets/ld.png" ></q-img>
+                  </q-avatar>
+                </div>
+                <div v-else-if="Auth.auth.avatar" class="self-center ">
+
+                  <q-avatar  style="background-color: #888888">
+                    <q-img no-spinner :src="storageUrl + `/` + Auth.auth.avatar" ></q-img>
+                  </q-avatar>
+                </div>
+              <!-- <q-avatar
                 style="background-color: #888888"
                 @click="$router.push('/profile-of-course')"
               >
                 <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-              </q-avatar>
+              </q-avatar> -->
             </div>
-            <div class="col-6 self-center q-pl-sm">
+            <div class="col-9 self-center q-pl-sm">
               <div
                 class="row text-weight-medium q-pb-xs"
                 style="font-size: 18px; color: white"
@@ -57,35 +69,36 @@
                 {{ Auth.auth.shop.name }}
               </div>
               <div class="row q-gutter-x-sm">
-                <div
-                  class="col-4 q-px-sm self-center"
-                  style="
-                    background-color: #ff843e;
-                    border-radius: 20px;
-                    width: auto;
-                    font-size: 12px;
-                    color: white;
-                  "
-                >
-                  Ranking 20
-                </div>
+              <div
+                class="col-4 q-px-sm self-center"
+                style="
+                  background-color: #ff843e;
+                  border-radius: 20px;
+                  width: auto;
+                  font-size: 12px;
+                  color: white;
+                "
+              >
+                40 Total Materi
+              </div>
 
-                <!-- Point -->
-                <div
-                  class="col-4 q-px-md self-center"
-                  style="
-                    background-color: #fff;
-                    border-radius: 20px;
-                    width: auto;
-                    font-size: 10px;
-                    color: #ff843e;
-                  "
-                >
-                  1500 Point
-                </div>
+              <!-- Point -->
+              <div
+                class="col-4 q-px-md self-center"
+                style="
+                  background-color: #fff;
+                  border-radius: 20px;
+                  width: auto;
+                  font-size: 10px;
+                  color: #ff843e;
+                "
+              >
+                1 Diselesaikan
               </div>
             </div>
-            <div class="col-2"></div>
+              
+            </div>
+
           </div>
 
           <!-- Search bar -->
@@ -145,6 +158,16 @@
               v-if="module.banner"
               no-spinner
               :src="storageUrl + `/` + module.banner.src"
+            >
+            </q-img>
+            <q-img
+              style="border-radius: 5px"
+              fit="cover"
+              width="90%"
+              :ratio="16 / 9"
+              v-else
+              no-spinner
+              src="dfltpht.svg"
             >
             </q-img>
             <!-- </q-avatar> -->

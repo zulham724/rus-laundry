@@ -9,9 +9,25 @@
       <div class="row q-mx-sm">
         <div class="col-2  self-center">
           <!-- Image profile -->
-          <q-avatar size="60px" style="background-color: #888888">
+          <!--Avatar-->
+            <div v-if="!post.author.avatar" class="self-center">
+              <q-avatar size="60px">
+                <q-img no-spinner src="~/assets/ld.png"></q-img>
+              </q-avatar>
+            </div>
+            <div v-else-if="post.author.avatar" class="self-center">
+              <q-avatar
+                size="60px"
+              >
+                <q-img
+                  no-spinner
+                  :src="STORAGE_URL + `/` + post.author.avatar"
+                ></q-img>
+              </q-avatar>
+            </div>
+          <!-- <q-avatar size="60px" style="background-color: #888888">
             <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-          </q-avatar>
+          </q-avatar> -->
         </div>
         <div class="col-8 q-pl-sm self-center">
           <!-- Nama Profile -->
@@ -19,7 +35,7 @@
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.author.name }}
+            {{ post.author.name }} 
           </div>
           <!-- Waktu posting -->
           <div
@@ -82,12 +98,12 @@
               style="padding-left: 0px; padding-right: 0px; margin: 0px"
             >
               <vue-plyr v-if="file.filetype.includes('video')">
-                <video :src="storageUrl + `/` + file.src"></video>
+                <video :src="STORAGE_URL + `/` + file.src"></video>
               </vue-plyr>
 
               <q-img
                 v-else-if="file.filetype.includes('image')"
-                :src="storageUrl + `/` + file.src"
+                :src="STORAGE_URL + `/` + file.src"
                 style="width: 100%; height: 100%"
               >
                 <template v-slot:error>
@@ -364,7 +380,7 @@ export default {
       dialogOption: false,
       dialogShare: false,
       readMoreActivated: false,
-      storageUrl: STORAGE_URL,
+       STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {

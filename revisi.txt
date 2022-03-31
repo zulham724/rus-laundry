@@ -95,10 +95,14 @@
 @ Belum Tersentuh 👎
     - halaman income belum bisa kustom pilih bulan tahun (skip)
     - halaman attendance-details belum bisa kustom pilih bulan tahun (skip)
-    
-    
     - yang bisa bikin postingan dan buat produk hanya akun OWNER saja
 
+    - back di halaman kursus & semua avatar
+    - rangking hapus kursus
+    - halaman list of course judul
+    - is read halaman list of course
+    - detail materi jika tidak ada gambar tidak usah ada img
+    - halaman community ketika di klik dia preview photo
     
     
     

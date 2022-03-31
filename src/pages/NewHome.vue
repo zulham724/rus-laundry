@@ -135,9 +135,7 @@
                   </q-avatar>
                 </div>
                 <div v-else-if="dataAuth.avatar" class="self-center q-pl-sm">
-                  <q-avatar v-if="dataAuth.avatar == 'users/default.png'">
-                    <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
-                  </q-avatar>
+
                   <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
                     <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
                   </q-avatar>

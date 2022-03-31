@@ -14,9 +14,13 @@
           </div>
         </div>
 
-        <div class="q-py-md q-px-xl text-center">
-          <q-avatar @click="openMedia()" style="width: 100px; height: 100px">
+        <div class="q-py-md q-px-xl text-center" >
+          <q-avatar @click="openMedia()"  style="width: 100px; height: 100px">
             <q-img :src="srcAvatar" />
+            
+          </q-avatar>
+          <q-avatar @click="openMedia()" square style="margin-left:-30px; margin-top:75px">
+            <q-img src="~/assets/ftg.svg"/>
           </q-avatar>
         </div>
 
@@ -160,7 +164,7 @@ export default {
       },
       srcAvatar: "",
       STORAGE_URL: STORAGE_URL,
-      Loading: false
+      Loading: false,
     };
   },
   mounted() {
@@ -226,11 +230,11 @@ export default {
         message: "Uploading...",
       });
       let formData = new FormData();
-      console.log('data account avatar', this.dataAccount.avatar);
+      console.log("data account avatar", this.dataAccount.avatar);
       formData.append("avatar", this.dataAccount.avatar);
       console.log("ini form data avatar", formData);
       this.$store.dispatch("Auth/updateAvatar", formData).then((res) => {
-        console.log('ini res', res)
+        console.log("ini res", res);
         this.srcAvatar = `${this.STORAGE_URL}/${res.data.avatar}`;
         this.$q.notify({
           color: "positive",
@@ -248,9 +252,10 @@ export default {
         .dispatch("Auth/updateAccount", this.dataAccount)
         .then((res) => {
           this.$q.notify("Berhasil");
-        }).finally(()=> {
-          this.Loading = false;
         })
+        .finally(() => {
+          this.Loading = false;
+        });
     },
   },
 };

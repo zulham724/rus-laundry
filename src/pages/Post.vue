@@ -1,14 +1,14 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-layout style="background-color: #fafafa">
-    <div class="fixed-top bg-white mbl-child" style="z-index: 999;">
-      <q-header style="background-color: #ffffff;" class="q-pb-md">
+    <div class="fixed-top bg-white mbl-child" style="z-index: 999">
+      <q-header style="background-color: #ffffff" class="q-pb-md">
         <div class="row q-ma-sm self-center">
           <div
             class="col-5 row text-weight-medium self-center"
-            style="color: #3a3838; "
+            style="color: #3a3838"
           >
             <q-btn
-              @click="$router.back()"
+              @click="$router.push('/')"
               no-caps
               dense
               flat
@@ -17,13 +17,13 @@
               <q-icon
                 size="20px"
                 name="fas fa-arrow-left"
-                style="color: #3A3838"
+                style="color: #3a3838"
               >
               </q-icon>
             </q-btn>
             <div class="q-pl-sm" style="font-size: larger">Postingan</div>
           </div>
-          <div class="col-5 text-center self-center  ">
+          <div class="col-5 text-center self-center">
             <q-btn flat dense no-caps @click="$router.push('/make-post')">
               <div
                 class="row justify-center q-px-sm q-py-xs"
@@ -44,7 +44,7 @@
               </div>
             </q-btn>
           </div>
-          <div class="col-1 text-center self-center ">
+          <div class="col-1 text-center self-center">
             <q-btn dense round flat @click="$router.push('/notification')">
               <q-icon
                 name="far fa-bell"
@@ -53,17 +53,34 @@
               ></q-icon>
             </q-btn>
           </div>
-          <div class="col-1 text-center  self-center">
-            <q-avatar
+          <div v-if="dataAuth" class="col-1 text-center self-center">
+            <!--Avatar-->
+            <div v-if="!dataAuth.avatar" class="self-center">
+              <q-avatar @click="$router.push('/my-profile')" size="30px">
+                <q-img no-spinner src="~/assets/ld.png"></q-img>
+              </q-avatar>
+            </div>
+            <div v-else-if="dataAuth.avatar" class="self-center">
+              <q-avatar
+                @click="$router.push('/my-profile')"
+                size="30px"
+              >
+                <q-img
+                  no-spinner
+                  :src="STORAGE_URL + `/` + dataAuth.avatar"
+                ></q-img>
+              </q-avatar>
+            </div>
+            <!-- <q-avatar
               size="30px"
               style="background-color: #888888"
               @click="$router.push('/my-profile')"
             >
-              <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-            </q-avatar>
+              <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar"></q-img>
+            </q-avatar> -->
           </div>
         </div>
-        <div class="row q-px-md ">
+        <div class="row q-px-md">
           <!-- Search -->
           <q-input
             @click="$router.push('/search')"
@@ -89,7 +106,7 @@
     </div>
 
     <q-page-container>
-      <q-page class="q-mt-sm bg-white">
+      <q-page class="q-mt-sm mbl-child">
         <q-pull-to-refresh @refresh="refresh">
           <!-- Skeleton -->
           <div v-if="isLoad">
@@ -123,16 +140,18 @@
             </q-card>
           </div>
 
-          <div v-else-if="isLoad == false && this.posts">
-            <q-infinite-scroll @load="onLoad" :offset="250">
+          <div  v-else-if="isLoad == false && this.posts">
+            <q-infinite-scroll  @load="onLoad" :offset="250">
               <!-- Postingan -->
               <q-intersection
+                class=" mbl-child"
                 :ref="`intersection_${post.id}`"
                 v-for="post in Post.posts.data"
                 :key="post.id"
                 :style="`min-height:${getItemPostHeight(post)}; `"
               >
                 <item-post-component
+                  class="mbl-child"
                   v-on:update-height="updateHeight(post)"
                   :post="post"
                   :style="`position:relative;height:100%`"
@@ -165,7 +184,7 @@ export default {
     "item-post-component": PostCardComponent,
   },
   computed: {
-    ...mapState(["Post"]),
+    ...mapState(["Post", "Auth"]),
   },
   data() {
     return {
@@ -173,9 +192,15 @@ export default {
       tab: "postingan",
       posts: {},
       search: "",
+      //ini untuk menyimpan data auth
+      dataAuth: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {
+    console.log('post', this.Post.posts.data);
+    this.dataAuth = this.Auth.auth;
+    console.log("auth", this.Auth.auth);
     this.getAllPosts();
   },
   created() {
