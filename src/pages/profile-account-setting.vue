@@ -226,7 +226,9 @@ export default {
         message: "Uploading...",
       });
       let formData = new FormData();
+      console.log('data account avatar', this.dataAccount.avatar);
       formData.append("avatar", this.dataAccount.avatar);
+      console.log("ini form data avatar", formData);
       this.$store.dispatch("Auth/updateAvatar", formData).then((res) => {
         console.log('ini res', res)
         this.srcAvatar = `${this.STORAGE_URL}/${res.data.avatar}`;

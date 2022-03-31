@@ -14,9 +14,10 @@
         </q-btn>
 
         <q-toolbar-title
+          v-if="content"
           class="text-left text-weight-medium text-subtitle2"
           style="color: white; font-size: 16px"
-          >Percaya diri itu perlu</q-toolbar-title
+          >{{content.tittle}}</q-toolbar-title
         >
       </q-toolbar>
     </q-header>

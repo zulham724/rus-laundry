@@ -6,7 +6,7 @@
         <div class="text-center bg-transparent" style="height: 200px">
           <!-- Header Image -->
           <q-img
-            src="~/assets/header-mesin-cuci.svg"
+            src="~/assets/bgrck.svg"
             style="height: 200px"
             class="fixed-top mbl-child"
             no-spinner
@@ -22,7 +22,7 @@
                 <q-avatar
                   size="25px"
                   icon="fas fa-arrow-left"
-                  style="color: #000"
+                  style="color: #fff"
                 >
                 </q-avatar>
               </q-btn>
@@ -30,11 +30,7 @@
 
             <div class="bg-transparent full-width q-mx-xl">
               <div
-                class="
-                  text-left text-weight-bold
-                  bg-transparent
-                  q-mt-xl q-ml-md
-                "
+                class="text-left text-weight-bold bg-transparent q-mt-xl q-ml-md"
                 style="color: #fff; font-size: 20px; max-width: 250px"
               >
                 Latihan dasar laundry untuk pemula
@@ -42,14 +38,7 @@
 
               <!-- Info -->
               <div
-                class="
-                  row
-                  full-width
-                  q-pa-md
-                  text-weight-medium
-                  self-center
-                  q-mx-xl q-mt-sm
-                "
+                class="row full-width q-pa-md text-weight-medium self-center q-mx-xl q-mt-sm"
                 style="background-color: #ffd53f; border-radius: 5px"
               >
                 <div class="col-6 text-left">
@@ -99,7 +88,7 @@
                       class="q-pl-md"
                     ></q-icon>
                     <div class="q-pl-sm">
-                      {{ module.count_contents_teks }} video
+                      {{ module.count_contents_teks }} materi
                     </div>
                   </div>
                 </div>
@@ -111,24 +100,49 @@
         <!-- Step course -->
         <div v-for="(content, c) in module.contents" :key="content.id">
           <!-- Container -->
-          <div @click="detailCourse(content.id, c)" class="full-width row">
+          <div @click="detailCourse(content.id, c)" class="full-width q-py-sm row">
             <!-- Thumbnail video -->
             <div class="col-5 text-center self-center" style="z-index: -1">
-              <!-- <q-avatar
-                square
-                style="width: 140px; height: 80px; border-radius: 5px"
-                color="grey"
-              > -->
-              <q-img
-                v-if="content.thumbnail"
-                fit="cover"
-                width="140px"
-                height="80px"
-                no-spinner
-                :src="storageUrl + content.thumbnail.src"
-              >
-              </q-img>
-              <!-- </q-avatar> -->
+              <div v-if="(content.type = 'Materi')">
+                <q-img
+                  v-if="content.thumbnail"
+                  fit="cover"
+                  width="90%"
+                  :ratio="16 / 9"
+                  no-spinner
+                  :src="`${STORAGE_URL}/${content.thumbnail.src}`"
+                />
+                <q-img
+                  v-else
+                  fit="cover"
+                  width="90%"
+                  :ratio="16 / 9"
+                  no-spinner
+                  src="~/assets/mtrksg.svg"
+                />
+                
+              </div>
+              <div v-else >
+                <q-img
+                  v-if="content.thumbnail"
+                  fit="cover"
+                  width="90%"
+                  :ratio="16 / 9"
+                  no-spinner
+                  :src="`${STORAGE_URL}/${content.thumbnail.src}`"
+                  
+                />
+                <q-img
+                  v-else
+                  fit="cover"
+                  width="90%"
+                  :ratio="16 / 9"
+                  no-spinner
+                  src="~/assets/vdksg.svg"
+                  
+                />
+                
+              </div>
             </div>
             <div class="col-7 q-pt-sm">
               <!-- Judul -->
@@ -145,50 +159,35 @@
               >
                 {{ content.description }}
               </div>
-              <!-- durasi video -->
-              <div v-if="lockDuration == false" class="row justify-end q-pt-sm">
-                <div
-                  class="text-weight-medium row self-center"
-                  style="
-                    color: white;
-                    border-radius: 5px 0 0 0;
-                    font-size: 11px;
-                  "
-                >
-                  <div
-                    class="col-6 q-px-md q-py-xs"
-                    style="background-color: #d637b3; border-radius: 5px 0 0 0"
-                  >
-                    Video
-                  </div>
-                  <div
-                    class="col q-px-sm q-py-xs"
-                    style="
-                  background-color: #0c1e7f;
-                  border-radius: 5px 0 0 0;
-                "
-                  >
-                    {{ content.duration }} menit
-                  </div>
-                </div>
-              </div>
-
-              <!-- jika video terkunci -->
-              <div v-else class="row justify-end q-pt-sm">
-                <div
-                  class="text-weight-medium q-px-md q-py-xs"
-                  style="
-                    color: white;
-                    background-color: #0c1e7f;
-                    border-radius: 5px 0 0 0;
-                    font-size: 11px;
-                  "
-                >
-                  Terbuka level 40
-                </div>
-              </div>
+              
             </div>
           </div>
+          <div><div class="row text-center">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div
+            class="col text-weight-medium q-py-xs"
+            style="
+              color: #fff;
+              background-color: #D637B3;
+              border-radius: 5px 0 0 0;
+              font-size: 11px;
+            "
+          >
+            {{ content.type }} 
+          </div>
+          <div
+            class="col text-weight-medium q-py-xs"
+            style="
+              color: #fff;
+              background-color: #0c1e7f;
+              border-radius: 0 0 0 0;
+              font-size: 11px;
+            "
+          >
+            {{ content.sum_duration }} menit
+          </div>
+        </div></div>
           <q-separator></q-separator>
         </div>
 
@@ -197,11 +196,7 @@
           <q-card style="border-radius: 20px">
             <!-- Image lock -->
             <div>
-              <q-img
-                no-spinner
-                src="~/assets/animation-lock.gif"
-                sizes="50px"
-              >
+              <q-img no-spinner src="~/assets/animation-lock.gif" sizes="50px">
               </q-img>
             </div>
 
@@ -226,11 +221,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   props: ["moduleid"],
-  computed:{
-    ...mapGetters(["ModuleContent"])
+  computed: {
+    ...mapGetters(["ModuleContent"]),
   },
   data() {
     return {
@@ -238,7 +233,7 @@ export default {
       lockDuration: false,
       dialogLock: false,
       module: [],
-      storageUrl: STORAGE_URL,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {
@@ -250,6 +245,7 @@ export default {
     },
     getModuleContents() {
       this.$store.dispatch("Module/show", this.moduleid).then((res) => {
+        console.log("res", res);
         this.module = res.data;
       });
     },
@@ -260,12 +256,11 @@ export default {
       this.$store.commit("ModuleContent/set_contents", {
         data: id_content,
       });
-       
+
       this.$router.push(`/${id}/detail-course`);
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

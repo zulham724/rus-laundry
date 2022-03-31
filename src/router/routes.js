@@ -91,6 +91,11 @@ const routes = [
   },
 
   {
+    path: "/detail-cabang-owner",
+    component: () => import("pages/DetailCabangOwner.vue"),
+  },
+
+  {
     path: "/profile-owner",
     component: () => import("pages/ProfileOwner.vue"),
   },

@@ -30,7 +30,7 @@
         </q-header>
       </div>
       <q-page>
-        <div class="q-px-sm q-py-sm">
+        <div v-for="q in 5" :key="q" class="q-px-sm q-py-sm">
           <q-card class="bgCard" style="border-radius: 10px">
             <div class="bgCardTop text-h6 text-white text-center q-py-sm">
               Paket Reguler
@@ -102,147 +102,7 @@
           </q-card>
         </div>
 
-        <div class="q-px-sm q-py-sm">
-          <q-card class="bgCard" style="border-radius: 10px">
-            <div class="bgCardTop text-h6 text-white text-center q-py-sm">
-              Paket Reguler
-            </div>
-            <div class="q-px-sm">
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>1 Cabang</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>1Unlimited Transaksi</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Unlimited Employee</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Unlimited Customer</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>3 Paket</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/cs.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Rp 1.000.000</div>
-                </div>
-              </div>
-            </div>
-
-            <q-btn
-              no-caps
-              class="full-width bgCardTop"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
-            >
-              <div class="text-h6 q-py-sm" style="color: #fff">
-                Lanjutkan Ke Pembayaran
-              </div>
-            </q-btn>
-          </q-card>
-        </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="bgCard" style="border-radius: 10px">
-            <div class="bgCardTop text-h6 text-white text-center q-py-sm">
-              Paket Reguler
-            </div>
-            <div class="q-px-sm">
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>1 Cabang</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>1Unlimited Transaksi</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Unlimited Employee</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Unlimited Customer</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>3 Paket</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/cs.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Rp 1.000.000</div>
-                </div>
-              </div>
-            </div>
-
-            <q-btn
-              no-caps
-              class="full-width bgCardTop"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
-            >
-              <div class="text-h6 q-py-sm" style="color: #fff">
-                Lanjutkan Ke Pembayaran
-              </div>
-            </q-btn>
-          </q-card>
-        </div>
+        
 
         <q-dialog v-model="payment1" persistent position="bottom">
           <q-card>
@@ -328,10 +188,7 @@
             <q-card-section class="q-pt-sm">
               <div>Kode Pembayaran :</div>
               <div class="text-h6">3047530475036506034</div>
-              <q-btn
-                no-caps
-                style="background-color: #ddca1d"
-              >
+              <q-btn no-caps style="background-color: #ddca1d">
                 <q-avatar square size="15px">
                   <q-img src="~/assets/cp.png" />
                 </q-avatar>
@@ -341,10 +198,9 @@
               <div class="text-h6">Rp 1.000.000</div>
             </q-card-section>
 
-           
-
             <q-card-actions align="left">
               <q-btn
+                @click="payment3 = true"
                 flat
                 label="Konfirmasi"
                 rounded
@@ -365,60 +221,61 @@
         </q-dialog>
 
         <q-dialog v-model="payment3" persistent>
-          <q-card>
+          <q-card style="border-radius: 24px">
             <q-card-section class="text-center">
               <div class="text-black">
-                <q-avatar>
-                  <q-img
-                    src="~/assets/ctg2.png"
-                  />
-                </q-avatar>
+                  <q-img src="~/assets/ctg2.png" width="60%"/>
               </div>
             </q-card-section>
-            <q-card-section
-              class="text-center"
-              style="background-color: #b43f3f"
-            >
-              <div class="text-white">
-                Layanan pembayaran Anda akan berakhir dalam : 24 Jam <br />
-                Jika melebihi 24 Jam Maka akan EXPIRED!
+            <q-card-section>
+              <div class="text-center text-black text-weight-bold">
+                Pembaaran Berhasil
               </div>
-            </q-card-section>
-            <q-card-section class="q-pt-sm">
-              <div>Kode Pembayaran :</div>
-              <div class="text-h6">3047530475036506034</div>
-              <q-btn
-                no-caps
-                style="background-color: #ddca1d"
-              >
-                <q-avatar square size="15px">
-                  <q-img src="~/assets/cp.png" />
-                </q-avatar>
-              </q-btn>
+              <div class="text-center text-black">15 Maret 2022 14:44 WIB</div>
+              <q-separator />
+              <q-item>
+                <q-item-section top avatar>
+                  <q-avatar>
+                    <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                  </q-avatar>
+                </q-item-section>
 
-              <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">Rp 1.000.000</div>
-            </q-card-section>
+                <q-item-section>
+                  <q-item-label>Lintangsssss</q-item-label>
+                  <q-item-label caption>No. anggota 1234567</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-separator />
+              <div style="color: #8B8484">Transfer Ke:</div>
+              <q-item>
+                
+                <q-item-section top avatar>
+                  <q-avatar>
+                    <img src="~/assets/bnk.svg" />
+                  </q-avatar>
+                </q-item-section>
 
-           
+                <q-item-section>
+                  <q-item-label caption class="text-black">a.n/Aryoseto Wahyatma  Bryan Hisyam</q-item-label>
+                  <q-item-label class="text-weight-bold" >3047530475036506034</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-card-section>
 
             <q-card-actions align="left">
               <q-btn
+
                 flat
-                label="Konfirmasi"
+                
                 rounded
                 style="background-color: #6295ff"
-                color="white"
+                
                 v-close-popup
-              />
-              <q-btn
-                flat
-                label="Batal"
-                rounded
-                style="background-color: #7e8385"
-                color="white"
-                v-close-popup
-              />
+              >
+                <div class="q-mx-sm" style="color:#fff">
+                  Selesai
+                </div>
+              </q-btn>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -435,7 +292,7 @@ export default {
     return {
       payment1: ref(false),
       payment2: ref(false),
-      payment3: ref(true),
+      payment3: ref(false),
     };
   },
   mounted() {},
