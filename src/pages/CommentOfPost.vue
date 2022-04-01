@@ -33,11 +33,39 @@
             "
           >
             <div class="q-pr-xs self-center">
-              <q-avatar size="40px">
+              <div class="text-left self-center" v-if="post">
+                <!--Avatar-->
+                <div v-if="!post.author.avatar" class="self-center">
+                  <q-avatar
+                    @click="$router.push('/my-profile')"
+                    size="40px"
+                    class="bg-transparent"
+                  >
+                    <q-img no-spinner src="~/assets/ld.png"></q-img>
+                  </q-avatar>
+                </div>
+                <div v-else-if="post.author.avatar" class="self-center">
+                  <q-avatar
+                    class="bg-transparent"
+                    @click="$router.push('/my-profile')"
+                    v-if="post.author.avatar != 'users/default.png'"
+                    size="40px"
+                  >
+                    <q-img
+                      no-spinner
+                      :src="STORAGE_URL + `/` + post.author.avatar"
+                    ></q-img>
+                  </q-avatar>
+                </div>
+                <!-- <q-avatar size="80px" style="background-color: #888888">
+                <q-img no-spinner src="~/assets/Avatar.png"></q-img>
+              </q-avatar> -->
+              </div>
+              <!-- <q-avatar size="40px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>
-              </q-avatar>
+              </q-avatar> -->
             </div>
-            <div class="self-center">
+            <div class="self-center q-pl-sm">
               <div
                 class="text-weight-bold"
                 style="color: #3a3838; font-size: 17px; width: auto"
@@ -62,8 +90,7 @@
             <div
               class="full-height"
               style="display: block; background-color: #c4c4c4; width: 1px"
-            >
-            </div>
+            ></div>
             <div class="col q-pl-sm">
               {{ post.body }}
             </div>
@@ -85,11 +112,36 @@
                 "
               >
                 <div class="col-3 q-pa-xs self-center">
-                  <q-avatar size="40px">
-                    <q-img src="~/assets/Avatar.png" no-spinner></q-img>
-                  </q-avatar>
+                  <div class="text-left self-center" v-if="comment">
+                    <!--Avatar-->
+                    <div v-if="!comment.user.avatar" class="self-center">
+                      <q-avatar
+                        @click="$router.push('/my-profile')"
+                        size="40px"
+                        class="bg-transparent"
+                      >
+                        <q-img no-spinner src="~/assets/ld.png"></q-img>
+                      </q-avatar>
+                    </div>
+                    <div v-else-if="comment.user.avatar" class="self-center">
+                      <q-avatar
+                        class="bg-transparent"
+                        @click="$router.push('/my-profile')"
+                        v-if="comment.user.avatar != 'users/default.png'"
+                        size="40px"
+                      >
+                        <q-img
+                          no-spinner
+                          :src="STORAGE_URL + `/` + comment.user.avatar"
+                        ></q-img>
+                      </q-avatar>
+                    </div>
+                    <!-- <q-avatar size="80px" style="background-color: #888888">
+                <q-img no-spinner src="~/assets/Avatar.png"></q-img>
+              </q-avatar> -->
+                  </div>
                 </div>
-                <div class="col self-center q-pl-lg">
+                <div class="col-9 self-center q-pl-md">
                   <div
                     class="text-weight-bold"
                     style="color: #3a3838; font-size: 17px; width: auto"
@@ -264,9 +316,32 @@
         >
           <!-- Profile -->
           <div class="col-2 self-end">
-            <q-avatar size="40px">
+            <!--Avatar-->
+              <div v-if="!dataAuth.avatar" class="self-center">
+                <q-avatar
+                  @click="$router.push('/my-profile')"
+                  size="40px"
+                  style="background-color: #888888"
+                >
+                  <q-img no-spinner src="~/assets/ld.png"></q-img>
+                </q-avatar>
+              </div>
+              <div v-else-if="dataAuth.avatar" class="self-center">
+                <q-avatar
+                  @click="$router.push('/my-profile')"
+                  v-if="dataAuth.avatar != 'users/default.png'"
+                  size="40px"
+                  style="background-color: #888888"
+                >
+                  <q-img
+                    no-spinner
+                    :src="STORAGE_URL + `/` + dataAuth.avatar"
+                  ></q-img>
+                </q-avatar>
+              </div>
+            <!-- <q-avatar size="40px">
               <q-img src="~/assets/Avatar.png" no-spinner></q-img>
-            </q-avatar>
+            </q-avatar> -->
           </div>
 
           <!-- Type of comment -->
@@ -305,7 +380,7 @@ import moment from "moment";
 export default {
   props: ["postid"],
   computed: {
-    ...mapState(["Post"]),
+    ...mapState(["Post", "Auth"]),
   },
   data() {
     return {
@@ -313,11 +388,17 @@ export default {
       lihatBalasan: false,
       like: "100",
       post: null,
+
+      //ini untuk menyimpan data auth
+      dataAuth: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {
+    this.dataAuth = this.Auth.auth;
     this.getPostData();
-    moment.locale('id')
+    
+    moment.locale("id");
   },
   methods: {
     moment,
@@ -331,6 +412,7 @@ export default {
     },
     getPostData() {
       this.$store.dispatch("Post/show", this.postid).then((res) => {
+        console.log(res.data);
         this.post = res.data;
       });
     },
@@ -340,7 +422,7 @@ export default {
         value: this.comment,
       };
       this.$store.dispatch("Comment/store", payload).then((res) => {
-        this.post = res.data
+        this.post = res.data;
         this.comment = null;
       });
     },

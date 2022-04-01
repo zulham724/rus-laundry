@@ -86,6 +86,11 @@ const routes = [
   },
 
   {
+    path: "/my-profile-like",
+    component: () => import("pages/myprofileLike.vue"),
+  },
+
+  {
     path: "/home-owner",
     component: () => import("pages/HomeOwner.vue"),
   },
@@ -118,6 +123,26 @@ const routes = [
   {
     path: "/paket-owner",
     component: () => import("pages/PaketOwner.vue"),
+  },
+
+  {
+    path: "/detail-paket-owner",
+    component: () => import("pages/DetailPaketOwner.vue"),
+  },
+
+  {
+    path: "/detail-karyawan-owner",
+    component: () => import("pages/DetailKaryawanOwner.vue"),
+  },
+
+  {
+    path: "/detail-pelanggan-owner",
+    component: () => import("pages/DetailPelangganOwner.vue"),
+  },
+
+  {
+    path: "/edit-paket-owner",
+    component: () => import("pages/EditPaketOwner.vue"),
   },
 
   {

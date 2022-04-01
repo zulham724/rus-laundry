@@ -84,6 +84,9 @@
     + halaman invoice-page bug
     + tambah satuan dudukan untuk sofa (bilangan bulat -> 1,2,3 dst)
     + tambah satuan m2 untuk karpet (pecahan -> 0.1 , 0.2 , 0.3 dst)
+    + halmaan list of course tidak ada waktu
+    + halaman detail course gambar bug
+    + halaman course of home default thumnail dan substring
 
 @ Proses 🚂
     - ada foto sebelum cucian dikerjakan atau baru masuk (menunggu desain)
@@ -103,6 +106,13 @@
     - is read halaman list of course
     - detail materi jika tidak ada gambar tidak usah ada img
     - halaman community ketika di klik dia preview photo
+    - halaman sub materi dikasih padding
+    - halaman kursus liat video, judul ke bawah
+
+    
+   
+     
+    - type materi dan video bug
     
     
     

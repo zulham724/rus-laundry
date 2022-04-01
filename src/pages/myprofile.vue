@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="mbl">
+  <q-layout class="mbl" view="lHh lpR fFf">
     <div class="fixed-top" style="z-index: 999">
       <q-header class="bg-transparent" v-if="dataAuth">
         <q-toolbar class="bg-white shadow-1">
@@ -14,10 +14,11 @@
             </q-icon>
           </q-btn>
 
-          <q-toolbar-title v-if="dataAuth.shop.name"
+          <q-toolbar-title
+            v-if="dataAuth.shop.name"
             class="text-left text-weight-medium text-subtitle2"
             style="color: black; font-size: 16px"
-            >{{dataAuth.shop.name}}</q-toolbar-title
+            >{{ dataAuth.shop.name }}</q-toolbar-title
           >
 
           <!-- Button option -->
@@ -39,37 +40,48 @@
       </q-header>
     </div>
     <q-page-container>
-      <q-page class="">
-        <div class="q-pa-md q-mb-lg">
+      <q-page class="mbl-child">
+        <div class="q-pa-md q-mb-sm">
           <div class="row">
-            <div class="col-4 text-left" v-if="dataAuth">
+            <div class="col-4 text-left self-center" v-if="dataAuth">
               <!--Avatar-->
-                <div v-if="!dataAuth.avatar" class="self-center">
-                  <q-avatar @click="$router.push('/my-profile')" size="80px" style="background-color: #888888">
-                    <q-img no-spinner src="~/assets/ld.png" ></q-img>
-                  </q-avatar>
-                </div>
-                <div v-else-if="dataAuth.avatar" class="self-center ">
-                  <q-avatar @click="$router.push('/my-profile')" v-if="dataAuth.avatar != 'users/default.png'" size="80px" style="background-color: #888888">
-                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" ></q-img>
-                  </q-avatar>
-                </div>
+              <div v-if="!dataAuth.avatar" class="self-center">
+                <q-avatar
+                  @click="$router.push('/my-profile')"
+                  size="80px"
+                  style="background-color: #888888"
+                >
+                  <q-img no-spinner src="~/assets/ld.png"></q-img>
+                </q-avatar>
+              </div>
+              <div v-else-if="dataAuth.avatar" class="self-center">
+                <q-avatar
+                  @click="$router.push('/my-profile')"
+                  v-if="dataAuth.avatar != 'users/default.png'"
+                  size="80px"
+                  style="background-color: #888888"
+                >
+                  <q-img
+                    no-spinner
+                    :src="STORAGE_URL + `/` + dataAuth.avatar"
+                  ></q-img>
+                </q-avatar>
+              </div>
               <!-- <q-avatar size="80px" style="background-color: #888888">
                 <q-img no-spinner src="~/assets/Avatar.png"></q-img>
               </q-avatar> -->
             </div>
-            <div class="col-8" >
+            <div class="col-8">
               <div
-                class="text-weight-medium text-right q-pb-sm"
-                style="color: #919193; font-size: 15px"
+                class=" text-right q-pb-xs"
               >
-                Cabang
+                <q-btn disable class="grad" text-color="white" label="Cabang" />
               </div>
               <div
-                class="row col-12 q-px-sm q-py-xs"
+                class="row col-12 q-px-sm "
                 style="
                   border-radius: 20px 0px 20px 0px;
-                  background-color: #f5f7f9;
+                  background-color: #F5F7F9;
                   width: auto;
                 "
               >
@@ -105,17 +117,35 @@
             </div>
           </div>
 
-          <div 
+          <div
             class="q-pt-sm text-weight-medium"
             style="color: #3a3838; font-size: 15px"
           >
             Tentang toko
           </div>
-          <div v-if="dataAuth" class="q-pt-xs text-weight-medium"
-            style="color: #898585; font-size: 16px; width: 70vw">
-            {{dataAuth.shop.name}}
+          <div
+            v-if="dataAuth"
+            class="q-pt-xs text-weight-medium"
+            style="color: #898585; font-size: 16px; width: 70vw"
+          >
+            {{ dataAuth.shop.name }}
+          </div>
+          <div class="q-pt-xs">
+            <q-item>
+              <q-item-section top avatar>
+                <q-avatar>
+                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>Laundry Zimbabwe</q-item-label>
+                <q-item-label caption>Pemilik</q-item-label>
+              </q-item-section>
+            </q-item>
           </div>
         </div>
+
         <q-separator></q-separator>
 
         <!--tabs postingan, like, dan video pribadi-->
@@ -126,70 +156,145 @@
           switch-indicator
         >
           <q-tab
+            name="post"
             class="col-4 self-center"
-            name="profile-other"
             no-caps
             @click="$router.push('/my-profile')"
-            >
-            <q-img
-              class="q-pa-sm"
-              no-spinner
-              style="width: 20px; height: 22px"
-              :src="tab == 'profile-other'? require('../assets/profile-other-active.svg'): require('../assets/profile-other.svg')"
-            ></q-img>
-          </q-tab>
-
-          <q-tab
-            class="col-4 self-center"
-            name="like"
-            no-caps
-            @click="$router.push('/my-profile-like')"
           >
             <q-img
               class="q-pa-sm"
               no-spinner
-              style="width: 20px; height: 18px"
-              :src="tab == 'like'? require('../assets/profile-like-active.svg'): require('../assets/profile-like.svg')"
+              style="width: 20px; height: 22px"
+              :src="
+                tab == 'post'
+                  ? require('../assets/profile-other-active.svg')
+                  : require('../assets/profile-other.svg')
+              "
             ></q-img>
           </q-tab>
 
-          <q-tab
-            class="col-4 self-center"
-            name="private"
-            no-caps
-            @click="$router.push('/my-profile-like')"
+          <q-tab class="col-4 self-center" name="like" no-caps>
+            <q-img
+              class="q-pa-sm"
+              no-spinner
+              style="width: 20px; height: 18px"
+              :src="
+                tab == 'like'
+                  ? require('../assets/profile-like-active.svg')
+                  : require('../assets/profile-like.svg')
+              "
+            ></q-img>
+          </q-tab>
+
+          <q-tab class="col-4 self-center" name="private" no-caps
             ><q-img
               class="q-pa-sm"
               no-spinner
               style="width: 18px; height: 21px"
-              :src="tab == 'private'? require('../assets/my-profile-private.svg'): require('../assets/my-profile-private.svg')"
+              :src="
+                tab == 'private'
+                  ? require('../assets/my-profile-private.svg')
+                  : require('../assets/my-profile-private.svg')
+              "
             ></q-img>
           </q-tab>
         </q-tabs>
 
         <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="hari">
-            <daily-transaction></daily-transaction>
+          <q-tab-panel name="post">
+            <div>
+              <div>TAB POST</div>
+              <q-infinite-scroll @load="onLoad">
+                <!-- Postingan -->
+                <q-intersection
+                  class="mbl-child"
+                  :ref="`intersection_${post.id}`"
+                  v-for="post in posts.data"
+                  :key="post.id"
+                  :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+                >
+                  <item-post-component
+                    class="mbl-child"
+                    v-on:update-height="updateHeight(post)"
+                    :post="post"
+                    :style="`position:relative;height:100%`"
+                  ></item-post-component>
+                </q-intersection>
+              </q-infinite-scroll>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="like">
+            <div>
+              <div>TAB LIKE</div>
+              <q-item clickable v-ripple :active="active">
+                <q-item-section avatar>
+                  <q-icon name="favorite_border" />
+                </q-item-section>
+                <q-item-section>Postingan yang saya sukai</q-item-section>
+                <q-item-section side>Hanya saya</q-item-section>
+              </q-item>
+
+              <q-infinite-scroll @load="onLoad">
+                <!-- Postingan -->
+                <q-intersection
+                  class="mbl-child"
+                  :ref="`intersection_${post.id}`"
+                  v-for="post in posts.data"
+                  :key="post.id"
+                  :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+                >
+                  <item-post-component
+                    class="mbl-child"
+                    v-on:update-height="updateHeight(post)"
+                    :post="post"
+                    :style="`position:relative;height:100%`"
+                  ></item-post-component>
+                </q-intersection>
+              </q-infinite-scroll>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="private">
+            <div>
+              <div>TAB PRIVATE</div>
+              <q-infinite-scroll @load="onLoad">
+                <!-- Postingan -->
+                <q-intersection
+                  class="mbl-child"
+                  :ref="`intersection_${post.id}`"
+                  v-for="post in posts.data"
+                  :key="post.id"
+                  :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+                >
+                  <item-post-component
+                    class="mbl-child"
+                    v-on:update-height="updateHeight(post)"
+                    :post="post"
+                    :style="`position:relative;height:100%`"
+                  ></item-post-component>
+                </q-intersection>
+              </q-infinite-scroll>
+            </div>
           </q-tab-panel>
         </q-tab-panels>
 
-        <div>
-          <q-infinite-scroll @load="onLoad" :offset="250">
-            <!-- Postingan -->
+        <!--  <div>
+          <q-infinite-scroll @load="onLoad">
             <q-intersection
+              class="mbl-child"
               :ref="`intersection_${post.id}`"
               v-for="post in posts.data"
               :key="post.id"
               :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
             >
               <item-post-component
+                class="mbl-child"
                 v-on:update-height="updateHeight(post)"
                 :post="post"
                 :style="`position:relative;height:100%`"
               ></item-post-component>
             </q-intersection>
           </q-infinite-scroll>
-        </div>
+        </div> -->
 
         <q-page-sticky position="bottom-right" :offset="[18, 60]">
           <q-fab
@@ -230,23 +335,24 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { mapState } from "vuex";
 import PostCardMyProfileComponent from "src/components/post/PostCardMyProfileComponent.vue";
 
 export default {
-  name: "MyProfilePage",
   include: ["MyProfilePage"],
   components: {
     "item-post-component": PostCardMyProfileComponent,
   },
 
   computed: {
-    ...mapState(["Post","Auth"]),
+    ...mapState(["Post", "Auth"]),
   },
 
   data() {
     return {
       posts: {},
+      tab: ref("post"),
       //ini untuk menyimpan data auth
       dataAuth: null,
       STORAGE_URL: STORAGE_URL,
@@ -295,4 +401,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.grad {
+  background-image: linear-gradient(to right, #ff9ac5, #7900ff);
+}
+</style>

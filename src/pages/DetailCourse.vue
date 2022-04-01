@@ -1,12 +1,12 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf">
-    <div class="fixed-top shadow-2" style="z-index: 999">
+  <q-layout class="mbl " view="lHh lpR fFf">
+    <div class="fixed-top  shadow-2" style="z-index: 999">
       <q-header elevated>
         <div
           class="row full-width q-py-sm justify-center"
           style="background-color: #1c309b"
         >
-          <div class="col-4 q-px-sm self-center">
+          <div class="col-2 text-center self-center">
             <q-btn flat round size="10px" @click="$router.back()">
               <q-avatar
                 size="20px"
@@ -16,16 +16,17 @@
               </q-avatar>
             </q-btn>
           </div>
-          <div
+          <div class="col-10">
+            <div
             v-if="content"
-            class="col-4 self-center text-weight-medium text-center text-white"
+            class=" self-center text-weight-medium  text-white q-pl-sm"
             style="font-size: 20px"
           >
             {{ content.tittle }}
           </div>
-          <div class="col-4 self-center text-right q-px-sm">
-            
           </div>
+          
+
         </div>
       </q-header>
     </div>
@@ -55,7 +56,7 @@
           class="row full-width q-py-sm justify-center"
           style="background-color: #1c309b"
         >
-          <div class="col-8 q-px-sm self-center">
+          <div class="col-2 text-center self-center">
             <q-btn flat round size="10px" @click="$router.back()">
               <q-avatar
                 size="20px"
@@ -65,13 +66,17 @@
               </q-avatar>
             </q-btn>
           </div>
-          <div
-            class="col-4 self-center text-weight-medium text-center text-white"
+          <div class="col-10">
+            <div
+            v-if="content"
+            class=" self-center text-weight-medium  text-white q-pl-sm"
             style="font-size: 20px"
           >
-            
+            {{ content.tittle }}
+          </div>
           </div>
           
+
         </div>
       <!-- Video/foto -->
       <div v-if="content.video" class="full-width bg-grey" style="height: 250px">
@@ -79,14 +84,17 @@
           <video :src="STORAGE_URL + `/` + content.video.src"></video>
         </vue-plyr>
       </div>
+      <div v-if="content.image_content" class="full-width " >
+        <q-img :src="STORAGE_URL + `/` + content.image_content.src"/>
+      </div>
       <!-- Deskripsi -->
       <div class="q-px-sm q-pt-md">
-        <div class="text-weight-bold" style="color: #5a5656; font-size: 15px">
+        <div class="q-px-sm text-weight-bold" style="color: #5a5656; font-size: 15px">
           Deskripsi
         </div>
         <!-- isi deskripsi -->
         <div
-          class="text-weight-medium text-justify"
+          class="text-weight-medium text-justify q-px-sm" 
           style="color: #aca9a9; font-size: 12px"
         >
           {{ content.description }}
@@ -94,127 +102,7 @@
       </div>
 
       <!-- Materi berikutnya -->
-      <div class="fixed-bottom mbl-child" v-if="next_content">
-        <div
-          class="text-weight-bold q-px-md"
-          style="color: #5f5959; font-size: 10px"
-        >
-          Materi berikutnya
-        </div>
-        <!-- Step course -->
-        <!-- Container -->
-        <div @click="detailCourse(next_content.id)" class="full-width row">
-          <!-- Thumbnail video -->
-          <div class="col-5 text-center self-center" style="z-index: -1">
-            <q-avatar
-              square
-              style="width: 140px; height: 80px; border-radius: 5px"
-              color="grey"
-            >
-              <q-img no-spinner src="~/assets/contoh-thumbnail.svg">
-                <!-- Jika video terlock -->
-                <q-icon
-                  v-if="(lockVideo = false)"
-                  class="absolute-center"
-                  name="fas fa-lock"
-                  size="40px"
-                  color="white"
-                ></q-icon>
-              </q-img>
-            </q-avatar>
-          </div>
-          <div class="col-7 q-pt-sm">
-            <!-- Judul -->
-            <div
-              class="text-weight-bold"
-              style="color: #5f5959; font-size: 14px"
-            >
-              {{ next_content.tittle }}
-            </div>
-            <!-- Deskripsi -->
-            <div
-              class="text-weight-regular"
-              style="color: #5a5656; font-size: 9px"
-            >
-              {{ next_content.description }}
-            </div>
-            <!-- durasi video -->
-            <div v-if="lockDuration == false" class="row justify-end q-pt-sm">
-              <div
-                class="text-weight-medium row self-center"
-                style="color: white; border-radius: 5px 0 0 0; font-size: 11px"
-              >
-                <div
-                  class="col-6 q-px-md q-py-xs"
-                  style="background-color: #d637b3; border-radius: 5px 0 0 0"
-                >
-                  Video
-                </div>
-                <div
-                  class="col q-px-sm q-py-xs"
-                  style="background-color: #0c1e7f; border-radius: 5px 0 0 0"
-                >
-                  {{ next_content.duration }} menit
-                </div>
-              </div>
-            </div>
-
-            <!-- jika video terkunci -->
-            <div v-else class="row justify-end q-pt-sm">
-              <div
-                class="text-weight-medium q-px-md q-py-xs"
-                style="
-                  color: white;
-                  background-color: #0c1e7f;
-                  border-radius: 5px 0 0 0;
-                  font-size: 11px;
-                "
-              >
-                Terbuka level 40
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom NavBar -->
-        <div class="row shadow-3">
-          <div class="col-6 justify-center text-center">
-            <q-btn
-              class="full-width"
-              no-caps
-              flat
-              dense
-              size="20px"
-              :color="content.liked_count ? 'red' : 'grey'"
-              :icon="content.liked_count ? 'favorite' : 'favorite_border'"
-              @click="content.liked_count ? dislike() : like()"
-            >
-            </q-btn>
-          </div>
-          <div class="col-6 justify-center text-center">
-            <q-btn
-              class="full-width"
-              no-caps
-              flat
-              @click="$router.push(`/${content.id}/comment-of-course`)"
-            >
-              <div>
-                <q-icon
-                  name="far fa-comment-alt"
-                  color="grey"
-                  size="25px"
-                ></q-icon>
-                <div
-                  class="text-weight-medium"
-                  style="color: grey; font-size: 10px"
-                >
-                  Komentar
-                </div>
-              </div>
-            </q-btn>
-          </div>
-        </div>
-      </div>
+      
 
       <!-- Dialog unlock content -->
       <q-dialog v-model="unlockLevel">
@@ -378,6 +266,7 @@ export default {
     getContent() {
       this.$store.dispatch("ModuleContent/show", this.contentid).then((res) => {
         this.content = res.data;
+        console.log('ini content',this.content);
         this.$forceUpdate();
       });
     },

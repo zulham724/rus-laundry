@@ -43,17 +43,19 @@
             </div>
             <div class="col-2 text-center q-pl-sm">
               <!--Avatar-->
-                <div v-if="!Auth.auth.avatar" class="self-center">
-                  <q-avatar style="background-color: #888888">
-                    <q-img no-spinner src="~/assets/ld.png" ></q-img>
-                  </q-avatar>
-                </div>
-                <div v-else-if="Auth.auth.avatar" class="self-center ">
-
-                  <q-avatar  style="background-color: #888888">
-                    <q-img no-spinner :src="storageUrl + `/` + Auth.auth.avatar" ></q-img>
-                  </q-avatar>
-                </div>
+              <div v-if="!Auth.auth.avatar" class="self-center">
+                <q-avatar style="background-color: #888888">
+                  <q-img no-spinner src="~/assets/ld.png"></q-img>
+                </q-avatar>
+              </div>
+              <div v-else-if="Auth.auth.avatar" class="self-center">
+                <q-avatar style="background-color: #888888">
+                  <q-img
+                    no-spinner
+                    :src="storageUrl + `/` + Auth.auth.avatar"
+                  ></q-img>
+                </q-avatar>
+              </div>
               <!-- <q-avatar
                 style="background-color: #888888"
                 @click="$router.push('/profile-of-course')"
@@ -66,39 +68,23 @@
                 class="row text-weight-medium q-pb-xs"
                 style="font-size: 18px; color: white"
               >
-                {{ Auth.auth.shop.name }}
+                Kursus Digital
               </div>
               <div class="row q-gutter-x-sm">
-              <div
-                class="col-4 q-px-sm self-center"
-                style="
-                  background-color: #ff843e;
-                  border-radius: 20px;
-                  width: auto;
-                  font-size: 12px;
-                  color: white;
-                "
-              >
-                40 Total Materi
-              </div>
-
-              <!-- Point -->
-              <div
-                class="col-4 q-px-md self-center"
-                style="
-                  background-color: #fff;
-                  border-radius: 20px;
-                  width: auto;
-                  font-size: 10px;
-                  color: #ff843e;
-                "
-              >
-                1 Diselesaikan
+                <div
+                  class="col-4 q-px-sm self-center"
+                  style="
+                    background-color: #ff843e;
+                    border-radius: 20px;
+                    width: auto;
+                    font-size: 12px;
+                    color: white;
+                  "
+                >
+                  {{ Auth.auth.shop.name }}
+                </div>
               </div>
             </div>
-              
-            </div>
-
           </div>
 
           <!-- Search bar -->
@@ -137,7 +123,7 @@
         </div>
       </div>
 
-      <div v-for="module in modules" :key="module.id" class=" ">
+      <div v-for="module in modules" :key="module.id">
         <!-- Container -->
         <div
           class="full-width row q-pt-sm"
@@ -151,28 +137,28 @@
             color="grey"
           > -->
             <q-img
+              v-if="module.banner"
               style="border-radius: 5px"
               fit="cover"
               width="90%"
               :ratio="16 / 9"
-              v-if="module.banner"
               no-spinner
               :src="storageUrl + `/` + module.banner.src"
             >
             </q-img>
             <q-img
+              v-else
               style="border-radius: 5px"
               fit="cover"
               width="90%"
               :ratio="16 / 9"
-              v-else
               no-spinner
-              src="dfltpht.svg"
+              src="~/assets/dfltpht.svg"
             >
             </q-img>
             <!-- </q-avatar> -->
           </div>
-          <div class="col-7">
+          <div class="col-7 q-px-sm">
             <!-- Judul -->
             <div
               class="text-weight-bold"
@@ -185,7 +171,8 @@
               class="text-weight-regular"
               style="color: #5a5656; font-size: 9px"
             >
-              {{ module.description }}
+              {{ module.description.substring(0, 100) }} . . . - Baca
+              Selengkapnya
             </div>
           </div>
           <!-- durasi video -->
@@ -240,6 +227,7 @@ export default {
     getModule() {
       this.$store.dispatch("Module/index").then((res) => {
         this.modules = this.module_temp = res.data;
+        console.log('ini module', this.modules);
       });
     },
     filterModule(value) {

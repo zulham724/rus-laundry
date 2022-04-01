@@ -1,14 +1,14 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf"> 
     <q-page-container>
-      <q-page>
+      <q-page >
         <!-- Header -->
         <div class="text-center bg-transparent" style="height: 200px">
           <!-- Header Image -->
           <q-img
-            src="~/assets/bgrck.svg"
+            src="~/assets/bgrck.png"
             style="height: 200px"
-            class="fixed-top mbl-child"
+            class="fixed-top  mbl-child "
             no-spinner
           >
             <q-toolbar class="bg-transparent" style="z-index: 999">
@@ -99,13 +99,13 @@
             </div>
           </q-img>
         </div>
-
+        <div class="q-py-sm"></div>
         <!-- Step course -->
         <div v-for="(content, c) in module.contents" :key="content.id">
           <!-- Container -->
-          <div @click="detailCourse(content.id, c)" class="full-width q-py-sm row">
+          <div @click="detailCourse(content.id, c)" class="full-width  q-py-sm row">
             <!-- Thumbnail video -->
-            <div class="col-5 text-center self-center" style="z-index: -1">
+            <div class="col-5  text-center self-center" style="z-index: -1">
               <div v-if="(content.type = 'Materi')">
                 <q-img
                   v-if="content.thumbnail"
@@ -147,7 +147,7 @@
                 
               </div>
             </div>
-            <div class="col-7 q-pt-sm">
+            <div class="col-7 q-pt-sm q-px-sm">
               <!-- Judul -->
               <div
                 class="text-weight-bold"
@@ -160,7 +160,7 @@
                 class="text-weight-regular"
                 style="color: #5a5656; font-size: 9px"
               >
-                {{ content.description }}
+                {{ content.description.substring(0, 100) }} . . . - Baca Selengkapnya
               </div>
               
             </div>
@@ -180,7 +180,7 @@
             {{ content.type }} 
           </div>
           <div
-          v-if="content.sum_duration"
+          v-if="content.duration"
             class="col text-weight-medium q-py-xs"
             style="
               color: #fff;
@@ -189,7 +189,7 @@
               font-size: 11px;
             "
           >
-            {{ content.sum_duration }} menit
+            {{ content.duration }} menit
           </div>
           <div
             v-else
