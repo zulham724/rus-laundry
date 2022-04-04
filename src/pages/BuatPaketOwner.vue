@@ -1,12 +1,12 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf">
+  <q-layout  class="mbl" view="lHh lpR fFf">
     <q-page class="mbl-child">
       <div class="q-px-sm q-py-xl text-center">
         <q-avatar size="100px">
           <q-img src="~/assets/ktab.png" />
         </q-avatar>
         <div class="text-weight-medium q-mt-sm" style="font-size: 24px">
-          Edit Paket
+          Buat Layanan Baru
         </div>
       </div>
       <div class="q-px-sm bg-white" style="border-radius: 5px">
@@ -56,7 +56,7 @@
           </div>
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
-              <q-btn class="q-px-sm" style="background-color:#6295FF; border-radius:10px"  text-color="white" label="Simpan" />
+              <q-btn class="q-px-sm" style="background-color:#6295FF; border-radius:10px"  text-color="white" label="Tambahkan" />
             </div>
             <div class="col text-left q-pl-sm">
               <q-btn class="q-px-lg" style="background-color:#fff; border-radius:10px"  text-color="black" label="Cancel" />

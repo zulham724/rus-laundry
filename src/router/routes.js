@@ -141,8 +141,43 @@ const routes = [
   },
 
   {
+    path: "/buat-paket-owner",
+    component: () => import("src/pages/BuatPaketOwner.vue"),
+  },
+
+  {
     path: "/edit-paket-owner",
-    component: () => import("pages/EditPaketOwner.vue"),
+    component: () => import("src/pages/EditPaketOwner.vue"),
+  },
+
+  {
+    path: "/buat-karyawan-owner",
+    component: () => import("src/pages/BuatKaryawanOwner.vue"),
+  },
+
+  {
+    path: "/edit-karyawan-owner",
+    component: () => import("src/pages/EditKaryawanOwner.vue"),
+  },
+
+  {
+    path: "/buat-pelanggan-owner",
+    component: () => import("src/pages/BuatPelangganOwner.vue"),
+  },
+
+  {
+    path: "/edit-pelanggan-owner",
+    component: () => import("src/pages/EditPelangganOwner.vue"),
+  },
+
+  {
+    path: "/detail-produk-owner",
+    component: () => import("src/pages/DetailProdukOwner.vue"),
+  },
+
+  {
+    path: "/detail-transaksi-owner",
+    component: () => import("src/pages/DetailTransaksiOwner.vue"),
   },
 
   {
@@ -186,6 +221,8 @@ const routes = [
     path: "/marketplace-home",
     component: () => import("pages/marketplace-home.vue"),
   },
+
+  
 
   {
     path: "/new-home",

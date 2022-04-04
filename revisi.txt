@@ -68,7 +68,6 @@
     + ketika tambah karyawan, belum bisa tambah foto
     + halaman make-an-order, dialog saat penambahan pelanggan & karyawan belum responsive, juga harus diisi
     + halaman connect to printer, gambar centang ketika sudah konek
-
     + halaman detail transaksi, jika paket/layanan sudah di delete halaman akan menjadi blank putih, dikarenakan layanan kosong
     + ketika memilih paket ambil yang is_available nya 1
     + ketika hendak memesan pesanan laundry, atribut yang ada di tabel service seperti name, description, price, and process time juga dimasukan ke table services
@@ -77,8 +76,7 @@
     + halaman utama laundry digital diganti nama toko
     + waktu salin link, cuman bisa di web di android belum bisa
     + edit nama itu = edit nama toko
-    + edit account -> pertama cek device (mobile / pc) -> kalo (mobile) cek galeri / ambil foto kemudian crop
-                                                       -> kalo (pc) ambil foto kemudian crop
+    + edit account -> pertama cek device (mobile / pc) -> kalo (mobile) cek galeri / ambil foto kemudian crop                                               -> kalo (pc) ambil foto kemudian crop
     + halaman edit akun foto profile (emit ketika foto sudah di crop masih belum bisa)
     + fungsi pengaturan akun cukup 1 saja di bagian menu(menunggu desain)
     + halaman invoice-page bug
@@ -87,32 +85,48 @@
     + halmaan list of course tidak ada waktu
     + halaman detail course gambar bug
     + halaman course of home default thumnail dan substring
+    + back di halaman kursus & semua avatar
+    + rangking hapus kursus
+    + halaman list of course judul
+    + is read halaman list of course
+    + detail materi jika tidak ada gambar tidak usah ada img
+    + halaman sub materi dikasih padding
+    + halaman kursus liat video, judul ke bawah
+    + halaman course silang di course
+    + tombol back di halmaan list type of clothes
+    + halaman basket blok background paket (saat belum pilih paket)
+    + halaman pembayaran ke 2, tampilan bug
+    + notify ketika tambah pakaian di halaman basket (sudah menambah item bukan sudah menambah pakaian)
+    + halaman pembayaran ke 2, ada total tagihan nya juga
+    + halmaan detail transaksi jika ingin menambah bukti foto (harus menyelesaikan/mengkonfirmasi pembayaran dahulu)
+    + type materi dan video bug
+    + halaman community ketika di klik dia preview photo
+    + ada foto sebelum cucian dikerjakan atau baru masuk (menunggu desain)
 
 @ Proses 🚂
-    - ada foto sebelum cucian dikerjakan atau baru masuk (menunggu desain)
+    -
     
 @ Bingung 👽
-    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
-   
+
 
 @ Belum Tersentuh 👎
+    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
     - halaman income belum bisa kustom pilih bulan tahun (skip)
     - halaman attendance-details belum bisa kustom pilih bulan tahun (skip)
     - yang bisa bikin postingan dan buat produk hanya akun OWNER saja
+    - halaman postingan belum bisa hapus postingan
 
-    - back di halaman kursus & semua avatar
-    - rangking hapus kursus
-    - halaman list of course judul
-    - is read halaman list of course
-    - detail materi jika tidak ada gambar tidak usah ada img
-    - halaman community ketika di klik dia preview photo
-    - halaman sub materi dikasih padding
-    - halaman kursus liat video, judul ke bawah
+    - halaman course bagian deskripsi menggunakan v-html
 
+    
+
+    
+    
+    
     
    
      
-    - type materi dan video bug
+    
     
     
     

@@ -1,5 +1,5 @@
 <template>
-  <div class=" mbl-child " style="height: 100%; width: 100%">
+  <div class="mbl-child" style="height: 100%; width: 100%">
     <div
       class="q-py-md"
       v-if="post != null"
@@ -7,24 +7,22 @@
       style="height: 100%"
     >
       <div class="row q-mx-sm">
-        <div class="col-2  self-center">
+        <div class="col-2 self-center">
           <!-- Image profile -->
           <!--Avatar-->
-            <div v-if="!post.author.avatar" class="self-center">
-              <q-avatar size="60px">
-                <q-img no-spinner src="~/assets/ld.png"></q-img>
-              </q-avatar>
-            </div>
-            <div v-else-if="post.author.avatar" class="self-center">
-              <q-avatar
-                size="60px"
-              >
-                <q-img
-                  no-spinner
-                  :src="STORAGE_URL + `/` + post.author.avatar"
-                ></q-img>
-              </q-avatar>
-            </div>
+          <div v-if="!post.author.avatar" class="self-center">
+            <q-avatar size="60px">
+              <q-img no-spinner src="~/assets/ld.png"></q-img>
+            </q-avatar>
+          </div>
+          <div v-else-if="post.author.avatar" class="self-center">
+            <q-avatar size="60px">
+              <q-img
+                no-spinner
+                :src="STORAGE_URL + `/` + post.author.avatar"
+              ></q-img>
+            </q-avatar>
+          </div>
           <!-- <q-avatar size="60px" style="background-color: #888888">
             <q-img no-spinner src="~/assets/Avatar.png"></q-img>
           </q-avatar> -->
@@ -35,7 +33,7 @@
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.author.name }} 
+            {{ post.author.name }}
           </div>
           <!-- Waktu posting -->
           <div
@@ -54,12 +52,12 @@
       </div>
 
       <!-- Isi post -->
-      <div class="row  q-mt-sm q-mx-sm">
+      <div class="row q-mt-sm q-mx-sm">
         <div
           class="q-py-sm text-weight-medium text-justify"
           style="font-size: 15px; color: #5a5656"
         >
-          <div class="col-12 self-center" >
+          <div class="col-12 self-center">
             <span v-if="!readMoreActivated"
               >{{ post.body.slice(0, 130) }}
             </span>
@@ -78,7 +76,7 @@
         </div>
       </div>
       <!-- Isi video/foto -->
-      <div class="full-width full-height  mbl-child">
+      <div class="full-width full-height mbl-child">
         <div v-if="post.files.length">
           <q-carousel
             v-model="slide"
@@ -102,6 +100,7 @@
               </vue-plyr>
 
               <q-img
+                @click="dialogPreviewPhoto(file)"
                 v-else-if="file.filetype.includes('image')"
                 :src="STORAGE_URL + `/` + file.src"
                 style="width: 100%; height: 100%"
@@ -366,6 +365,9 @@
 <script>
 import moment from "moment";
 import { mapState } from "vuex";
+import { toBase64 } from "../../helpers";
+import communityPhotoPreview from "./CommunityPreviewPhotoComponent.vue";
+
 export default {
   props: {
     post: null,
@@ -380,7 +382,7 @@ export default {
       dialogOption: false,
       dialogShare: false,
       readMoreActivated: false,
-       STORAGE_URL: STORAGE_URL,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   mounted() {
@@ -396,6 +398,17 @@ export default {
     moment,
     buttonOption() {
       this.dialogOption = true;
+    },
+
+    dialogPreviewPhoto(value) {
+      // console.log("ini value", value);
+      this.$q.dialog({
+        component: communityPhotoPreview,
+
+        componentProps: {
+          src: value,
+        },
+      });
     },
 
     buttonShare() {

@@ -45,13 +45,13 @@
             </q-btn>
           </div>
           <div class="col-1 text-center self-center">
-            <q-btn dense round flat @click="$router.push('/notification')">
+            <!-- <q-btn dense round flat @click="$router.push('/notification')">
               <q-icon
                 name="far fa-bell"
                 sizes="18px"
                 style="color: #888888"
               ></q-icon>
-            </q-btn>
+            </q-btn> -->
           </div>
           <div v-if="dataAuth" class="col-1 text-center self-center">
             <!--Avatar-->
@@ -200,7 +200,6 @@ export default {
   mounted() {
     console.log('post', this.Post.posts.data);
     this.dataAuth = this.Auth.auth;
-    console.log("auth", this.Auth.auth);
     this.getAllPosts();
   },
   created() {

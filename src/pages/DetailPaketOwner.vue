@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout  class="mbl" view="lHh lpR fFf">
     <q-page-container>
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>

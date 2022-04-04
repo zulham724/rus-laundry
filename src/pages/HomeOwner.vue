@@ -1,10 +1,110 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
+    <q-drawer
+      v-model="drawerLeft"
+      show-if-above
+      elevated
+      class="bg-white text-black"
+    >
+      <!-- TAB PROFILE -->
+      <div>
+        <q-card
+          class="grad text-center"
+          style="border-radius: 0px 0px 50px 50px"
+        >
+          <div class="q-py-sm text-right q-px-sm">
+            <q-img
+              src="~/assets/stg.png"
+              width="8%"
+              style="border-radius: 0px"
+            />
+          </div>
+
+          <div >
+            <q-item>
+              <q-item-section top avatar>
+                <q-avatar>
+                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" width />
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section class="text-white text-left">
+                <q-item-label>Lintangssssssssss</q-item-label>
+                <q-item-label class="text-white" caption>LintangTampans@gmail.com</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+
+          <q-img
+            class="q-mt-sm"
+            src="~/assets/tkkn.png"
+            width="40%"
+            style="border-radius: 0px"
+          />
+        </q-card>
+      </div>
+      <!-- TAB KODE AFFILIATE -->
+      <div class="q-py-md q-px-xs text-center">
+        <q-btn
+          text-color="black"
+          label="Generate Kode Affiliate"
+          style="background-color: #f1f1f1"
+        />
+      </div>
+      <q-separator/>
+      <!-- TAB BUTTON ROUTER PUSH -->
+      <div >
+        <q-item clickable v-ripple >
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/krjg.png" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Marketplace</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/hm.png" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Postingan</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/tk.png" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Cabang</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/chn.png" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Affiliate</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/abs.png" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Absensi</q-item-section>
+        </q-item>
+      </div>
+    </q-drawer>
     <q-page>
       <!-- btn dashboard & beli paket -->
       <div class="row q-pt-sm q-px-sm">
         <div class="col-3 bg-white">
-          <q-btn flat round size="70%">
+          <q-btn flat @click="drawerLeft = !drawerLeft" round size="70%">
             <q-avatar square>
               <img src="~/assets/dsblg.png" style="width: 50%; height: 50%" />
             </q-avatar>
@@ -328,6 +428,7 @@ import { useQuasar } from "quasar";
 export default {
   data() {
     return {
+      drawerLeft: ref(false),
       slide: ref(1),
       alert: ref(false),
     };
@@ -337,6 +438,10 @@ export default {
 </script>
 
 <style>
+.grad {
+  background-image: linear-gradient(to right, #0072FF , #00C6FF);
+}
+
 .bgJumlahPesanan {
   background-image: linear-gradient(to right, #ad90ff, #8c64ff);
 }

@@ -161,7 +161,7 @@
           <q-card style="width: 18rem">
             <q-card-section>
               <div class="text-subtitle1">
-                Pakaian telah ditambahkan ke keranjang
+                Item telah ditambahkan ke keranjang
               </div>
             </q-card-section>
 

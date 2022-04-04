@@ -1,14 +1,14 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf"> 
+  <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
-      <q-page >
+      <q-page>
         <!-- Header -->
         <div class="text-center bg-transparent" style="height: 200px">
           <!-- Header Image -->
           <q-img
             src="~/assets/bgrck.png"
             style="height: 200px"
-            class="fixed-top  mbl-child "
+            class="fixed-top mbl-child"
             no-spinner
           >
             <q-toolbar class="bg-transparent" style="z-index: 999">
@@ -28,23 +28,29 @@
               </q-btn>
             </q-toolbar>
 
-            <div class="bg-transparent full-width q-mx-xl">
+            <div
+              class="bg-transparent full-width q-mx-xl"
+              style="position: absolute; bottom: 0"
+            >
               <div
                 class="text-left text-weight-bold bg-transparent q-mt-xl q-ml-md"
                 style="color: #fff; font-size: 20px; max-width: 250px"
               >
-                {{ module.tittle }}
+                <!-- {{ module.tittle }} -->
               </div>
 
               <!-- Info -->
               <div
-                class="row full-width q-pa-md text-weight-medium self-center  q-mt-sm"
-                style="background-color: #ffd53f; border-radius: 5px; "
+                class="row full-width q-pa-md text-weight-medium self-center q-mt-sm"
+                style="background-color: #ffd53f; border-radius: 5px"
               >
                 <div class="col-6 text-left">
                   <div style="color: white; font-size: 13px">Waktu kursus</div>
                   <!-- Waktu course -->
-                  <div v-if="module.sum_duration" style="color: black; font-size: 10px">
+                  <div
+                    v-if="module.sum_duration"
+                    style="color: black; font-size: 10px"
+                  >
                     {{ module.sum_duration }} menit
                   </div>
                   <div v-else style="color: black; font-size: 10px">
@@ -62,7 +68,9 @@
                     :thickness="0.22"
                     track-color="white"
                   >
-                    {{ module.count_content_is_read }}/{{ module.count_contents }}
+                    {{ module.count_content_is_read }}/{{
+                      module.count_contents
+                    }}
                   </q-circular-progress>
                 </div>
                 <div class="col-4">
@@ -70,7 +78,7 @@
                     style="color: #fdfdfe; font-size: 10px"
                     class="text-left q-pb-xs"
                   >
-                    Materi 
+                    Materi
                   </div>
                   <div class="row" style="color: #5a5656; font-size: 7px">
                     <!-- video -->
@@ -99,14 +107,18 @@
             </div>
           </q-img>
         </div>
+
         <div class="q-py-sm"></div>
         <!-- Step course -->
         <div v-for="(content, c) in module.contents" :key="content.id">
           <!-- Container -->
-          <div @click="detailCourse(content.id, c)" class="full-width  q-py-sm row">
+          <div
+            @click="detailCourse(content.id, c)"
+            class="full-width q-py-sm row"
+          >
             <!-- Thumbnail video -->
-            <div class="col-5  text-center self-center" style="z-index: -1">
-              <div v-if="(content.type = 'Materi')">
+            <div class="col-5 text-center self-center" style="z-index: -1">
+              <div v-if="content.type == 'Materi'">
                 <q-img
                   v-if="content.thumbnail"
                   fit="cover"
@@ -123,9 +135,8 @@
                   no-spinner
                   src="~/assets/mtrksg.svg"
                 />
-                
               </div>
-              <div v-else >
+              <div v-else>
                 <q-img
                   v-if="content.thumbnail"
                   fit="cover"
@@ -133,7 +144,6 @@
                   :ratio="16 / 9"
                   no-spinner
                   :src="`${STORAGE_URL}/${content.thumbnail.src}`"
-                  
                 />
                 <q-img
                   v-else
@@ -142,9 +152,7 @@
                   :ratio="16 / 9"
                   no-spinner
                   src="~/assets/vdksg.svg"
-                  
                 />
-                
               </div>
             </div>
             <div class="col-7 q-pt-sm q-px-sm">
@@ -160,50 +168,52 @@
                 class="text-weight-regular"
                 style="color: #5a5656; font-size: 9px"
               >
-                {{ content.description.substring(0, 100) }} . . . - Baca Selengkapnya
+                {{ content.description.substring(0, 100) }} . . . - Baca
+                Selengkapnya
               </div>
-              
             </div>
           </div>
-          <div><div class="row text-center">
-          <div class="col"></div>
-          <div class="col"></div>
-          <div
-            class="col text-weight-medium q-py-xs"
-            style="
-              color: #fff;
-              background-color: #D637B3;
-              border-radius: 5px 0 0 0;
-              font-size: 11px;
-            "
-          >
-            {{ content.type }} 
+          <div>
+            <div class="row text-center">
+              <div class="col"></div>
+              <div class="col"></div>
+              <div
+                class="col text-weight-medium q-py-xs"
+                style="
+                  color: #fff;
+                  background-color: #d637b3;
+                  border-radius: 5px 0 0 0;
+                  font-size: 11px;
+                "
+              >
+                {{ content.type }}
+              </div>
+              <div
+                v-if="content.duration"
+                class="col text-weight-medium q-py-xs"
+                style="
+                  color: #fff;
+                  background-color: #0c1e7f;
+                  border-radius: 0 0 0 0;
+                  font-size: 11px;
+                "
+              >
+                {{ content.duration }} menit
+              </div>
+              <div
+                v-else
+                class="col text-weight-medium q-py-xs"
+                style="
+                  color: #fff;
+                  background-color: #0c1e7f;
+                  border-radius: 0 0 0 0;
+                  font-size: 11px;
+                "
+              >
+                Tidak ada waktu
+              </div>
+            </div>
           </div>
-          <div
-          v-if="content.duration"
-            class="col text-weight-medium q-py-xs"
-            style="
-              color: #fff;
-              background-color: #0c1e7f;
-              border-radius: 0 0 0 0;
-              font-size: 11px;
-            "
-          >
-            {{ content.duration }} menit
-          </div>
-          <div
-            v-else
-            class="col text-weight-medium q-py-xs"
-            style="
-              color: #fff;
-              background-color: #0c1e7f;
-              border-radius: 0 0 0 0;
-              font-size: 11px;
-            "
-          >
-            Tidak ada waktu
-          </div>
-        </div></div>
           <q-separator></q-separator>
         </div>
 

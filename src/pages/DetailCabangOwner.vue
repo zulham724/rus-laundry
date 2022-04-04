@@ -1,11 +1,13 @@
 <template>
-  <q-layout>
+  <q-layout  class="mbl" view="lHh lpR fFf">
     <q-page-container>
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>
           <div class="row full-width q-py-sm bg-white justify-center">
-            <div class="col-4 q-px-sm self-center">
+            <div class="col-1 q-px-sm self-center">
               <q-btn
+                v-ripple
+                
                 flat
                 round
                 size="10px"
@@ -20,12 +22,12 @@
               </q-btn>
             </div>
             <div
-              class="col-4 self-center text-weight-medium text-center text-black"
+              class="col-10 self-center text-weight-medium text-center text-black"
               style="font-size: 20px"
             >
               Laundry Rus
             </div>
-            <div class="col-4 self-center text-right q-px-sm"></div>
+            <div class="col-1 self-center text-right q-px-sm"></div>
           </div>
         </q-header>
       </div>

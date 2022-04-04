@@ -1,6 +1,6 @@
 <template>
-  <q-layout>
-    <q-page-container>
+  <q-layout class="mbl" view="lHh lpR fFf">
+    <q-page-container class="mbl-child">
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>
           <div class="row full-width q-py-sm bg-white justify-center">
@@ -87,7 +87,7 @@
               <div class="row">
                 <div class="text-center self-center col-2">
                   <q-avatar square>
-                    <img src="~/assets/gmr.png" style="width:100%; height:95%"/>
+                    <img src="~/assets/crg.png" style="width:100%; height:95%"/>
                   </q-avatar>
                 </div>
                 <div class="q-pl-sm col-5 text-h6 text-grey self-center">

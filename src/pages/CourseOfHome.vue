@@ -114,7 +114,7 @@
               <template v-slot:append>
                 <q-icon
                   name="close"
-                  @click="clear = ''"
+                  @click="test()"
                   class="cursor-pointer"
                 />
               </template>
@@ -164,7 +164,7 @@
               class="text-weight-bold"
               style="color: #5f5959; font-size: 14px"
             >
-              {{ module.tittle }}
+              {{ module.tittle.substring(0, 38) }} . . .
             </div>
             <!-- Deskripsi -->
             <div
@@ -211,6 +211,7 @@ export default {
   data() {
     const progress1 = ref(0.5);
     return {
+      search: "",
       progress1,
       progressLabel1: (progress1.value * 100).toFixed(2) + "%",
       lockDuration: false,
@@ -224,6 +225,11 @@ export default {
     this.getModule();
   },
   methods: {
+    test() {
+      console.log(this.search);
+      this.search = "";
+      this.getModule();
+    },
     getModule() {
       this.$store.dispatch("Module/index").then((res) => {
         this.modules = this.module_temp = res.data;

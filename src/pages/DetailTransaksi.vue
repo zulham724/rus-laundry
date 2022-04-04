@@ -334,7 +334,10 @@
                   <q-space></q-space>
                   <q-item-section
                     avatar
-                    @click="dialogPreviewPhoto(`${STORAGE_URL}/${service.pre_order_photo.src}`)">
+                    @click="
+                      testPreviewPhoto1(service.pre_order_photo)
+                    "
+                  >
                     <q-avatar size="30px" class="bg-transparent">
                       <q-img src="~/assets/gbr2.svg" />
                     </q-avatar>
@@ -369,8 +372,7 @@
                   <q-space></q-space>
                   <q-item-section
                     avatar
-                    @click="
-                      dialogPreviewPhoto(`${STORAGE_URL}/${order.photo.src}`)">
+                    @click=" testPreviewPhoto2()">
                     <q-avatar size="30px" class="bg-transparent">
                       <q-img src="~/assets/foto.svg" />
                     </q-avatar>
@@ -658,6 +660,11 @@
             </q-card-section>
           </q-card>
         </q-dialog>
+        <q-dialog v-model="alert">
+          <q-card class="q-px-xl q-py-xl text-center" style="border-radius: 10px">
+            <div class="text-h6 text-weight-bold ">Tambahkan Foto Dahulu</div>
+          </q-card>
+        </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -692,12 +699,16 @@ export default {
       APP_URL: APP_URL,
       statusCucian: null,
       message: "",
+      source: null,
+      finalLink: null,
+      alert: false,
     };
   },
 
   mounted() {
     this.getDetailOrder();
     this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.orderid}`;
+
   },
 
   methods: {
@@ -763,18 +774,28 @@ export default {
           });
       }
     },
+    testPreviewPhoto1(sendedLink) {
+      console.log('ini link preorder', sendedLink)
+      this.dialogPreviewPhoto(sendedLink);
+    },
+    testPreviewPhoto2(sendedLink) {
+      console.log('ini order.photo', this.order.photo)
+      this.dialogPreviewPhoto(this.order.photo);
+    },
     dialogPreviewPhoto(src) {
-      console.log('src', src)
+      if (src) {
+        this.finalLink =  `${STORAGE_URL}/${src.src}`;
+        console.log("finalLink", this.finalLink);
         this.$q.dialog({
           component: PreviewPhotoComponentVue,
-
-          // props forwarded to your custom component
           componentProps: {
-            src: src,
-            // ...more..props...
+            src: this.finalLink,
           },
         });
-    
+      } else {
+        console.log("src kosong");
+        this.alert = true;
+      }
     },
     makePayment() {
       this.$q
@@ -856,7 +877,7 @@ export default {
       // }, (res) => {
       //     console.log(res);
       // });
-      this.$notify('Link tersalin');
+      this.$notify("Link tersalin");
     },
   },
 };

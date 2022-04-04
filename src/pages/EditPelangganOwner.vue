@@ -3,17 +3,38 @@
     <q-page class="mbl-child">
       <div class="q-px-sm q-py-xl text-center">
         <q-avatar size="100px">
-          <q-img src="~/assets/ktab.png" />
+          <q-img src="~/assets/klgcmr.png" />
         </q-avatar>
         <div class="text-weight-medium q-mt-sm" style="font-size: 24px">
-          Edit Paket
+          Edit Pelanggan
         </div>
       </div>
       <div class="q-px-sm bg-white" style="border-radius: 5px">
         <q-form>
           <div class="q-py-sm">
             <q-input
-              label="Masukkan Nama Paket"
+              label="Nama"
+              color="black"
+              v-model="search"
+              outlined
+              type="search"
+            >
+            </q-input>
+          </div>
+          <div class="q-py-sm">
+            <q-input
+              label="Email"
+              color="black"
+              v-model="search"
+              outlined
+              type="search"
+            >
+ 
+            </q-input>
+          </div>
+          <div class="q-py-sm">
+            <q-input
+              label="Alamat"
               color="black"
               v-model="search"
               outlined
@@ -23,35 +44,14 @@
             </q-input>
           </div>
           <div class="q-py-sm">
-            <q-select
-              outlined
-              v-model="model"
-              :options="options"
-              label="Hitungan menurut"
-            />
-          </div>
-          <div class="q-py-sm">
             <q-input
-              label="Masukkan Harga"
+              label="No. Telp"
               color="black"
               v-model="search"
               outlined
               type="search"
             >
 
-            </q-input>
-          </div>
-          <div class="q-py-sm">
-            <q-input
-              label="Waktu Pengerjaan"
-              color="black"
-              v-model="search"
-              outlined
-              type="search"
-            >
-              <template v-slot:append>
-                <div style="font-size: 12px">/Jam</div>
-              </template>
             </q-input>
           </div>
           <div class="row q-pt-lg q-pb-sm">
@@ -65,6 +65,7 @@
         </q-form>
       </div>
       <div
+        
         style="position: absolute;  z-index: -1; vertical-align: text-bottom; width: 100%;"
       >
         <q-img  src="~/assets/br.png" />

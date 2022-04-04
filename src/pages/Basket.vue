@@ -7,7 +7,7 @@
           flat
           round
           size="10px"
-          @click="$router.back()"
+          @click="$router.push('/list-type-of-clothes')"
         >
           <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #888888">
           </q-avatar>
@@ -171,12 +171,12 @@
               <q-btn
                 @click="$router.push(`/${category.id}/choose-package`)"
                 flat
-                class="q-my-sm bg-white text-left"
+                class="q-my-sm -left"
                 no-caps
-                style="width: 100%"
+                style="width: 100%; background-color: #49C2C0;"
                 align="left"
               >
-                <div class="text-left" style="color: grey">
+                <div class="text-left" style="color: white">
                   Pilih Jenis Paket
                 </div>
               </q-btn>

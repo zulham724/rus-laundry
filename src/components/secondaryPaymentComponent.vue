@@ -70,6 +70,28 @@
             </q-btn>
           </div>
         </div>
+        <div class="row">
+          <div class="col-5"><div class=" q-px-xs" style="font-size: 12px;">Total Tagihan :</div></div>
+          <div class="col-7" >
+            <div
+              v-if="this.orderSend"
+              style="font-size: 12px; font-weight: bold"
+            >
+              {{
+                new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(this.orderSend.total_sum)
+              }}
+            </div>
+            <div
+              v-if="!this.orderSend.total_sum"
+              style="font-size: 16px; font-weight: bold"
+            >
+              Kosong
+            </div>
+          </div>
+        </div>
       </q-card-section>
 
       <q-separator />
@@ -92,7 +114,7 @@
           </q-item>
 
           <!-- digunakan untuk menciptakan padding bawah -->
-          <div class="fixed-bottom">
+          <div class="fixed-bottom mbl-child">
             <q-input
               disable
               type="number"

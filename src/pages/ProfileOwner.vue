@@ -1,7 +1,7 @@
 <template>
-  <q-layout>
+  <q-layout  class="mbl" view="lHh lpR fFf">
     <q-page-container>
-      <q-page>
+      <q-page class="mbl-child">
         <!-- HEADER BIRU -->
         <div
           class="bgHead text-center q-pb-lg"

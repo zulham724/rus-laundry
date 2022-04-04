@@ -96,8 +96,8 @@
         <div
           class="text-weight-medium text-justify q-px-sm" 
           style="color: #aca9a9; font-size: 12px"
+          v-html="content.description"
         >
-          {{ content.description }}
         </div>
       </div>
 
