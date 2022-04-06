@@ -118,7 +118,8 @@
 
     (halaman home)
     - halaman new-home (pesanan yang belum selesai masuk antrian[])
-    - halmaan new-home antrian pesanan hari ini jadi (antrian pesanan sampai hari ini)
+    - halmaan new-home antrian pesanan sampai hari ini (total seluruh transaksi belum 100% )
+    + halmaan new-home antrian pesanan hari ini jadi (antrian pesanan sampai hari ini)
 
     (halaman course)
     - halaman detail course (masih ada blackbar di vue player)
