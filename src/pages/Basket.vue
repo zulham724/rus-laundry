@@ -21,170 +21,236 @@
     </q-header>
     <q-page-container style="background-color: #fafafa">
       <q-page>
-        <div v-if="Orders.order.charts.length">
-          <q-card
-            class="no-shadow"
+        <!-- TAB ITEM BARU -->
+        <div
+          v-if="Orders.order.charts.length"
+          class="q-px-sm "
+          style="height: 100vh"
+        >
+          <div
             v-for="(category, c) in Orders.order.charts"
             :key="category.id"
+            style="align-item: center"
+            class="q-my-sm"
           >
-            <div class="row bg-white q-py-sm q-mt-sm">
-              <div class="col-4">
-                <div
-                  class="q-ma-md text-subtitle1 text-weight-medium float-left"
-                  style="color: grey"
-                >
-                  {{ category.name }}
+            <q-card class="shadow-1 q-py-sm" style="border-radius: 10px">
+              <div class="row">
+                <div class="col-3 text-center self-center">
+                  <q-img src="~/assets/bjmn.png" width="75%" />
                 </div>
-              </div>
-              <div class="col-8" v-if="category.service_unit.name == 'Kg'">
-                <q-btn
-                  class="q-ma-sm float-right"
-                  @click="tambahkg(c)"
-                  flat
-                  style="background-color: #d72929; color: white"
-                >
-                  <q-icon
-                    name="fas fa-plus"
-                    style="height: 5px; width: 5px"
-                  ></q-icon>
-                </q-btn>
-                <div class="float-right q-pa-sm text-weight-medium text-h5">
-                  {{ category.quantity ? category.quantity.toFixed(1) : null }}
-                </div>
-
-                <q-btn
-                  class="q-ma-sm float-right"
-                  @click="kurangkg(c)"
-                  flat
-                  style="background-color: #eaeaea"
-                >
-                  <q-icon
-                    name="fas fa-minus"
-                    style="height: 5px; width: 5px"
-                  ></q-icon>
-                </q-btn>
-              </div>
-              <div
-                class="col-8"
-                v-else-if="category.service_unit.name == 'Pcs'"
-              >
-                <q-btn
-                  class="q-ma-sm float-right"
-                  @click="tambahpcs(c)"
-                  flat
-                  style="background-color: #d72929; color: white"
-                >
-                  <q-icon
-                    name="fas fa-plus"
-                    style="height: 5px; width: 5px"
-                  ></q-icon>
-                </q-btn>
-                <div class="float-right q-pa-sm text-weight-medium text-h5">
-                  {{ category.quantity }}
-                </div>
-
-                <q-btn
-                  class="q-ma-sm float-right"
-                  @click="kurangpcs(c)"
-                  flat
-                  style="background-color: #eaeaea"
-                >
-                  <q-icon
-                    name="fas fa-minus"
-                    style="height: 5px; width: 5px"
-                  ></q-icon>
-                </q-btn>
-              </div>
-            </div>
-            <div class="row bg-white justify-end">
-              <div
-                class="text-caption text-weight-light text-right"
-                style="margin-right: 30px; margin-top: -20px"
-              >
-                Jumlah({{ category.service_unit.name }})
-              </div>
-            </div>
-
-            <q-separator size="5px" class="q-ma-sm" />
-
-            <div v-if="this.Orders.order.charts[c].package">
-              <div>
-                <q-card class="no-shadow">
-                  <q-card-section
-                    @click="$router.push(`/${category.id}/choose-package`)"
-                  >
-                    <div class="text-caption">
-                      {{ this.Orders.order.charts[c].package.name }}
+                <div class="col-5 self-center">
+                  <div class="row text-weight-bold" style="line-height: 100%">
+                    {{ category.name }}
+                  </div>
+                  <div class="row" style="font-size: 12px">
+                    Jumlah ({{ category.service_unit.name }})
+                  </div>
+                  <div class="row self-center">
+                    <div class="row" v-if="category.service_unit.name == 'Kg'">
+                      <div class="col q-pr-xs text-weight-bold self-center">
+                        <q-btn
+                          @click="kurangkg(c)"
+                          size="sm"
+                          round
+                          flat
+                          style="background-color: #fafafa"
+                          text-color="black"
+                        >
+                          <q-icon
+                            name="fas fa-minus"
+                            style="height: 5px; width: 5px"
+                          ></q-icon>
+                        </q-btn>
+                      </div>
+                      <div
+                        class="col q-px-xs self-center text-h6 text-weight-bold"
+                      >
+                        {{
+                          category.quantity
+                            ? category.quantity.toFixed(1)
+                            : null
+                        }}
+                      </div>
+                      <div class="col q-pl-xs self-center">
+                        <q-btn
+                          @click="tambahkg(c)"
+                          size="sm"
+                          flat
+                          class="text-weight-bold"
+                          round
+                          style="background-color: #49c2c0"
+                          text-color="white"
+                        >
+                          <q-icon
+                            name="fas fa-plus"
+                            style="height: 5px; width: 5px"
+                          ></q-icon
+                        ></q-btn>
+                      </div>
                     </div>
-                  </q-card-section>
-                </q-card>
-                <q-card class="q-mt-sm no-shadow">
-                  <q-card-section>
-                    <div class="text-caption">Harga</div>
-                    <div class="text-caption">
-                      {{
-                        new Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                        }).format(this.Orders.order.charts[c].total_price)
-                      }}
-                    </div>
-                  </q-card-section>
-                </q-card>
-                <q-card class="q-mt-sm no-shadow">
-                  <q-btn
-                    v-if="!category.pre_order_photo"
-                    @click="$router.push(`/postpreorderphoto/${category.id}`)"
-                    class="full-width"
-                    color="white"
-                    style="background-color: #49c2c0"
-                    flat
-                    label="Ambil Gambar"
-                  />
-                  <div class="row" v-if="category.pre_order_photo">
-                    <div class="col">
-                      <q-btn
-                        @click="
-                          $router.push(`/postpreorderphoto/${category.id}`)
-                        "
-                        class="full-width"
-                        style="background-color: #fff; color:#888888"
-                        flat
-                        label="Ganti Gambar"
-                      />
-                    </div>
-                    <div class="col">
-                      <q-btn
-                        @click="dialogPreviewPhoto(category.pre_order_photo)"
-                        class="full-width"
-                        color="white"
-                        style="background-color: #7ed396"
-                        flat
-                        label="Lihat Gambar"
-                      />
+                    <div class="row self-center">
+                      <div
+                        class="row"
+                        v-if="category.service_unit.name == 'Pcs'"
+                      >
+                        <div class="col q-pr-xs text-weight-bold self-center">
+                          <q-btn
+                            @click="kurangpcs(c)"
+                            size="sm"
+                            round
+                            flat
+                            style="background-color: #fafafa"
+                            text-color="black"
+                          >
+                            <q-icon
+                              name="fas fa-minus"
+                              style="height: 5px; width: 5px"
+                            ></q-icon>
+                          </q-btn>
+                        </div>
+                        <div
+                          class="col q-px-xs self-center text-center text-h6 text-weight-bold"
+                        >
+                          {{ category.quantity }}
+                        </div>
+                        <div class="col q-pl-xs self-center">
+                          <q-btn
+                            @click="tambahpcs(c)"
+                            size="sm"
+                            flat
+                            class="text-weight-bold"
+                            round
+                            style="background-color: #49c2c0"
+                            text-color="white"
+                          >
+                            <q-icon
+                              name="fas fa-plus"
+                              style="height: 5px; width: 5px"
+                            ></q-icon
+                          ></q-btn>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </q-card>
+                </div>
+                <div class="col-4 self-center ">
+                  <div
+                    v-if="this.Orders.order.charts[c].total_price"
+                    class=" self-center text-weight-medium"
+                  >
+                    {{
+                      new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(this.Orders.order.charts[c].total_price)
+                    }}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div v-else>
+            </q-card>
+            <!-- TAB LAYANAN -->
+            <div class="full-width text-center">
               <q-btn
                 @click="$router.push(`/${category.id}/choose-package`)"
+                dense
                 flat
-                class="q-my-sm -left"
-                no-caps
-                style="width: 100%; background-color: #49C2C0;"
-                align="left"
+                class="q-py-none"
+                style="
+                  background-color: #49c2c0;
+                  width: 90%;
+                  border-radius: 0px 0px 10px 10px;
+                "
               >
-                <div class="text-left" style="color: white">
-                  Pilih Jenis Paket
-                </div>
+                <q-item dense class="full-width">
+                  <q-item-section avatar>
+                    <q-img
+                      src="~/assets/bgg.png"
+                      style="width: 70%; heigth: 70%"
+                    />
+                  </q-item-section>
+                  <q-item-section
+                    v-if="this.Orders.order.charts[c].package"
+                    class="text-white text-left"
+                    style="font-size: 12px"
+                    >{{
+                      this.Orders.order.charts[c].package.name
+                    }}</q-item-section
+                  >
+                  <q-item-section
+                    v-else
+                    class="text-white"
+                    style="font-size: 12px"
+                  >
+                    Tambah Layanan
+                  </q-item-section>
+                  <q-item-section side class="text-h5 text-white">
+                    >
+                  </q-item-section>
+                </q-item>
               </q-btn>
             </div>
-          </q-card>
+            <!-- TAB TAMBAH GAMBAR -->
+            <div
+              class="full-width text-center"
+              v-if="
+                !category.pre_order_photo && this.Orders.order.charts[c].package
+              "
+            >
+              <q-btn
+                @click="$router.push(`/postpreorderphoto/${category.id}`)"
+                dense
+                class="q-py-xs q-px-sm text-center text-weight-medium"
+                style="
+                  width: 80%;
+                  border-radius: 0px 0px 10px 10px;
+                  margin: auto;
+                "
+              >
+                Tambahkan Bukti Foto
+              </q-btn>
+            </div>
+            <!-- TAB TAMBAH GAMBAR & GANTI GAMBAR -->
+            <div
+              class="full-width text-center row "
+  
+              v-if="category.pre_order_photo"
+            >
+              <div class="col-6 text-right ">
+                <q-btn
+                  @click="dialogPreviewPhoto(category.pre_order_photo)"
+                  dense
+                  no-caps
+                  class="q-py-xs  text-center text-weight-medium"
+                  style="
+                    padding-right: 8.5px;
+                    width:80%;
+                    border-radius: 0px 0px 0px 10px;
+                  "
+                >
+                  Lihat Gambar
+                </q-btn>
+              </div>
+              <div class="col-6 text-left">
+                <q-btn
+                  @click="$router.push(`/postpreorderphoto/${category.id}`)"
+                  dense
+                  no-caps
+                  class="q-py-xs text-white text-center text-weight-medium"
+                  style="
+                    background-color: #49c1bf;
+                  width:80%;
+                    border-radius: 0px 0px 10px 0px;
 
-          <div class="col-12 q-pt-lg" v-if="this.Orders.order.total_price">
-            <q-card class="q-pa-sm shadow-5">
+                  "
+                >
+                  Ganti Gambar
+                </q-btn>
+              </div>
+            </div>
+          </div>
+
+          <div class="fixed-bottom mbl-child" v-if="this.Orders.order.total_price">
+            <q-card class="q-pa-sm" style="border-radius: 20px 20px 0px 0px">
               <q-card-section>
                 <div class="text-caption">Total Harga</div>
                 <div class="text-subtitle1">
@@ -252,30 +318,117 @@
                           <div class="text-caption">
                             {{ category.name }}
                           </div>
-                          <div class="text-caption">
+                          <div class="text-caption" v-if="category.package">
                             {{ category.package.process_time }} Jam
                           </div>
                         </q-card-section>
                       </div>
                     </q-slide-transition>
+                    <q-btn
+                      :disable="loading"
+                      @click="alert = true"
+                      class="full-width q-mt-sm"
+                      style="border-radius: 10px"
+                      color="grey-7"
+                      label="Buat Pesanan"
+                    />
                   </q-card>
                 </div>
               </q-card-section>
             </q-card>
-
-            <div class="q-pa-lg">
-              <q-btn
-                :disable="loading"
-                @click="alert = true"
-                class="full-width"
-                style="border-radius: 10px"
-                color="grey-7"
-                label="Buat Pesanan"
-              />
-            </div>
           </div>
         </div>
-        <div v-else>
+        <!-- UNTUK MENCIPTAKAN MARGIN Bottom -->
+        <q-card
+          class="q-pa-sm full-width"
+          v-if="this.Orders.order.total_price"
+          style="border-radius: 20px 20px 0px 0px; z-index: -1"
+        >
+          <q-card-section>
+            <div class="text-caption">Total Harga</div>
+            <div class="text-subtitle1">
+              {{
+                new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(this.Orders.order.total_price)
+              }}
+            </div>
+            <div class="col-12">
+              <q-card class="no-shadow">
+                <q-card-section class="text-left q-pa-none">
+                  <div class="row">
+                    <div class="col-6">
+                      <q-btn
+                        dense
+                        flat
+                        :icon-right="
+                          expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+                        "
+                        color="grey-6"
+                        @click="expanded = !expanded"
+                      >
+                        <div class="text-caption" style="color: #888888">
+                          Estimasi Pesanan
+                        </div>
+                      </q-btn>
+                    </div>
+                    <div class="col-6 text-right">
+                      <!--
+                          <q-btn
+                            v-if="!payment"
+                            class="bg-cyan-5 text-grey-1"
+                            size="sm"
+                            flat
+                            @click="paymentDialog = true"
+                            >Tambah Pembayaran</q-btn
+                          >
+                          <q-btn
+                            size="sm"
+                            v-else
+                            flat
+                            @click="paymentDialog = true"
+                          >
+                            Pembayaran sejumlah RP.
+                            {{ this.Orders.order.payment.toLocaleString() }} dimasukan (KLIK UNTUK
+                            UBAH)
+                          </q-btn>
+                          -->
+                    </div>
+                  </div>
+                </q-card-section>
+
+                <q-slide-transition>
+                  <div v-show="expanded">
+                    <q-separator />
+                    <q-card-section
+                      style="color: #888888"
+                      v-for="category in this.Orders.order.charts"
+                      :key="category.id"
+                    >
+                      <div class="text-caption">
+                        {{ category.name }}
+                      </div>
+                      <div class="text-caption" v-if="category.package">
+                        {{ category.package.process_time }} Jam
+                      </div>
+                    </q-card-section>
+                  </div>
+                </q-slide-transition>
+                <q-btn
+                  :disable="loading"
+                  @click="alert = true"
+                  class="full-width q-mt-sm"
+                  style="border-radius: 10px"
+                  color="grey-7"
+                  label="Buat Pesanan"
+                />
+              </q-card>
+            </div>
+          </q-card-section>
+        </q-card>
+
+        <div v-else-if="!Orders.order.charts.length">
           <div class="text-center q-ma-xl">
             <img
               src="~/assets/krj.png"
@@ -509,7 +662,6 @@
             </div>
           </q-card>
         </q-dialog>
-
         <!-- end dialog payment  -->
       </q-page>
     </q-page-container>

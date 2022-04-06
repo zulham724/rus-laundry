@@ -6,7 +6,7 @@
       :ref="`post_${post.id}`"
       style="height: 100%"
     >
-      <div class="row q-px-md">
+      <div class="row q-px-md text-center">
         <div class="col-2">
           <!-- Image profile -->
           <!--Avatar-->
@@ -78,7 +78,7 @@
         </div>
       </div>
       <!-- Isi video/foto -->
-      <div class="full-width full-height q-py-xs">
+      <div class="full-width  full-height q-py-xs">
         <div v-if="post.files.length">
           <q-carousel
             v-model="slide"
@@ -102,9 +102,11 @@
               </vue-plyr>
 
               <q-img
+               @click="dialogPreviewPhoto(file)"
                 v-else-if="file.filetype.includes('image')"
                 :src="storageUrl + `/` + file.src"
                 style="width: 100%; height: 100%"
+
               >
               </q-img>
             </q-carousel-slide>
@@ -405,6 +407,7 @@
 <script>
 import moment from "moment";
 import { mapState } from "vuex";
+import communityPhotoPreview from "./CommunityPreviewPhotoComponent.vue";
 export default {
   props: {
     post: null,
@@ -435,6 +438,17 @@ export default {
     moment,
     buttonOption() {
       this.dialogOption = true;
+    },
+
+    dialogPreviewPhoto(value) {
+      // console.log("ini value", value);
+      this.$q.dialog({
+        component: communityPhotoPreview,
+
+        componentProps: {
+          src: value,
+        },
+      });
     },
 
     buttonShare() {

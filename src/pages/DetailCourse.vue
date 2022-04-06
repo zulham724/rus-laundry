@@ -1,6 +1,6 @@
 <template>
-  <q-layout class="mbl " view="lHh lpR fFf">
-    <div class="fixed-top  shadow-2" style="z-index: 999">
+  <q-layout class="mbl" view="lHh lpR fFf">
+    <div class="fixed-top shadow-2" style="z-index: 999">
       <q-header elevated>
         <div
           class="row full-width q-py-sm justify-center"
@@ -18,15 +18,13 @@
           </div>
           <div class="col-10">
             <div
-            v-if="content"
-            class=" self-center text-weight-medium  text-white q-pl-sm"
-            style="font-size: 20px"
-          >
-            {{ content.tittle }}
+              v-if="content"
+              class="self-center text-weight-medium text-white q-pl-sm"
+              style="font-size: 20px"
+            >
+              {{ content.tittle }}
+            </div>
           </div>
-          </div>
-          
-
         </div>
       </q-header>
     </div>
@@ -53,56 +51,96 @@
     </q-header> -->
     <q-page v-if="content">
       <div
-          class="row full-width q-py-sm justify-center"
-          style="background-color: #1c309b"
-        >
-          <div class="col-2 text-center self-center">
-            <q-btn flat round size="10px" @click="$router.back()">
-              <q-avatar
-                size="20px"
-                icon="fas fa-arrow-left"
-                style="color: #fff"
-              >
-              </q-avatar>
-            </q-btn>
-          </div>
-          <div class="col-10">
-            <div
+        class="row full-width q-py-sm justify-center"
+        style="background-color: #1c309b"
+      >
+        <div class="col-2 text-center self-center">
+          <q-btn flat round size="10px" @click="$router.back()">
+            <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #fff">
+            </q-avatar>
+          </q-btn>
+        </div>
+        <div class="col-10">
+          <div
             v-if="content"
-            class=" self-center text-weight-medium  text-white q-pl-sm"
+            class="self-center text-weight-medium text-white q-pl-sm"
             style="font-size: 20px"
           >
             {{ content.tittle }}
           </div>
-          </div>
-          
-
         </div>
+      </div>
       <!-- Video/foto -->
-      <div v-if="content.video" class="full-width bg-grey" style="height: 250px">
+      <div
+        v-if="content.video"
+        class="full-width bg-grey"
+        style="height: 250px"
+      >
         <vue-plyr v-if="content.video">
           <video :src="STORAGE_URL + `/` + content.video.src"></video>
         </vue-plyr>
       </div>
-      <div v-if="content.image_content" class="full-width " >
-        <q-img :src="STORAGE_URL + `/` + content.image_content.src"/>
+      <div v-if="content.image_content" class="full-width">
+        <q-img :src="STORAGE_URL + `/` + content.image_content.src" />
       </div>
       <!-- Deskripsi -->
-      <div class="q-px-sm q-pt-md">
-        <div class="q-px-sm text-weight-bold" style="color: #5a5656; font-size: 15px">
+      <div class="q-px-sm q-pt-md" style="height: 100%; ">
+        <div
+          class="q-px-sm text-weight-bold"
+          style="color: #5a5656; font-size: 15px"
+        >
           Deskripsi
         </div>
         <!-- isi deskripsi -->
         <div
-          class="text-weight-medium text-justify q-px-sm" 
+          class="text-weight-medium text-justify q-px-sm"
           style="color: #aca9a9; font-size: 12px"
           v-html="content.description"
-        >
-        </div>
+        ></div>
       </div>
 
+      <!-- Materi berikutnya padding -->
+      <div class="bg-white q-py-sm  row">
+        <div class="col-6 text-right q-pr-md">
+          <q-btn dense flat class="q-px-lg">
+            <div class="col">
+              <div class="row justify-center"><q-img src="~/assets/lk2.png" style="width:25px;"/></div>
+              <div class="row text-white" >Suka</div>
+            </div>
+          </q-btn>
+        </div>
+        <div class="col-6 text-left q-pl-md">
+          <q-btn dense flat>
+            <div class="col">
+              <div class="row justify-center">
+                <q-img src="~/assets/lk2.png" style="width:25px"/>
+              </div>
+              <div no-caps class="row text-white">Komentar</div>
+            </div>
+          </q-btn>
+        </div>
+      </div>
       <!-- Materi berikutnya -->
-      
+      <div dense class="bg-white q-py-xs fixed-bottom shadow-up-1 row">
+        <div  class="col-6 text-right q-pr-md">
+          <q-btn dense flat class="q-px-lg">
+            <div class="col">
+              <div class="row justify-center"><q-img src="~/assets/lk.png" style="width:25px;"/></div>
+              <div class="row " >Suka</div>
+            </div>
+          </q-btn>
+        </div>
+        <div class="col-6 text-left q-pl-md">
+          <q-btn dense flat>
+            <div class="col">
+              <div class="row justify-center">
+                <q-img src="~/assets/kmt.png" style="width:25px"/>
+              </div>
+              <div no-caps class="row ">Komentar</div>
+            </div>
+          </q-btn>
+        </div>
+      </div>
 
       <!-- Dialog unlock content -->
       <q-dialog v-model="unlockLevel">
@@ -266,7 +304,7 @@ export default {
     getContent() {
       this.$store.dispatch("ModuleContent/show", this.contentid).then((res) => {
         this.content = res.data;
-        console.log('ini content',this.content);
+        console.log("ini content", this.content);
         this.$forceUpdate();
       });
     },

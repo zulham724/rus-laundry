@@ -224,13 +224,13 @@
             </div>
           </q-tab-panel>
           <q-tab-panel name="like">
-            <div>
-              <div>TAB LIKE</div>
+            <div >
+              <div >TAB LIKE</div>
               <q-item clickable v-ripple :active="active">
                 <q-item-section avatar>
-                  <q-icon name="favorite_border" />
+                  <q-icon style="color:#2196F3" name="favorite_border" />
                 </q-item-section>
-                <q-item-section>Postingan yang saya sukai</q-item-section>
+                <q-item-section style="color:#2196F3">Postingan yang saya sukai</q-item-section>
                 <q-item-section side>Hanya saya</q-item-section>
               </q-item>
 

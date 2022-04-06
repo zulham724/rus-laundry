@@ -415,6 +415,7 @@ export default {
   },
   components: {
     "saldo-scan": SaldoScan,
+    
   },
 
   data() {

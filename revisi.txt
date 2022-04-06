@@ -102,6 +102,7 @@
     + type materi dan video bug
     + halaman community ketika di klik dia preview photo
     + ada foto sebelum cucian dikerjakan atau baru masuk (menunggu desain)
+    + halaman course bagian deskripsi menggunakan v-html
 
 @ Proses 🚂
     -
@@ -110,14 +111,27 @@
 
 
 @ Belum Tersentuh 👎
-    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
     - halaman income belum bisa kustom pilih bulan tahun (skip)
     - halaman attendance-details belum bisa kustom pilih bulan tahun (skip)
-    - yang bisa bikin postingan dan buat produk hanya akun OWNER saja
-    - halaman postingan belum bisa hapus postingan
+    - yang bisa bikin postingan dan buat produk hanya akun OWNER saja (skip)
 
-    - halaman course bagian deskripsi menggunakan v-html
+    (halaman marketplace)
+    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
+    
+    (halaman komunitas)
+    - halaman postingan belum ada [data] tab like dan private
+    - halaman postingan belum bisa edit, share, hapus, arsipkan postingan dan nonaktifkan komentar
+        
+    (halaman mobile owner)
+    - halaman home belum bisa menggunakan [line chart]
 
+    (halaman web owner)
+    - halaman web owner laundry digital ditambahkan kode affiliate, ketik kode nanti bisa terlihat siapa usernya
+    - ada pilihan paket free trial, ketika mau daftar paket untuk owner
+
+    
+
+   
     
 
     

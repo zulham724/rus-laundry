@@ -4,6 +4,8 @@
       v-model="drawerLeft"
       show-if-above
       elevated
+      :no-swipe-close="false"
+      :no-swipe-open="false"
       class="bg-white text-black"
     >
       <!-- TAB PROFILE -->
@@ -20,7 +22,7 @@
             />
           </div>
 
-          <div >
+          <div>
             <q-item>
               <q-item-section top avatar>
                 <q-avatar>
@@ -30,7 +32,9 @@
 
               <q-item-section class="text-white text-left">
                 <q-item-label>Lintangssssssssss</q-item-label>
-                <q-item-label class="text-white" caption>LintangTampans@gmail.com</q-item-label>
+                <q-item-label class="text-white" caption
+                  >LintangTampans@gmail.com</q-item-label
+                >
               </q-item-section>
             </q-item>
           </div>
@@ -44,17 +48,18 @@
         </q-card>
       </div>
       <!-- TAB KODE AFFILIATE -->
-      <div class="q-py-md q-px-xs text-center">
+      <div class="q-pb-md q-px-xs text-center">
+        <q-img src="~/assets/sgtg.png" style="width: 30%; height: 70px" />
         <q-btn
           text-color="black"
           label="Generate Kode Affiliate"
-          style="background-color: #f1f1f1"
+          style="background-color: #f1f1f1; margin-top: -10px"
         />
       </div>
-      <q-separator/>
+      <q-separator />
       <!-- TAB BUTTON ROUTER PUSH -->
-      <div >
-        <q-item clickable v-ripple >
+      <div>
+        <q-item clickable v-ripple>
           <q-item-section avatar>
             <q-avatar square>
               <img src="~/assets/krjg.png" style="width: 80%; height: 80%" />
@@ -299,29 +304,22 @@
       </div>
 
       <br />
-      <!-- tab chart data jumlah pesanan & penghasilan -->
-      <div class="col">
-        <div class="row">
-          <div class="col">
-            <div class="row q-px-md q-py-md text-weight-bold">
-              Data Jumlah Pesanan
-            </div>
-            <div class="row justify-center q-pb-md">
-              <q-img no-spinner src="~/assets/chart.png" style="width: 90%">
-              </q-img>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row q-px-md q-py-md text-weight-bold">Penghasilan</div>
-            <div class="row justify-center q-pb-md">
-              <q-img no-spinner src="~/assets/chart2.png" style="width: 90%">
-              </q-img>
-            </div>
-          </div>
-        </div>
+      
+      <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
+      <div id="app">
+        <BarChart />
       </div>
+
+      <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
+      <div id="app">
+        <BarChart />
+      </div>
+
+      <!-- <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
+      <div id="app" class="bg-red">
+        <LineChart />
+      </div> -->
+
 
       <br />
       <!-- tab jumlah pesanan tiap cabang -->
@@ -360,6 +358,8 @@
       </div>
 
       <br />
+
+      
       <!-- tab penghasilan tiap cabang -->
       <div>
         <div class="row q-px-md q-py-md text-weight-bold">
@@ -424,8 +424,15 @@
 <script>
 import { ref } from "vue";
 import { useQuasar } from "quasar";
+import BarChart from "src/components/BarChartOwnerComponent.vue";
+// import LineChart  from "src/components/LineChartOwnerComponent.vue";
 
 export default {
+  name: "App",
+  components: {
+    BarChart,
+    
+  },
   data() {
     return {
       drawerLeft: ref(false),
@@ -439,7 +446,7 @@ export default {
 
 <style>
 .grad {
-  background-image: linear-gradient(to right, #0072FF , #00C6FF);
+  background-image: linear-gradient(to right, #0072ff, #00c6ff);
 }
 
 .bgJumlahPesanan {
@@ -456,5 +463,13 @@ export default {
 
 .bgPaketEntrepreneur {
   background-image: linear-gradient(to right, #edbd7a, #f4a333);
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 </style>
