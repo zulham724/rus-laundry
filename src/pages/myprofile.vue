@@ -128,7 +128,7 @@
             class="q-pt-xs text-weight-medium"
             style="color: #898585; font-size: 16px; width: 70vw"
           >
-            {{ dataAuth.shop.name }}
+            {{ dataAuth.shop.description }}
           </div>
           <div class="q-pt-xs">
             <q-item>
@@ -186,32 +186,21 @@
             ></q-img>
           </q-tab>
 
-          <q-tab class="col-4 self-center" name="private" no-caps
-            ><q-img
-              class="q-pa-sm"
-              no-spinner
-              style="width: 18px; height: 21px"
-              :src="
-                tab == 'private'
-                  ? require('../assets/my-profile-private.svg')
-                  : require('../assets/my-profile-private.svg')
-              "
-            ></q-img>
-          </q-tab>
+          
         </q-tabs>
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="post">
             <div>
               <div>TAB POST</div>
-              <q-infinite-scroll @load="onLoad">
+              <q-infinite-scroll @load="onLoad" >
                 <!-- Postingan -->
-                <q-intersection
-                  class="mbl-child"
+                <q-intersection 
+                  
                   :ref="`intersection_${post.id}`"
                   v-for="post in posts.data"
                   :key="post.id"
-                  :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+                  
                 >
                   <item-post-component
                     class="mbl-child"
@@ -241,40 +230,19 @@
                   :ref="`intersection_${post.id}`"
                   v-for="post in posts.data"
                   :key="post.id"
-                  :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+                  
                 >
                   <item-post-component
                     class="mbl-child"
                     v-on:update-height="updateHeight(post)"
                     :post="post"
-                    :style="`position:relative;height:100%`"
+                    :style="`height:100%`"
                   ></item-post-component>
                 </q-intersection>
               </q-infinite-scroll>
             </div>
           </q-tab-panel>
-          <q-tab-panel name="private">
-            <div>
-              <div>TAB PRIVATE</div>
-              <q-infinite-scroll @load="onLoad">
-                <!-- Postingan -->
-                <q-intersection
-                  class="mbl-child"
-                  :ref="`intersection_${post.id}`"
-                  v-for="post in posts.data"
-                  :key="post.id"
-                  :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
-                >
-                  <item-post-component
-                    class="mbl-child"
-                    v-on:update-height="updateHeight(post)"
-                    :post="post"
-                    :style="`position:relative;height:100%`"
-                  ></item-post-component>
-                </q-intersection>
-              </q-infinite-scroll>
-            </div>
-          </q-tab-panel>
+          
         </q-tab-panels>
 
         <!--  <div>

@@ -178,18 +178,18 @@ export default {
     console.log("avatar", this.srcAvatar);
   },
   methods: {
-    async previewImages(files) {
-      if (files.length > 1) {
-        this.$q.notify("Hanya bisa menambahkan 1 foto");
-      } else {
-        console.log("sebelum base 64", files);
-        this.employee.avatar = files[0];
-        let promise = toBase64(files[0]);
-        promise.then((res) => {
-          console.log("setelah base 64", this.employee.avatar);
-        });
-      }
-    },
+    // async previewImages(files) {
+    //   if (files.length > 1) {
+    //     this.$q.notify("Hanya bisa menambahkan 1 foto");
+    //   } else {
+    //     console.log("sebelum base 64", files);
+    //     this.employee.avatar = files[0];
+    //     let promise = toBase64(files[0]);
+    //     promise.then((res) => {
+    //       console.log("setelah base 64", this.employee.avatar);
+    //     });
+    //   }
+    // },
 
     openMedia() {
       this.$refs.addImages.pickFiles();

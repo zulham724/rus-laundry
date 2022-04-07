@@ -23,26 +23,18 @@
           </div>
         </q-img>
       </div>
-      <div class="bg-transparent absolute">
+      <div  class="bg-transparent absolute">
         <q-avatar
+          v-if="dataAuth"
           class="q-ml-sm"
-          style="margin-top: -50px; background-color: #bdbdbd"
+          style="margin-top: -50px; background-color: #fff"
           size="90px"
+          
         >
-          <q-icon name="fas fa-user" />
+          <q-img v-if="dataAuth.avatar" :src="`${STORAGE_URL}/${dataAuth.avatar}`"/>
+          <q-img v-if="!dataAuth.avatar" src="~/assets/ld.png"/>
         </q-avatar>
-        <q-avatar
-          @click="$refs.file.click()"
-          style="
-            margin-left: -22px;
-            margin-top: 5px;
-            background-color: white;
-            z-index: 999;
-          "
-          size="25px"
-        >
-          <q-icon name="fas fa-camera" color="grey" />
-        </q-avatar>
+        
       </div>
       <div
         class="q-py-md text-body1 text-right q-pr-md"
@@ -184,13 +176,16 @@ export default {
       components: {
         Icon,
       },
+      STORAGE_URL: STORAGE_URL,
+      dataAuth: null,
     };
   },
   computed: {
     ...mapState(["Auth"]),
   },
   mounted() {
-    console.log(this.Auth)
+    this.dataAuth = this.Auth.auth;
+    console.log('ini auth',this.dataAuth)
   },
 };
 </script>

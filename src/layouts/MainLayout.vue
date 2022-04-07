@@ -17,11 +17,11 @@
           <q-tab name="home" no-caps @click="$router.push('/')"
             ><q-img
               no-spinner
-              style="width: 20px; height: 20px"
+              style="width: 20px; height: 20px; "
               :src="
                 tab == 'home'
-                  ? require('../assets/beranda_nav.svg')
-                  : require('../assets/beranda_nav_false.svg')
+                  ? require('../assets/hma3.svg')
+                  : require('../assets/hm3.svg')
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
@@ -32,11 +32,11 @@
           <q-tab name="transaksi" no-caps @click="getOrderPush"
             ><q-img
               no-spinner
-              style="width: 18px; height: 20px"
+              style="width: 20px; height: 20px"
               :src="
                 tab == 'transaksi'
-                  ? require('../assets/transaksi-color.svg')
-                  : require('../assets/icon-transaksi.svg')
+                  ? require('../assets/txta.svg')
+                  : require('../assets/txt.svg')
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
@@ -47,11 +47,11 @@
           <q-tab name="pesanan" no-caps @click="$router.push('/make-an-order')"
             ><q-img
               no-spinner
-              style="width: 18px; height: 22px"
+              style="width: 20px; height: 20px"
               :src="
                 tab == 'pesanan'
-                  ? require('../assets/pesanan-color.svg')
-                  : require('../assets/icon-pesanan.svg')
+                  ? require('../assets/lsta.svg')
+                  : require('../assets/lst.svg')
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
@@ -62,11 +62,11 @@
           <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
             ><q-img
               no-spinner
-              style="width: 18px; height: 20px"
+              style="width: 20px; height: 20px"
               :src="
                 tab == 'penghasilan'
-                  ? require('../assets/penghasilan-color.svg')
-                  : require('../assets/icon-penghasilan.svg')
+                  ? require('../assets/tga.svg')
+                  : require('../assets/tg.svg')
               "
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
@@ -77,12 +77,13 @@
           <q-tab name="menu" no-caps @click="$router.push('/menu')"
             ><q-img
               no-spinner
-              style="width: 18px; height: 20px"
+              style="width: 20px; height: 20px"
               :src="
                 tab == 'karyawan'
-                  ? require('../assets/menu-color.svg')
-                  : require('../assets/icon-menu.svg')
+                  ? require('../assets/mnaa.svg')
+                  : require('../assets/mn.svg')
               "
+              :color="tab == 'karyawan' ? 'green-5' : 'grey-5'"
             ></q-img>
             <div class="text-weight-light q-mt-xs" style="font-size: 8px">
               Menu

@@ -120,16 +120,18 @@
     - halaman new-home (pesanan yang belum selesai masuk antrian[])
     - halmaan new-home antrian pesanan sampai hari ini (total seluruh transaksi belum 100% )
     + halmaan new-home antrian pesanan hari ini jadi (antrian pesanan sampai hari ini)
+    - halaman home bottom bar icon home salah icon
 
     (halaman course)
     - halaman detail course (masih ada blackbar di vue player)
     - halaman comment-of-post (tidak usah ada balas komentar)
 
     (halaman marketplace)
-    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel) 
-    - halaman marketplace home (click profile diaktifkan lagi )
-    - halmaan markeplace-add-product-item (ketika add gambar, bisa di crop)
+    - halmaan markeplace-add-product-item (ketika add gambar, bisa di crop) 
+    + halaman marketplace home (click profile diaktifkan lagi )
+    - halaman menu marketplace lokasi bisnis belum bisa
     - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel)
+    
 
     (halaman komunitas)
     - halaman postingan belum ada [data] tab like dan private
@@ -147,7 +149,7 @@
     - halaman my-profile (tab pemilik masih statis)
     - halaman my-profile (tab pengikut dan diikuti masih statis)
     - halaman my-profile tab post (btn .3, masih belum berfungsi)
-    - halaman my-profile tab private hapus
+    + halaman my-profile tab private hapus
     - halaman my-profile btn ungu bawah kanan mengarah ke halmaan buat postingan 
     - seluruh halaman community (username akun = nama toko)
     - seluruh halaman community (username jika ada nama toko == nama toko, jika tidak nama user)

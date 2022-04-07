@@ -100,42 +100,41 @@
       </div>
 
       <!-- Materi berikutnya padding -->
-      <div class="bg-white q-py-sm row">
-        <div class="col-6 text-right q-pr-md">
-          <q-btn dense flat class="q-px-lg">
-            <div class="col">
-              <div class="row justify-center">
-                <q-img src="~/assets/lk2.png" style="width: 25px" />
-              </div>
-              <div class="row text-white">Suka</div>
+      <div class="row justify-between">
+        <div></div>
+        <q-btn disable dense flat class="q-px-lg ">
+          <div class="col">
+            <div class="row justify-center">
+              <q-img src="~/assets/lk2.png" style="width: 25px" />
             </div>
-          </q-btn>
-        </div>
-        <div class="col-6 text-left q-pl-md">
-          <q-btn dense flat >
-            <div class="col ">
-              <div class="row justify-center bg-white">
-                <q-img src="~/assets/lk2.png" style="width: 25px" />
-              </div>
-              <div no-caps class="row text-white ">Komentar</div>
+            <div class="row text-white">Suka </div>
+          </div>
+        </q-btn>
+        <div></div>
+        <q-btn disable dense flat class="q-px-xs ">
+          <div  class="col  ">
+            <div class="row justify-center ">
+              <q-img src="~/assets/lk2.png" style="width: 25px" />
             </div>
-          </q-btn>
-        </div>
+            <div class="row text-white">Komentar</div>
+          </div>
+        </q-btn>
+        <div></div>
       </div>
       <!-- Materi berikutnya -->
 
-      <div class="row justify-between">
+      <div class="row fixed-bottom justify-between">
         <div></div>
-        <q-btn dense flat class="q-px-lg bg-red">
+        <q-btn dense flat class="q-px-lg ">
           <div class="col">
             <div class="row justify-center">
               <q-img src="~/assets/lk.png" style="width: 25px" />
             </div>
-            <div class="row">Suka</div>
+            <div class="row">Suka </div>
           </div>
         </q-btn>
         <div></div>
-        <q-btn dense flat class="q-px-xs bg-red">
+        <q-btn dense flat class="q-px-xs ">
           <div class="col  ">
             <div class="row justify-center ">
               <q-img src="~/assets/kmt.png" style="width: 25px" />
@@ -275,6 +274,7 @@
         </q-card>
       </q-dialog>
     </q-page>
+    
   </q-layout>
 </template>
 

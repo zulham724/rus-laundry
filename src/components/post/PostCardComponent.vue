@@ -79,6 +79,8 @@
       <div class="full-width full-height mbl-child">
         <div v-if="post.files.length">
           <q-carousel
+            class="q-mx-md"
+            style="border-radius:10px"
             v-model="slide"
             transition-prev="scale"
             transition-next="scale"
@@ -196,6 +198,8 @@
           {{ post.comments[post.comments.length - 1].value }}
         </div>
       </div>
+
+      <q-separator class="q-mt-md q-mx-sm"></q-separator>
     </div>
 
     <q-dialog v-model="dialogOption" position="bottom">

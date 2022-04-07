@@ -1,49 +1,35 @@
 <template>
-  <div  style="height: 100%; width: 100%">
-    <div
-      class="q-py-md"
-      v-if="post != null"
-      :ref="`post_${post.id}`"
-      style="height: 100%"
-    >
+  <div style="height: 100%; width: 100%">
+    <div class="q-py-md" v-if="post != null" :ref="`post_${post.id}`" style="height: 100%">
       <div class="row q-px-md text-center">
         <div class="col-2">
           <!-- Image profile -->
           <!--Avatar-->
-            <div v-if="!post.author.avatar" class="self-center">
-              <q-avatar size="60px">
-                <q-img no-spinner src="~/assets/ld.png"></q-img>
-              </q-avatar>
-            </div>
-            <div v-else-if="post.author.avatar" class="self-center">
-              <q-avatar
-                size="60px"
-              >
-                <q-img
-                  no-spinner
-                  :src="storageUrl + `/` + post.author.avatar"
-                ></q-img>
-              </q-avatar>
-            </div>
+          <div v-if="!post.author.avatar" class="self-center">
+            <q-avatar size="60px">
+              <q-img no-spinner src="~/assets/ld.png"></q-img>
+            </q-avatar>
+          </div>
+          <div v-else-if="post.author.avatar" class="self-center">
+            <q-avatar size="60px">
+              <q-img no-spinner :src="storageUrl + `/` + post.author.avatar"></q-img>
+            </q-avatar>
+          </div>
           <!-- <q-avatar size="60px" style="background-color: #888888">
             <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-          </q-avatar> -->
+          </q-avatar>-->
         </div>
         <div class="col-8 q-pl-md">
           <!-- Nama Profile -->
           <div
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
-          >
-            {{ post.author.name }}
-          </div>
+          >{{ post.author.name }}</div>
           <!-- Waktu posting -->
           <div
             class="text-weight-medium"
             style="color: #b1b1b1; font-size: 12px"
-          >
-            {{ moment(post.created_at).locale("id").fromNow() }}
-          </div>
+          >{{ moment(post.created_at).locale("id").fromNow() }}</div>
         </div>
         <div class="col-2 text-right">
           <!-- Button option -->
@@ -60,25 +46,21 @@
           style="font-size: 15px; color: #5a5656"
         >
           <div>
-            <span v-if="!readMoreActivated"
-              >{{ post.body.slice(0, 130) }}
-            </span>
+            <span v-if="!readMoreActivated">{{ post.body.slice(0, 130) }}</span>
 
             <a
               style="color: #b1b1b1; font-size: 12px"
               class="cursor-pointer text-weight-light"
               v-if="post.body.length > 130 && !readMoreActivated"
               @click="activateReadMore"
-            >
-              ..selengkapnya
-            </a>
+            >..selengkapnya</a>
 
             <span v-if="readMoreActivated" v-html="post.body"></span>
           </div>
         </div>
       </div>
       <!-- Isi video/foto -->
-      <div class="full-width  full-height q-py-xs">
+      <div class="full-width full-height q-py-xs">
         <div v-if="post.files.length">
           <q-carousel
             v-model="slide"
@@ -102,13 +84,11 @@
               </vue-plyr>
 
               <q-img
-               @click="dialogPreviewPhoto(file)"
+                @click="dialogPreviewPhoto(file)"
                 v-else-if="file.filetype.includes('image')"
                 :src="storageUrl + `/` + file.src"
                 style="width: 100%; height: 100%"
-
-              >
-              </q-img>
+              ></q-img>
             </q-carousel-slide>
           </q-carousel>
         </div>
@@ -125,14 +105,11 @@
             :color="post.liked_count ? 'red' : 'grey'"
             :icon="post.liked_count ? 'favorite' : 'favorite_border'"
             @click="post.liked_count ? dislike() : like()"
-          >
-          </q-btn>
+          ></q-btn>
           <div
             class="text-weight-medium self-center"
             style="color: #b1b1b1; font-size: 15px"
-          >
-            {{ post.likes_count }}
-          </div>
+          >{{ post.likes_count }}</div>
         </div>
         <div class="row col-2 self-center">
           <q-btn
@@ -142,28 +119,19 @@
             size="18px"
             @click="$router.push(`/post/${post.id}/comment-of-post`)"
           >
-            <q-Icon
-              name="far fa-comments"
-              size="25px"
-              style="color: #b1b1b1"
-            ></q-Icon>
+            <q-Icon name="far fa-comments" size="25px" style="color: #b1b1b1"></q-Icon>
           </q-btn>
           <div
             class="text-weight-medium self-center"
             style="color: #b1b1b1; font-size: 15px"
-          >
-            {{ post.comments_count }}
-          </div>
+          >{{ post.comments_count }}</div>
         </div>
         <div class="row col-3 self-center">
-          <q-btn dense round flat size="18px" color="grey" icon="visibility">
-          </q-btn>
+          <q-btn dense round flat size="18px" color="grey" icon="visibility"></q-btn>
           <div
             class="text-weight-medium self-center"
             style="color: #b1b1b1; font-size: 15px"
-          >
-            {{ post.readers_count }}
-          </div>
+          >{{ post.readers_count }}</div>
         </div>
       </div>
 
@@ -173,25 +141,20 @@
         @click="$router.push('/comment-of-post')"
         class="text-weight-regular q-px-md"
         style="color: #b1b1b1; font-size: 10px"
-      >
-        Lihat {{ post.comments_count }} komentar
-      </div>
+      >Lihat {{ post.comments_count }} komentar</div>
 
       <!-- Show comment  -->
       <div class="row self-center q-px-md">
         <div
           class="text-weight-regular self-center"
           style="font-size: 12px; color: #3a3838"
-        >
-          kios_laundry
-        </div>
+        >kios_laundry</div>
         <div
           class="text-weight-regular self-center q-pl-sm"
           style="color: #b1b1b1; font-size: 10px"
-        >
-          Kenapa kok pake vanish?...
-        </div>
+        >Kenapa kok pake vanish?...</div>
       </div>
+      <q-separator class="q-mt-md" ></q-separator>
     </div>
 
     <q-dialog v-model="dialogOption" position="bottom">
@@ -210,19 +173,13 @@
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
-                  <q-icon
-                    name="fas fa-pen"
-                    style="color: #787878"
-                    size="25px"
-                  ></q-icon>
+                  <q-icon name="fas fa-pen" style="color: #787878" size="25px"></q-icon>
                 </q-btn>
               </div>
               <div
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
-              >
-                Edit postingan
-              </div>
+              >Edit postingan</div>
             </div>
           </q-btn>
         </q-card-actions>
@@ -233,19 +190,13 @@
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
-                  <q-icon
-                    name="fas fa-share-alt"
-                    style="color: #787878"
-                    size="25px"
-                  ></q-icon>
+                  <q-icon name="fas fa-share-alt" style="color: #787878" size="25px"></q-icon>
                 </q-btn>
               </div>
               <div
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
-              >
-                Bagikan postingan
-              </div>
+              >Bagikan postingan</div>
             </div>
           </q-btn>
         </q-card-actions>
@@ -256,19 +207,13 @@
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
-                  <q-icon
-                    name="fas fa-exclamation-triangle"
-                    style="color: #787878"
-                    size="25px"
-                  ></q-icon>
+                  <q-icon name="fas fa-exclamation-triangle" style="color: #787878" size="25px"></q-icon>
                 </q-btn>
               </div>
               <div
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
-              >
-                Hapus postingan
-              </div>
+              >Hapus postingan</div>
             </div>
           </q-btn>
         </q-card-actions>
@@ -279,19 +224,13 @@
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
-                  <q-icon
-                    name="fas fa-archive"
-                    style="color: #787878"
-                    size="25px"
-                  ></q-icon>
+                  <q-icon name="fas fa-archive" style="color: #787878" size="25px"></q-icon>
                 </q-btn>
               </div>
               <div
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
-              >
-                Arsipkan postingan
-              </div>
+              >Arsipkan postingan</div>
             </div>
           </q-btn>
         </q-card-actions>
@@ -302,19 +241,13 @@
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
-                  <q-icon
-                    name="fas fa-archive"
-                    style="color: #787878"
-                    size="25px"
-                  ></q-icon>
+                  <q-icon name="fas fa-archive" style="color: #787878" size="25px"></q-icon>
                 </q-btn>
               </div>
               <div
                 class="col-8 text-weight-medium self-center text-left"
                 style="color: #3a3838; font-size: 20px"
-              >
-                Nonaktifkan komentar
-              </div>
+              >Nonaktifkan komentar</div>
             </div>
           </q-btn>
         </q-card-actions>
@@ -330,18 +263,10 @@
               <div
                 class="col-8 text-subtitle1 text-weight-medium text-left"
                 style="font-family: roboto; font-size: 18px"
-              >
-                Share Media
-              </div>
+              >Share Media</div>
               <!-- Button Close -->
               <div class="col-4 text-right">
-                <q-btn
-                  flat
-                  round
-                  v-ripple
-                  style="background-color: transparent"
-                  v-close-popup
-                >
+                <q-btn flat round v-ripple style="background-color: transparent" v-close-popup>
                   <q-avatar icon="far fa-times-circle" size="30px"></q-avatar>
                 </q-btn>
               </div>
@@ -351,9 +276,7 @@
             <div
               class="q-pa-sm text-subtitle1"
               style="margin-left: -10px; font-size: 14px"
-            >
-              Share this link via
-            </div>
+            >Share this link via</div>
 
             <div class="row justify-center">
               <!-- Button Facebook -->
@@ -386,11 +309,7 @@
                 bg-color="transparent"
                 v-model="link"
               >
-                <q-btn
-                  class="self-center q-px-xl"
-                  label="Copy"
-                  color="deep-purple-13"
-                />
+                <q-btn class="self-center q-px-xl" label="Copy" color="deep-purple-13" />
                 <template v-slot:prepend>
                   <q-icon name="fas fa-link" />
                 </template>

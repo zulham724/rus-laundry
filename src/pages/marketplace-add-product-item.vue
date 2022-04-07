@@ -8,22 +8,27 @@
               size="25px"
               style="color: #7d7d7d"
               icon="fas fa-arrow-left"
-            >
-            </q-avatar>
+            ></q-avatar>
           </q-btn>
           <q-toolbar-title
             class="text-left text-weight-medium text-body1"
             style="color: #484848"
-            >tambah produk
-          </q-toolbar-title>
+            >tambah produk</q-toolbar-title
+          >
           <q-btn
             flat
             no-caps
             class="text-indigo-10"
             @click="store()"
             :disable="loading == true"
-            >Simpan Produk
-            <q-spinner v-if="loading" class="q-mx-xs" color="black" :thickness="2" />
+          >
+            Simpan Produk
+            <q-spinner
+              v-if="loading"
+              class="q-mx-xs"
+              color="black"
+              :thickness="2"
+            />
           </q-btn>
         </q-toolbar>
         <q-dialog v-model="confirm" persistent>
@@ -64,7 +69,7 @@
               <template v-slot:before>
                 <div
                   @click="openMedia()"
-                  class="col-4 text-white justify-center self-center q-px-md"
+                  class="col-4 text-white justify-center self-center q-px-sm"
                   style="
                     height: 150px;
                     background-color: #d0d1dc;
@@ -78,20 +83,22 @@
               <template v-slot="{ item, index }">
                 <div :key="index" class="q-px-md">
                   <q-img
-                    :src="item.src"
+                    :src="item"
                     width="130px"
                     height="150px"
                     style="border-radius: 10px"
                     class="shadow-2"
                   >
                     <q-btn
+                      round
                       style="
+                        background-color: rgba(0, 0, 0, 0.4);
                         position: absolute;
-                        bottom: 0;
+
                         right: 0;
                         z-index: 1;
                       "
-                      color="red"
+                      color="white"
                       flat
                       dense
                       class="all-pointer-events"
@@ -104,8 +111,8 @@
             </q-virtual-scroll>
           </div>
           <div class="q-ml-lg q-mt-md text-caption text-black">
-            Pilih foto utama anda terlebih dahulu <br />
-            maks. 10 foto
+            Pilih foto utama anda terlebih dahulu
+            <br />maks. 10 foto
           </div>
           <div>
             <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
@@ -122,9 +129,7 @@
               style="width: 95%"
               outlined
               lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '',
-              ]"
+              :rules="[(val) => (val && val.length > 0) || '']"
               v-model="product.tittle"
               placeholder="Masukkan nama produk"
             />
@@ -145,7 +150,7 @@
               style="width: 95%"
               outlined
               lazy-rules
-              :rules="[(val) => val  || '']"
+              :rules="[(val) => val || '']"
               v-model.number="product.price"
               placeholder="Masukkan harga produk"
             />
@@ -166,9 +171,7 @@
               style="width: 95%"
               outlined
               lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0 ) || '',
-              ]"
+              :rules="[(val) => (val && val.length > 0) || '']"
               v-model="product.description"
               placeholder="Masukkan Deskripsi produk"
             />
@@ -209,9 +212,7 @@
             class="q-ml-md q-mt-sm"
             style="width: 95%"
             lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
             outlined
             :model-value="
               product.is_new != undefined
@@ -283,7 +284,6 @@
         ref="addImages"
         @update:model-value="previewImages"
         v-show="false"
-        multiple
       ></q-file>
     </q-page-container>
   </q-layout>
@@ -291,6 +291,8 @@
 
 <script>
 import { ref } from "vue";
+import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 
 export default {
   data() {
@@ -304,9 +306,8 @@ export default {
       dialogKondisiBarang: false,
       is_new: null,
       loading: false,
-      // kondisiBarang: ref("baru"),
-      // aa: "aaaa",
-      // submitResult = ref([])
+      encodedImage: null,
+      arrEncodedImage: [],
     };
   },
   mounted() {},
@@ -318,27 +319,31 @@ export default {
     openMedia() {
       this.$refs.addImages.pickFiles();
     },
-    async previewImages(files) {
-      if (files.length > 10) {
-        this.$q.notify("Hanya bisa menambahkan 10 foto");
-      } else {
-        this.product.images = files;
-
-        let array = [];
-        await files.forEach((images, i) => {
-          array[i] = this.toBase64(images);
-        });
-
-        Promise.all(array).then((res) => {
-          this.images = res;
-          console.log(this.images);
-        });
-      }
+    async previewImages(file) {
+      // console.log("cek file", file);
+      let promise = toBase64(file);
+      promise.then((res) => {
+        this.$q
+          .dialog({
+            component: CropPhotoComponent,
+            componentProps: {
+              ImgBS64: res.src,
+            },
+          })
+          .onOk((data) => {
+            // console.log("cek hasil crop", data);
+            let imageBase64 = data.dataUrl;
+            this.images.push(imageBase64);
+            let imgTo64 = base64ToFile(imageBase64, "avatar");
+            this.product.images.push(imgTo64);
+          });
+      });
     },
     removeImage(index) {
       this.images.splice(index, 1);
     },
     store() {
+      console.log("ini sebelum simpan gambar", this.images);
       this.$refs.form.validate().then((success) => {
         if (success) {
           if (this.product.images.length) {
@@ -349,16 +354,18 @@ export default {
               this.product.is_new == 0;
             }
             let formData = this.jsonToFormData(this.product);
-            this.$store.dispatch("Product/store", formData).then((res) => {
-              this.$router.push("/marketplace-add-product");
-              this.$q.notify("Berhasil");
-              this.product = {};
-              this.images = [];
-              this.is_new = null;
-            }).finally(()=>{
-              
-            this.loading = false;
-            })
+            this.$store
+              .dispatch("Product/store", formData)
+              .then((res) => {
+                this.$router.push("/marketplace-add-product");
+                this.$q.notify("Berhasil");
+                this.product = {};
+                this.images = [];
+                this.is_new = null;
+              })
+              .finally(() => {
+                this.loading = false;
+              });
           } else {
             this.$q.notify("Silahkan masukan gambar");
           }
