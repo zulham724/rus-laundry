@@ -9,8 +9,11 @@
           flat
           style="color: white"
         >
-          <q-icon size="20px" name="fas fa-arrow-left" style="color: #49c2c0">
-          </q-icon>
+          <q-icon
+            size="20px"
+            name="fas fa-arrow-left"
+            style="color: #49c2c0"
+          ></q-icon>
         </q-btn>
 
         <q-toolbar-title
@@ -22,7 +25,7 @@
     </q-header>
     <q-page-container>
       <q-page class="q-pb-xl" v-if="post">
-        <div class="full-width q-ma-md">
+        <div class="full-width q-ma-md row">
           <!-- Profil -->
           <div
             class="row q-px-lg q-py-xs q-mx-sm"
@@ -59,16 +62,24 @@
                 </div>
                 <!-- <q-avatar size="80px" style="background-color: #888888">
                 <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-              </q-avatar> -->
+                </q-avatar>-->
               </div>
               <!-- <q-avatar size="40px">
                 <q-img src="~/assets/Avatar.png" no-spinner></q-img>
-              </q-avatar> -->
+              </q-avatar>-->
             </div>
             <div class="self-center q-pl-sm">
               <div
+                v-if="post.author.shop"
                 class="text-weight-bold"
-                style="color: #3a3838; font-size: 17px; width: auto"
+                style="color: #3a3838; width: auto"
+              >
+                {{ post.author.shop.name }}
+              </div>
+              <div
+                v-else
+                class="text-weight-bold"
+                style="color: #3a3838; width: auto"
               >
                 {{ post.author.name }}
               </div>
@@ -82,7 +93,6 @@
           </div>
 
           <!-- Isi Comment -->
-
           <div
             class="row q-pa-md text-weight-regular"
             style="font-size: 15px; color: #5a5656"
@@ -91,20 +101,18 @@
               class="full-height"
               style="display: block; background-color: #c4c4c4; width: 1px"
             ></div>
-            <div class="col q-pl-sm">
-              {{ post.body }}
-            </div>
+            <div class="col q-pl-sm">{{ post.body }}</div>
           </div>
         </div>
         <q-separator size="2px"></q-separator>
 
         <!-- Comment balasan -->
         <div v-for="(comment, c) in post.comments" :key="comment.id">
-          <div class="q-ma-md">
-            <div class="row col-12">
-              <!-- Profil     -->
+          <div class="q-pa-md">
+            <div class="row  ">
+              <!-- Profil -->
               <div
-                class="row col-12 q-px-sm"
+                class="row col-11  q-px-sm"
                 style="
                   border-radius: 20px 0px 20px 0px;
                   background-color: #f7f7f7;
@@ -137,14 +145,22 @@
                       </q-avatar>
                     </div>
                     <!-- <q-avatar size="80px" style="background-color: #888888">
-                <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-              </q-avatar> -->
+                  <q-img no-spinner src="~/assets/Avatar.png"></q-img>  
+                    </q-avatar>-->
                   </div>
                 </div>
                 <div class="col-9 self-center q-pl-md">
                   <div
+                    v-if="comment.user.shop"
                     class="text-weight-bold"
-                    style="color: #3a3838; font-size: 17px; width: auto"
+                    style="color: #3a3838"
+                  >
+                    {{ comment.user.shop.name }}
+                  </div>
+                  <div
+                    v-else
+                    class="text-weight-bold"
+                    style="color: #3a3838; width: auto"
                   >
                     {{ comment.user.name }}
                   </div>
@@ -159,46 +175,51 @@
 
               <q-space></q-space>
 
-              <!-- Button like -->
-              <q-btn
-                dense
-                round
-                flat
-                size="20px"
-                :color="comment.liked_count ? 'red' : 'grey'"
-                :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
-                @click="
-                  comment.liked_count ? dislikeComment(c) : likeComment(c)
-                "
-              >
-              </q-btn>
+              <div class="col-1 text-right">
+                <!-- Button like -->
+                <q-btn
+                  dense
+                  round
+                  flat
+                  size="100%"
+                  :color="comment.liked_count ? 'red' : 'grey'"
+                  :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
+                  @click="
+                    comment.liked_count ? dislikeComment(c) : likeComment(c)
+                  "
+                ></q-btn>
+              </div>
             </div>
 
-            <!-- Isi Comment -->
-
-            <div
-              class="row q-pa-md text-weight-regular"
-              style="font-size: 15px; color: #5a5656"
-            >
+            <div class="row q-mt-xs">
               <div
-                class="full-height"
-                style="display: block; background-color: #c4c4c4; width: 1px"
+                class="q-mr-sm q-my-xs"
+                style="display: block; background-color: grey; width: 1px"
               ></div>
-              <div class="col q-pl-sm">
-                {{ comment.value }}
+
+              <div class="col">
+                <!-- Isi Comment -->
+                <div
+                  class="row text-weight-regular"
+                  style="font-size: 15px; color: #5a5656"
+                >
+                  <div
+                    class="full-height"
+                    style="
+                      display: block;
+                      background-color: #c4c4c4;
+                      width: 1px;
+                    "
+                  ></div>
+                  <div class="col">{{ comment.value }}</div>
+                </div>
               </div>
             </div>
 
             <!-- Button reply & jumlah like -->
-            <div class="row col-12 self-center q-pl-md q-pr-xs">
+            <div class="row col-12 self-center q-mt-md q-mx-xs">
               <div
-                class="text-weight-medium q-pr-sm"
-                style="color: #b1b1b1; font-size: 12px"
-              >
-                Balas
-              </div>
-              <div
-                class="text-weight-medium q-pl-xs"
+                class="text-weight-medium"
                 style="color: #b1b1b1; font-size: 12px"
               >
                 {{ comment.likes_count }} suka
@@ -317,31 +338,31 @@
           <!-- Profile -->
           <div class="col-2 self-end">
             <!--Avatar-->
-              <div v-if="!dataAuth.avatar" class="self-center">
-                <q-avatar
-                  @click="$router.push('/my-profile')"
-                  size="40px"
-                  style="background-color: #888888"
-                >
-                  <q-img no-spinner src="~/assets/ld.png"></q-img>
-                </q-avatar>
-              </div>
-              <div v-else-if="dataAuth.avatar" class="self-center">
-                <q-avatar
-                  @click="$router.push('/my-profile')"
-                  v-if="dataAuth.avatar != 'users/default.png'"
-                  size="40px"
-                  style="background-color: #888888"
-                >
-                  <q-img
-                    no-spinner
-                    :src="STORAGE_URL + `/` + dataAuth.avatar"
-                  ></q-img>
-                </q-avatar>
-              </div>
+            <div v-if="!dataAuth.avatar" class="self-center">
+              <q-avatar
+                @click="$router.push('/my-profile')"
+                size="40px"
+                style="background-color: #888888"
+              >
+                <q-img no-spinner src="~/assets/ld.png"></q-img>
+              </q-avatar>
+            </div>
+            <div v-else-if="dataAuth.avatar" class="self-center">
+              <q-avatar
+                @click="$router.push('/my-profile')"
+                v-if="dataAuth.avatar != 'users/default.png'"
+                size="40px"
+                style="background-color: #888888"
+              >
+                <q-img
+                  no-spinner
+                  :src="STORAGE_URL + `/` + dataAuth.avatar"
+                ></q-img>
+              </q-avatar>
+            </div>
             <!-- <q-avatar size="40px">
               <q-img src="~/assets/Avatar.png" no-spinner></q-img>
-            </q-avatar> -->
+            </q-avatar>-->
           </div>
 
           <!-- Type of comment -->
@@ -397,7 +418,7 @@ export default {
   mounted() {
     this.dataAuth = this.Auth.auth;
     this.getPostData();
-    
+
     moment.locale("id");
   },
   methods: {
@@ -412,7 +433,7 @@ export default {
     },
     getPostData() {
       this.$store.dispatch("Post/show", this.postid).then((res) => {
-        console.log(res.data);
+        console.log("get post data", res.data);
         this.post = res.data;
       });
     },

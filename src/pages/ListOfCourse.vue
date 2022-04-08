@@ -36,7 +36,7 @@
                 class="text-left text-weight-bold bg-transparent q-mt-xl q-ml-md"
                 style="color: #fff; font-size: 20px; max-width: 250px"
               >
-                <!-- {{ module.tittle }} -->
+                {{ module.tittle.substring(0, 34) }} . . .
               </div>
 
               <!-- Info -->
@@ -161,7 +161,7 @@
                 class="text-weight-bold"
                 style="color: #5f5959; font-size: 14px"
               >
-                {{ content.tittle }}
+                {{ content.tittle.substring(0, 20) }} . . .
               </div>
               <!-- Deskripsi -->
               <div

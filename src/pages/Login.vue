@@ -138,11 +138,13 @@ export default {
           this.$store
             .dispatch("Auth/login", this.credential)
             .then((res) => {
+              // console.log('login gan', res)
               this.$router.push("/");
             })
             .catch((err) => {
+              console.log('ini error login',err);
               this.$q.notify("terjadi kesalahan");
-              console.log(err);
+              
             })
             .finally(() => {
               this.loading = false;

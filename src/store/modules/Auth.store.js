@@ -26,10 +26,10 @@ const mutations = {
     },
     update_account(state, payload) {
         state.auth.name = payload.name
-        // toko
+            // toko
         state.auth.shop.name = payload.shop.name
         state.auth.shop.description = payload.shop.description
-        
+
     }
 };
 
@@ -48,7 +48,7 @@ const actions = {
                 api.defaults.headers.common.Accept = "application/json";
                 api.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
                 commit('set_token', { token: token })
-                api.get(`api/slave/user`).then(resp => {
+                api.get(`/api/user`).then(resp => {
                     const auth = resp.data
                     commit('set_auth', { auth: auth })
                 }).finally(() => {
@@ -77,36 +77,36 @@ const actions = {
             })
         })
     },
-    updateAvatar({commit},formData){
-        return new Promise((resolve,reject)=>{
+    updateAvatar({ commit }, formData) {
+        return new Promise((resolve, reject) => {
             api.post('/api/slave/updateavatar', formData).then(res => {
-                commit('update_avatar', {avatar:res.data.avatar})
+                commit('update_avatar', { avatar: res.data.avatar })
                 resolve(res)
-            }).catch(err=>{
+            }).catch(err => {
                 reject(err)
             })
         })
     },
-    updateAccount({commit}, Account){
-        return new Promise((resolve,reject)=>{
+    updateAccount({ commit }, Account) {
+        return new Promise((resolve, reject) => {
             api.post(`/api/slave/updateaccount/${Account.id}`, Account).then(res => {
-                commit('update_account',res.data)
+                commit('update_account', res.data)
                 resolve(res)
-            }).catch(err=>{
+            }).catch(err => {
                 reject(err)
             })
         })
     },
-    changePassword({commit}, password){
-        return new Promise((resolve,reject)=>{
+    changePassword({ commit }, password) {
+        return new Promise((resolve, reject) => {
             api.post(`/api/slave/changepassword`, password).then(res => {
                 resolve(res)
-            }).catch(err=>{
+            }).catch(err => {
                 reject(err)
             })
         })
     }
-    
+
 };
 
 const getters = {

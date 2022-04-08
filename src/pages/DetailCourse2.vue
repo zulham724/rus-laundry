@@ -379,7 +379,6 @@
                                       </q-btn>
                                       <div></div>
                                       <q-btn
-                                        @click="$router.push('/comment-of-course')"
                                         dense
                                         flat
                                         class="q-px-xs"
@@ -577,7 +576,7 @@ export default {
   methods: {
     routerPush() {
       // this.$router.push('/')
-      this.$router.push(`/${this.next_content.id}/detail-course2`);
+      this.$router.push(`/${this.next_content.id}/detail-course`);
       this.getContent();
       this.getNextContent();
     },

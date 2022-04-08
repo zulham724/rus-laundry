@@ -30,6 +30,14 @@
         <div class="col-8 q-pl-sm self-center">
           <!-- Nama Profile -->
           <div
+            v-if="post.user.shop"
+            class="text-weight-medium"
+            style="color: #3a3838; font-size: 20px"
+          >
+            {{ post.user.shop.name }}
+          </div>
+          <div
+            v-else
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
@@ -79,7 +87,7 @@
       <div class="full-width full-height mbl-child">
         <div v-if="post.files.length">
           <q-carousel
-            class="q-mx-md"
+            class="q-mx-sm"
             style="border-radius:10px"
             v-model="slide"
             transition-prev="scale"
@@ -161,23 +169,14 @@
             {{ post.comments_count }}
           </div>
         </div>
-        <div class="row col-2 self-center">
-          <q-btn dense round flat size="18px" color="grey" icon="visibility">
-          </q-btn>
-          <div
-            class="text-weight-medium self-center"
-            style="color: #b1b1b1; font-size: 15px"
-          >
-            {{ post.readers_count }}
-          </div>
-        </div>
+        
       </div>
 
       <!-- Button show comment -->
       <div
         v-if="post.comments_count > 0"
-        @click="$router.push('/post/${post.id}/comment-of-post')"
-        class="text-weight-regular q-px-md"
+        @click="$router.push(`/post/${post.id}/comment-of-post`)"
+        class="text-weight-regular q-px-md q-py-xs"
         style="color: #b1b1b1; font-size: 10px"
       >
         Lihat {{ post.comments_count }} komentar

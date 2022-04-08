@@ -227,7 +227,7 @@
         <!-- <q-btn class="full-width" flat no-caps dense @click="$router.push('/transaction')"> -->
         <div class="row full-width self-center">
           <div
-            class="col-8 text-weight-medium text-left self-center"
+            class="col-12  text-weight-medium text-left self-center"
             style="color: #313131; font-size: 15px"
           >
             Antrian pesanan sampai hari ini

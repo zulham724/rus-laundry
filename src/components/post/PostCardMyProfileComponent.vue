@@ -22,9 +22,15 @@
         <div class="col-8 q-pl-md">
           <!-- Nama Profile -->
           <div
+            v-if="post.user.shop"
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
-          >{{ post.author.name }}</div>
+          >{{ post.user.shop.name }}</div>
+          <div
+          v-else
+            class="text-weight-medium"
+            style="color: #3a3838; font-size: 20px"
+          >{{ post.user.shop.name }}</div>
           <!-- Waktu posting -->
           <div
             class="text-weight-medium"

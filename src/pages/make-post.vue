@@ -3,14 +3,12 @@
     <q-header class="shadow-1">
       <q-toolbar class="bg-white q-py-sm">
         <q-btn flat round size="10px" @click="$router.back()">
-          <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #3A3838">
-          </q-avatar>
+          <q-avatar size="20px" icon="fas fa-arrow-left" style="color: #3A3838"></q-avatar>
         </q-btn>
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #5a5656; font-size: 16px"
-          >Buat Postingan</q-toolbar-title
-        >
+        >Buat Postingan</q-toolbar-title>
         <q-btn
           no-caps
           :disable="loading"
@@ -18,69 +16,29 @@
           flat
           color="grey"
           @click="store()"
-          class="text-right"
+          v-ripple
+          class="text-right "
         >
-          <div class="text-weight-medium text-subtitle2" style="color: #5a5656">
-            Posting
-          </div>
+          <div class="text-weight-medium text-subtitle2" style="color: #5a5656">Posting</div>
         </q-btn>
       </q-toolbar>
     </q-header>
     <q-page-container>
       <q-page>
-        <div class="row q-mt-lg q-mx-md">
-          <div class="col-7">
-            <div
-              class="row q-pa-sm"
-              style="border-radius: 20px 0 20px 0; background-color: #f7f7f7"
-            >
-              <q-avatar size="30px">
+        <div class="row q-pt-md q-px-md ">
+          <div class="row q-py-sm" style="border-radius: 20px 0 20px 0; ">
+            <q-avatar size="30px">
               <!-- <img :src="`${STORAGE_URL}/${Auth.auth.avatar}`" /> -->
-                <img src="~/assets/Avatar.png" />
-              </q-avatar>
-              <div
-                class="q-pl-sm self-center text-weight-bold"
-                style="font-size: small"
-              >
-                {{ Auth.auth.shop.name }}
-              </div>
-            </div>
-          </div>
-          <div class="col-5 justify-end text-right">
-            <q-btn-dropdown
-              dense
-              flat
-              no-caps
-              style="
-                width: 70%;
-                height: 40%;
-                background-color: #f5f7f9;
-                border-radius: 5px;
-                margin-left: 20px;
-              "
-            >
-              <template v-slot:label>
-                <div class="row no-wrap">
-                  <q-icon
-                    class="q-pt-xs"
-                    size="15px"
-                    name="fas fa-globe-asia"
-                  />
-                  <div class="text-center text-caption q-ml-xs">Publik</div>
-                </div>
-              </template>
-              <q-list>
-                <q-item clickable v-close-popup>
-                  <q-item-section>
-                    <q-item-label caption>Private</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
+              <img src="~/assets/Avatar.png" />
+            </q-avatar>
+            <div
+              class="q-pl-sm self-center text-weight-bold"
+              style="font-size: small"
+            >{{ Auth.auth.shop.name }}</div>
           </div>
         </div>
-        <div class="row">
-          <div class="q-pb-xl" style="height: 200px; width: 100%">
+        <div class="row ">
+          <div class="q-pb-xl " style="height: 200px; width: 100%">
             <q-form ref="form">
               <q-input
                 :disable="loading"
@@ -93,8 +51,8 @@
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
             </q-form>
-            <div class="row">
-              <div v-for="(file, f) in images_videos" :key="f" class="q-pa-md">
+            <div class="row  q-px-md ">
+              <div v-for="(file, f) in images_videos" :key="f" class=" q-pa-sm">
                 <div v-if="file.type.includes('image')">
                   <q-img :src="file.src" width="100px" height="100px">
                     <q-btn
@@ -137,29 +95,10 @@
               @update:model-value="previewImages"
               multiple
               bg-color="transparent"
-            >
-            </q-file>
-            <div>
-              <q-btn
-                dense
-                outline
-                no-caps
-                style="font-size: 8px; border-radius: 10px"
-                class="q-ml-md q-mb-md q-mt-xl text-caption"
-                ># Tambah Hastag</q-btn
-              >
-            </div>
+            ></q-file>
+
             <q-separator />
             <q-list class="text-weight-medium">
-              <q-item tag="label" v-ripple :disable="loading">
-                <q-item-section>
-                  <q-item-label>Share ke WhatsApp</q-item-label>
-                </q-item-section>
-                <q-item-section avatar>
-                  <q-toggle v-model="value2" color="light-green-13" />
-                </q-item-section>
-              </q-item>
-
               <q-item tag="label" v-ripple :disable="loading">
                 <q-item-section>
                   <q-item-label>Jadwalkan untuk nanti</q-item-label>
@@ -186,11 +125,7 @@
             </q-list>
             <q-dialog v-model="dialog" position="bottom">
               <q-card>
-                <q-date
-                  style="width: 100%; height: 20%"
-                  v-model="date"
-                  minimal
-                />
+                <q-date style="width: 100%; height: 20%" v-model="date" minimal />
               </q-card>
             </q-dialog>
           </div>
@@ -201,7 +136,11 @@
             external-label
             vertical-actions-align="left"
             direction="up"
-            color="teal"
+            style="
+              background-image: linear-gradient(to right top, #ff9ac5, #7900ff);
+              color: white;
+            "
+
           >
             <q-fab-action
               external-label
@@ -231,7 +170,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
   data() {
     return {

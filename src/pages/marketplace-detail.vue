@@ -2,14 +2,22 @@
   <q-layout class="mbl">
     <q-page-container>
       <q-page v-if="product">
-        <q-carousel animated v-model="slide" arrows navigation>
+        <q-carousel swipeable  animated v-model="slide" arrows navigation v-if="product.images">
           <q-carousel-slide
-            class="bg-grey-5"
             v-for="(image, i) in product.images"
             :key="image.id"
             :name="i"
-            :img-src="STORAGE_URL + `/` + image.src"
+            :img-src="`${STORAGE_URL}/${image.src}`"
           />
+        </q-carousel>
+        <q-carousel swipeable  animated v-model="slide2" arrows navigation v-else>
+          <q-carousel-slide name="empty"
+          >
+          <div class="q-mt-md text-center" style="color: black">
+           Tidak ada gambar
+          </div>
+          </q-carousel-slide>
+          
         </q-carousel>
         <q-btn
           @click="$router.back()"
@@ -179,7 +187,7 @@
             >
               <q-img
                 v-if="another_product.images.length"
-                class="bg-red"
+                class="bg-white"
                 :src="STORAGE_URL + `/` + another_product.images[0].src"
                 style="height: 150px"
               >
@@ -257,6 +265,7 @@ export default {
   data() {
     return {
       slide: 0,
+      slide2: "empty",
       product: null,
       another_products: [],
       STORAGE_URL: STORAGE_URL,

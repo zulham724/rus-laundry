@@ -116,47 +116,50 @@
     - halaman attendance-details belum bisa kustom pilih bulan tahun (skip)
     - yang bisa bikin postingan dan buat produk hanya akun OWNER saja (skip)
 
+
+
     (halaman home)
-    - halaman new-home (pesanan yang belum selesai masuk antrian[])
-    - halmaan new-home antrian pesanan sampai hari ini (total seluruh transaksi belum 100% )
     + halmaan new-home antrian pesanan hari ini jadi (antrian pesanan sampai hari ini)
-    - halaman home bottom bar icon home salah icon
-
+    + halaman home bottom bar icon home salah icon
+    - 🧠halmaan new-home antrian pesanan sampai hari ini (total seluruh transaksi belum 100% )
+    
     (halaman course)
-    - halaman detail course (masih ada blackbar di vue player)
-    - halaman comment-of-post (tidak usah ada balas komentar)
-
+    + halaman detail course (masih ada blackbar di vue player)
+    - 🧠📷halmaan course fungsi like dan komentar
+    
     (halaman marketplace)
-    - halmaan markeplace-add-product-item (ketika add gambar, bisa di crop) 
-    + halaman marketplace home (click profile diaktifkan lagi )
-    - halaman menu marketplace lokasi bisnis belum bisa
-    - marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel)
+    + halmaan markeplace-add-product-item (ketika add gambar, bisa di crop) 
+    + halaman marketplace home (click profile diaktifkan lagi) 
+    - 🧠📷halaman menu marketplace lokasi bisnis belum bisa
+    - 📷marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel)
     
 
     (halaman komunitas)
-    - halaman postingan belum ada [data] tab like dan private
-    - halaman postingan belum bisa edit, share, hapus, arsipkan postingan dan nonaktifkan komentar
-    - halaman community (post-er diubah jadi nama toko)
-    - halaman community (ketika feed nama/profile postingan di klik, link ke halmaan profile post-er)
-    - halaman community (link push lihat 4 komentar)
-    - halaman community (jumlah view dihapus)
-    - halaman community (btn .3, berfungsi untuk hapus & edit(khusus postingan user), dan laporkan postingan)
-    - halmaam laporkan postingan ketika btn laporkan di klik (auto kirim ke email ardata)
-    - halaman buat postingan (tidak ada postingan private)
-    - halaman buat postingan (# postingan di hapus) 
-    - halaman buat postingan (share ke whatsapp di hapus)
-    - halaman my-profile (tab post kurang rapi[padding kiri])
-    - halaman my-profile (tab pemilik masih statis)
-    - halaman my-profile (tab pengikut dan diikuti masih statis)
-    - halaman my-profile tab post (btn .3, masih belum berfungsi)
+    + halaman buat postingan (tidak ada postingan private)
+    + halaman buat postingan (# postingan di hapus) 
+    + halaman buat postingan (share ke whatsapp di hapus)
+    + halaman my-profile (tab post kurang rapi[padding kiri])
+    + halaman community (post-er diubah jadi nama toko)
+    + halaman community (link push lihat 4 komentar)
+    + halaman community (jumlah view dihapus)
     + halaman my-profile tab private hapus
-    - halaman my-profile btn ungu bawah kanan mengarah ke halmaan buat postingan 
-    - seluruh halaman community (username akun = nama toko)
-    - seluruh halaman community (username jika ada nama toko == nama toko, jika tidak nama user)
-    - halaman postingan belum bisa hapus postingan
-        
+    + halaman my-profile btn ungu bawah kanan mengarah ke halmaan buat postingan 
+    + seluruh halaman community (username akun = nama toko)
+    + seluruh halaman community (username jika ada nama toko == nama toko, jika tidak nama user)
+    + halaman comment-of-post (tidak usah ada balas komentar)
+    - 🧠📷halaman postingan belum ada [data] tab like dan private
+    - 🧠halaman postingan belum bisa edit, share, hapus, arsipkan postingan dan nonaktifkan komentar
+    - 📷halaman community (ketika feed nama/profile postingan di klik, link ke halmaan profile post-er)
+    - 🧠halaman community (btn .3, berfungsi untuk hapus & edit(khusus postingan user), dan laporkan postingan)
+    - 🧠halmaam laporkan postingan ketika btn laporkan di klik (auto kirim ke email ardata)
+    - 🧠📷halaman my-profile (tab pemilik masih statis)
+    - 🧠📷halaman my-profile (tab pengikut dan diikuti masih statis)
+    - 🧠halaman my-profile tab post (btn .3, masih belum berfungsi)
+    - 🧠halaman postingan belum bisa hapus postingan
+    
     (halaman mobile owner)
-    - halaman home belum bisa menggunakan [line chart]
+    - 📷halaman home belum bisa menggunakan [line chart]
+    - 🧠📷seluruh fungsi halaman mobile owner
 
     (halaman web owner)
     - halaman web owner laundry digital ditambahkan kode affiliate, ketik kode nanti bisa terlihat siapa usernya

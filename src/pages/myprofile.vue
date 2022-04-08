@@ -264,37 +264,19 @@
           </q-infinite-scroll>
         </div> -->
 
-        <q-page-sticky position="bottom-right" :offset="[18, 60]">
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
           <q-fab
             icon="fas fa-plus"
             external-label
             vertical-actions-align="left"
             direction="up"
+            @click="$router.push('/make-post')"
             style="
               background-image: linear-gradient(to right top, #ff9ac5, #7900ff);
               color: white;
             "
           >
-            <q-fab-action
-              external-label
-              label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
-              style="color: #dc2baa; background-color: white"
-              label-position="left"
-              class="shadow-1"
-              @click="openMedia()"
-              icon="perm_media"
-              label="Media"
-            />
-            <q-fab-action
-              external-label
-              label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
-              style="color: #dc2baa; background-color: white"
-              label-position="left"
-              class="shadow-1"
-              @click="cek()"
-              icon="photo_camera"
-              label="Kamera"
-            />
+            
           </q-fab>
         </q-page-sticky>
       </q-page>

@@ -198,8 +198,10 @@ export default {
     };
   },
   mounted() {
-    console.log('post', this.Post.posts.data);
+    console.log('post', this.Post);
+    
     this.dataAuth = this.Auth.auth;
+    console.log('auth', this.dataAuth);
     this.getAllPosts();
   },
   created() {
@@ -213,6 +215,7 @@ export default {
             .dispatch("Post/index")
             .then((res) => {
               this.posts = res.data;
+              console.log('this post', this.posts)
               resolve(res.data);
               // console.log("ini data post", res.data);
             })

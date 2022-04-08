@@ -304,7 +304,7 @@
       </div>
 
       <br />
-      
+
       <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
       <div id="app">
         <BarChart />
@@ -319,7 +319,6 @@
       <div id="app" class="bg-red">
         <LineChart />
       </div> -->
-
 
       <br />
       <!-- tab jumlah pesanan tiap cabang -->
@@ -359,7 +358,6 @@
 
       <br />
 
-      
       <!-- tab penghasilan tiap cabang -->
       <div>
         <div class="row q-px-md q-py-md text-weight-bold">
@@ -424,15 +422,25 @@
 <script>
 import { ref } from "vue";
 import { useQuasar } from "quasar";
+import { mapState } from "vuex";
 import BarChart from "src/components/BarChartOwnerComponent.vue";
 // import LineChart  from "src/components/LineChartOwnerComponent.vue";
 
 export default {
+  // SETUP BARCHART
   name: "App",
   components: {
     BarChart,
-    
   },
+
+  computed: {
+    ...mapState(["Auth"]),
+  },
+
+  mounted() {
+    console.log("ini auth gan", this.Auth.auth);
+  },
+
   data() {
     return {
       drawerLeft: ref(false),
@@ -440,7 +448,19 @@ export default {
       alert: ref(false),
     };
   },
-  mounted() {},
+
+  methods: {
+    getOrderCountByMonthSearchBranches() {
+      this.$store
+        .dispatch("MasterOrders/getOrderCountByMonthSearchBranches")
+        .then((res) => {
+          console.log("ini res", res);
+        })
+        .catch((err) => {
+          alert("terjadi kesalahan");
+        });
+    },
+  },
 };
 </script>
 

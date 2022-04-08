@@ -46,7 +46,7 @@
                 label="keluar"
                 style="background-color: #9b27f1"
                 color="white"
-                @click="$router.push('/marketplace-add-product')"
+                @click="$router.back()"
               />
               <q-btn
                 flat
@@ -69,7 +69,7 @@
               <template v-slot:before>
                 <div
                   @click="openMedia()"
-                  class="col-4 text-white justify-center self-center q-px-sm"
+                  class="col-4 text-white justify-center self-center q-px-md"
                   style="
                     height: 150px;
                     background-color: #d0d1dc;
