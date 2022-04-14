@@ -24,14 +24,8 @@
       <q-page v-if="employee">
         <div class="text-center q-py-md" style="background-color: #49c2c0">
           <q-avatar @click="openMedia()" size="150px" color="grey-4">
-            <q-img
-              v-if="
-                employee.avatar == 'users/default.png' && encodedImage == null
-              "
-              no-spinner
-              src="~/assets/ld.png"
-            ></q-img>
-            <q-img
+            <q-img v-if="employee.avatar" no-spinner :src="avatar64"></q-img>
+            <!-- <q-img
               v-else-if="
                 employee.avatar != 'users/default.png' && encodedImage == null
               "
@@ -42,7 +36,7 @@
               v-else-if="encodedImage != null"
               no-spinner
               :src="encodedImage"
-            />
+            /> -->
           </q-avatar>
         </div>
 
@@ -90,7 +84,6 @@
           ref="addImages"
           @update:model-value="previewImages"
           v-show="false"
-          multiple
         ></q-file>
       </q-page>
     </q-page-container>
@@ -98,7 +91,8 @@
 </template>
 
 <script>
-import { toBase64, jsonToFormData } from "./../helpers";
+import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 
 export default {
   props: ["employeeid"],
@@ -107,40 +101,71 @@ export default {
       employee: null,
       jabatan: "Karyawan",
       encodedImage: null,
+      avatar64: null,
+      avatar: null,
+      STORAGE_URL: STORAGE_URL,
     };
   },
   methods: {
+    init() {
+      if (this.employee.avatar) {
+        this.avatar64 = this.STORAGE_URL + "/" + this.employee.avatar;
+      }
+    },
     openMedia() {
       this.$refs.addImages.pickFiles();
     },
-    async previewImages(files) {
-      if (files.length > 1) {
-        this.$q.notify("Hanya bisa menambahkan 1 foto");
-      } else {
-        console.log("sebelum base 64", files);
-        this.employee.avatar = files[0];
-        let promise = toBase64(files[0]);
-        promise.then((res) => {
-          // console.log("setelah base 64", res.src);
-          this.encodedImage = res.src;
-          console.log('ini encoded img', this.encodedImage)
-        });
-        this.updateImages();
-      }
-      
-    },
-    updateImages() {
+    updateImages(file) {
+      let avatar = file;
+      // console.log("ini avatar", avatar);
+      let formData = new FormData();
+      formData.append("avatar", avatar);
+      console.log("ini form data", formData);
       const payload = {
         id: this.employee.id,
-        formData: jsonToFormData(this.employee)
-      }
-      console.log('data employee update', this.employee)
-      this.$store.dispatch(`Employee/updateImage`, payload);
+        formData: formData,
+      };
+      // console.log('data employee update', this.employee)
+      this.$store
+        .dispatch(`Employee/updateImage`, payload)
+        .then((res) => {})
+        .finally(() => {
+          this.$q.notify("Foto Berhasil di tambahkan");
+        });
+    },
+    async previewImages(file) {
+      let promise = toBase64(file);
+      promise.then((res) => {
+        this.$q
+          .dialog({
+            component: CropPhotoComponent,
+            componentProps: {
+              ImgBS64: res.src,
+              aspectRatio: 1 / 1,
+            },
+          })
+          .onOk((data) => {
+            // console.log("cek data", data);
+            this.avatar64 = data.dataUrl;
+            let file = base64ToFile(data.dataUrl, "avatar");
+            this.avatar = file;
+            // console.log("avatar file", this.avatar);
+            this.updateImages(file);
+          });
+      });
     },
     getEmployee() {
-      this.$store.dispatch("Employee/show", this.employeeid).then((res) => {
-        this.employee = res.data;
-        console.log('data karyawan', this.employee)
+      return new Promise((resolve, reject) => {
+        this.$store
+          .dispatch("Employee/show", this.employeeid)
+          .then((res) => {
+            this.employee = res.data;
+            console.log("data karyawan", this.employee);
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     update() {
@@ -153,7 +178,9 @@ export default {
   },
   mounted() {
     // console.log(this.$storageUrl)
-    this.getEmployee();
+    this.getEmployee().then((res) => {
+      this.init();
+    });
   },
 };
 </script>

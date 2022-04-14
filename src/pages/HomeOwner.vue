@@ -1,5 +1,8 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf">
+  <q-layout
+    class="mbl"
+    view="lHh lpR fFf"
+  >
     <q-drawer
       v-model="drawerLeft"
       show-if-above
@@ -15,27 +18,43 @@
           style="border-radius: 0px 0px 50px 50px"
         >
           <div class="q-py-sm text-right q-px-sm">
-            <q-img
-              src="~/assets/stg.png"
-              width="8%"
-              style="border-radius: 0px"
-            />
+            <q-btn
+              round
+              dense
+              flat
+              class="shadow-1"
+              @click="$router.push('/profile-owner')"
+            >
+              <q-icon
+                name="fas fa-user"
+                style="color: white;"
+                size="medium"
+              ></q-icon>
+                </q-btn>
           </div>
 
           <div>
             <q-item>
-              <q-item-section top avatar>
-                <q-avatar>
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" width />
+              <q-item-section
+                top
+                avatar
+              >
+                <q-avatar size="50px" class="shadow-2">
+                  <q-img
+                    no-spinner
+                    :src="`${STORAGE_URL}/${this.Auth.auth.avatar}`"
+                  />
                 </q-avatar>
-              </q-item-section>
+                </q-item-section>
 
-              <q-item-section class="text-white text-left">
-                <q-item-label>Lintangssssssssss</q-item-label>
-                <q-item-label class="text-white" caption
-                  >LintangTampans@gmail.com</q-item-label
-                >
-              </q-item-section>
+                <q-item-section class="text-white text-left">
+                  <q-item-label>{{ this.Auth.auth.name }}</q-item-label>
+                  <q-item-label
+                    class="text-white"
+                    caption
+                  >{{ this.Auth.auth.email }}
+                    </q-item-label>
+                </q-item-section>
             </q-item>
           </div>
 
@@ -45,177 +64,230 @@
             width="40%"
             style="border-radius: 0px"
           />
-        </q-card>
+          </q-card>
       </div>
       <!-- TAB KODE AFFILIATE -->
-      <div class="q-pb-md q-px-xs text-center">
-        <q-img src="~/assets/sgtg.png" style="width: 30%; height: 70px" />
-        <q-btn
-          text-color="black"
-          label="Generate Kode Affiliate"
-          style="background-color: #f1f1f1; margin-top: -10px"
-        />
+      <div class="q-pb-md q-px-xs text-center justify-center column">
+        <div class="text-center justify-center">
+          <q-img
+            src="~/assets/sgtg.png"
+            style="width: 30%; height: 70px"
+          />
+        </div>
+        <div class="text-center justify-center">
+          <q-btn
+            @click="copyToClipboard()"
+            flat
+            no-caps
+            text-color="black"
+            style="
+              background-color: #f1f1f1;
+              margin-top: -10px;
+              border-radius: 5px;
+            "
+          >
+            <div class="q-px-md">{{ this.Auth.auth.affiliate_code }}</div>
+            </q-btn>
+        </div>
       </div>
       <q-separator />
       <!-- TAB BUTTON ROUTER PUSH -->
       <div>
-        <q-item clickable v-ripple>
+        <q-item
+          clickable
+          v-ripple
+        >
           <q-item-section avatar>
             <q-avatar square>
-              <img src="~/assets/krjg.png" style="width: 80%; height: 80%" />
+              <img
+                src="~/assets/krjg.png"
+                style="width: 80%; height: 80%"
+              />
             </q-avatar>
           </q-item-section>
           <q-item-section>Marketplace</q-item-section>
-        </q-item>
+          </q-item>
 
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-avatar square>
-              <img src="~/assets/hm.png" style="width: 80%; height: 80%" />
-            </q-avatar>
-          </q-item-section>
-          <q-item-section>Postingan</q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-avatar square>
-              <img src="~/assets/tk.png" style="width: 80%; height: 80%" />
-            </q-avatar>
-          </q-item-section>
-          <q-item-section>Cabang</q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-avatar square>
-              <img src="~/assets/chn.png" style="width: 80%; height: 80%" />
-            </q-avatar>
-          </q-item-section>
-          <q-item-section>Affiliate</q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-avatar square>
-              <img src="~/assets/abs.png" style="width: 80%; height: 80%" />
-            </q-avatar>
-          </q-item-section>
-          <q-item-section>Absensi</q-item-section>
-        </q-item>
-      </div>
-    </q-drawer>
-    <q-page>
-      <!-- btn dashboard & beli paket -->
-      <div class="row q-pt-sm q-px-sm">
-        <div class="col-3 bg-white">
-          <q-btn flat @click="drawerLeft = !drawerLeft" round size="70%">
-            <q-avatar square>
-              <img src="~/assets/dsblg.png" style="width: 50%; height: 50%" />
-            </q-avatar>
-          </q-btn>
-        </div>
-        <div class="col-4 bg-white"></div>
-        <div class="col-5 self-center">
-          <q-btn
-            @click="alert = true"
-            rounded
-            class="bg-white full-width self-center"
-            style="height: 70%"
+          <q-item
+            clickable
+            v-ripple
           >
-            <div class="row full-width">
-              <div class="col-4">
-                <q-avatar size="200%">
-                  <img src="~/assets/box.png" />
+            <q-item-section avatar>
+              <q-avatar square>
+                <img
+                  src="~/assets/hm.png"
+                  style="width: 80%; height: 80%"
+                />
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>Postingan</q-item-section>
+            </q-item>
+
+            <q-item
+              clickable
+              v-ripple
+            >
+              <q-item-section avatar>
+                <q-avatar square>
+                  <img
+                    src="~/assets/tk.png"
+                    style="width: 80%; height: 80%"
+                  />
                 </q-avatar>
+              </q-item-section>
+              <q-item-section>Cabang</q-item-section>
+              </q-item>
+
+              <q-item
+                clickable
+                v-ripple
+              >
+                <q-item-section avatar>
+                  <q-avatar square>
+                    <img
+                      src="~/assets/chn.png"
+                      style="width: 80%; height: 80%"
+                    />
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>Affiliate</q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                >
+                  <q-item-section avatar>
+                    <q-avatar square>
+                      <img
+                        src="~/assets/abs.png"
+                        style="width: 80%; height: 80%"
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>Absensi</q-item-section>
+                  </q-item>
+      </div>
+      </q-drawer>
+      <q-page>
+        <!-- btn dashboard & beli paket -->
+        <div class="row q-pt-sm q-px-sm">
+          <div class="col-3 bg-white">
+            <q-btn
+              flat
+              @click="drawerLeft = !drawerLeft"
+              round
+              size="70%"
+            >
+              <q-avatar square>
+                <img
+                  src="~/assets/dsblg.png"
+                  style="width: 50%; height: 50%"
+                />
+              </q-avatar>
+              </q-btn>
+          </div>
+          <div class="col-4 bg-white"></div>
+          <div class="col-5 self-center">
+            <q-btn
+              @click="alert = true"
+              rounded
+              class="bg-white full-width self-center"
+              style="height: 70%"
+            >
+              <div class="row full-width">
+                <div class="col-4">
+                  <q-avatar size="200%">
+                    <img src="~/assets/box.png" />
+                  </q-avatar>
+                </div>
+                <div class="col-8 self-center">Beli Paket</div>
               </div>
-              <div class="col-8 self-center">Beli Paket</div>
+              </q-btn>
+          </div>
+        </div>
+
+        <br />
+        <!-- tab info -->
+        <div class="col">
+          <div class="row">
+            <div class="col-6 q-pa-sm">
+              <q-btn
+                no-caps
+                class="bgJumlahPesanan shadow-2 q-px-md full-height full-width"
+                style="border-radius: 10px"
+              >
+                <div class="full-width self-center text-center full-height">
+                  <div class="q-pt-lg">
+                    <q-img
+                      no-spinner
+                      src="~/assets/pp.png"
+                      width="50px"
+                      height="50px"
+                    >
+                      </q-img>
+                  </div>
+
+                  <div class="col full-width">
+                    <div class="row">
+                      <div
+                        class="text-weight-medium q-pt-md text-left"
+                        style="color: #fff; font-size: small"
+                      >
+                        Jumlah Pesanan
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="text-weight-medium text-left"
+                      style="color: #fff; font-size: small"
+                    >
+                      {{ this.totalOrders }}
+                  </div>
+                </div>
             </div>
+          </div>
           </q-btn>
         </div>
-      </div>
-
-      <br />
-      <!-- tab info -->
-      <div class="col">
-        <div class="row">
-          <div class="col-6 q-pa-sm">
-            <q-btn
-              no-caps
-              class="bgJumlahPesanan shadow-2 q-px-md full-height full-width"
-              style="border-radius: 10px"
-            >
-              <div class="full-width self-center text-center full-height">
-                <div class="q-pt-lg">
-                  <q-img
-                    no-spinner
-                    src="~/assets/pp.png"
-                    width="50px"
-                    height="50px"
-                  >
+        <!-- info perkembangan -->
+        <div class="col-6 q-pa-sm">
+          <q-btn
+            no-caps
+            class="bgInfoPerkembangan shadow-2 q-px-md full-height full-width"
+            style="border-radius: 10px"
+          >
+            <div class="full-width self-center text-center full-height">
+              <div class="q-pt-lg">
+                <q-img
+                  no-spinner
+                  src="~/assets/perkembangan.png"
+                  width="50px"
+                  height="50px"
+                >
                   </q-img>
-                </div>
+              </div>
 
-                <div class="col full-width">
-                  <div class="row">
-                    <div
-                      class="text-weight-medium q-pt-md text-left"
-                      style="color: #fff; font-size: small"
-                    >
-                      Jumlah Pesanan
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div
-                      class="text-weight-medium text-left"
-                      style="color: #fff; font-size: small"
-                    >
-                      11040385235907
-                    </div>
-                  </div>
+              <div class="col full-width">
+                <div class="row">
+                  <div
+                    class="text-weight-medium q-pt-md text-left"
+                    style="color: #fff; font-size: small"
+                  >
+                    Info Perkembangan
                 </div>
               </div>
-            </q-btn>
-          </div>
-          <!-- info perkembangan -->
-          <div class="col-6 q-pa-sm">
-            <q-btn
-              no-caps
-              class="bgInfoPerkembangan shadow-2 q-px-md full-height full-width"
-              style="border-radius: 10px"
-            >
-              <div class="full-width self-center text-center full-height">
-                <div class="q-pt-lg">
-                  <q-img
-                    no-spinner
-                    src="~/assets/perkembangan.png"
-                    width="50px"
-                    height="50px"
-                  >
-                  </q-img>
-                </div>
-
-                <div class="col full-width">
-                  <div class="row">
-                    <div
-                      class="text-weight-medium q-pt-md text-left"
-                      style="color: #fff; font-size: small"
-                    >
-                      Info Perkembangan
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div
-                      class="text-weight-medium text-left"
-                      style="color: #fff; font-size: small"
-                    >
-                      0.0%
-                    </div>
-                  </div>
-                </div>
+              <div class="row">
+                <div
+                  class="text-weight-medium text-left"
+                  style="color: #fff; font-size: small"
+                >
+                  {{ this.totalPerkembangan }} %
               </div>
-            </q-btn>
-          </div>
+            </div>
+        </div>
+        </div>
+        </q-btn>
+        </div>
         </div>
         <div class="row">
           <!-- info penghasilan keseluruhan -->
@@ -234,7 +306,7 @@
                       width="50px"
                       height="50px"
                     >
-                    </q-img>
+                      </q-img>
                   </div>
 
                   <div class="col full-width">
@@ -244,179 +316,207 @@
                         style="color: #fff; font-size: small"
                       >
                         Penghasilan
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div
-                        class="text-weight-medium text-left"
-                        style="color: #fff; font-size: small"
-                      >
-                        Rp. 100.000
-                      </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div
+                      class="text-weight-medium text-left"
+                      style="color: #fff; font-size: small"
+                    >
+                      {{ new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", }).format(this.Profit) }}
+                  </div>
                 </div>
-              </q-btn>
             </div>
           </div>
-          <!-- info paket entrepreneur -->
-          <div class="col">
-            <div class="col-6 q-pa-sm">
-              <q-btn
-                no-caps
-                class="bgPaketEntrepreneur shadow-2 q-px-md full-height full-width"
-                style="border-radius: 10px"
-              >
-                <div class="full-width self-center text-center full-height">
-                  <div class="q-pt-lg">
-                    <q-img
-                      no-spinner
-                      src="~/assets/pae.png"
-                      width="50px"
-                      height="50px"
-                    >
+          </q-btn>
+        </div>
+        </div>
+        <!-- info paket entrepreneur -->
+        <div class="col">
+          <div class="col-6 q-pa-sm">
+            <q-btn
+              no-caps
+              class="bgPaketEntrepreneur shadow-2 q-px-md full-height full-width"
+              style="border-radius: 10px"
+            >
+              <div class="full-width self-center text-center full-height">
+                <div class="q-pt-lg">
+                  <q-img
+                    no-spinner
+                    src="~/assets/pae.png"
+                    width="50px"
+                    height="50px"
+                  >
                     </q-img>
-                  </div>
+                </div>
 
-                  <div class="col full-width">
-                    <div class="row">
-                      <div
-                        class="text-weight-medium q-pt-md text-left"
-                        style="color: #fff; font-size: small"
-                      >
-                        Paket Entrepreneur
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div
-                        class="text-weight-medium text-left"
-                        style="color: #fff; font-size: small"
-                      >
-                        12 Desember 2022
-                      </div>
-                    </div>
+                <div class="col full-width">
+                  <div class="row">
+                    <div
+                      class="text-weight-medium q-pt-md text-left"
+                      style="color: #fff; font-size: small"
+                    >
+                      Paket Entrepreneur
                   </div>
                 </div>
-              </q-btn>
-            </div>
+                <div class="row">
+                  <div
+                    class="text-weight-medium text-left"
+                    style="color: #fff; font-size: small"
+                  >
+                    data palsu
+                </div>
+              </div>
           </div>
         </div>
-      </div>
+        </q-btn>
+        </div>
+        </div>
+        </div>
+        </div>
 
-      <br />
+        <br />
 
-      <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
+        <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
+        <div id="app">
+          <BarChart />
+        </div>
+
+        <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
+        <div id="app">
+          <BarChart2 />
+        </div> 
+
+        <!-- <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
       <div id="app">
-        <BarChart />
-      </div>
-
-      <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
-      <div id="app">
-        <BarChart />
-      </div>
-
-      <!-- <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
-      <div id="app" class="bg-red">
         <LineChart />
       </div> -->
 
-      <br />
-      <!-- tab jumlah pesanan tiap cabang -->
-      <div>
-        <div class="row q-px-md q-py-md text-weight-bold">
-          Jumlah Pesanan Tiap Cabang
-        </div>
+        <br />
+        <!-- tab jumlah pesanan tiap cabang -->
         <div>
-          <q-carousel animated height="100%" v-model="slide" swipeable infinite>
-            <q-carousel-slide :name="1">
-              <div class="col">
-                <div class="row justify-center">
-                  <q-img
-                    src="~/assets/circ.png"
-                    style="width: 60%; height: 60%"
-                    class="self-center"
-                  />
+          <div class="row q-px-md q-py-md text-weight-bold">
+            Jumlah Pesanan Tiap Cabang
+          </div>
+          <!-- <div>
+            <q-carousel
+              animated
+              height="100%"
+              v-model="slide"
+              swipeable
+              infinite
+            >
+              <q-carousel-slide :name="1">
+                <div class="col">
+                  <div class="row justify-center">
+                    <q-img
+                      src="~/assets/circ.png"
+                      style="width: 60%; height: 60%"
+                      class="self-center"
+                    />
+                  </div>
+                  <div class="row justify-center q-py-md">Laundry Amsterdam</div>
                 </div>
-                <div class="row justify-center q-py-md">Laundry Amsterdam</div>
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="2">
-              <div class="col">
-                <div class="row justify-center">
-                  <q-img
-                    src="~/assets/circ2.png"
-                    style="width: 60%; height: 60%"
-                    class="self-center"
-                  />
+              </q-carousel-slide>
+              <q-carousel-slide :name="2">
+                <div class="col">
+                  <div class="row justify-center">
+                    <q-img
+                      src="~/assets/circ2.png"
+                      style="width: 60%; height: 60%"
+                      class="self-center"
+                    />
+                  </div>
+                  <div class="row justify-center q-py-md">Laundry Utrecht</div>
                 </div>
-                <div class="row justify-center q-py-md">Laundry Utrecht</div>
-              </div>
-            </q-carousel-slide>
-          </q-carousel>
+              </q-carousel-slide>
+              </q-carousel>
+          </div> -->
+          <div>
+            <circle-component></circle-component>
+          </div>
         </div>
-      </div>
 
-      <br />
+        <br />
 
-      <!-- tab penghasilan tiap cabang -->
-      <div>
-        <div class="row q-px-md q-py-md text-weight-bold">
-          Penghasilan Tiap Cabang
-        </div>
+        <!-- tab penghasilan tiap cabang -->
         <div>
-          <q-carousel
-            control-color="blue"
-            height="100%"
-            animated
-            v-model="slide"
-            swipeable
-            navigation
-            infinite
-          >
-            <q-carousel-slide :name="1">
-              <div class="col">
-                <div class="row">
-                  <q-img src="~/assets/mount.png" class="self-center" />
+          <div class="row q-px-md q-py-md text-weight-bold">
+            Penghasilan Tiap Cabang
+          </div>
+          <div>
+            <q-carousel
+              control-color="blue"
+              height="100%"
+              animated
+              v-model="slide"
+              swipeable
+              navigation
+              infinite
+            >
+              <q-carousel-slide :name="1">
+                <div class="col">
+                  <div class="row">
+                    <q-img
+                      src="~/assets/mount.png"
+                      class="self-center"
+                    />
+                  </div>
+                  <div class="row q-py-md q-mb-lg">Laundry Amsterdam</div>
                 </div>
-                <div class="row q-py-md q-mb-lg">Laundry Amsterdam</div>
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="2">
-              <div class="col">
-                <div class="row">
-                  <q-img src="~/assets/mount.png" class="self-center" />
+              </q-carousel-slide>
+              <q-carousel-slide :name="2">
+                <div class="col">
+                  <div class="row">
+                    <q-img
+                      src="~/assets/mount.png"
+                      class="self-center"
+                    />
+                  </div>
+                  <div class="row q-py-md q-mb-lg">Laundry Utrecht</div>
                 </div>
-                <div class="row q-py-md q-mb-lg">Laundry Utrecht</div>
-              </div>
-            </q-carousel-slide>
-          </q-carousel>
+              </q-carousel-slide>
+              </q-carousel>
+          </div>
         </div>
-      </div>
 
-      <!-- dialog ganti paket -->
-      <q-dialog v-model="alert">
-        <q-card>
-          <q-card-section class="text-center">
-            <q-img src="~/assets/alert.png" style="width: 40%; height: 40%" />
-          </q-card-section>
-          <q-card-section class="text-center">
-            <div class="text-h6">
-              Apakah anda benar- benar yakin untuk mengganti Paket?
-            </div>
-          </q-card-section>
+        <!-- dialog ganti paket -->
+        <q-dialog v-model="alert">
+          <q-card>
+            <q-card-section class="text-center">
+              <q-img
+                src="~/assets/alert.png"
+                style="width: 40%; height: 40%"
+              />
+            </q-card-section>
+            <q-card-section class="text-center">
+              <div class="text-h6">
+                Apakah anda benar- benar yakin untuk mengganti Paket?
+              </div>
+            </q-card-section>
 
-          <q-card-section class="q-pt-none">
-            Jika Yakin tekan Yakin, Jika tidak tekan Tidak
-          </q-card-section>
+            <q-card-section class="q-pt-none">
+              Jika Yakin tekan Yakin, Jika tidak tekan Tidak
+            </q-card-section>
 
-          <q-card-actions align="right">
-            <q-btn flat label="Tidak" color="grey" v-close-popup />
-            <q-btn flat label="Yakin" color="red" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-    </q-page>
-  </q-layout>
+            <q-card-actions align="right">
+              <q-btn
+                flat
+                label="Tidak"
+                color="grey"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Yakin"
+                color="red"
+                v-close-popup
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+      </q-page>
+      </q-layout>
 </template>
 
 <script>
@@ -424,21 +524,35 @@ import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { mapState } from "vuex";
 import BarChart from "src/components/BarChartOwnerComponent.vue";
+import BarChart2 from "src/components/BarChartRevenueComponent.vue";
+// import LineChart from "src/components/LineChartOwnerComponent.ts";
 // import LineChart  from "src/components/LineChartOwnerComponent.vue";
+import circle from "src/components/circle/circle.vue";
+
 
 export default {
   // SETUP BARCHART
   name: "App",
   components: {
     BarChart,
+    BarChart2,
+    "circle-component": circle,
   },
 
   computed: {
-    ...mapState(["Auth"]),
+    ...mapState(["Auth", "MasterOrders"]),
   },
 
   mounted() {
-    console.log("ini auth gan", this.Auth.auth);
+    // console.log("ini adalah data auth", this.Auth.auth);s
+    this.getTotalOrders();
+    this.getTotalOrdersPerShop();
+    this.getProfit();
+    this.getDataPerkembangan();
+
+    //data pesanan bulanan
+    this.getMonthlyOrder();
+
   },
 
   data() {
@@ -446,20 +560,78 @@ export default {
       drawerLeft: ref(false),
       slide: ref(1),
       alert: ref(false),
+      STORAGE_URL: STORAGE_URL,
+
+      // data jumlah seluruh pesanan
+      totalOrdersPerShop: null,
+      totalOrders: 0,
+      Profit: 0,
+      totalPerkembangan: null,
+
+      //data bulanan
     };
   },
 
   methods: {
-    getOrderCountByMonthSearchBranches() {
+    copyToClipboard() {
+      let text = this.Auth.auth.affiliate_code;
+      navigator.clipboard.writeText(text);
+      this.$q.notify("Kode Affiliate Anda telah disalin");
+    },
+    // get data jumlah seluruh pesanan
+    getDataPerkembangan() {
+      this.$store.dispatch("MasterOrders/getDataPerkembangan").then(res => {
+        this.totalPerkembangan = res.data.toFixed(2);
+        // console.log("daw", this.totalPerkembangan);
+      });
+    },
+    getProfit() {
+      this.$store.dispatch("MasterOrders/getProfit").then(res => {
+        this.Profit = res.data;
+        // console.log(this.Profit);
+      });
+    },
+    getTotalOrdersPerShop() {
       this.$store
-        .dispatch("MasterOrders/getOrderCountByMonthSearchBranches")
-        .then((res) => {
-          console.log("ini res", res);
+        .dispatch("MasterOrders/getTotalOrdersPerShop")
+        .then(res => {
+          this.totalOrdersPerShop = res.data;
         })
-        .catch((err) => {
-          alert("terjadi kesalahan");
+        .catch(err => {
+          console.log("terjadi kesalahan getTotalOrdersPerShop");
         });
     },
+    getTotalOrders() {
+      this.$store
+        .dispatch("MasterOrders/getTotalOrders")
+        .then(res => {
+          this.totalOrders = res.data;
+        })
+        .catch(err => {
+          console.log("terjadi kesalahan getTotalOrders");
+        });
+    },
+
+    // get data pesanan bulanan
+    getMonthlyOrder() {
+      this.$store
+        .dispatch("MasterOrders/getMonthlyOrder")
+        .then(res => {
+          // console.log("data bulanan ", res.data);
+          
+        })
+        .catch(err => {
+          console.log("terjadi kesalahan getMonthlyOrder", err  );
+        });
+    },
+
+    filterMonth(value){
+      let resBulan = value;
+      let results = resBulan.filter(obj => {
+        return obj.month === 1;
+      });
+      console.log('data januari', results);
+    }
   },
 };
 </script>
@@ -492,4 +664,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 </style>

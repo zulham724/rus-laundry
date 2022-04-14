@@ -1,7 +1,7 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <div class="fixed-top" style="z-index: 999">
-      <q-header class="bg-transparent" v-if="dataAuth">
+      <q-header class="bg-transparent" v-if="profilePost">
         <q-toolbar class="bg-white shadow-1">
           <q-btn
             @click="$router.back()"
@@ -15,10 +15,10 @@
           </q-btn>
 
           <q-toolbar-title
-            v-if="dataAuth.shop.name"
+            v-if="profilePost.shop.name"
             class="text-left text-weight-medium text-subtitle2"
             style="color: black; font-size: 16px"
-            >{{ dataAuth.shop.name }}</q-toolbar-title
+            >{{ profilePost.shop.name }}</q-toolbar-title
           >
 
           <!-- Button option -->
@@ -41,28 +41,27 @@
     </div>
     <q-page-container>
       <q-page class="mbl-child">
-        <div class="q-pa-md q-mb-sm">
+        <div v-if="profilePost" class="q-pa-md q-mb-sm">
           <div class="row">
-            <div class="col-4 text-left self-center" v-if="dataAuth">
+            <div class="col-4 text-left self-center" >
               <!--Avatar-->
-              <div v-if="!dataAuth.avatar" class="self-center">
+              <div v-if="!profilePost.avatar" class="self-center">
                 <q-avatar
-                  @click="$router.push('/my-profile')"
                   size="80px"
-                  style="background-color: #888888"
+                  style="background-color: #fff"
                 >
                   <q-img no-spinner src="~/assets/ld.png"></q-img>
                 </q-avatar>
               </div>
-              <div v-else-if="dataAuth.avatar" class="self-center">
+              <div v-else-if="profilePost.avatar" class="self-center">
                 <q-avatar
                   @click="$router.push('/my-profile')"
                   size="80px"
-                  style="background-color: #888888"
+                  style="background-color: #fff"
                 >
                   <q-img
                     no-spinner
-                    :src="STORAGE_URL + `/` + dataAuth.avatar"
+                    :src="STORAGE_URL + `/` + profilePost.avatar"
                   ></q-img>
                 </q-avatar>
               </div>
@@ -72,7 +71,12 @@
             </div>
             <div class="col-8">
               <div class="text-right q-pb-xs">
-                <q-btn disable class="grad" text-color="white" label="Cabang" />
+                <q-btn
+                  disable
+                  class="grad"
+                  text-color="white"
+                  :label="profilePost.shop ? 'Cabang' : 'Pemilik'"
+                />
               </div>
               <div
                 class="row col-12 q-px-sm"
@@ -121,28 +125,65 @@
             Tentang toko
           </div>
           <div
-            v-if="dataAuth"
+            v-if="profilePost"
             class="q-pt-xs text-weight-medium"
             style="color: #898585; font-size: 16px; width: 70vw"
           >
-            {{ dataAuth.shop.description }}
+            {{ profilePost.shop.description }}
           </div>
-          <div class="q-pt-xs" v-if="dataAuth">
+          <div class="q-pt-xs" v-if="booleantest">
             <q-item>
               <q-item-section top avatar>
                 <q-avatar>
                   <q-img
                     ratio="1"
-                    :src="`${STORAGE_URL}/${dataAuth.master[0].avatar}`"
+                    :src="`${STORAGE_URL}/${profilePost.master[0].avatar}`"
                   />
                 </q-avatar>
               </q-item-section>
 
-              <q-item-section v-if="dataAuth.master">
-                <q-item-label>{{ dataAuth.master[0].name }}</q-item-label>
+              <q-item-section v-if="profilePost.master">
+                <q-item-label>{{ profilePost.master[0].name }}</q-item-label>
                 <q-item-label caption>Pemilik</q-item-label>
               </q-item-section>
             </q-item>
+          </div>
+          <div class="q-pt-xs col" v-else>
+            <div class="row ">
+              <q-btn
+                no-caps
+                label="Ikuti"
+                style="background-color: #7900ff; color: #fff"
+              />
+            </div>
+            <div class="row" v-if="!profilePost.shop">
+              <q-item
+                class="full-width"
+                clickable
+                v-ripple
+              >
+                <q-item-section avatar>
+                  <q-avatar size="20px">
+                    <img
+                        src="~/assets/dna.svg"
+                    />
+                  </q-avatar>
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>Daftar Cabang</q-item-label>
+                  <q-item-label caption lines="1">awdawdawdaw</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-avatar size="20px">
+                    <img
+                        src="~/assets/lbdr.svg"
+                    />
+                  </q-avatar>
+                </q-item-section>
+              </q-item>
+            </div>
           </div>
         </div>
 
@@ -159,7 +200,6 @@
             name="post"
             class="col-4 self-center"
             no-caps
-            @click="$router.push('/my-profile')"
           >
             <q-img
               class="q-pa-sm"
@@ -189,8 +229,8 @@
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="post" class="q-ma-none q-pa-none">
-            <div>
-              <q-infinite-scroll @load="onLoad">
+            <div v-if="this.posts">
+              <q-infinite-scroll @load="onLoad" :offset="250">
                 <!-- Postingan -->
                 <q-intersection
                   :ref="`intersection_${post.id}`"
@@ -208,8 +248,9 @@
               </q-infinite-scroll>
             </div>
           </q-tab-panel>
-          <q-tab-panel name="like" class="q-ma-none q-pa-none">
+          <q-tab-panel name="like">
             <div>
+              <div>TAB LIKE</div>
               <q-item clickable v-ripple :active="active">
                 <q-item-section avatar>
                   <q-icon style="color: #2196f3" name="favorite_border" />
@@ -220,39 +261,46 @@
                 <q-item-section side>Hanya saya</q-item-section>
               </q-item>
 
-              <q-infinite-scroll @load="onLoad2">
-                <!-- Like -->
+              <q-infinite-scroll @load="onLoad">
+                <!-- Postingan -->
                 <q-intersection
+                  class="mbl-child"
                   :ref="`intersection_${post.id}`"
-                  v-for="post in Post.liked_posts.data"
+                  v-for="post in posts.data"
                   :key="post.id"
                 >
-                  <item-like-component
+                  <item-post-component
                     class="mbl-child"
                     v-on:update-height="updateHeight(post)"
                     :post="post"
                     :style="`height:100%`"
-                  ></item-like-component>
+                  ></item-post-component>
                 </q-intersection>
               </q-infinite-scroll>
             </div>
           </q-tab-panel>
         </q-tab-panels>
 
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
-          <q-fab
-            icon="fas fa-plus"
-            external-label
-            vertical-actions-align="left"
-            direction="up"
-            @click="$router.push('/make-post')"
-            style="
-              background-image: linear-gradient(to right top, #ff9ac5, #7900ff);
-              color: white;
-            "
-          >
-          </q-fab>
-        </q-page-sticky>
+        <!--  <div>
+          <q-infinite-scroll @load="onLoad">
+            <q-intersection
+              class="mbl-child"
+              :ref="`intersection_${post.id}`"
+              v-for="post in posts.data"
+              :key="post.id"
+              :style="`min-height:${getItemPostHeight(post)}; width:100vw`"
+            >
+              <item-post-component
+                class="mbl-child"
+                v-on:update-height="updateHeight(post)"
+                :post="post"
+                :style="`position:relative;height:100%`"
+              ></item-post-component>
+            </q-intersection>
+          </q-infinite-scroll>
+        </div> -->
+
+        
       </q-page>
     </q-page-container>
   </q-layout>
@@ -262,13 +310,12 @@
 import { ref } from "vue";
 import { mapState } from "vuex";
 import PostCardMyProfileComponent from "src/components/post/PostCardMyProfileComponent.vue";
-import LikeCardMyProfileComponent from "src/components/post/LikeCardMyProfileComponent.vue";
 
 export default {
+    props: ["postauthorid"],
   include: ["MyProfilePage"],
   components: {
     "item-post-component": PostCardMyProfileComponent,
-    "item-like-component": LikeCardMyProfileComponent,
   },
 
   computed: {
@@ -277,20 +324,24 @@ export default {
 
   data() {
     return {
+      booleantest: false,
+      //hanya untuk test
+
       posts: {},
-      liked_post: {},
       tab: ref("post"),
+      profilePost: {},
+
       //ini untuk menyimpan data auth
-      dataAuth: null,
+      profilePost: null,
       STORAGE_URL: STORAGE_URL,
     };
   },
 
   mounted() {
-    this.dataAuth = this.Auth.auth;
-    // console.log('dataauth',this.dataAuth);
-    this.getAllPostsUser();
-    this.getAllLikedPosts();
+      this.getProfilePostsUser();
+      this.getAllPostsUser();
+
+
   },
 
   created() {
@@ -298,19 +349,20 @@ export default {
   },
 
   methods: {
-    getAllLikedPosts() {
+
+    getProfilePostsUser() {
       this.$store
-        .dispatch("Post/getLikedPostByUser", this.Auth.auth.id)
+        .dispatch("Post/getProfilePostByUser", +this.postauthorid)
         .then((res) => {
-          // console.log("liked post", res);
-          this.liked_post = res.data;
+          console.log(" profile post by user", res);
+          this.profilePost = res.data;
         });
     },
     getAllPostsUser() {
       this.$store
-        .dispatch("Post/getPostByUser", this.Auth.auth.id)
+        .dispatch("Post/getPostByUser", +this.postauthorid)
         .then((res) => {
-          // console.log("post by user", res);
+          console.log("post by user", res);
           this.posts = res.data;
         });
     },
@@ -332,13 +384,6 @@ export default {
     onLoad(index, done) {
       this.Post.my_posts.next_page_url
         ? this.$store.dispatch("Post/nextMyPost").then((res) => {
-            done();
-          })
-        : done();
-    },
-    onLoad2(index, done) {
-      this.Post.liked_posts.next_page_url
-        ? this.$store.dispatch("Post/nextLikedPost").then((res) => {
             done();
           })
         : done();

@@ -384,6 +384,7 @@ export default {
     this.getProducts();
   },
   methods: {
+    
     filterProducts(value) {
       this.updateProducts(value);
     },
@@ -409,7 +410,7 @@ export default {
           .dispatch("Product/index")
           .then((res) => {
             this.products = this.products_temp = res.data;
-            resolve(res.data);
+            console.log('produk', this.products);
           })
           .catch((err) => {
             reject(err);

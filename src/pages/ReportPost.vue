@@ -22,135 +22,22 @@
     <q-page-container style="background-color: #fafafa">
       <q-pull-to-refresh>
         <q-page>
-          <q-list class="">
-            <q-item  clickable v-close-popup @click="onItemClick">
+          <q-list>
+            <q-item
+              v-ripple
+              v-for="item in report_list"
+              :key="item.id"
+              clickable
+              v-close-popup
+              @click="sendReport(item.name)"
+            >
               <q-item-section>
-                <q-item-label>Ini Adalah Spam</q-item-label>
+                <q-item-label>{{ item.name }}</q-item-label>
               </q-item-section>
               <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Mengandung Provokasi</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Mengandung Konten Hak Cipta</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Terdapat Unsur Pornografi</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Ujaran Kebencian</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Konten Kekerasan</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Postingan Berisi Konten Ilegal</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Informasi Hoax</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Memiliki Unsur Penghinaan</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Lainnya</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  rounded
-                  style="color: #000000; font-size: 14px"
-                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon></q-btn
-                >
+                <q-btn flat rounded style="color: #000000; font-size: 14px"
+                  ><q-icon name="fas fa-chevron-right" size="15px"></q-icon
+                ></q-btn>
               </q-item-section>
             </q-item>
           </q-list>
@@ -164,26 +51,102 @@
 import { mapState } from "vuex";
 import { ref } from "vue";
 export default {
-  setup() {
-    return {
-      menu: ref(false),
-      onItemClick() {
-        // console.log('Clicked on an Item')
-      },
-      tab: ref("mails"),
-    };
-  },
-
+  props: ["post_id"],
   computed: {
-    ...mapState(["Printer"]),
+    ...mapState(["ReportPost"]),
   },
   data() {
     return {
       printers: [],
+      report: {
+        id: null,
+        name: null,
+      },
+      report_list: [
+        {
+          id: 1,
+          name: "Ini Adalah Spam",
+        },
+        {
+          id: 2,
+          name: "Mengandung Provokasi",
+        },
+        {
+          id: 3,
+          name: "Mengandung Konten Hak Cipta",
+        },
+        {
+          id: 4,
+          name: "Terdapat Unsur Pornografi",
+        },
+        {
+          id: 5,
+          name: "Ujaran Kebencian",
+        },
+        {
+          id: 6,
+          name: "Konten Kekerasan",
+        },
+        {
+          id: 7,
+          name: "Postingan Berisi Konten Ilegal",
+        },
+        {
+          id: 8,
+          name: "Informasi Hoax",
+        },
+        {
+          id: 9,
+          name: "Memiliki Unsur Penghinaan",
+        },
+        {
+          id: 10,
+          name: "Lainnya",
+        },
+      ],
+      contact: "085741960341",
+      message: "",
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    submitMessage() {
+      this.setTextMessage();
+      // console.log(this.message);
+      let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
+        this.contact
+      )}&text=${encodeURI(this.message)}`;
+      window.open(url, "_blank");
+
+      this.$router.push('/community');
+    },
+
+    setTextMessage() {
+      // let url = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
+      let tmp = 'share';
+      this.message = tmp;
+    },
+
+    formatPhoneNumber(number) {
+      // console.log(typeof(String(number)))
+      let formatted = String(number).replace(/\D/g, "");
+
+      if (formatted.startsWith("0")) {
+        formatted = "+62" + formatted.substr(1);
+      }
+
+      if (formatted.startsWith("62")) {
+        formatted = "+62" + formatted.substr(2);
+      }
+
+      return formatted;
+    },
+    sendReport(value) {
+      // console.log(value);
+      this.$store.commit("ReportPost/setReportPost", value);
+      this.$router.push(`/description-report-post/${this.post_id}`);
+    },
+  },
 };
 </script>
 

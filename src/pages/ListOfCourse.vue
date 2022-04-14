@@ -7,7 +7,7 @@
           <!-- Header Image -->
           <q-img
             src="~/assets/bgrck.png"
-            style="height: 200px"
+            style="height: 200px; z-index: 999"
             class="fixed-top mbl-child"
             no-spinner
           >
@@ -166,10 +166,13 @@
               <!-- Deskripsi -->
               <div
                 class="text-weight-regular"
-                style="color: #5a5656; font-size: 9px"
+                style="color: #5a5656; font-size: 9px; "
               >
-                {{ content.description.substring(0, 100) }} . . . - Baca
-                Selengkapnya
+                <VueReadMoreSmooth :lines="3">
+                  <p>
+                    {{ content.description }}
+                  </p>
+                </VueReadMoreSmooth>
               </div>
             </div>
           </div>
@@ -248,13 +251,20 @@
 
 <script>
 import { mapGetters } from "vuex";
+import VueReadMoreSmooth from "./ReadMore";
+
 export default {
+  //setup read more smooth
+  name: "app",
+  components: { VueReadMoreSmooth },
+
   props: ["moduleid"],
   computed: {
     ...mapGetters(["ModuleContent"]),
   },
   data() {
     return {
+      lorem: "Lorem fistrum adipisicing apetecan elit diodeno torpedo al ataquerl incididunt quietooor fistro. Cillum consequat ese que llega aliqua esse veniam de la pradera. Aliquip aliquip qué dise usteer al ataquerl hasta luego Lucas. Benemeritaar ese hombree condemor ullamco veniam ese hombree fistro no puedor quietooor dolor apetecan. Pupita te voy a borrar el cerito diodenoo te va a hasé pupitaa fistro tempor duis caballo blanco caballo negroorl. Hasta luego Lucas no te digo trigo por no llamarte Rodrigor a wan commodo enim et et nisi nisi. Eiusmod voluptate nostrud exercitation ullamco. Magna incididunt la caidita pupita elit sit amet tiene musho peligro.",
       value: 1,
       lockDuration: false,
       dialogLock: false,

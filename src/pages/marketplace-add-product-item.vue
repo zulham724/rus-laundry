@@ -338,6 +338,7 @@ export default {
             this.product.images.push(imgTo64);
           });
       });
+      
     },
     removeImage(index) {
       this.images.splice(index, 1);

@@ -121,17 +121,20 @@
     (halaman home)
     + halmaan new-home antrian pesanan hari ini jadi (antrian pesanan sampai hari ini)
     + halaman home bottom bar icon home salah icon
-    - 🧠halmaan new-home antrian pesanan sampai hari ini (total seluruh transaksi belum 100% )
+    + halmaan new-home antrian pesanan sampai hari ini (total seluruh transaksi belum 100% )
     
     (halaman course)
     + halaman detail course (masih ada blackbar di vue player)
-    - 🧠📷halmaan course fungsi like dan komentar
+    + halaman course (halaman komentar)
+    + halmaan course fungsi like dan komentar
+    + course hide deskripsi
     
     (halaman marketplace)
     + halmaan markeplace-add-product-item (ketika add gambar, bisa di crop) 
     + halaman marketplace home (click profile diaktifkan lagi) 
+    + marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel)
     - 🧠📷halaman menu marketplace lokasi bisnis belum bisa
-    - 📷marketplace detail jika tidak ada gambar kasih gambar lain, berikan img error produk lain (img nya carousel)
+    - halaman marketplace-product-liked belum jadi fungsinya 
     
 
     (halaman komunitas)
@@ -147,15 +150,16 @@
     + seluruh halaman community (username akun = nama toko)
     + seluruh halaman community (username jika ada nama toko == nama toko, jika tidak nama user)
     + halaman comment-of-post (tidak usah ada balas komentar)
-    - 🧠📷halaman postingan belum ada [data] tab like dan private
-    - 🧠halaman postingan belum bisa edit, share, hapus, arsipkan postingan dan nonaktifkan komentar
-    - 📷halaman community (ketika feed nama/profile postingan di klik, link ke halmaan profile post-er)
-    - 🧠halaman community (btn .3, berfungsi untuk hapus & edit(khusus postingan user), dan laporkan postingan)
-    - 🧠halmaam laporkan postingan ketika btn laporkan di klik (auto kirim ke email ardata)
-    - 🧠📷halaman my-profile (tab pemilik masih statis)
+    + halaman postingan belum bisa crop photo saat buat postingan
+    + halaman community (ketika feed nama/profile postingan di klik, link ke halmaan profile post-er)
+    + halaman my-profile (tab pemilik masih statis)
+    + halaman my-profile tab post (btn .3, masih belum berfungsi)
+    + halaman postingan belum ada [data] tab like 
+    + halmaam laporkan postingan ketika btn laporkan di klik (auto kirim ke wa ardata)
+    - 🧠halaman community dan my-profile (btn .3, berfungsi untuk edit, share, hapus✅, dan laporkan postingan✅(khusus postingan user), dan berfungsi untuk share, laporkan postingan, 
+    dan laporkan postingan(khusus postingan user lain)
     - 🧠📷halaman my-profile (tab pengikut dan diikuti masih statis)
-    - 🧠halaman my-profile tab post (btn .3, masih belum berfungsi)
-    - 🧠halaman postingan belum bisa hapus postingan
+    
     
     (halaman mobile owner)
     - 📷halaman home belum bisa menggunakan [line chart]

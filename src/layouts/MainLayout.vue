@@ -20,7 +20,7 @@
               style="width: 20px; height: 20px; "
               :src="
                 tab == 'home'
-                  ? require('../assets/hma3.svg')
+                  ? require('../assets/bdhrmh.svg')
                   : require('../assets/hm3.svg')
               "
             ></q-img>

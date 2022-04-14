@@ -25,7 +25,10 @@
       "cordova-plugin-camera": {
         "ANDROIDX_CORE_VERSION": "1.6.+"
       },
-      "cordova-clipboard": {}
+      "cordova-clipboard": {},
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      }
     }
   },
   "devDependencies": {
@@ -33,6 +36,7 @@
     "cordova-clipboard": "^1.3.0",
     "cordova-plugin-btprinter": "github:CesarBalzer/Cordova-Plugin-BTPrinter",
     "cordova-plugin-camera": "^6.0.0",
+    "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-qr-barcode-scanner": "^8.0.3"
   }
 }

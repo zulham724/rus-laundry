@@ -24,14 +24,18 @@
             position: relative;
           "
         >
-          <div class=" text-right q-px-lg">
-            <q-avatar  class="front " style="background-color:#fafafa; margin-top: -25px" size="65px">
+          <div class="text-right q-px-lg">
+            <q-avatar
+              class="front"
+              style="background-color: #fafafa; margin-top: -25px"
+              size="65px"
+            >
               <img src="~/assets/ldlg.svg" />
             </q-avatar>
           </div>
 
           <div class="q-mx-lg q-mb-sm">
-            <div class="text-bold text-h4" >Login</div>
+            <div class="text-bold text-h4">Login</div>
             Halo Selamat Datang Kembali
           </div>
 
@@ -138,13 +142,18 @@ export default {
           this.$store
             .dispatch("Auth/login", this.credential)
             .then((res) => {
-              // console.log('login gan', res)
-              this.$router.push("/");
+              let auth = this.$store.getters["Auth/auth"];
+              // console.log('login gan', auth)
+              // this.$router.push("/");
+              if (auth.role_id == 4) {
+                this.$router.push("/");
+              } else if (auth.role_id == 3) {
+                this.$router.push("/home-owner");
+              }
             })
             .catch((err) => {
-              console.log('ini error login',err);
+              console.log("ini error login", err);
               this.$q.notify("terjadi kesalahan");
-              
             })
             .finally(() => {
               this.loading = false;

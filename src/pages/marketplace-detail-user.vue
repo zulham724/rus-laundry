@@ -87,7 +87,7 @@
             @click="$router.push('/follow-marketplace')"
           >
             <q-item-section avatar>
-              <img style="margin-left: 2px" src="~/assets/personlove2.svg" />
+              <img  src="~/assets/personlove2.svg" />
             </q-item-section>
             <q-item-section
               class="text-weight-medium text-subtitle1"
@@ -95,16 +95,7 @@
               >Diikuti</q-item-section
             >
           </q-item>
-          <q-item class="q-pb-md" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon color="black" name="fas fa-history" />
-            </q-item-section>
-            <q-item-section
-              class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
-              >Baru-baru dilihat</q-item-section
-            >
-          </q-item>
+          
           <q-item
             class="q-pb-md"
             clickable
@@ -135,22 +126,8 @@
               >No Whatsapp</q-item-section
             >
           </q-item>
-          <q-item class="q-pb-md" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon
-                style="margin-left: 2px"
-                color="black"
-                size="20px"
-                name="fas fa-city"
-              />
-            </q-item-section>
-            <q-item-section
-              class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
-              >Tentang Bisnis</q-item-section
-            >
-          </q-item>
-          <q-item class="q-pb-md" clickable v-ripple>
+          
+          <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/shop-location')">
             <q-item-section avatar>
               <img style="margin-left: 4px" src="~/assets/pinmap1.svg" />
             </q-item-section>
@@ -186,7 +163,11 @@ export default {
   mounted() {
     this.dataAuth = this.Auth.auth;
     console.log('ini auth',this.dataAuth)
+
   },
+  methods: {
+    
+  }
 };
 </script>
 

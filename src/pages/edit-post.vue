@@ -12,20 +12,22 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #5a5656; font-size: 16px"
-          >Buat Postingan</q-toolbar-title
+          >Edit Postingan</q-toolbar-title
         >
         <q-btn
+          dense
+          style="border: solid 1px black"
           no-caps
           :disable="loading"
           :loading="loading"
           flat
           color="grey"
-          @click="store()"
+          @click="updatePostingan()"
           v-ripple
           class="text-right"
         >
           <div class="text-weight-medium text-subtitle2" style="color: #5a5656">
-            Posting
+            Simpan
           </div>
         </q-btn>
       </q-toolbar>
@@ -52,15 +54,57 @@
         </div>
         <div class="row">
           <div class="q-pb-xl" style="height: 200px; width: 100%">
+            <div v-if="this.post.files" class="bg-red">
+              <div v-if="this.post.files.length">
+                <q-carousel
+                  v-model="slide"
+                  transition-prev="scale"
+                  transition-next="scale"
+                  swipeable
+                  animated
+                  control-color="teal-4"
+                  :navigation="post.files.length > 1"
+                  padding
+                  arrows
+                >
+                  <q-carousel-slide
+                    v-for="(file, f) in post.files"
+                    :key="file.id"
+                    :name="f"
+                    style="padding-left: 0px; padding-right: 0px; margin: 0px"
+                  >
+                    <vue-plyr v-if="file.filetype.includes('video')">
+                      <video :src="STORAGE_URL + `/` + file.src"></video>
+                    </vue-plyr>
+
+                    <q-img
+                      @click="dialogPreviewPhoto(file)"
+                      v-else-if="file.filetype.includes('image')"
+                      :src="STORAGE_URL + `/` + file.src"
+                      style="width: 100%; height: 100%"
+                    >
+                      <template v-slot:error>
+                        <div
+                          class="absolute-full flex flex-center bg-grey-5 text-white"
+                        >
+                          Gagal mendapatkan Gambar
+                        </div>
+                      </template>
+                    </q-img>
+                  </q-carousel-slide>
+                </q-carousel>
+              </div>
+            </div>
             <q-form ref="form">
               <q-input
                 :disable="loading"
                 class="q-px-md"
                 placeholder="Apa yang kamu pikirkan hari ini"
-                borderless
-                v-model="post.body"
+                outlined
+                color="teal-4"
                 style="width: 100%"
                 autogrow
+                v-model="this.updatePost.body"
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
             </q-form>
@@ -84,86 +128,25 @@
                     />
                   </q-img>
                 </div>
-                <div class="row full-width" v-else-if="file.type.includes('video')">
-                  <div class="col-10">
-                    <vue-plyr :options="{ ratio: '1:1' }">
-                      <video
-                        preload="metadata"
-                        :src="`${file.src}#t=0.1}`"
-                        style="
-                          margin-left: auto;
-                          margin-right: auto;
-                          display: block;
-                        "
-                      ></video>
-                      <q-btn
-                        style="
-                          position: absolute;
-                          bottom: 0;
-                          right: 0;
-                          z-index: 1;
-                        "
-                        color="red"
-                        flat
-                        dense
-                        class="all-pointer-events"
-                        icon="close"
-                        @click="removeImage(f)"
-                      />
-                    </vue-plyr>
-                  </div>
-                  <div class="col-2 bg-grey text-center self-center">
-                    <q-btn
+                <div v-else-if="file.type.includes('video')">
+                  <vue-plyr :options="{ ratio: '1:1' }">
+                    <video
+                      preload="metadata"
+                      :src="`${file.src}#t=0.1}`"
                       style="
-                        
-                        z-index: 1;
+                        margin-left: auto;
+                        margin-right: auto;
+                        display: block;
+                        height: 50vw;
                       "
-                      color="red"
-                      flat
-                      dense
-                      class="all-pointer-events"
-                      icon="close"
-                      @click="removeImage(f)"
-                    />
-                  </div>
+                    ></video>
+                  </vue-plyr>
                 </div>
               </div>
             </div>
-            <q-file
-              v-show="false"
-              dense
-              filled
-              ref="selectfiles"
-              @update:model-value="previewImages"
-              bg-color="transparent"
-            ></q-file>
 
             <q-separator />
-            <q-list class="text-weight-medium">
-              <q-item tag="label" v-ripple :disable="loading">
-                <q-item-section>
-                  <q-item-label>Jadwalkan untuk nanti</q-item-label>
-                </q-item-section>
-                <q-item-section avatar>
-                  <q-toggle v-model="value1" color="light-green-13" />
-                </q-item-section>
-              </q-item>
 
-              <q-item
-                tag="label"
-                @click="open('bottom')"
-                v-model="value1"
-                v-ripple
-                :disable="loading"
-              >
-                <q-item-section>
-                  <q-item-label>Hari Ini 06:57</q-item-label>
-                </q-item-section>
-                <q-item-section avatar class="q-mr-md">
-                  <q-icon size="15px" name="fas fa-chevron-right" />
-                </q-item-section>
-              </q-item>
-            </q-list>
             <q-dialog v-model="dialog" position="bottom">
               <q-card>
                 <q-date
@@ -175,7 +158,7 @@
             </q-dialog>
           </div>
         </div>
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+        <!-- <q-page-sticky position="bottom-right" :offset="[18, 18]">
           <q-fab
             icon="fas fa-plus"
             external-label
@@ -191,7 +174,7 @@
               label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
               style="color: #dc2baa"
               label-position="left"
-              class="shadow-1 bg-white"
+              class="shadow-1"
               @click="openMedia()"
               icon="perm_media"
               label="Media"
@@ -201,13 +184,13 @@
               label-class="bg-transparent text-weight-medium text-grey-8 text-body1"
               style="color: #dc2baa"
               label-position="left"
-              class="shadow-1 bg-white"
+              class="shadow-1"
               @click="cek()"
               icon="photo_camera"
               label="Kamera"
             />
           </q-fab>
-        </q-page-sticky>
+        </q-page-sticky> -->
       </q-page>
     </q-page-container>
   </q-layout>
@@ -221,8 +204,11 @@ import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 import CameraMakePost from "src/components/CameraMakePost.vue";
 
 export default {
+  props: ["post_id"],
   data() {
     return {
+      slide: 0,
+
       dataUser: {},
       value1: false,
       value2: false,
@@ -235,12 +221,25 @@ export default {
       post: {},
       STORAGE_URL: STORAGE_URL,
       images_videos_files: [],
+      postData: {},
+      updatePost: {
+        body: null,
+      },
     };
+  },
+  mounted() {
+    this.getPostByPostId().then((res) => {
+      this.init();
+    });
   },
   computed: {
     ...mapState(["Auth"]),
   },
   methods: {
+    init() {
+      this.updatePost.body = this.postData.body;
+      // console.log('cek aja', this.updatePost.body)
+    },
     cek() {
       this.$q
         .dialog({
@@ -250,7 +249,7 @@ export default {
           // },
         })
         .onOk((data) => {
-          console.log("data on ok halmaan make post", data);
+          // console.log("data on ok halmaan make post", data);
           let promise = this.toBase64(data.imgFile);
           promise.then((res) => {
             console.log("ini res", res);
@@ -262,12 +261,12 @@ export default {
                 },
               })
               .onOk((data) => {
-                console.log("posttt", this.post);
-                console.log("cek hasil crop", data);
+                // console.log("posttt", this.post);
+                // console.log("cek hasil crop", data);
                 data.type = res.type;
                 let imageBase64 = data;
                 this.images_videos.push(imageBase64);
-                console.log("image video", this.images_videos);
+                // console.log("image video", this.images_videos);
                 let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
                 this.files.push(imgTo64);
               });
@@ -280,8 +279,8 @@ export default {
         reader.readAsDataURL(file);
         reader.onload = () =>
           resolve({
-            src: reader.result,
             type: file.type,
+            src: reader.result,
           });
         reader.onerror = (error) => reject(error);
       });
@@ -303,73 +302,65 @@ export default {
     // },
     async previewImages(file) {
       // console.log("cek file", file);
-      if (file.type.includes("image")) {
-        let promise = this.toBase64(file);
-        promise.then((res) => {
-          console.log("ini res", res);
-          this.$q
-            .dialog({
-              component: CropPhotoComponent,
-              componentProps: {
-                ImgBS64: res.src,
-              },
-            })
-            .onOk((data) => {
-              console.log("posttt", this.post);
-              console.log("cek hasil crop", data);
-              data.type = res.type;
-              let imageBase64 = data;
-              console.log("ini foto yang sudah jadi base 64", imageBase64);
-              this.images_videos.push(imageBase64);
-              console.log("image video", this.images_videos);
-              let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
-              this.files.push(imgTo64);
-            });
-        });
-      } else if (file.type.includes("video")) {
-        console.log("bismillah ini bukan foto gan");
-        let promise = this.toBase64(file);
-        promise.then((res) => {
-          console.log("ini video yang sudah jadi base 64 ", res);
-          let videoBase64 = res;
-          this.images_videos.push(res);
-          console.log("images_video", this.images_videos);
-          let vid64toFile = base64ToFile(videoBase64.src, "avatar");
-          this.files.push(vid64toFile);
-          console.log("this.files", this.files);
-        });
-      }
-    },
-    removeImage(index) {
-
-      this.images_videos.splice(index, 1);
-      this.files.splice(index, 1);
-    },
-    store() {
-      this.loading = true;
-      this.$refs.form.validate().then((success) => {
-        if (success) {
-          let formData = new FormData();
-
-          this.files.forEach((file) => {
-            formData.append("files[]", file);
+      let promise = this.toBase64(file);
+      promise.then((res) => {
+        // console.log("ini res", res);
+        this.$q
+          .dialog({
+            component: CropPhotoComponent,
+            componentProps: {
+              ImgBS64: res.src,
+            },
+          })
+          .onOk((data) => {
+            // console.log("posttt", this.post);
+            // console.log("cek hasil crop", data);
+            data.type = res.type;
+            let imageBase64 = data;
+            this.images_videos.push(imageBase64);
+            // console.log("image video", this.images_videos);
+            let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
+            this.files.push(imgTo64);
           });
-          formData.append("tittle", "LAUNDRY POST");
-          formData.append("body", this.post.body);
-          formData.append("status", "PUBLISHED");
-          formData.append("featured", 0);
-
-          this.$store.dispatch("Post/store", formData).then((res) => {
-            console.log("formdata hehe", res);
-            this.$router.push("/community");
-            this.$q.notify("Berhasil");
-            this.loading = false;
-          });
-        } else {
-          this.$q.notify("Gagal");
-          this.loading = false;
-        }
       });
+    },
+    getPostByPostId() {
+      return new Promise((resolve, reject) => {
+        this.$store
+          .dispatch("Post/getPostByPostId", this.post_id)
+          .then((res) => {
+            console.log("ini data postingan", res.data[0]);
+            this.postData = res.data[0];
+            this.post = res.data[0];
+            // console.log("ini post data", this.postData);
+
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {});
+      });
+    },
+    updatePostingan() {
+      let value = this.updatePost.body;
+      // console.log("cek value", value);
+      const payload = {
+        body: value,
+        id: this.post_id,
+      };
+      this.loading = true;
+      this.$store
+        .dispatch("Post/updatePost", payload)
+        .then((res) => {
+          console.log("ini res", res);
+        })
+        .catch((err) => {})
+        .finally(() => {
+          this.loading = false;
+          this.$q.notify("Berhasil melakukan perubahan");
+          this.$router.back();
+        });
     },
   },
 };

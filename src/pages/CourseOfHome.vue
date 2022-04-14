@@ -44,7 +44,7 @@
             <div class="col-2 text-center q-pl-sm">
               <!--Avatar-->
               <div v-if="!Auth.auth.avatar" class="self-center">
-                <q-avatar style="background-color: #888888">
+                <q-avatar style="background-color: #888888" class="shadow-1">
                   <q-img no-spinner src="~/assets/ld.png"></q-img>
                 </q-avatar>
               </div>
@@ -127,8 +127,7 @@
         <!-- Container -->
         <div
           class="full-width row q-pt-sm"
-          @click="$router.push(`/${module.id}/list-of-course`)"
-        >
+          @click="$router.push(`/${module.id}/list-of-course`)">
           <!-- Thumbnail video -->
           <div class="col-5 text-center self-center">
             <!-- <q-avatar
@@ -171,8 +170,11 @@
               class="text-weight-regular"
               style="color: #5a5656; font-size: 9px"
             >
-              {{ module.description.substring(0, 100) }} . . . - Baca
-              Selengkapnya
+              <VueReadMoreSmooth :lines="3">
+                  <p>
+                    {{ module.description }}
+                  </p>
+                </VueReadMoreSmooth>
             </div>
           </div>
           <!-- durasi video -->
@@ -202,7 +204,12 @@
 <script>
 import { ref } from "vue";
 import { mapState } from "vuex";
+import VueReadMoreSmooth from "./ReadMore";
+
 export default {
+  name: "app",
+  components: { VueReadMoreSmooth },
+
   name: "CourseOfHomePage",
   include: ["CourseOfHomePage"],
   computed: {

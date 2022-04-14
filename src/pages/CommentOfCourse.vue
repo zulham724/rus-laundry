@@ -6,7 +6,6 @@
         <q-btn
           @click="$router.back()"
           no-caps
-          class="q-pa-md"
           flat
           style="color: white"
           round
@@ -25,34 +24,36 @@
     <q-page-container>
       <q-page class="q-pa-md">
         <!-- Container -->
-        <div v-for="(comment,c) in comments" :key="comment.id" class="q-pb-lg">
+        <div v-for="(comment, c) in comments" :key="comment.id" class="q-pb-lg">
           <div class="row">
             <div class="col-8 row">
               <!-- Photo profile -->
               <div class="col-2 text-left self-center">
-                <q-avatar size="30px" color="grey">
-                  <q-img no-spinner src="~/assets/Avatar.png"></q-img>
+                <q-avatar size="md" color="grey">
+                  <q-img no-spinner :src="`${STORAGE_URL}/${comment.user.avatar}`"></q-img>
                 </q-avatar>
               </div>
-              <!-- Name of profile -->
-              <div
-                class="col text-weight-bold self-center q-pl-xs"
-                style="color: #3a3838; font-size: 15px"
-              >
-                {{ comment.user.name }}
-              </div>
-              <!-- Time of post -->
-              <div
-                class="col text-weight-medium self-center q-pl-sm"
-                style="color: #b1b1b1; font-size: 10px"
-              >
-                 {{ moment(comment.created_at).locale('id').fromNow() }}
+              <div class=" column q-pl-xs text-left">
+                <!-- Name of profile -->
+                <div
+                  class="row text-weight-bold   text-left"
+                  style="color: #3a3838; font-size: 15px"
+                >
+                  {{ comment.user.name }}
+                </div>
+                <!-- Time of post -->
+                <div
+                  class="row text-weight-medium   text-left"
+                  style="color: #b1b1b1; font-size: 10px"
+                >
+                  {{ moment(comment.created_at).locale("id").fromNow() }}
+                </div>
               </div>
             </div>
 
-            <div class="col-4 row justify-end">
+            <div class="col-4 row justify-end ">
               <!-- Level -->
-              <div
+              <!-- <div
                 class="q-px-sm self-center justify-end"
                 style="
                   background-color: #ff843e;
@@ -63,18 +64,18 @@
                 "
               >
                 Lv.20
-              </div>
+              </div> -->
               <!-- button like -->
               <div class="self-center q-pl-xs">
-                <q-btn 
-                round 
-                dense 
-                flat
-                :color="comment.liked_count ? 'red' : 'grey'"
-                :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
-                @click="
-                  comment.liked_count ? dislikeComment(c) : likeComment(c)
-                "
+                <q-btn
+                  round
+                  dense
+                  flat
+                  :color="comment.liked_count ? 'red' : 'grey'"
+                  :icon="comment.liked_count ? 'favorite' : 'favorite_border'"
+                  @click="
+                    comment.liked_count ? dislikeComment(c) : likeComment(c)
+                  "
                 >
                 </q-btn>
               </div>
@@ -94,20 +95,20 @@
             class="row text-weight-medium q-pt-sm"
             style="color: #b1b1b1; font-size: 12px"
           >
-            <div>Balas</div>
+            <!-- <div>Balas</div> -->
             <!-- Count like -->
-            <div class="q-pl-md">100 suka</div>
+            <div>{{ comment.likes_count }} suka</div>
           </div>
         </div>
 
         <!-- Container Reply-->
-        <div v-if="commentReply = false">
+        <div v-if="(commentReply = false)">
           <div v-for="n in 5" :key="n" class="q-pb-lg q-pl-sm">
             <div class="row">
               <div class="col-8 row">
                 <!-- Photo profile -->
                 <div class="col-2 text-left self-center">
-                  <q-avatar size="30px" color="grey">
+                  <q-avatar size="30px" class="shadow-1">
                     <q-img no-spinner src="~/assets/Avatar.png"></q-img>
                   </q-avatar>
                 </div>
@@ -122,9 +123,7 @@
                 <div
                   class="col text-weight-medium self-center q-pl-sm"
                   style="color: #b1b1b1; font-size: 10px"
-                >
-                 
-                </div>
+                ></div>
               </div>
 
               <div class="col-4 row justify-end">
@@ -182,8 +181,8 @@
         >
           <!-- Profile -->
           <div class="col-2 self-end">
-            <q-avatar size="40px">
-              <q-img src="~/assets/Avatar.png" no-spinner></q-img>
+            <q-avatar size="40px" class="shadow-1">
+              <q-img :src="`${STORAGE_URL}/${this.Auth.auth.avatar}`" no-spinner></q-img>
             </q-avatar>
           </div>
 
@@ -217,35 +216,47 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
+import {mapState} from "vuex";
 export default {
-  props:["contentid"],
+  props: ["contentid"],
   data() {
     return {
       comment: null,
       commentReply: false,
       comments: [],
+      STORAGE_URL: STORAGE_URL,
     };
   },
-  mounted(){
+  mounted() {
+    // console.log("cek contentid", this.contentid);
+    console.log('cek auth', this.Auth)
     this.getComments();
   },
-  methods:{
-    moment,
-    getComments(){
-      this.$store.dispatch('Comment/getCommentCourse', this.contentid).then(res => {
-        this.comments = res.data.comments
-      })
+  computed: {
+    ...mapState(["Auth"]),
     },
-    store(){
+  methods: {
+    moment,
+    getComments() {
+      this.$store
+        .dispatch("Comment/getCommentCourse", this.contentid)
+        .then((res) => {
+          console.log("cek comment", res);
+          this.comments = res.data.comments;
+        });
+    },
+    store() {
       const payload = {
         id: this.contentid,
-        value: this.comment
-      }
-      this.$store.dispatch('Comment/storeCommentCourse', payload).then(res => {
-        this.comment = null
-        this.comments = res.data.comments
-      })
+        value: this.comment,
+      };
+      this.$store
+        .dispatch("Comment/storeCommentCourse", payload)
+        .then((res) => {
+          this.comment = null;
+          this.comments = res.data.comments;
+        });
     },
     likeComment(index) {
       this.$store
@@ -263,7 +274,7 @@ export default {
           this.comments[index].likes_count = res.data.likes_count;
         });
     },
-  }
+  },
 };
 </script>
 

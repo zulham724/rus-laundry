@@ -9,7 +9,7 @@
           flat
           style="color: white"
         >
-          <q-icon size="20px" name="fas fa-arrow-left" style="color: #9B27F1">
+          <q-icon size="20px" name="fas fa-arrow-left" style="color: #9b27f1">
           </q-icon>
         </q-btn>
 
@@ -217,7 +217,7 @@ export default {
     "item-post-component": PostCardComponent,
   },
 
-  computed:{
+  computed: {
     ...mapState(["Post"]),
   },
 
@@ -232,7 +232,7 @@ export default {
     this.getAllPosts();
   },
 
-  created(){
+  created() {
     if (!this.Post.posts.data) this.$store.dispatch("Post/index");
   },
 
@@ -260,10 +260,12 @@ export default {
       console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
       // alert(post.size.height)
     },
-    onLoad(index, done){
-      this.Post.posts.next_page_url ? this.$store.dispatch("Post/next").then(res => {
-        done()
-      }) : done();
+    onLoad(index, done) {
+      this.Post.posts.next_page_url
+        ? this.$store.dispatch("Post/next").then((res) => {
+            done();
+          })
+        : done();
     },
   },
 };
