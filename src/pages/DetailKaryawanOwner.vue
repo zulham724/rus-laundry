@@ -1,5 +1,5 @@
 <template>
-  <q-layout  class="mbl" view="lHh lpR fFf">
+  <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>
@@ -9,7 +9,7 @@
                 flat
                 round
                 size="10px"
-                @click="$router.push('/make-an-order')"
+                @click="$router.push(`/detail-cabang-owner/${this.branchid}`)"
               >
                 <q-avatar
                   size="20px"
@@ -25,15 +25,21 @@
             >
               Karyawan
             </div>
-            <div class="col-4 self-center text-right q-px-sm">
-              
-            </div>
+            <div class="col-4 self-center text-right q-px-sm"></div>
           </div>
         </q-header>
       </div>
       <q-page>
         <div class="q-px-sm q-py-sm">
-          <q-input dense color="black" label="Cari Karyawan" rounded outlined v-model="search"  type="search" >
+          <q-input
+            dense
+            color="black"
+            label="Cari Karyawan"
+            rounded
+            outlined
+            v-model="search"
+            type="search"
+          >
             <template v-slot:prepend>
               <q-icon name="search" />
             </template>
@@ -81,26 +87,29 @@
                 </div>
                 <div class="q-pl-sm col-10 text-h6 text-grey self-center">
                   <div style="font-size: 16px">Nomor Telephone</div>
-                  <div style="font-size: 16px" class="text-black">085349345768</div>
+                  <div style="font-size: 16px" class="text-black">
+                    085349345768
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="text-center self-center col-2">
                   <q-avatar square>
-                    <img src="~/assets/gmr.png" style="width:100%; height:95%"/>
+                    <img
+                      src="~/assets/gmr.png"
+                      style="width: 100%; height: 95%"
+                    />
                   </q-avatar>
                 </div>
                 <div class="q-pl-sm col-5 text-h6 text-grey self-center">
                   <div style="font-size: 16px">Layanan</div>
-                  <div style="font-size: 16px" class="text-black">
-                    57
-                  </div>
+                  <div style="font-size: 16px" class="text-black">57</div>
                 </div>
                 <div class="q-pl-sm col-5 text-h6 text-grey self-center">
                   <div class="row">
                     <div class="col-6">
                       <q-btn
-                      @click="alert = true"
+                        @click="alert = true"
                         class="q-py-none q-px-xs"
                         flat
                         color="white"
@@ -122,87 +131,95 @@
             </div>
           </q-card>
         </div>
-
-        <div v-for="dupe in 6" :key="dupe" class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-8 text-h6 text-grey self-center">
-                  <div style="font-size: 16px">Nama Karyawan</div>
-                  <div style="font-size: 16px" class="text-black">
-                    Angel Lista Putri
+        <div v-if="this.branchEmployee">
+          <div
+            v-for="item in branchEmployee"
+            :key="item.id"
+            class="q-px-sm q-py-sm"
+          >
+            <q-card class="q-px-" style="border-radius: 10px">
+              <div class="q-px-sm">
+                <div class="row">
+                  <div class="text-center self-center col-2">
+                    <q-avatar>
+                      <img src="~/assets/trg.png" />
+                    </q-avatar>
                   </div>
-                </div>
-                <div class="text-center self-center col-2">
-   
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar square>
-                    <img src="~/assets/lct.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div style="font-size: 16px">Alamat karyawan</div>
-                  <div style="font-size: 16px" class="text-black">
-                    Wergu Kulon Rt5/1 Kudus
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar square>
-                    <img src="~/assets/cll.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div style="font-size: 16px">Nomor Telephone</div>
-                  <div style="font-size: 16px" class="text-black">085349345768</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar square>
-                    <img src="~/assets/gmr.png" style="width:100%; height:95%"/>
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-5 text-h6 text-grey self-center">
-                  <div style="font-size: 16px">Layanan</div>
-                  <div style="font-size: 16px" class="text-black">
-                    57
-                  </div>
-                </div>
-                <div class="q-pl-sm col-5 text-h6 text-grey self-center">
-                  <div class="row">
-                    <div class="col-6">
-                      <q-btn
-                      @click="alert = true"
-                        class="q-py-none q-px-xs"
-                        flat
-                        color="white"
-                        text-color="blue"
-                        label="Hapus"
-                      />
+                  <div class="q-pl-sm col-8 text-h6 text-grey self-center">
+                    <div style="font-size: 16px">Nama Karyawan</div>
+                    <div style="font-size: 16px" class="text-black">
+                      {{ item.name }}
                     </div>
-                    <div class="col-6">
-                      <q-btn
-                        class="q-py-none q-px-md"
-                        color="blue"
-                        text-color="white"
-                        label="Edit"
-                      />
+                  </div>
+                  <div class="text-center self-center col-2"></div>
+                </div>
+                <div class="row">
+                  <div class="text-center self-center col-2">
+                    <q-avatar square>
+                      <img src="~/assets/lct.png" />
+                    </q-avatar>
+                  </div>
+                  <div class="q-pl-sm col-10 text-h6 text-grey self-center">
+                    <div style="font-size: 16px">Alamat karyawan</div>
+                    <div style="font-size: 16px" class="text-black">
+                      {{ item.home_address }}
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="text-center self-center col-2">
+                    <q-avatar square>
+                      <img src="~/assets/cll.png" />
+                    </q-avatar>
+                  </div>
+                  <div class="q-pl-sm col-10 text-h6 text-grey self-center">
+                    <div style="font-size: 16px">Nomor Telephone</div>
+                    <div style="font-size: 16px" class="text-black">
+                      {{ item.contact_number }}
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="text-center self-center col-2">
+                    <q-avatar square>
+                      <img
+                        src="~/assets/gmr.png"
+                        style="width: 100%; height: 95%"
+                      />
+                    </q-avatar>
+                  </div>
+                  <div class="q-pl-sm col-5 text-h6 text-grey self-center">
+                    <div style="font-size: 16px">Layanan</div>
+                    <div style="font-size: 16px" class="text-black">
+                      57 (fake)
+                    </div>
+                  </div>
+                  <div class="q-pl-sm col-5 text-h6 text-grey self-center">
+                    <div class="row">
+                      <div class="col-6">
+                        <q-btn
+                          @click="alert = true"
+                          class="q-py-none q-px-xs"
+                          flat
+                          color="white"
+                          text-color="blue"
+                          label="Hapus"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <q-btn
+                          class="q-py-none q-px-md"
+                          color="blue"
+                          text-color="white"
+                          label="Edit"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </q-card>
+            </q-card>
+          </div>
         </div>
 
         <q-dialog v-model="alert">
@@ -235,12 +252,31 @@
 import { ref } from "vue";
 
 export default {
+  props: ["branchid"],
   data() {
     return {
       alert: ref(false),
+      branchEmployee: [],
     };
   },
-  mounted() {},
+  mounted() {
+    console.log("branch", this.branchid);
+    this.getBranchEmployee();
+  },
+  methods: {
+    //get jumlah karyawan
+    getBranchEmployee() {
+      this.$store
+        .dispatch("MasterBranchOrders/getBranchEmployee", this.branchid)
+        .then((res) => {
+          console.log("res getBranchEmployee", res.data);
+          this.branchEmployee = res.data;
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getBranchEmployee");
+        });
+    },
+  },
 };
 </script>
 

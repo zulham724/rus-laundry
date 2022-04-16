@@ -103,11 +103,10 @@ const routes = [
                 component: () =>
                     import ("pages/Transaction.vue"),
             },
-
         ],
     },
 
-    //OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER 
+    //OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER
     {
         path: "/home-owner",
         component: () =>
@@ -116,10 +115,11 @@ const routes = [
     },
 
     {
-        path: "/detail-cabang-owner",
+        path: "/detail-cabang-owner/:branchid",
         component: () =>
             import ("pages/DetailCabangOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
@@ -158,24 +158,27 @@ const routes = [
     },
 
     {
-        path: "/detail-paket-owner",
+        path: "/detail-paket-owner/:branchid",
         component: () =>
             import ("pages/DetailPaketOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
-        path: "/detail-karyawan-owner",
+        path: "/detail-karyawan-owner/:branchid",
         component: () =>
             import ("pages/DetailKaryawanOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
-        path: "/detail-pelanggan-owner",
+        path: "/detail-pelanggan-owner/:branchid",
         component: () =>
             import ("pages/DetailPelangganOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
@@ -239,6 +242,14 @@ const routes = [
         path: "/employee",
         component: () =>
             import ("pages/Employee.vue"),
+    },
+
+    {
+        path: "/marketplace-home",
+        component: () =>
+            import ("pages/marketplace-home.vue"),
+        beforeEnter: multiguard([auth, checkIfSlave]),
+        props: true,
     },
 
     {
@@ -406,6 +417,13 @@ const routes = [
     },
 
     {
+        path: "/course-of-home",
+        component: () =>
+            import ("pages/CourseOfHome.vue"),
+        beforeEnter: multiguard([auth, checkIfSlave]),
+    },
+
+    {
         path: "/detail-ranking",
         component: () =>
             import ("pages/DetailRanking.vue"),
@@ -531,7 +549,8 @@ const routes = [
         component: () =>
             import ("pages/success-attendance.vue"),
         beforeEnter: multiguard([auth, checkIfSlave]),
-    }, {
+    },
+    {
         path: "/change-no-whatsapp",
         component: () =>
             import ("pages/ChangeNoWhatsApp.vue"),

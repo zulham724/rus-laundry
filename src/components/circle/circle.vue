@@ -11,7 +11,8 @@ export default {};
 <style>
 .circle {
   border-radius: 50%;
-  box-shadow: 0px 0px 0px 20px linear-gradient(to right, #ffb3ba, #ffddb7);
+  box-shadow: 0px 0px 0px 20px;
+  color: linear-gradient( #f8b500, #f8b500);
   width: 100px;
   height: 100px;
   margin: 3em;

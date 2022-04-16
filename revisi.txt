@@ -164,6 +164,13 @@
     (halaman mobile owner)
     - 📷halaman home belum bisa menggunakan [line chart]
     - 🧠📷seluruh fungsi halaman mobile owner
+    - listing cabang, tambah cabang
+    - tammbah layanan, karyawan, dan customer
+    - tambah postingan, dan produk marketplace
+    - afiliasi
+    - laporan pemasukan dan pengeluaran tiap cabang
+    - chart dashboard
+
 
     (halaman web owner)
     - halaman web owner laundry digital ditambahkan kode affiliate, ketik kode nanti bisa terlihat siapa usernya
@@ -178,7 +185,7 @@
     - halaman dashboard tambahkan table transaksi, pemasukan, dan pengeluaran
 
     
-
+    
    
     
 

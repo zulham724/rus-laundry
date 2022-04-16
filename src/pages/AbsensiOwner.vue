@@ -9,7 +9,7 @@
                 flat
                 round
                 size="10px"
-                @click="$router.push('/make-an-order')"
+                @click="$router.push('/home-owner')"
               >
                 <q-avatar
                   size="20px"
@@ -31,7 +31,12 @@
       </div>
       <q-page>
         <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
+          <q-card
+            v-for="item in 6"
+            :key="item"
+            style="border-radius: 10px"
+            class="q-ma-sm"
+          >
             <div class="q-px-sm">
               <div class="row">
                 <div class="text-center self-center col-2">
@@ -39,9 +44,19 @@
                     <img src="~/assets/trg.png" />
                   </q-avatar>
                 </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Karyawan</div>
-                  <div class="text-black">Angel Lista Putri</div>
+                <div class="q-pl-sm col-10 self-center">
+                  <div
+                    class="text-grey text-weight-bold"
+                    style="font-size: larger"
+                  >
+                    Nama Karyawan
+                  </div>
+                  <div
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    Angel Lista Putri
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -50,9 +65,19 @@
                     <img src="~/assets/cal.png" />
                   </q-avatar>
                 </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Tanggal Absensi</div>
-                  <div class="text-black">07/09/2020</div>
+                <div class="q-pl-sm col-10 self-center">
+                  <div
+                    class="text-grey text-weight-bold"
+                    style="font-size: larger"
+                  >
+                    Tanggal Absensi
+                  </div>
+                  <div
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    07/09/2020
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -61,169 +86,19 @@
                     <img src="~/assets/tm.png" />
                   </q-avatar>
                 </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Waktu Absen</div>
-                  <div class="text-black">06.30</div>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Karyawan</div>
-                  <div class="text-black">Angel Lista Putri</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/cal.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Tanggal Absensi</div>
-                  <div class="text-black">07/09/2020</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/tm.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Waktu Absen</div>
-                  <div class="text-black">06.30</div>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Karyawan</div>
-                  <div class="text-black">Angel Lista Putri</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/cal.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Tanggal Absensi</div>
-                  <div class="text-black">07/09/2020</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/tm.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Waktu Absen</div>
-                  <div class="text-black">06.30</div>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Karyawan</div>
-                  <div class="text-black">Angel Lista Putri</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/cal.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Tanggal Absensi</div>
-                  <div class="text-black">07/09/2020</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/tm.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Waktu Absen</div>
-                  <div class="text-black">06.30</div>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Karyawan</div>
-                  <div class="text-black">Angel Lista Putri</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/cal.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Tanggal Absensi</div>
-                  <div class="text-black">07/09/2020</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/tm.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Waktu Absen</div>
-                  <div class="text-black">06.30</div>
+                <div class="q-pl-sm col-10 self-center">
+                  <div
+                    class="text-grey text-weight-bold"
+                    style="font-size: larger"
+                  >
+                    Waktu Absen
+                  </div>
+                  <div
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    06.30
+                  </div>
                 </div>
               </div>
             </div>
@@ -263,9 +138,28 @@ export default {
   data() {
     return {
       alert: ref(false),
+      attendance: [],
     };
   },
-  mounted() {},
+  computed: {
+    auth() {
+      return this.$store.getters["Auth/auth"];
+    },
+  },
+  mounted() {
+    // console.log("cek auth", this.auth);
+    this.getAttendance();
+  },
+  methods: {
+    getAttendance() {
+      this.$store
+        .dispatch("Attendance/getAttendanceOwner", this.auth.id)
+        .then((res) => {
+          this.attendance = res.data;
+          console.log("cek attendance", this.attendance);
+        });
+    },
+  },
 };
 </script>
 

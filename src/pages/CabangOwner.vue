@@ -1,5 +1,5 @@
 <template>
-  <q-layout  class="mbl" view="lHh lpR fFf">
+  <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>
@@ -9,7 +9,7 @@
                 flat
                 round
                 size="10px"
-                @click="$router.push('/make-an-order')"
+                @click="$router.push(`/home-owner`)"
               >
                 <q-avatar
                   size="20px"
@@ -26,19 +26,32 @@
               Cabang
             </div>
             <div class="col-4 self-center text-right q-px-sm">
-              <q-btn @click="alert = true" rounded color="white" text-color="black" label="Tambah" />
+              <q-btn
+                no-caps
+                dense
+                @click="alert = true"
+                rounded
+                color="white"
+                text-color="black"
+                label="Tambah"
+              />
             </div>
           </div>
         </q-header>
       </div>
       <q-page>
-        <div class="q-px-sm q-py-sm">
+        <div
+          v-if="dataBranch"
+          class="q-px-sm q-py-sm"
+          v-for="item in dataBranch"
+          :key="item.id"
+        >
           <q-card class="bgCard" style="border-radius: 10px">
             <div class="q-px-sm">
               <div class="row">
-                <div class="col-6">
+                <div class="col-6 q-pt-sm">
                   <div>Nama Laundry</div>
-                  <div class="text-white text-h6">Laundry RUS</div>
+                  <div class="text-white text-h6">{{ item.shop.name }}</div>
                 </div>
                 <div class="col-6 self-center text-right">
                   <q-btn round flat>
@@ -52,19 +65,44 @@
               <div>
                 <div>
                   <div>Tanggal Pembuatan</div>
-                  <div class="text-white text-h6">07/09/2020, 13:00:20</div>
+                  <div class="text-white text-h6">
+                    {{ moment(item.created_at).locale("id").format("L, LT") }}
+                  </div>
                 </div>
               </div>
               <div>
                 <div>
                   <div>Jumlah Pesanan</div>
-                  <div class="text-white text-h6">145</div>
+                  <div class="text-white text-h6">{{ item.orders_count }}</div>
                 </div>
               </div>
               <div>
                 <div>
                   <div>Status</div>
-                  <div class="text-white text-h6">Hidup</div>
+                  <!-- cabang aktif -->
+                  <div
+                    class="row"
+                    v-if="this.current_date <= this.expired_date"
+                  >
+                    <div class="col-3">
+                      <div class="text-white text-h6">Hidup</div>
+                    </div>
+                    <div class="col-9 self-center">
+                      <div class="dot dota"></div>
+                    </div>
+                  </div>
+                  <!-- cabang mati -->
+                  <div
+                    class="row"
+                    v-if="this.current_date >= this.expired_date"
+                  >
+                    <div class="col-3">
+                      <div class="text-white text-h6">Mati</div>
+                    </div>
+                    <div class="col-9 self-center">
+                      <div class="dotm dota"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -76,154 +114,7 @@
                 background-color: #22c7dd;
                 border-radius: 0px 0px 10px 10px;
               "
-            >
-              <div class="text-h6" style="color: #fff">Detail Cabang</div>
-            </q-btn>
-          </q-card>
-        </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="bgCard" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="col-6">
-                  <div>Nama Laundry</div>
-                  <div class="text-white text-h6">Laundry RUS</div>
-                </div>
-                <div class="col-6 self-center text-right">
-                  <q-btn round flat>
-                    <img
-                      src="~/assets/trash.png"
-                      style="width: 60%; height: 60%"
-                    />
-                  </q-btn>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Tanggal Pembuatan</div>
-                  <div class="text-white text-h6">07/09/2020, 13:00:20</div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Jumlah Pesanan</div>
-                  <div class="text-white text-h6">145</div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Status</div>
-                  <div class="text-white text-h6">Hidup</div>
-                </div>
-              </div>
-            </div>
-
-            <q-btn
-              no-caps
-              class="full-width"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
-            >
-              <div class="text-h6" style="color: #fff">Detail Cabang</div>
-            </q-btn>
-          </q-card>
-        </div>
-        <div class="q-px-sm q-py-sm">
-          <q-card class="bgCard" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="col-6">
-                  <div>Nama Laundry</div>
-                  <div class="text-white text-h6">Laundry RUS</div>
-                </div>
-                <div class="col-6 self-center text-right">
-                  <q-btn round flat>
-                    <img
-                      src="~/assets/trash.png"
-                      style="width: 60%; height: 60%"
-                    />
-                  </q-btn>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Tanggal Pembuatan</div>
-                  <div class="text-white text-h6">07/09/2020, 13:00:20</div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Jumlah Pesanan</div>
-                  <div class="text-white text-h6">145</div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Status</div>
-                  <div class="text-white text-h6">Hidup</div>
-                </div>
-              </div>
-            </div>
-
-            <q-btn
-              no-caps
-              class="full-width"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
-            >
-              <div class="text-h6" style="color: #fff">Detail Cabang</div>
-            </q-btn>
-          </q-card>
-        </div>
-        <div class="q-px-sm q-py-sm">
-          <q-card class="bgCard " style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="col-6">
-                  <div>Nama Laundry</div>
-                  <div class="text-white text-h6">Laundry RUS</div>
-                </div>
-                <div class="col-6 self-center text-right">
-                  <q-btn round flat>
-                    <img
-                      src="~/assets/trash.png"
-                      style="width: 60%; height: 60%"
-                    />
-                  </q-btn>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Tanggal Pembuatan</div>
-                  <div class="text-white text-h6">07/09/2020, 13:00:20</div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Jumlah Pesanan</div>
-                  <div class="text-white text-h6">145</div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div>Status</div>
-                  <div class="text-white text-h6">Hidup</div>
-                </div>
-              </div>
-            </div>
-
-            <q-btn
-              no-caps
-              class="full-width"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
+              @click="$router.push(`/detail-cabang-owner/${item.shop.id}`)"
             >
               <div class="text-h6" style="color: #fff">Detail Cabang</div>
             </q-btn>
@@ -237,7 +128,7 @@
             </q-card-section>
             <q-card-section class="text-center">
               <div class="text-h6">
-                Apakah anda benar- benar yakin untuk mengganti Paket?
+                Apakah anda benar- benar yakin untuk menambah Paket?
               </div>
             </q-card-section>
 
@@ -246,8 +137,8 @@
             </q-card-section>
 
             <q-card-actions align="right">
-              <q-btn flat label="Tidak" color="grey" v-close-popup />
-              <q-btn flat label="Yakin" color="red" v-close-popup />
+              <q-btn no-caps flat label="Tidak" color="grey" v-close-popup />
+              <q-btn no-caps flat label="Yakin" color="red" v-close-popup />
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -258,19 +149,82 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
+import moment from "moment";
 
 export default {
   data() {
     return {
       alert: ref(false),
+      dataBranch: [],
+      expired_date: null,
+      current_date: null,
     };
   },
-  mounted() {},
+  computed: {
+    ...mapState(["Auth"]),
+  },
+  mounted() {
+    // console.log("auth", this.Auth.auth);
+    this.getMonthlyOrdersEachBranches();
+    this.checkActivePackageUser();
+  },
+  methods: {
+    moment,
+    checkActivePackageUser() {
+      let date = this.Auth.auth.active_package_user.expired_date;
+      this.expired_date = moment(date).locale("id").format("LL");
+      this.current_date = moment().locale("id").format("LL");
+      // console.log("expired_date", this.expired_date);
+    },
+    getMonthlyOrdersEachBranches() {
+      this.$store
+        .dispatch("MasterOrders/getMonthlyOrdersEachBranches")
+        .then((res) => {
+          this.dataBranch = res.data;
+          console.log("all res", this.dataBranch);
+        })
+        .catch((err) => {
+          console.log("err");
+        });
+    },
+  },
 };
 </script>
 
 <style>
 .bgCard {
   background-image: linear-gradient(to left, #74b6ff, #00bef8);
+}
+
+/*blinking dot*/
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dota {
+  animation: blink 2s infinite;
+}
+
+.dot {
+  height: 13px;
+  width: 13px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotm {
+  height: 13px;
+  width: 13px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: inline-block;
 }
 </style>

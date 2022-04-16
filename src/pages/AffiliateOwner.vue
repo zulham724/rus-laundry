@@ -9,7 +9,7 @@
                 flat
                 round
                 size="10px"
-                @click="$router.push('/make-an-order')"
+                @click="$router.push('/home-owner')"
               >
                 <q-avatar
                   size="20px"
@@ -39,27 +39,48 @@
                     <img src="~/assets/trg.png" />
                   </q-avatar>
                 </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Owner</div>
-                  <div class="text-black">Hisyam Bagus Prasetyo</div>
+                <div class="q-pl-sm col-10 self-center">
+                  <div
+                    class="text-grey text-weight-bold"
+                    style="font-size: larger"
+                  >
+                    Nama Owner
+                  </div>
+                  <div
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    Hisyam Bagus Prasetyo
+                  </div>
                 </div>
               </div>
               <div class="row">
-                <div class="text-center self-center col-2 ">
-                  <img src="~/assets/lcb.png" style="width: 80%; height: 80%" />
-                </div>
-                <div class=" col-10 text-h6 self-center">
-                  <q-expansion-item expand-separator label="List Cabang" style="color:#B8B8B8">
+                <div class="col-12 self-center">
+                  <q-expansion-item dense expand-separator>
+                    <template v-slot:header>
+                      <q-item-section avatar class="text-center self-center">
+                        <q-avatar size="40px">
+                          <q-img src="~/assets/lcb.png" />
+                        </q-avatar>
+                      </q-item-section>
+                      <q-item-section
+                        class="text-grey text-weight-medium"
+                        {{
+                        st
+                        }}yle="font-size: medium"
+                      >
+                        List Cabang
+                      </q-item-section>
+                    </template>
                     <q-card>
                       <q-card-section>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang amsterdam
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang utrecth
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang barcelona
+                        <div
+                          v-for="slave in 5"
+                          :key="slave"
+                          class="text-black text-weight-medium"
+                          style="font-size: medium"
+                        >
+                          - cabang amsterdam
                         </div>
                       </q-card-section>
                     </q-card>
@@ -69,125 +90,6 @@
             </div>
           </q-card>
         </div>
-
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Owner</div>
-                  <div class="text-black">Hisyam Bagus Prasetyo</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2 ">
-                  <img src="~/assets/lcb.png" style="width: 80%; height: 80%" />
-                </div>
-                <div class=" col-10 text-h6 self-center">
-                  <q-expansion-item expand-separator label="List Cabang" style="color:#B8B8B8">
-                    <q-card>
-                      <q-card-section>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang amsterdam
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang utrecth
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang barcelona
-                        </div>
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Owner</div>
-                  <div class="text-black">Hisyam Bagus Prasetyo</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2 ">
-                  <img src="~/assets/lcb.png" style="width: 80%; height: 80%" />
-                </div>
-                <div class=" col-10 text-h6 self-center">
-                  <q-expansion-item expand-separator label="List Cabang" style="color:#B8B8B8">
-                    <q-card>
-                      <q-card-section>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang amsterdam
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang utrecth
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang barcelona
-                        </div>
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-        <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
-            <div class="q-px-sm">
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <q-avatar>
-                    <img src="~/assets/trg.png" />
-                  </q-avatar>
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Nama Owner</div>
-                  <div class="text-black">Hisyam Bagus Prasetyo</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="text-center self-center col-2 ">
-                  <img src="~/assets/lcb.png" style="width: 80%; height: 80%" />
-                </div>
-                <div class=" col-10 text-h6 self-center">
-                  <q-expansion-item expand-separator label="List Cabang" style="color:#B8B8B8">
-                    <q-card>
-                      <q-card-section>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang amsterdam
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang utrecth
-                        </div>
-                        <div class="text-black" style="font-size: 18px">
-                            - cabang barcelona
-                        </div>
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-
 
         <q-dialog v-model="alert">
           <q-card>
@@ -222,9 +124,28 @@ export default {
   data() {
     return {
       alert: ref(false),
+      affiliate_list: [],
     };
   },
-  mounted() {},
+  computed: {
+    auth() {
+      return this.$store.getters["Auth/auth"];
+    },
+  },
+  mounted() {
+    console.log("cek auth", this.auth());
+    this.getAffiliateList();
+  },
+  methods: {
+    getAffiliateList() {
+      this.$store
+        .dispatch("Affiliate/getAffiliateList", this.auth.id)
+        .then((res) => {
+          this.affiliate_list = res.data;
+          console.log("cek affiliate", this.affiliate_list);
+        });
+    },
+  },
 };
 </script>
 

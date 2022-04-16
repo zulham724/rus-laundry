@@ -14,47 +14,10 @@ const mutations = {
 };
 
 const actions = {
-    // get data jumlah seluruh pesanan
-    getDataPerkembangan({ commit }) {
+    getBranchOrders({ commit }, shopid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/master/growth`)
-                .then((res) => {
-                    resolve(res);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        });
-    },
-    getProfit({ commit }) {
-        return new Promise((resolve, reject) => {
-            api
-                .get(`/api/master/profit`)
-                .then((res) => {
-                    resolve(res);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        });
-    },
-    getTotalOrders({ commit }, masterId) {
-        return new Promise((resolve, reject) => {
-            api
-                .get(`/api/master/totalorders`)
-                .then((res) => {
-                    resolve(res);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        });
-    },
-    getTotalOrdersPerShop({ commit }) {
-        return new Promise((resolve, reject) => {
-            api
-                .get("/api/master/branches")
+                .get(`/api/master/shop/${shopid}/orderscount`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -64,11 +27,10 @@ const actions = {
         });
     },
 
-    // get data
-    getMonthlyOrder({ commit }) {
+    getBranchDevelopment({ commit }, shopid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/master/ordercountbymonths`)
+                .get(`api/master/shop/${shopid}/getcurrentprofit`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -78,10 +40,10 @@ const actions = {
         });
     },
 
-    getMonthlyOrderEachBranch({ commit }) {
+    getBranchProfit({ commit }, shopid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/master/paymentcountbymonthseachbranches`)
+                .get(`api/master/shop/${shopid}/gettotalprice`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -91,10 +53,36 @@ const actions = {
         });
     },
 
-    getMonthlyOrdersEachBranches({ commit }) {
+    getBranchServices({ commit }, id) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/master/branches`)
+                .get(`api/master/slave/${id}/services`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+
+    getBranchEmployee({ commit }, shopid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/shop/${shopid}/employee`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+
+    getBranchCustomers({ commit }, shopid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/shop/${shopid}/customers`)
                 .then((res) => {
                     resolve(res);
                 })
