@@ -33,6 +33,7 @@
                 rounded
                 color="white"
                 text-color="black"
+                size="small"
                 label="Tambah"
               />
             </div>
@@ -54,7 +55,11 @@
                   <div class="text-white text-h6">{{ item.shop.name }}</div>
                 </div>
                 <div class="col-6 self-center text-right">
-                  <q-btn round flat>
+                  <q-btn
+                    round
+                    flat
+                    @click="dialogDelete(item.shop.id, item.id)"
+                  >
                     <img
                       src="~/assets/trash.png"
                       style="width: 60%; height: 60%"
@@ -82,7 +87,7 @@
                   <!-- cabang aktif -->
                   <div
                     class="row"
-                    v-if="this.current_date <= this.expired_date"
+                    v-if="this.expired_date <= this.current_date"
                   >
                     <div class="col-3">
                       <div class="text-white text-h6">Hidup</div>
@@ -94,7 +99,7 @@
                   <!-- cabang mati -->
                   <div
                     class="row"
-                    v-if="this.current_date >= this.expired_date"
+                    v-if="this.expired_date >= this.current_date"
                   >
                     <div class="col-3">
                       <div class="text-white text-h6">Mati</div>
@@ -138,7 +143,50 @@
 
             <q-card-actions align="right">
               <q-btn no-caps flat label="Tidak" color="grey" v-close-popup />
-              <q-btn no-caps flat label="Yakin" color="red" v-close-popup />
+              <q-btn
+                no-caps
+                flat
+                label="Yakin"
+                color="red"
+                @click="$router.push(`/buat-cabang-owner`)"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
+        <q-dialog v-model="alertDelete" persistent>
+          <q-card>
+            <q-card-section class="text-center">
+              <q-img src="~/assets/alert.png" style="width: 40%; height: 40%" />
+            </q-card-section>
+            <q-card-section class="text-center">
+              <div class="text-h6">
+                Apakah anda benar- benar yakin untuk menghapus Paket?
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              Jika Yakin tekan Yakin, Jika tidak tekan Tidak
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn
+                no-caps
+                flat
+                label="Tidak"
+                color="grey"
+                v-close-popup
+                :disable="loadingDelete"
+              />
+              <q-btn
+                :disable="loadingDelete"
+                :loading="loadingDelete"
+                no-caps
+                flat
+                label="Yakin"
+                color="red"
+                @click="deleteBranch()"
+              />
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -159,6 +207,10 @@ export default {
       dataBranch: [],
       expired_date: null,
       current_date: null,
+      shop_id: null,
+      user_id: null,
+      alertDelete: false,
+      loadingDelete: false,
     };
   },
   computed: {
@@ -171,6 +223,32 @@ export default {
   },
   methods: {
     moment,
+    dialogDelete(shop_id, user_id) {
+      this.shop_id = shop_id;
+      this.user_id = user_id;
+      // console.log("cek id", this.shop_id);
+      this.alertDelete = true;
+    },
+    deleteBranch() {
+      let payload = {
+        shop_id: this.shop_id,
+        user_id: this.user_id,
+      };
+      // console.log("id", payload);
+      this.loadingDelete = true;
+      this.$store
+        .dispatch("Branch/deleteBranch", payload)
+        .then((res) => {
+          this.$q.notify("Berhasil Menghapus Cabang");
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.loadingDelete = false;
+          this.$router.go();
+        });
+    },
     checkActivePackageUser() {
       let date = this.Auth.auth.active_package_user.expired_date;
       this.expired_date = moment(date).locale("id").format("LL");
@@ -182,7 +260,7 @@ export default {
         .dispatch("MasterOrders/getMonthlyOrdersEachBranches")
         .then((res) => {
           this.dataBranch = res.data;
-          console.log("all res", this.dataBranch);
+          // console.log("all res", this.dataBranch);
         })
         .catch((err) => {
           console.log("err");

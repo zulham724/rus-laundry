@@ -31,7 +31,12 @@
       </div>
       <q-page>
         <div class="q-px-sm q-py-sm">
-          <q-card class="q-px-" style="border-radius: 10px">
+          <q-card
+            class="q-py-xs q-my-sm"
+            style="border-radius: 10px"
+            v-for="(affiliate, i) in affiliate_list"
+            :key="affiliate.id"
+          >
             <div class="q-px-sm">
               <div class="row">
                 <div class="text-center self-center col-2">
@@ -50,7 +55,7 @@
                     class="text-black text-weight-medium"
                     style="font-size: medium"
                   >
-                    Hisyam Bagus Prasetyo
+                    {{ affiliate.name }}
                   </div>
                 </div>
               </div>
@@ -65,22 +70,31 @@
                       </q-item-section>
                       <q-item-section
                         class="text-grey text-weight-medium"
-                        {{
-                        st
-                        }}yle="font-size: medium"
+                        style="font-size: medium"
                       >
                         List Cabang
                       </q-item-section>
                     </template>
                     <q-card>
                       <q-card-section>
-                        <div
-                          v-for="slave in 5"
-                          :key="slave"
-                          class="text-black text-weight-medium"
-                          style="font-size: medium"
-                        >
-                          - cabang amsterdam
+                        <div v-if="affiliate.slaves.length">
+                          <div
+                            v-for="(branch, i) in affiliate.slaves"
+                            :key="branch.id"
+                            class="text-black text-weight-medium"
+                            style="font-size: medium"
+                          >
+                            <div>{{ i + 1 }}. {{ branch.shop.name }}</div>
+                          </div>
+                        </div>
+                        <!-- Belum ada cabang -->
+                        <div v-else>
+                          <div
+                            class="text-black text-weight-medium"
+                            style="font-size: medium"
+                          >
+                            <div>Belum ada cabang</div>
+                          </div>
                         </div>
                       </q-card-section>
                     </q-card>
@@ -133,7 +147,7 @@ export default {
     },
   },
   mounted() {
-    console.log("cek auth", this.auth());
+    console.log("cek auth", this.auth);
     this.getAffiliateList();
   },
   methods: {

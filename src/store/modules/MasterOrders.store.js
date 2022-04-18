@@ -27,6 +27,18 @@ const actions = {
                 });
         });
     },
+    getPackages({}) {
+        return new Promise((resolve, reject) => {
+            api
+                .get("/api/master/packages")
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
     getProfit({ commit }) {
         return new Promise((resolve, reject) => {
             api

@@ -87,6 +87,7 @@
           </div>
           <div class="col-6 q-px-sm q-py-xs">
             <q-card
+              @click="$router.push(`/detail-transaksi-owner/${this.branchid}`)"
               class="text-center q-py-sm"
               style="background-color: #64f4ff; border-radius: 14px"
             >
@@ -231,6 +232,7 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 
 export default {
   props: ["branchid"],
@@ -244,7 +246,11 @@ export default {
       branchCustomers: 0,
     };
   },
+  computed: {
+    ...mapState(["Auth"]),
+  },
   mounted() {
+    console.log("ini auth", this.Auth.auth);
     // console.log("branch", this.branchid);
     this.getBranchOrders();
     this.getBranchDevelopment();
@@ -252,9 +258,29 @@ export default {
     this.getBranchServices();
     this.getBranchEmployee();
     this.getBranchCustomers();
+    // this.getCurrentBranch();
   },
 
   methods: {
+    // getCurrentBranch() {
+    //   this.$store
+    //     .dispatch("MasterOrders/getMonthlyOrdersEachBranches")
+    //     .then((res) => {
+    //       // this.dataBranch = res.data;
+    //       var branch = res.data;
+    //       var sendedId = this.branchid;
+
+    //       var branchini = branch.filter(function (hero) {
+    //         return branch.id == sendedId;
+    //       });
+
+    //       console.log("this branch", branchini);
+    //     })
+    //     .catch((err) => {
+    //       console.log("err", err);
+    //     });
+    // },
+
     //get jumlah pesanans
     getBranchOrders() {
       this.$store

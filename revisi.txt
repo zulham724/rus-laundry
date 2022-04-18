@@ -162,12 +162,12 @@
     
     
     (halaman mobile owner)
-    - 📷halaman home belum bisa menggunakan [line chart]
-    - 🧠📷seluruh fungsi halaman mobile owner
-    - listing cabang, tambah cabang
-    - tammbah layanan, karyawan, dan customer
-    - tambah postingan, dan produk marketplace
-    - afiliasi
+    + listing cabang, layanan, karyawan, dan customer
+
+    - 📷halaman home belum bisa menampilkan [line chart]
+    - 🧠tammbah cabang, layanan, karyawan, dan customer
+    - 🧠📷tambah postingan, dan produk marketplace
+    - 🧠afiliasi
     - laporan pemasukan dan pengeluaran tiap cabang
     - chart dashboard
 

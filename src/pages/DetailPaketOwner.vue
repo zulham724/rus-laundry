@@ -117,6 +117,7 @@
                       </div>
                       <div class="col-6">
                         <q-btn
+                          @click="$router.push(`/edit-paket-owner/${item.id}`)"
                           class="q-py-none q-px-md"
                           color="blue"
                           text-color="white"

@@ -54,7 +54,7 @@
                   </div>
                 </div>
 
-               <!--Avatar-->
+                <!--Avatar-->
                 <div v-if="!dataAuth.avatar" class="self-center q-pl-sm">
                   <q-avatar>
                     <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
@@ -65,7 +65,11 @@
                     <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
                   </q-avatar>
                   <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
-                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
+                    <q-img
+                      no-spinner
+                      :src="STORAGE_URL + `/` + dataAuth.avatar"
+                      size="40px"
+                    ></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -135,9 +139,12 @@
                   </q-avatar>
                 </div>
                 <div v-else-if="dataAuth.avatar" class="self-center q-pl-sm">
-
                   <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
-                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
+                    <q-img
+                      no-spinner
+                      :src="STORAGE_URL + `/` + dataAuth.avatar"
+                      size="40px"
+                    ></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -198,7 +205,6 @@
                   >
                     Laundry Digital
                   </div>
-                  
                 </div>
 
                 <!--Avatar-->
@@ -212,7 +218,11 @@
                     <q-img no-spinner src="~/assets/ld.png" size="40px"></q-img>
                   </q-avatar>
                   <q-avatar v-if="dataAuth.avatar != 'users/default.png'">
-                    <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar" size="40px"></q-img>
+                    <q-img
+                      no-spinner
+                      :src="STORAGE_URL + `/` + dataAuth.avatar"
+                      size="40px"
+                    ></q-img>
                   </q-avatar>
                 </div>
               </div>
@@ -227,7 +237,7 @@
         <!-- <q-btn class="full-width" flat no-caps dense @click="$router.push('/transaction')"> -->
         <div class="row full-width self-center">
           <div
-            class="col-12  text-weight-medium text-left self-center"
+            class="col-12 text-weight-medium text-left self-center"
             style="color: #313131; font-size: 15px"
           >
             Antrian pesanan sampai hari ini
@@ -415,7 +425,6 @@ export default {
   },
   components: {
     "saldo-scan": SaldoScan,
-    
   },
 
   data() {
@@ -440,7 +449,7 @@ export default {
 
   mounted() {
     this.dataAuth = this.Auth.auth;
-    console.log('dataAuth', this.dataAuth);
+    console.log("dataAuth", this.dataAuth);
     this.timeChecker();
     this.getProfitByDay();
     this.getSpendToday();

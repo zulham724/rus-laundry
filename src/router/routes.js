@@ -114,6 +114,14 @@ const routes = [
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 
+    // {
+    //     path: "/marketplace-home-owner",
+    //     component: () =>
+    //         import ("pages/marketplace-home.vue"),
+    //     beforeEnter: multiguard([auth, checkIfOwner]),
+    //     props: true,
+    // },
+
     {
         path: "/detail-cabang-owner/:branchid",
         component: () =>
@@ -189,9 +197,17 @@ const routes = [
     },
 
     {
-        path: "/edit-paket-owner",
+        path: "/edit-paket-owner/:serviceid",
         component: () =>
             import ("src/pages/EditPaketOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
+    },
+
+    {
+        path: "/buat-cabang-owner",
+        component: () =>
+            import ("src/pages/BuatCabangOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 
@@ -231,10 +247,11 @@ const routes = [
     },
 
     {
-        path: "/detail-transaksi-owner",
+        path: "/detail-transaksi-owner/:branchid",
         component: () =>
             import ("src/pages/DetailTransaksiOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     //SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE SLAVE
@@ -299,7 +316,8 @@ const routes = [
         path: "/community",
         component: () =>
             import ("pages/Post.vue"),
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
+        // beforeEnter: multiguard([auth, checkIfSlave]),
     },
 
     {

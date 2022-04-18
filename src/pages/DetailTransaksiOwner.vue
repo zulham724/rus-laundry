@@ -9,7 +9,7 @@
                 flat
                 round
                 size="10px"
-                @click="$router.push('/make-an-order')"
+                @click="$router.push(`/detail-cabang-owner/${this.branchid}`)"
               >
                 <q-avatar
                   size="20px"
@@ -123,7 +123,11 @@
         <!-- TAB LIST -->
         <!-- ITEM SURPLUS -->
         <div class="q-mt-sm q-px-sm" v-for="a in 2" :key="a">
-          <q-item v-ripple class="bg-white shadow-1" style="border-radius: 25px">
+          <q-item
+            v-ripple
+            class="bg-white shadow-1"
+            style="border-radius: 25px"
+          >
             <q-item-section avatar>
               <q-avatar>
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
@@ -146,7 +150,11 @@
         </div>
         <!-- ITEM DEFISIT -->
         <div class="q-mt-sm q-px-sm" v-for="a in 2" :key="a">
-          <q-item v-ripple class="bg-white shadow-1" style="border-radius: 25px">
+          <q-item
+            v-ripple
+            class="bg-white shadow-1"
+            style="border-radius: 25px"
+          >
             <q-item-section avatar>
               <q-avatar>
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
@@ -168,13 +176,12 @@
           </q-item>
         </div>
         <!-- ITEM NULL -->
-        <div class="q-mt-sm q-px-sm text-center q-py-lg" >
-          <q-img src="~/assets/itmn.png" width="60%"/>
+        <div class="q-mt-sm q-px-sm text-center q-py-lg">
+          <q-img src="~/assets/itmn.png" width="60%" />
           <div class="text-h6 q-py-sm">
             Tidak Ada Pengeluaran Untuk Kategori Laundry
           </div>
         </div>
-        
       </q-page>
     </q-page-container>
   </q-layout>
@@ -184,6 +191,7 @@
 import { ref } from "vue";
 
 export default {
+  props: ["branchid"],
   data() {
     return {
       alert: ref(false),
@@ -191,7 +199,9 @@ export default {
       options: ["Semua", "Laundry", "Marketplace", "Lainnya"],
     };
   },
-  mounted() {},
+  mounted() {
+    console.log("ini branchid", this.branchid);
+  },
 };
 </script>
 

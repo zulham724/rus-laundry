@@ -9,7 +9,7 @@
                 flat
                 round
                 size="10px"
-                @click="$router.push('/make-an-order')"
+                @click="$router.push(`/detail-cabang-owner/${this.branchid}`)"
               >
                 <q-avatar
                   size="20px"

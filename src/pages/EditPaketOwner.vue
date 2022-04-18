@@ -13,13 +13,12 @@
         <q-form>
           <div class="q-py-sm">
             <q-input
-              label="Masukkan Nama Paket"
+              label="Nama Paket"
               color="black"
-              v-model="search"
+              v-model="this.dataService.name"
               outlined
               type="search"
             >
-
             </q-input>
           </div>
           <div class="q-py-sm">
@@ -32,20 +31,19 @@
           </div>
           <div class="q-py-sm">
             <q-input
-              label="Masukkan Harga"
+              label="Harga"
               color="black"
-              v-model="search"
+              v-model="this.dataService.price"
               outlined
               type="search"
             >
-
             </q-input>
           </div>
           <div class="q-py-sm">
             <q-input
               label="Waktu Pengerjaan"
+              v-model="this.dataService.process_time"
               color="black"
-              v-model="search"
               outlined
               type="search"
             >
@@ -56,25 +54,77 @@
           </div>
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
-              <q-btn class="q-px-sm" style="background-color:#6295FF; border-radius:10px"  text-color="white" label="Simpan" />
+              <q-btn
+                class="q-px-md"
+                style="background-color: #6295ff; border-radius: 10px"
+                text-color="white"
+                label="Simpan"
+                @click="updateService()"
+              />
             </div>
             <div class="col text-left q-pl-sm">
-              <q-btn class="q-px-lg" style="background-color:#fff; border-radius:10px"  text-color="black" label="Cancel" />
+              <q-btn
+                class="q-px-lg"
+                style="background-color: #fff; border-radius: 10px"
+                text-color="black"
+                label="Cancel"
+              />
             </div>
           </div>
         </q-form>
       </div>
       <div
-        style="position: absolute;  z-index: -1; vertical-align: text-bottom; width: 100%;"
+        style="
+          position: absolute;
+          z-index: -1;
+          vertical-align: text-bottom;
+          width: 100%;
+        "
       >
-        <q-img  src="~/assets/br.png" />
+        <q-img src="~/assets/br.png" />
       </div>
     </q-page>
   </q-layout>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["serviceid"],
+  data() {
+    return {
+      dataService: {},
+    };
+  },
+  mounted() {
+    console.log("ini serviceid", this.serviceid);
+
+    this.getServiceById();
+  },
+  methods: {
+    getServiceById() {
+      this.$store
+        .dispatch("MasterBranchOrders/getServiceById", this.serviceid)
+        .then((res) => {
+          this.dataService = res.data;
+          console.log("ini res getServiceById", this.dataService);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getServiceById", err);
+        });
+    },
+
+    updateService() {
+      this.$store
+        .dispatch("MasterBranchOrders/updateService", this.dataService)
+        .then((res) => {
+          console.log("berhasil update", this.dataService);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan updateService", err);
+        });
+    },
+  },
+};
 </script>
 
 <style></style>

@@ -1,16 +1,11 @@
 <template>
-  <q-layout  class="mbl" view="lHh lpR fFf">
+  <q-layout class="mbl" view="lHh lpR fFf">
     <q-page-container>
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>
           <div class="row full-width q-py-sm bg-white justify-center">
             <div class="col-4 q-px-sm self-center">
-              <q-btn
-                flat
-                round
-                size="10px"
-                @click="$router.push('/make-an-order')"
-              >
+              <q-btn flat round size="10px" @click="$router.back()">
                 <q-avatar
                   size="20px"
                   icon="fas fa-arrow-left"
@@ -30,50 +25,24 @@
         </q-header>
       </div>
       <q-page>
-        <div v-for="q in 5" :key="q" class="q-px-sm q-py-sm">
+        <div
+          v-for="item in this.packageData"
+          :key="item.id"
+          class="q-px-sm q-py-sm"
+        >
           <q-card class="bgCard" style="border-radius: 10px">
             <div class="bgCardTop text-h6 text-white text-center q-py-sm">
-              Paket Reguler
+              {{ item.name }}
             </div>
             <div class="q-px-sm">
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>1 Cabang</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>1Unlimited Transaksi</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Unlimited Employee</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Unlimited Customer</div>
-                </div>
-              </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/dm.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>3 Paket</div>
+              <div v-for="paket in item.package_contents" :key="paket.id">
+                <div class="row q-py-xs">
+                  <div class="text-center self-center col-2">
+                    <img src="~/assets/dm.png" />
+                  </div>
+                  <div class="q-pl-sm col-10 text-h6 text-grey self-center">
+                    <div>{{ paket.value }}</div>
+                  </div>
                 </div>
               </div>
               <div class="row q-py-xs">
@@ -81,7 +50,14 @@
                   <img src="~/assets/cs.png" />
                 </div>
                 <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>Rp 1.000.000</div>
+                  <div>
+                    {{
+                      new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(item.price)
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,8 +77,6 @@
             </q-btn>
           </q-card>
         </div>
-
-        
 
         <q-dialog v-model="payment1" persistent position="bottom">
           <q-card>
@@ -224,7 +198,7 @@
           <q-card style="border-radius: 24px">
             <q-card-section class="text-center">
               <div class="text-black">
-                  <q-img src="~/assets/ctg2.png" width="60%"/>
+                <q-img src="~/assets/ctg2.png" width="60%" />
               </div>
             </q-card-section>
             <q-card-section>
@@ -246,9 +220,8 @@
                 </q-item-section>
               </q-item>
               <q-separator />
-              <div style="color: #8B8484">Transfer Ke:</div>
+              <div style="color: #8b8484">Transfer Ke:</div>
               <q-item>
-                
                 <q-item-section top avatar>
                   <q-avatar>
                     <img src="~/assets/bnk.svg" />
@@ -256,25 +229,24 @@
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label caption class="text-black">a.n/Aryoseto Wahyatma  Bryan Hisyam</q-item-label>
-                  <q-item-label class="text-weight-bold" >3047530475036506034</q-item-label>
+                  <q-item-label caption class="text-black"
+                    >a.n/Aryoseto Wahyatma Bryan Hisyam</q-item-label
+                  >
+                  <q-item-label class="text-weight-bold"
+                    >3047530475036506034</q-item-label
+                  >
                 </q-item-section>
               </q-item>
             </q-card-section>
 
             <q-card-actions align="left">
               <q-btn
-
                 flat
-                
                 rounded
                 style="background-color: #6295ff"
-                
                 v-close-popup
               >
-                <div class="q-mx-sm" style="color:#fff">
-                  Selesai
-                </div>
+                <div class="q-mx-sm" style="color: #fff">Selesai</div>
               </q-btn>
             </q-card-actions>
           </q-card>
@@ -293,9 +265,26 @@ export default {
       payment1: ref(false),
       payment2: ref(false),
       payment3: ref(false),
+
+      packageData: null,
     };
   },
-  mounted() {},
+  mounted() {
+    this.getPackages();
+  },
+  methods: {
+    getPackages() {
+      this.$store
+        .dispatch("MasterOrders/getPackages")
+        .then((res) => {
+          console.log("ini res", res.data);
+          this.packageData = res.data;
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getPackages", err);
+        });
+    },
+  },
 };
 </script>
 

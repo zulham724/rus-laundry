@@ -14,6 +14,36 @@ const mutations = {
 };
 
 const actions = {
+    updateService({ commit }, service) {
+        let access = {
+            _method: "PUT",
+            ...service,
+        };
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/branch_service/${service.id}`, access)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+
+    getServiceById({ commit }, service) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`/api/master/branch_service/${service}`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+
     getBranchOrders({ commit }, shopid) {
         return new Promise((resolve, reject) => {
             api

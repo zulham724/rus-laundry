@@ -30,14 +30,17 @@
         </q-header>
       </div>
       <q-page>
-        <div class="q-px-sm q-py-sm">
+        <div class="q-px-sm q-py-sm" v-for="item in attendance" :key="item.id">
+          <div class="text-weight-bold q-px-sm" style="font-size: medium">
+            {{ item.shop.name }}
+          </div>
           <q-card
-            v-for="item in 6"
-            :key="item"
+            v-for="employee in item.shop.employees"
+            :key="employee.id"
             style="border-radius: 10px"
             class="q-ma-sm"
           >
-            <div class="q-px-sm">
+            <div class="q-px-sm q-py-xs">
               <div class="row">
                 <div class="text-center self-center col-2">
                   <q-avatar>
@@ -47,7 +50,7 @@
                 <div class="q-pl-sm col-10 self-center">
                   <div
                     class="text-grey text-weight-bold"
-                    style="font-size: larger"
+                    style="font-size: medium"
                   >
                     Nama Karyawan
                   </div>
@@ -55,7 +58,7 @@
                     class="text-black text-weight-medium"
                     style="font-size: medium"
                   >
-                    Angel Lista Putri
+                    {{ employee.name }}
                   </div>
                 </div>
               </div>
@@ -68,15 +71,28 @@
                 <div class="q-pl-sm col-10 self-center">
                   <div
                     class="text-grey text-weight-bold"
-                    style="font-size: larger"
+                    style="font-size: medium"
                   >
                     Tanggal Absensi
                   </div>
                   <div
+                    v-if="employee.attendances.length"
                     class="text-black text-weight-medium"
                     style="font-size: medium"
                   >
-                    07/09/2020
+                    {{
+                      moment(employee.attendances[0].created_at)
+                        .locale("id")
+                        .format("LL")
+                    }}
+                  </div>
+                  <!-- Belum Absen -->
+                  <div
+                    v-else
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    Belum Absen
                   </div>
                 </div>
               </div>
@@ -89,15 +105,28 @@
                 <div class="q-pl-sm col-10 self-center">
                   <div
                     class="text-grey text-weight-bold"
-                    style="font-size: larger"
+                    style="font-size: medium"
                   >
                     Waktu Absen
                   </div>
                   <div
+                    v-if="employee.attendances.length"
                     class="text-black text-weight-medium"
                     style="font-size: medium"
                   >
-                    06.30
+                    {{
+                      moment(employee.attendances[0].created_at)
+                        .locale("id")
+                        .format("LT")
+                    }}
+                  </div>
+                  <!-- Belum Absen -->
+                  <div
+                    v-else
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    Belum Absen
                   </div>
                 </div>
               </div>
@@ -133,6 +162,7 @@
 
 <script>
 import { ref } from "vue";
+import moment from "moment";
 
 export default {
   data() {
@@ -151,13 +181,18 @@ export default {
     this.getAttendance();
   },
   methods: {
+    moment,
     getAttendance() {
       this.$store
         .dispatch("Attendance/getAttendanceOwner", this.auth.id)
         .then((res) => {
           this.attendance = res.data;
-          console.log("cek attendance", this.attendance);
-        });
+          // console.log("cek attendance", this.attendance);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {});
     },
   },
 };

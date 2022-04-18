@@ -91,7 +91,7 @@
           <q-item-section>Marketplace</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="$router.push(`/community`)">
           <q-item-section avatar>
             <q-avatar square>
               <img src="~/assets/hm.png" style="width: 80%; height: 80%" />
@@ -141,7 +141,24 @@
         <div class="col-4 bg-white"></div>
         <div class="col-5 self-center">
           <q-btn
+            v-if="this.expired_date <= this.current_date"
             @click="alert = true"
+            rounded
+            class="bg-white full-width self-center"
+            style="height: 70%"
+          >
+            <div class="row full-width">
+              <div class="col-4">
+                <q-avatar size="200%">
+                  <img src="~/assets/box.png" />
+                </q-avatar>
+              </div>
+              <div class="col-8 self-center">Beli Paket</div>
+            </div>
+          </q-btn>
+          <q-btn
+            v-if="this.expired_date >= this.current_date"
+            @click="$router.push('/paket-owner')"
             rounded
             class="bg-white full-width self-center"
             style="height: 70%"
@@ -435,7 +452,13 @@
 
           <q-card-actions align="right">
             <q-btn flat label="Tidak" color="grey" v-close-popup />
-            <q-btn flat label="Yakin" color="red" v-close-popup />
+            <q-btn
+              @click="testingButton()"
+              flat
+              label="Yakin"
+              color="red"
+              v-close-popup
+            />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -470,9 +493,12 @@ export default {
     this.getTotalOrdersPerShop();
     this.getProfit();
     this.getDataPerkembangan();
+    // this.getDateToday();
+    this.checkActivePackageUser();
 
     //data pesanan bulanan
     this.getMonthlyOrder();
+    this.dataAuth = this.Auth.auth;
     console.log("cek auth", this.Auth.auth);
   },
 
@@ -482,6 +508,8 @@ export default {
       slide: ref(1),
       alert: ref(false),
       STORAGE_URL: STORAGE_URL,
+      expired_date: null,
+      current_date: null,
 
       // data jumlah seluruh pesanan
       totalOrdersPerShop: null,
@@ -489,13 +517,25 @@ export default {
       Profit: 0,
       totalPerkembangan: null,
       value: 77,
-
+      dataAuth: {},
+      momentToday: null,
       //data bulanan
     };
   },
 
   methods: {
     moment,
+    testingButton() {
+      console.log("klik");
+      this.$router.push("paket-owner");
+    },
+    checkActivePackageUser() {
+      let date = this.Auth.auth.active_package_user.expired_date;
+      this.expired_date = moment(date).locale("id").format("LL");
+      this.current_date = moment().locale("id").format("LL");
+      console.log("expired_date", this.expired_date);
+      console.log("current_date", this.current_date);
+    },
     copyToClipboard() {
       let text = this.Auth.auth.affiliate_code;
       navigator.clipboard.writeText(text);
@@ -529,6 +569,7 @@ export default {
         .dispatch("MasterOrders/getTotalOrders")
         .then((res) => {
           this.totalOrders = res.data;
+          // console.log("asdfffffffffffffffffffffff", this.totalOrders);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getTotalOrders");
