@@ -23,17 +23,16 @@
               class="col-3 self-center text-weight-medium text-center text-black"
               style="font-size: 17px"
             >
-              Cabang
+              Layanan
             </div>
             <div class="col-5 self-center text-right q-px-sm">
               <q-btn
-                @click="alert = true"
+                @click="checkLimitBranch()"
                 no-caps
-                rounded
                 dense
                 style="font-size: 13px; color: #000"
               >
-                <div>Tambah Cabang</div>
+                <div>Tambah</div>
               </q-btn>
             </div>
           </div>
@@ -42,8 +41,8 @@
       <q-page>
         <div v-if="this.branchServices">
           <div
-            v-for="item in branchServices"
-            :key="item.id"
+            v-for="(item, i) in branchServices"
+            :key="i"
             class="q-px-sm q-py-sm"
           >
             <q-card class="q-px-" style="border-radius: 10px">
@@ -113,6 +112,7 @@
                           color="white"
                           text-color="blue"
                           label="Hapus"
+                          @click="popupAlert(item.id, i)"
                         />
                       </div>
                       <div class="col-6">
@@ -139,17 +139,23 @@
             </q-card-section>
             <q-card-section class="text-center">
               <div class="text-weight-bold" style="font-size: 18px">
-                Apakah anda benar- benar yakin untuk mengganti Paket?
+                Apakah anda benar- benar yakin untuk menghapus Layanan?
               </div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">
-              Jika Yakin tekan Yakin, Jika tidak tekan Tidak
+            <q-card-section class="q-pt-none text-center">
+              Jika Yakin tekan Yakin, Jika tidak maka tekan Tidak
             </q-card-section>
 
             <q-card-actions align="right">
               <q-btn flat label="Tidak" color="grey" v-close-popup />
-              <q-btn flat label="Yakin" color="red" v-close-popup />
+              <q-btn
+                flat
+                @click="confirmAlert()"
+                label="Yakin"
+                color="red"
+                v-close-popup
+              />
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -166,22 +172,88 @@ export default {
   props: ["branchid"],
   data() {
     return {
+      deleteProperties: {
+        id: null,
+        index: null,
+      },
       alert: ref(false),
       branchServices: [],
+      sendProps: {
+        branchid: null,
+        packageid: null,
+      },
     };
   },
+  computed: {
+    auth() {
+      return this.$store.getters["Auth/auth"];
+    },
+  },
   mounted() {
-    console.log("ww", this.branchid);
+    console.log("cek auth", this.auth);
     this.getBranchServices();
   },
   methods: {
     moment,
+    popupAlert(id, index) {
+      this.alert = true;
+      this.deleteProperties.id = id;
+      this.deleteProperties.index = index;
+    },
+    confirmAlert() {
+      // this.removePackage(this.deleteProperties.index);
+      this.deleteBranchService(this.deleteProperties.id);
+      // this.deleteProperties.index = null;
+      this.deleteProperties.id = null;
+    },
+    checkLimitBranch() {
+      let limit_branch =
+        this.auth.active_package_user.package.package_limits.find((item) => {
+          return item.entity == "services_count";
+        });
+      // console.log("cek limit branch", result);
+
+      if (this.branchServices.length == limit_branch) {
+        this.$q.notify("Maaf, Anda sudah mencapai batas maksimal paket");
+      } else {
+        this.$router.push(`/buat-paket-owner/${this.branchid}`);
+      }
+    },
+    removePackage(index) {
+      this.branchServices.splice(index, 1);
+    },
+    deleteBranchService(id) {
+      console.log("ini deletebranchServices", this.deleteProperties);
+      this.$store
+        .dispatch("MasterBranchOrders/deleteBranchServices", id)
+        .then((res) => {
+          // this.$q.notify({
+          //   position: "bottom",
+          //   message: "Layanan Sedang Dihapus",
+          // });
+        })
+        .finally(() => {
+          this.removePackage(this.deleteProperties.index);
+          this.deleteProperties.index = null;
+          this.$q.notify({
+            position: "bottom",
+            message: "Layanan Berhasil Dihapus",
+          });
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan deleteService", err);
+          this.$q.notify({
+            position: "bottom",
+            message: "Gagal Menghapus Layanan",
+          });
+        });
+    },
     //get jumlah paket/layanan
     getBranchServices() {
       this.$store
         .dispatch("MasterBranchOrders/getBranchServices", this.branchid)
         .then((res) => {
-          console.log("res getBranchServices", res.data);
+          // console.log("res getBranchServices", res.data);
           this.branchServices = res.data;
         })
         .catch((err) => {

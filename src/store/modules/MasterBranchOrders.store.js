@@ -14,6 +14,138 @@ const mutations = {
 };
 
 const actions = {
+    //new customer
+    createBranchCustomer({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api
+                .post("api/master/branch_customer", payload)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //delete customer
+    deleteBranchCustomer({ commit }, id) {
+        let access = {
+            _method: "delete",
+        };
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/branch_customer/${id}`, access)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //get customer by id
+    getCustomerById({ commit }, id) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`/api/master/branch_customer/${id}`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    updateCustomer({ commit }, customer) {
+        let access = {
+            _method: "PUT",
+            ...customer,
+        };
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/branch_customer/${customer.id}`, access)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //new employee
+    createBranchEmployee({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api
+                .post("/api/master/branch_employee", payload)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //update employee
+    updateEmployee({ commit }, employee) {
+        let access = {
+            _method: "PUT",
+            ...employee,
+        };
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/branch_employee/${employee.id}`, access)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //delete employee
+    deleteBranchEmployee({ commit }, id) {
+        let access = {
+            _method: "delete",
+            // ...service,
+        };
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/branch_employee/${id}`, access)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //get employee by id
+    getEmployeeById({ commit }, id) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`/api/master/branch_employee/${id}`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //new service
+    createBranchServices({ commit }, service) {
+        return new Promise((resolve, reject) => {
+            api
+                .post("/api/master/branch_service", service)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //update service
     updateService({ commit }, service) {
         let access = {
             _method: "PUT",
@@ -30,11 +162,43 @@ const actions = {
                 });
         });
     },
+    //delete service
+    deleteBranchServices({ commit }, id) {
+        let access = {
+            _method: "delete",
+            // ...service,
+        };
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/branch_service/${id}`, access)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
 
+    //get service by id
     getServiceById({ commit }, service) {
         return new Promise((resolve, reject) => {
             api
                 .get(`/api/master/branch_service/${service}`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+
+    //get service catogeory
+    getServiceCategory({ commit }) {
+        return new Promise((resolve, reject) => {
+            api
+                .get("/api/master/branch_service_category")
                 .then((res) => {
                     resolve(res);
                 })

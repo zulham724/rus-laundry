@@ -1,5 +1,5 @@
 <template>
-  <q-layout  class="mbl" view="lHh lpR fFf">
+  <q-layout class="mbl" view="lHh lpR fFf">
     <q-page class="mbl-child">
       <div class="q-px-sm q-py-xl text-center">
         <q-avatar size="100px">
@@ -15,18 +15,18 @@
             <q-input
               label="Masukkan Nama Paket"
               color="black"
-              v-model="search"
+              v-model="this.addPackage.name"
               outlined
               type="search"
             >
-
             </q-input>
           </div>
           <div class="q-py-sm">
             <q-select
               outlined
-              v-model="model"
-              :options="options"
+              v-model="this.addPackage.service_category_id"
+              :options="this.serviceCategories"
+              option-label="name"
               label="Hitungan menurut"
             />
           </div>
@@ -34,47 +34,124 @@
             <q-input
               label="Masukkan Harga"
               color="black"
-              v-model="search"
+              v-model="this.addPackage.price"
               outlined
-              type="search"
+              type="number"
             >
-
+              <template v-slot:append>
+                <div style="font-size: 12px">Rp</div>
+              </template>
             </q-input>
           </div>
           <div class="q-py-sm">
             <q-input
               label="Waktu Pengerjaan"
               color="black"
-              v-model="search"
+              v-model="this.addPackage.process_time"
               outlined
-              type="search"
+              type="number"
             >
               <template v-slot:append>
-                <div style="font-size: 12px">/Jam</div>
+                <div style="font-size: 12px">Jam</div>
               </template>
             </q-input>
           </div>
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
-              <q-btn class="q-px-sm" style="background-color:#6295FF; border-radius:10px"  text-color="white" label="Tambahkan" />
+              <q-btn
+                class="q-px-sm"
+                style="background-color: #6295ff; border-radius: 10px"
+                text-color="white"
+                label="Tambahkan"
+                @click="print()"
+                no-caps
+              />
             </div>
             <div class="col text-left q-pl-sm">
-              <q-btn class="q-px-lg" style="background-color:#fff; border-radius:10px"  text-color="black" label="Cancel" />
+              <q-btn
+                no-caps
+                @click="$router.back()"
+                class="q-px-lg"
+                style="background-color: #fff; border-radius: 10px"
+                text-color="black"
+                label="Cancel"
+              />
             </div>
           </div>
         </q-form>
       </div>
+      <!--
       <div
-        style="position: absolute;  z-index: -1; vertical-align: text-bottom; width: 100%;"
+        style="
+          position: absolute;
+          z-index: -1;
+          vertical-align: text-bottom;
+          width: 100%;
+        "
       >
-        <q-img  src="~/assets/br.png" />
+        <q-img src="~/assets/br.png" />
       </div>
+      -->
     </q-page>
   </q-layout>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["branchid"],
+  data() {
+    return {
+      serviceCategories: [],
+      addPackage: {
+        description: "",
+        name: null,
+        price: null,
+        process_time: null,
+        service_category_id: null,
+        shop_id: null,
+      },
+    };
+  },
+  mounted() {
+    console.log("bid", this.branchid);
+    this.getServiceCategory();
+  },
+  methods: {
+    print() {
+      this.addPackage.shop_id = this.branchid;
+      this.addPackage.service_category_id =
+        this.addPackage.service_category_id.id;
+      console.log("ini res print", this.addPackage);
+      this.createService();
+    },
+    createService() {
+      this.$store
+        .dispatch("MasterBranchOrders/createBranchServices", this.addPackage)
+        .then((res) => {
+          console.log("ini res createService", res);
+          this.$q.notify({
+            position: "bottom",
+            message: "Layanan Telah Ditambahkan",
+          });
+          this.$router.push(`/detail-paket-owner/${this.branchid}`);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan createService", err);
+        });
+    },
+    getServiceCategory() {
+      this.$store
+        .dispatch("MasterBranchOrders/getServiceCategory")
+        .then((res) => {
+          this.serviceCategories = res.data;
+          console.log("ini res getServiceCategory", this.serviceCategories);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getServiceCategory", err);
+        });
+    },
+  },
+};
 </script>
 
 <style></style>

@@ -82,7 +82,7 @@
       <q-separator />
       <!-- TAB BUTTON ROUTER PUSH -->
       <div>
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="$router.push('/marketplace-home')">
           <q-item-section avatar>
             <q-avatar square>
               <img src="~/assets/krjg.png" style="width: 80%; height: 80%" />
@@ -199,7 +199,7 @@
                 <div class="col full-width">
                   <div class="row">
                     <div
-                      class="text-weight-medium q-pt-md text-left"
+                      class="text-weight-bold q-pt-md text-left"
                       style="color: #fff; font-size: small"
                     >
                       Jumlah Pesanan
@@ -238,7 +238,7 @@
                 <div class="col full-width">
                   <div class="row">
                     <div
-                      class="text-weight-medium q-pt-md text-left"
+                      class="text-weight-bold q-pt-md text-left"
                       style="color: #fff; font-size: small"
                     >
                       Info Perkembangan
@@ -278,7 +278,7 @@
                 <div class="col full-width">
                   <div class="row">
                     <div
-                      class="text-weight-medium q-pt-md text-left"
+                      class="text-weight-bold q-pt-md text-left"
                       style="color: #fff; font-size: small"
                     >
                       Penghasilan
@@ -322,7 +322,7 @@
                 <div class="col full-width">
                   <div class="row">
                     <div
-                      class="text-weight-medium q-pt-md text-left"
+                      class="text-weight-bold q-pt-md text-left"
                       style="color: #fff; font-size: small"
                     >
                       {{ this.Auth.auth.active_package_user.package.name }}
@@ -333,6 +333,7 @@
                       class="text-weight-medium text-left"
                       style="color: #fff; font-size: small"
                     >
+                      Berakhir hingga
                       {{
                         moment(this.Auth.auth.active_package_user.expired_date)
                           .locale("id")
@@ -351,7 +352,7 @@
 
       <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
       <div id="app">
-        <BarChart />
+        <BarChart data="halo" />
       </div>
 
       <!-- <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
@@ -414,20 +415,17 @@
             navigation
             infinite
           >
-            <q-carousel-slide :name="1">
+            <q-carousel-slide
+              v-for="branch in branches"
+              :key="branch.id"
+              :name="branch.id"
+            >
               <div class="col">
                 <div class="row">
-                  <q-img src="~/assets/mount.png" class="self-center" />
+                  <!-- <q-img src="~/assets/mount.png" class="self-center" /> -->
+                  <!-- <BarChart3 :data=""></BarChart3> -->
                 </div>
-                <div class="row q-py-md q-mb-lg">Laundry Amsterdam</div>
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="2">
-              <div class="col">
-                <div class="row">
-                  <q-img src="~/assets/mount.png" class="self-center" />
-                </div>
-                <div class="row q-py-md q-mb-lg">Laundry Utrecht</div>
+                <div class="row q-py-md q-mb-lg">{{ branch.name }}</div>
               </div>
             </q-carousel-slide>
           </q-carousel>
@@ -473,6 +471,7 @@ import { useQuasar } from "quasar";
 import { mapState } from "vuex";
 import BarChart from "src/components/BarChartOwnerComponent.vue";
 import BarChart2 from "src/components/BarChartRevenueComponent.vue";
+import BarChart3 from "src/components/BarChartComponent";
 // import LineChart from "src/components/LineChartOwnerComponent.ts";
 // import LineChart  from "src/components/LineChartOwnerComponent.vue";
 
@@ -482,6 +481,7 @@ export default {
   components: {
     BarChart,
     BarChart2,
+    BarChart3,
   },
 
   computed: {
@@ -489,6 +489,7 @@ export default {
   },
 
   mounted() {
+    // this.getBranches();
     this.getTotalOrders();
     this.getTotalOrdersPerShop();
     this.getProfit();
@@ -520,11 +521,29 @@ export default {
       dataAuth: {},
       momentToday: null,
       //data bulanan
+
+      testing: 'halo dunia',
+      //array cabang
+      branches: [],
     };
   },
 
   methods: {
     moment,
+    getProfitEachBranches() {
+      this.$store.dispatch("Branch/getBranches").then((res) => {
+        this.branches = res.data;
+        if (this.branches.length) {
+          this.slide = this.branches[0].id;
+          this.branches.each((branch, b) => {
+            this.getProfit(branch.id).then((res) => {
+              this.branches[b].profit = res.data;
+            });
+          });
+          console.log("cek cabang dengan profit", this.branches);
+        }
+      });
+    },
     testingButton() {
       console.log("klik");
       this.$router.push("paket-owner");

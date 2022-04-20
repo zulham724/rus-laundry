@@ -20,12 +20,21 @@
               </q-btn>
             </div>
             <div
-              class="col-4 self-center text-weight-medium text-center text-black"
+              class="col-3 self-center text-weight-medium text-center text-black"
               style="font-size: 17px"
             >
               Pelanggan
             </div>
-            <div class="col-4 self-center text-right q-px-sm"></div>
+            <div class="col-5 self-center text-right q-px-sm">
+              <q-btn
+                @click="$router.push(`/buat-pelanggan-owner/${this.branchid}`)"
+                no-caps
+                dense
+                style="font-size: 13px; color: #000"
+              >
+                <div>Tambah</div>
+              </q-btn>
+            </div>
           </div>
         </q-header>
       </div>
@@ -38,6 +47,7 @@
             rounded
             outlined
             v-model="search"
+            @update:model-value="searchCustomer(search)"
             type="search"
           >
             <template v-slot:prepend>
@@ -45,7 +55,7 @@
             </template>
           </q-input>
         </div>
-        <div v-for="dupe in 1" :key="dupe" class="q-px-sm q-py-sm">
+        <!-- <div v-for="dupe in 1" :key="dupe" class="q-px-sm q-py-sm">
           <q-card class="q-px-" style="border-radius: 10px">
             <div class="q-px-sm">
               <div class="row">
@@ -130,11 +140,11 @@
               </div>
             </div>
           </q-card>
-        </div>
+        </div> -->
 
         <div v-if="this.branchCustomers">
           <div
-            v-for="item in branchCustomers"
+            v-for="(item, i) in branchCustomers"
             :key="item.id"
             class="q-px-sm q-py-sm"
           >
@@ -152,7 +162,11 @@
                       {{ item.name }}
                     </div>
                   </div>
-                  <div class="text-center self-center col-2"></div>
+                  <div v-if="i == 0" class="text-center self-center col-2">
+                    <q-avatar>
+                      <img src="~/assets/png.png" />
+                    </q-avatar>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="text-center self-center col-2">
@@ -163,7 +177,7 @@
                   <div class="q-pl-sm col-10 text-h6 text-grey self-center">
                     <div style="font-size: 16px">Alamat Pelanggan</div>
                     <div style="font-size: 16px" class="text-black">
-                      {{ item.home_adress }}
+                      {{ item.home_address }}
                     </div>
                   </div>
                 </div>
@@ -190,16 +204,16 @@
                     </q-avatar>
                   </div>
                   <div class="q-pl-sm col-5 text-h6 text-grey self-center">
-                    <div style="font-size: 16px">Pesanan</div>
+                    <div style="font-size: 16px">Jumlah Pesanan</div>
                     <div style="font-size: 16px" class="text-black">
-                      57 (fake)
+                      {{ item.order_served_by_customer_count }}
                     </div>
                   </div>
                   <div class="q-pl-sm col-5 text-h6 text-grey self-center">
                     <div class="row">
                       <div class="col-6">
                         <q-btn
-                          @click="alert = true"
+                          @click="popupAlert(item.id, i)"
                           class="q-py-none q-px-xs"
                           flat
                           color="white"
@@ -213,6 +227,11 @@
                           color="blue"
                           text-color="white"
                           label="Edit"
+                          @click="
+                            this.$router.push(
+                              `/edit-pelanggan-owner/${item.id}`
+                            )
+                          "
                         />
                       </div>
                     </div>
@@ -234,13 +253,19 @@
               </div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">
-              Jika Yakin tekan Yakin, Jika tidak tekan Tidak
+            <q-card-section class="q-pt-none text-center">
+              Jika Yakin tekan Yakin, Jika tidak maka tekan Tidak
             </q-card-section>
 
             <q-card-actions align="right">
               <q-btn flat label="Tidak" color="grey" v-close-popup />
-              <q-btn flat label="Yakin" color="red" v-close-popup />
+              <q-btn
+                flat
+                label="Yakin"
+                @click="confirmAlert()"
+                color="red"
+                v-close-popup
+              />
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -258,20 +283,70 @@ export default {
     return {
       alert: ref(false),
       branchCustomers: [],
+      branchCustomersTemp: [],
+      search: "",
+      deleteProperties: {
+        id: null,
+        index: null,
+      },
     };
   },
   mounted() {
     console.log("branch", this.branchid);
     this.getBranchCustomers();
+    // this.getCustomerById();
   },
   methods: {
+    popupAlert(id, index) {
+      this.alert = true;
+      this.deleteProperties.id = id;
+      this.deleteProperties.index = index;
+    },
+    confirmAlert() {
+      // this.removePackage(this.deleteProperties.index);
+      this.deleteBranchCustomer(this.deleteProperties.id);
+      // this.deleteProperties.index = null;
+      this.deleteProperties.id = null;
+    },
+    removeCustomer(index) {
+      this.branchCustomers.splice(index, 1);
+    },
+    deleteBranchCustomer(id) {
+      this.$store
+        .dispatch("MasterBranchOrders/deleteBranchCustomer", id)
+        .then((res) => {
+          this.removeCustomer(this.deleteProperties.index);
+          this.$q.notify({
+            position: "bottom",
+            message: "Berhasil menghapus pelanggan",
+          });
+          console.log("res deleteBranchCustomer", res);
+        })
+        .catch((err) => {
+          this.$q.notify({
+            position: "bottom",
+            message: "Gagal menghapus pelanggan",
+          });
+          console.log("terjadi kesalahan deleteBranchCustomer", err);
+        });
+    },
+    searchCustomer(value) {
+      if (value == "") {
+        this.branchCustomers = this.branchCustomersTemp;
+      }
+
+      const needle = value.toLowerCase();
+      this.branchCustomers = this.branchCustomersTemp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
+    },
     //get jumlah customers
     getBranchCustomers() {
       this.$store
         .dispatch("MasterBranchOrders/getBranchCustomers", this.branchid)
         .then((res) => {
           console.log("res getBranchCustomers", res.data);
-          this.branchCustomers = res.data;
+          this.branchCustomers = this.branchCustomersTemp = res.data;
         })
         .catch((err) => {
           console.log("terjadi kesalahan getBranchCustomers");

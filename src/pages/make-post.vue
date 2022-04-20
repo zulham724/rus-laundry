@@ -84,7 +84,10 @@
                     />
                   </q-img>
                 </div>
-                <div class="row full-width" v-else-if="file.type.includes('video')">
+                <div
+                  class="row full-width"
+                  v-else-if="file.type.includes('video')"
+                >
                   <div class="col-10">
                     <vue-plyr :options="{ ratio: '1:1' }">
                       <video
@@ -114,10 +117,7 @@
                   </div>
                   <div class="col-2 bg-grey text-center self-center">
                     <q-btn
-                      style="
-                        
-                        z-index: 1;
-                      "
+                      style="z-index: 1"
                       color="red"
                       flat
                       dense
@@ -341,7 +341,6 @@ export default {
       }
     },
     removeImage(index) {
-
       this.images_videos.splice(index, 1);
       this.files.splice(index, 1);
     },

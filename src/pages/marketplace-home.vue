@@ -176,7 +176,10 @@
                         alt="avatar-box"
                       />
                     </q-avatar>
-                    <div class=" justify-center text-center self-center text-weight-medium" style="font-size: x-small">
+                    <div
+                      class="justify-center text-center self-center text-weight-medium"
+                      style="font-size: x-small"
+                    >
                       Tidak ada gambar
                     </div>
                   </div>
@@ -270,7 +273,7 @@
                   class="row q-px-md text-weight-medium q-pt-md text-center justify-center"
                   style="color: #393939; font-size: 17px"
                 >
-                  MASUKAN NOMOR WHATSAPP
+                  MASUKKAN NOMOR WHATSAPP
                 </div>
                 <div
                   class="row q-px-sm text-weight-medium text-center q-pt-md"
@@ -381,10 +384,10 @@ export default {
   },
   mounted() {
     this.dataAuth = this.Auth.auth;
+    console.log("ini res auth", this.dataAuth);
     this.getProducts();
   },
   methods: {
-    
     filterProducts(value) {
       this.updateProducts(value);
     },
@@ -410,7 +413,7 @@ export default {
           .dispatch("Product/index")
           .then((res) => {
             this.products = this.products_temp = res.data;
-            console.log('produk', this.products);
+            console.log("produk", this.products);
           })
           .catch((err) => {
             reject(err);

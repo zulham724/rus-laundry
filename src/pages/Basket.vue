@@ -24,7 +24,7 @@
         <!-- TAB ITEM BARU -->
         <div
           v-if="Orders.order.charts.length"
-          class="q-px-sm "
+          class="q-px-sm"
           style="height: 100vh"
         >
           <div
@@ -133,10 +133,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-4 self-center ">
+                <div class="col-4 self-center">
                   <div
                     v-if="this.Orders.order.charts[c].total_price"
-                    class=" self-center text-weight-medium"
+                    class="self-center text-weight-medium"
                   >
                     {{
                       new Intl.NumberFormat("id-ID", {
@@ -211,19 +211,18 @@
             </div>
             <!-- TAB TAMBAH GAMBAR & GANTI GAMBAR -->
             <div
-              class="full-width text-center row "
-  
+              class="full-width text-center row"
               v-if="category.pre_order_photo"
             >
-              <div class="col-6 text-right ">
+              <div class="col-6 text-right">
                 <q-btn
                   @click="dialogPreviewPhoto(category.pre_order_photo)"
                   dense
                   no-caps
-                  class="q-py-xs  text-center text-weight-medium"
+                  class="q-py-xs text-center text-weight-medium"
                   style="
                     padding-right: 8.5px;
-                    width:80%;
+                    width: 80%;
                     border-radius: 0px 0px 0px 10px;
                   "
                 >
@@ -238,9 +237,8 @@
                   class="q-py-xs text-white text-center text-weight-medium"
                   style="
                     background-color: #49c1bf;
-                  width:80%;
+                    width: 80%;
                     border-radius: 0px 0px 10px 0px;
-
                   "
                 >
                   Ganti Gambar
@@ -249,7 +247,10 @@
             </div>
           </div>
 
-          <div class="fixed-bottom mbl-child" v-if="this.Orders.order.total_price">
+          <div
+            class="fixed-bottom mbl-child"
+            v-if="this.Orders.order.total_price"
+          >
             <q-card class="q-pa-sm" style="border-radius: 20px 20px 0px 0px">
               <q-card-section>
                 <div class="text-caption">Total Harga</div>

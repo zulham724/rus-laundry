@@ -34,13 +34,13 @@
             <div class="bgCardTop text-h6 text-white text-center q-py-sm">
               {{ item.name }}
             </div>
-            <div class="q-px-sm">
+            <div class="q-px-sm bg-white">
               <div v-for="paket in item.package_contents" :key="paket.id">
                 <div class="row q-py-xs">
                   <div class="text-center self-center col-2">
                     <img src="~/assets/dm.png" />
                   </div>
-                  <div class="q-pl-sm col-10 text-h6 text-grey self-center">
+                  <div class="q-pl-sm col-10 text-h6 text-black self-center">
                     <div>{{ paket.value }}</div>
                   </div>
                 </div>

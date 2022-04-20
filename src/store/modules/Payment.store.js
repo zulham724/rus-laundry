@@ -1,31 +1,54 @@
-import { api } from 'boot/axios';
+import { api } from "boot/axios";
 
-const state = {
-   
-};
+const state = {};
 
-const mutations = {
-    
-
-};
+const mutations = {};
 
 const actions = {
-
-    // store({ commit }, spend){
-    //     return new Promise((resolve, reject) => {
-    //         api.post(`/api/slave/payment`, spend).t
-    //     })
-    // }
+    getTotalSum({ commit }, shopid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/payment/get-total-sum/${shopid}`)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
+    getIncome({ commit }, shopid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/payment/get-income/${shopid}`)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
+    getSpend({ commit }, shopid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/payment/get-spending/${shopid}`)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
 };
 
-const getters = {
-   
-};
+const getters = {};
 
 export default {
     namespaced: true,
     state,
     mutations,
     actions,
-    getters
-}
+    getters,
+};

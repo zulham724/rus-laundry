@@ -190,10 +190,11 @@ const routes = [
     },
 
     {
-        path: "/buat-paket-owner",
+        path: "/buat-paket-owner/:branchid",
         component: () =>
             import ("src/pages/BuatPaketOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
@@ -212,31 +213,35 @@ const routes = [
     },
 
     {
-        path: "/buat-karyawan-owner",
+        path: "/buat-karyawan-owner/:branchid",
         component: () =>
             import ("src/pages/BuatKaryawanOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
-        path: "/edit-karyawan-owner",
+        path: "/edit-karyawan-owner/:employeeid",
         component: () =>
             import ("src/pages/EditKaryawanOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
-        path: "/buat-pelanggan-owner",
+        path: "/buat-pelanggan-owner/:branchid",
         component: () =>
             import ("src/pages/BuatPelangganOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
-        path: "/edit-pelanggan-owner",
+        path: "/edit-pelanggan-owner/:customerid",
         component: () =>
             import ("src/pages/EditPelangganOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
     },
 
     {
@@ -261,11 +266,19 @@ const routes = [
             import ("pages/Employee.vue"),
     },
 
+    // {
+    //     path: "/marketplace-home",
+    //     component: () =>
+    //         import ("pages/marketplace-home.vue"),
+    //     beforeEnter: multiguard([auth, checkIfSlave]),
+    //     props: true,
+    // },
+
     {
         path: "/marketplace-home",
         component: () =>
             import ("pages/marketplace-home.vue"),
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
         props: true,
     },
 

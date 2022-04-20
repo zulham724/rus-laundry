@@ -36,23 +36,49 @@
         <!-- TAB PEMASUKAN DAN PENGELUARAN -->
         <div class="row">
           <div class="col-6 text-center q-px-sm">
+            <!-- active -->
             <q-card
+              v-if="tabPemasukanAktif"
               v-ripple
               class="q-py-sm"
               style="background-color: #233471; border-radius: 10px"
             >
-              <q-img src="~/assets/elmsk.png" width="50%" />
+              <q-img no-spinner src="~/assets/elmsk.png" width="50%" />
+              <div class="text-white text-center self-center">Pemasukan</div>
+            </q-card>
+            <!-- non-active -->
+            <q-card
+              @click="clickPemasukan()"
+              v-if="tabPemasukanNonAktif"
+              v-ripple
+              class="q-py-sm"
+              style="background-color: #44495f; border-radius: 10px"
+            >
+              <q-img no-spinner src="~/assets/elmsk.png" width="50%" />
               <div class="text-white text-center self-center">Pemasukan</div>
             </q-card>
           </div>
 
           <div class="col-6 text-center q-px-sm">
+            <!-- non-active -->
             <q-card
+              @click="clickPengeluaran()"
+              v-if="tabPengeluaranNonAktif"
               v-ripple
               class="q-py-sm"
               style="background-color: #44495f; border-radius: 10px"
             >
-              <q-img src="~/assets/elmdk.png" width="50%" />
+              <q-img no-spinner src="~/assets/elmdk.png" width="50%" />
+              <div class="text-white text-center self-center">Pengeluaran</div>
+            </q-card>
+            <!-- active -->
+            <q-card
+              v-if="tabPengeluaranAktif"
+              v-ripple
+              class="q-py-sm"
+              style="background-color: #233471; border-radius: 10px"
+            >
+              <q-img no-spinner src="~/assets/elmdk.png" width="50%" />
               <div class="text-white text-center self-center">Pengeluaran</div>
             </q-card>
           </div>
@@ -72,7 +98,10 @@
                     <q-img src="~/assets/yen.png" />
                   </div>
                   <div class="col-7 q-px-xs self-center">
-                    <div class="text-white self-center" style="font-size: 12px">
+                    <div
+                      class="text-whit</div>e self-center"
+                      style="font-size: 12px"
+                    >
                       Pemasukan
                     </div>
                     <div class="text-white self-center" style="font-size: 10px">
@@ -84,13 +113,18 @@
 
               <div class="col-6 q-py-md self-center">
                 <div class="row">
-                  <div class="col-1">
-                    <q-separator vertical color="white" class="q-my-sm" />
-                  </div>
+                  <div
+                    style="background-color: white; width: 1px; display: block"
+                  />
 
                   <div class="col-11 q-px-xs self-center">
                     <div class="text-white self-center" style="font-size: 18px">
-                      Rp. 500.000
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(totalSum)
+                      }}
                     </div>
                     <div
                       class="text-white self-center row"
@@ -122,7 +156,7 @@
         </div>
         <!-- TAB LIST -->
         <!-- ITEM SURPLUS -->
-        <div class="q-mt-sm q-px-sm" v-for="a in 2" :key="a">
+        <!-- <div class="q-mt-sm q-px-sm" v-for="a in 2" :key="a">
           <q-item
             v-ripple
             class="bg-white shadow-1"
@@ -141,47 +175,19 @@
               >
             </q-item-section>
 
-            <q-item-section side>
+            <q-item-section side> color: #dd2222
               <q-item-label caption style="color: #00ff38"
                 >+Rp 50.000</q-item-label
               >
             </q-item-section>
           </q-item>
-        </div>
-        <!-- ITEM DEFISIT -->
-        <div class="q-mt-sm q-px-sm" v-for="a in 2" :key="a">
-          <q-item
-            v-ripple
-            class="bg-white shadow-1"
-            style="border-radius: 25px"
-          >
-            <q-item-section avatar>
-              <q-avatar>
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-              </q-avatar>
-            </q-item-section>
+        </div> -->
 
-            <q-item-section>
-              <q-item-label>Budi RianEko</q-item-label>
-              <q-item-label caption class="text-black"
-                >07-Sept-2022, 13.00</q-item-label
-              >
-            </q-item-section>
+        <!-- Pemasukan -->
+        <income-component v-if="incomeComponent"></income-component>
 
-            <q-item-section side>
-              <q-item-label caption style="color: #dd2222"
-                >-Rp 50.000</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-        </div>
-        <!-- ITEM NULL -->
-        <div class="q-mt-sm q-px-sm text-center q-py-lg">
-          <q-img src="~/assets/itmn.png" width="60%" />
-          <div class="text-h6 q-py-sm">
-            Tidak Ada Pengeluaran Untuk Kategori Laundry
-          </div>
-        </div>
+        <!-- Pengeluaran -->
+        <spend-component v-if="spendComponent"> </spend-component>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -189,18 +195,87 @@
 
 <script>
 import { ref } from "vue";
+import moment from "moment";
+import IncomeComponent from "src/components/owner/IncomeComponent";
+import SpendComponent from "src/components/owner/SpendComponent";
 
 export default {
   props: ["branchid"],
+  components: {
+    "income-component": IncomeComponent,
+    "spend-component": SpendComponent,
+  },
   data() {
     return {
       alert: ref(false),
       model: ref("Semua"),
       options: ["Semua", "Laundry", "Marketplace", "Lainnya"],
+      isLoad: false,
+      shopsId: [],
+      spendingData: [],
+      incomeData: [],
+      totalSum: 0,
+      tabPemasukanAktif: true,
+      tabPemasukanNonAktif: false,
+      tabPengeluaranAktif: false,
+      tabPengeluaranNonAktif: true,
+
+      incomeComponent: true,
+      spendComponent: false,
     };
   },
+  computed: {
+    auth() {
+      return this.$store.getters["Auth/auth"];
+    },
+  },
   mounted() {
-    console.log("ini branchid", this.branchid);
+    // console.log("ini auth", this.auth);
+    this.getShopId();
+    this.getTotalSum();
+  },
+  methods: {
+    moment,
+    clickPengeluaran() {
+      this.tabPemasukanAktif = false;
+      this.tabPemasukanNonAktif = true;
+
+      this.tabPengeluaranAktif = true;
+      this.tabPengeluaranNonAktif = false;
+      //  Component
+      this.incomeComponent = false;
+      this.spendComponent = true;
+    },
+    clickPemasukan() {
+      this.tabPengeluaranAktif = false;
+      this.tabPengeluaranNonAktif = true;
+
+      this.tabPemasukanAktif = true;
+      this.tabPemasukanNonAktif = false;
+      //  Component
+      this.spendComponent = false;
+      this.incomeComponent = true;
+    },
+    getTotalSum() {
+      let shopId = this.shopsId;
+      this.$store
+        .dispatch("Payment/getTotalSum", shopId)
+        .then((res) => {
+          this.totalSum = res.data;
+          // console.log("cek totalSum", this.totalSum);
+        })
+        .catch((err) => {});
+    },
+    getShopId() {
+      return new Promise((resolve, reject) => {
+        let shopsId = [];
+        this.auth.slaves.forEach((slave) => {
+          shopsId.push(slave.shop.id);
+        });
+        this.shopsId = shopsId;
+        // console.log("ini shopsId", shopsId);
+      });
+    },
   },
 };
 </script>

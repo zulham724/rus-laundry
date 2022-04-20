@@ -27,10 +27,10 @@
             </div>
             <div class="col-4 self-center text-right q-px-sm">
               <q-btn
+                class="q-px-sm"
                 no-caps
                 dense
                 @click="alert = true"
-                rounded
                 color="white"
                 text-color="black"
                 size="small"
@@ -85,10 +85,7 @@
                 <div>
                   <div>Status</div>
                   <!-- cabang aktif -->
-                  <div
-                    class="row"
-                    v-if="this.expired_date <= this.current_date"
-                  >
+                  <div class="row" v-if="this.Auth.auth.apiStatus == 'Hidup'">
                     <div class="col-3">
                       <div class="text-white text-h6">Hidup</div>
                     </div>
@@ -97,10 +94,7 @@
                     </div>
                   </div>
                   <!-- cabang mati -->
-                  <div
-                    class="row"
-                    v-if="this.expired_date >= this.current_date"
-                  >
+                  <div class="row" v-if="this.Auth.auth.apiStatus == 'Mati'">
                     <div class="col-3">
                       <div class="text-white text-h6">Mati</div>
                     </div>
@@ -133,7 +127,7 @@
             </q-card-section>
             <q-card-section class="text-center">
               <div class="text-h6">
-                Apakah anda benar- benar yakin untuk menambah Paket?
+                Apakah anda benar- benar yakin untuk menambah Cabang?
               </div>
             </q-card-section>
 
@@ -148,7 +142,7 @@
                 flat
                 label="Yakin"
                 color="red"
-                @click="$router.push(`/buat-cabang-owner`)"
+                @click="checkLimitBranch()"
               />
             </q-card-actions>
           </q-card>
@@ -161,7 +155,7 @@
             </q-card-section>
             <q-card-section class="text-center">
               <div class="text-h6">
-                Apakah anda benar- benar yakin untuk menghapus Paket?
+                Apakah anda benar- benar yakin untuk menghapus Cabang?
               </div>
             </q-card-section>
 
@@ -223,6 +217,21 @@ export default {
   },
   methods: {
     moment,
+    checkLimitBranch() {
+      let limit_branch =
+        this.Auth.auth.active_package_user.package.package_limits.find(
+          (item) => {
+            return item.entity == "slaves_count";
+          }
+        );
+      // console.log("cek limit branch", limit_branch.limit);
+
+      if (this.dataBranch.length == limit_branch.limit) {
+        this.$q.notify("Maaf, Anda sudah mencapai batas maksimal cabang");
+      } else {
+        this.$router.push(`/buat-cabang-owner`);
+      }
+    },
     dialogDelete(shop_id, user_id) {
       this.shop_id = shop_id;
       this.user_id = user_id;
@@ -231,7 +240,7 @@ export default {
     },
     deleteBranch() {
       let payload = {
-        shop_id: this.shop_id,
+        // shop_id: this.shop_id,
         user_id: this.user_id,
       };
       // console.log("id", payload);
@@ -246,6 +255,7 @@ export default {
         })
         .finally(() => {
           this.loadingDelete = false;
+          this.alertDelete = false;
           this.$router.go();
         });
     },

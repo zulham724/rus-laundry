@@ -34,7 +34,6 @@ ChartJS.register(
 );
 
 export default {
-  props: ['data'],
   name: "BarChart",
   components: { Bar },
   props: {
@@ -66,16 +65,20 @@ export default {
       type: Object,
       default: () => {},
     },
+    data: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
-      orderDataNull : {
+      orderDataNull: {
         orders: 0,
       },
 
-      array : [],
-      orderData : {},
-     
+      array: [],
+      orderData: {},
+
       chartData: {
         labels: [],
         datasets: [],
@@ -83,71 +86,78 @@ export default {
       chartOptions: {
         responsive: true,
         scales: {
-            y: {
-                beginAtZero: true,
-                max: 100
-                }
-            }
-
+          y: {
+            beginAtZero: true,
+            max: 100,
+          },
+        },
       },
     };
   },
-  mounted(){
-    console.log('ini dataaaaaaaaaaaaaaa gan', this.data);
-    this.getMonthlyOrder();
+  computed: {
+    chartData: function () {
+      return {
+        labels: this.data.labels,
+        datasets: this.data.datasets,
+      };
+    },
   },
-  methods:{
-    setChartData(){
+  mounted() {},
+  methods: {
+    setChartData() {
       this.chartData.labels = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "Mei",
-          "Jun",
-          "Jul",
-          "Agu",
-          "Sep",
-          "Okt",
-          "Nov",
-          "Des",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agu",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
       ];
       this.chartData.datasets = [
         {
           label: "Jumlah Pesanan",
           backgroundColor: "#3286A0",
           hoverBackgroundColor: "#000",
-          data: [this.array[0].orders, this.array[1].orders, this.array[2].orders, this.array[3].orders, this.array[4].orders, this.array[5].orders, this.array[6].orders, this.array[7].orders, this.array[8].orders, this.array[9].orders, this.array[10].orders, this.array[11].orders],
+          data: [
+            this.array[0].orders,
+            this.array[1].orders,
+            this.array[2].orders,
+            this.array[3].orders,
+            this.array[4].orders,
+            this.array[5].orders,
+            this.array[6].orders,
+            this.array[7].orders,
+            this.array[8].orders,
+            this.array[9].orders,
+            this.array[10].orders,
+            this.array[11].orders,
+          ],
           borderRadius: Number.MAX_VALUE,
-        }
+        },
       ];
     },
-    getMonthlyOrder() {
-      this.$store
-        .dispatch("MasterOrders/getMonthlyOrder")
-        .then(res => {
-          this.filterMonth(res.data);
-        })
-        .catch(err => {
-          console.log("terjadi kesalahan getMonthlyOrder barchart", err);
-        });
-    },
-    filterMonth(value){
+    filterMonth(value) {
       for (let i = 1; i < 13; i++) {
-          let bulan = value.filter(obj => {
-            return obj.month === i;
-          });
-          if(bulan.length){
-            let zero = this.orderDataNull.orders = 0;
-            zero = bulan[0];
-            this.array.push(zero);
-          } else {
-            this.orderDataNull.orders = 0;
-            this.array.push(this.orderDataNull);
-          };
+        let bulan = value.filter((obj) => {
+          return obj.month === i;
+        });
+        if (bulan.length) {
+          let zero = (this.orderDataNull.orders = 0);
+          zero = bulan[0];
+          this.array.push(zero);
+        } else {
+          this.orderDataNull.orders = 0;
+          this.array.push(this.orderDataNull);
+        }
       }
       this.setChartData();
-    }
-  }
+    },
+  },
 };
 </script>

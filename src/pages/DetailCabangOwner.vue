@@ -24,7 +24,9 @@
               class="col-10 self-center text-weight-medium text-center text-black"
               style="font-size: 20px"
             >
-              Laundry Rusa
+              
+              <div v-if="this.currentShop">{{ this.currentShop[0].shop.name }}</div>
+              <div v-else>Laundry</div>
             </div>
             <div class="col-1 self-center text-right q-px-sm"></div>
           </div>
@@ -191,7 +193,7 @@
                     >Produk</q-item-label
                   >
                   <q-item-label class="text-white" caption
-                    >3 Produk Tersedia</q-item-label
+                    >Ini data palsu</q-item-label
                   >
                 </q-item-section>
               </q-item>
@@ -244,6 +246,9 @@ export default {
       branchServices: 0,
       branchEmployee: 0,
       branchCustomers: 0,
+
+      shopNameFilter: [],
+      currentShop: null,
     };
   },
   computed: {
@@ -259,6 +264,7 @@ export default {
     this.getBranchEmployee();
     this.getBranchCustomers();
     // this.getCurrentBranch();
+    this.getShopName();
   },
 
   methods: {
@@ -356,6 +362,26 @@ export default {
         })
         .catch((err) => {
           console.log("terjadi kesalahan getBranchCustomers");
+        });
+    },
+
+    getShopName() {
+      this.$store
+        .dispatch("MasterOrders/getTotalOrdersPerShop")
+        .then((res) => {
+          this.shopNameFilter = res.data;
+          // console.log("shopName", this.shopName);
+
+          var creatures = res.data;
+          var id = +this.branchid;
+          var aquaticCreatures = creatures.filter(function (creature) {
+            return creature.shop.id == id;
+          });
+          this.currentShop = aquaticCreatures;
+          console.log("shopName", aquaticCreatures);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getTotalOrdersPerShop", err);
         });
     },
   },
