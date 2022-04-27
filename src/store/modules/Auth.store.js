@@ -87,6 +87,19 @@ const actions = {
                 });
         });
     },
+    addMasterWANumber({ commit }, contact_number) {
+        return new Promise((resolve, reject) => {
+            api
+                .post(`/api/master/inputnumberphone`, contact_number)
+                .then((res) => {
+                    commit("update_phone_number", { contact_number: contact_number });
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
     updateAvatar({ commit }, formData) {
         return new Promise((resolve, reject) => {
             api

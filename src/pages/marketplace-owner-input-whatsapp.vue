@@ -84,7 +84,7 @@ export default {
       this.$refs.form.validate().then((success) => {
         if (success) {
           this.$store
-            .dispatch("Auth/addWANumber", {
+            .dispatch("Auth/addMasterWANumber", {
               contact_number: this.model + this.contact,
             })
             .then((res) => {

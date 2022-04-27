@@ -103,6 +103,17 @@ const actions = {
         });
     },
 
+    getMonthlyRevenue({ commit }) {
+        return new Promise((resolve, reject) => {
+            api.get('/api/master/paymentcountbymonths')
+                .then((res) => {
+                    resolve(res);
+                }).catch((err) => {
+                    reject(err);
+                })
+        });
+    },
+
     getMonthlyOrdersEachBranches({ commit }) {
         return new Promise((resolve, reject) => {
             api

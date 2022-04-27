@@ -187,7 +187,6 @@ export default {
           console.log("setelah base 64", res.src);
           this.encodedImage = res.src;
         });
-
       }
     },
   },

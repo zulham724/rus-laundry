@@ -270,11 +270,39 @@ export default {
         .dispatch("MasterOrders/getMonthlyOrdersEachBranches")
         .then((res) => {
           this.dataBranch = res.data;
-          // console.log("all res", this.dataBranch);
+          console.log("all res", this.dataBranch);
         })
         .catch((err) => {
           console.log("err");
         });
+    },
+    filterMonthGetMonthlyOrder(value) {
+      for (let i = 1; i < 13; i++) {
+        let bulan = value.filter((obj) => {
+          return obj.month === i;
+        });
+        if (bulan.length) {
+          bulan[0].show = bulan[0].orders;
+
+          let counter = 0;
+          counter = bulan[0].show;
+          this.arrayCounter.push(+counter);
+
+          let zero = bulan[0];
+          this.array.push(zero);
+          this.sendDataBoolean = true;
+          // console.log("iniarrrrrrrrrr", this.array);
+        } else {
+          this.orderDataNull.orders = 0;
+          this.array.push(this.orderDataNull);
+          this.sendDataBoolean = true;
+
+          let counter = 0;
+          this.arrayCounter.push(counter);
+        }
+      }
+      this.topValueCounter();
+      console.log("ini array", this.array);
     },
   },
 };

@@ -14,6 +14,32 @@ const mutations = {
 };
 
 const actions = {
+    //get revenue
+    getMonthlyRevenue({ commit }, branchid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/branchpaymentcountbymonth/${branchid}`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
+    //get data orders
+    getMonthlyOrders({ commit }, branchid) {
+        return new Promise((resolve, reject) => {
+            api
+                .get(`api/master/ordercountbranchbymonth/${branchid}`)
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    },
     //new customer
     createBranchCustomer({ commit }, payload) {
         return new Promise((resolve, reject) => {

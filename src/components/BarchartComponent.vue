@@ -69,40 +69,33 @@ export default {
       type: Object,
       default: () => {},
     },
+    dataTop: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
-      orderDataNull: {
-        orders: 0,
-      },
-
-      array: [],
-      orderData: {},
-
       chartData: {
-        labels: [],
-        datasets: [],
+        labels: ["January", "February", "March"],
+        datasets: [{ data: [40, 20, 12] }],
       },
       chartOptions: {
         responsive: true,
         scales: {
           y: {
             beginAtZero: true,
-            max: 100,
+            max: this.dataTop + (10 / 100) * this.dataTop,
           },
         },
       },
     };
   },
-  computed: {
-    chartData: function () {
-      return {
-        labels: this.data.labels,
-        datasets: this.data.datasets,
-      };
-    },
+  mounted() {
+    this.setChartData();
+    // console.log("nilai terbesar", Math.max(this.data.show));
+    // console.log("ini sended data", this.data);
   },
-  mounted() {},
   methods: {
     setChartData() {
       this.chartData.labels = [
@@ -121,42 +114,26 @@ export default {
       ];
       this.chartData.datasets = [
         {
-          label: "Jumlah Pesanan",
+          label: "Data Perbulan",
           backgroundColor: "#3286A0",
           hoverBackgroundColor: "#000",
           data: [
-            this.array[0].orders,
-            this.array[1].orders,
-            this.array[2].orders,
-            this.array[3].orders,
-            this.array[4].orders,
-            this.array[5].orders,
-            this.array[6].orders,
-            this.array[7].orders,
-            this.array[8].orders,
-            this.array[9].orders,
-            this.array[10].orders,
-            this.array[11].orders,
+            this.data[0].show,
+            this.data[1].show,
+            this.data[2].show,
+            this.data[3].show,
+            this.data[4].show,
+            this.data[5].show,
+            this.data[6].show,
+            this.data[7].show,
+            this.data[8].show,
+            this.data[9].show,
+            this.data[10].show,
+            this.data[11].show,
           ],
           borderRadius: Number.MAX_VALUE,
         },
       ];
-    },
-    filterMonth(value) {
-      for (let i = 1; i < 13; i++) {
-        let bulan = value.filter((obj) => {
-          return obj.month === i;
-        });
-        if (bulan.length) {
-          let zero = (this.orderDataNull.orders = 0);
-          zero = bulan[0];
-          this.array.push(zero);
-        } else {
-          this.orderDataNull.orders = 0;
-          this.array.push(this.orderDataNull);
-        }
-      }
-      this.setChartData();
     },
   },
 };

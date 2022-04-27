@@ -26,6 +26,7 @@ module.exports = configure(function(ctx) {
             "loadComponents",
             "vueplyr",
             "vue-simple-camera",
+            "apexcharts",
         ],
 
         // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

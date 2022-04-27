@@ -114,13 +114,28 @@ const routes = [
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 
-    // {
-    //     path: "/marketplace-home-owner",
-    //     component: () =>
-    //         import ("pages/marketplace-home.vue"),
-    //     beforeEnter: multiguard([auth, checkIfOwner]),
-    //     props: true,
-    // },
+    {
+        path: "/marketplace-detail-owner/:productid",
+        component: () =>
+            import ("src/pages/MarketplaceDetailOwner.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/marketplace-home-input-whatsapp",
+        component: () =>
+            import ("pages/marketplace-input-whatsapp.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/marketplace-home-owner",
+        component: () =>
+            import ("pages/MarketplaceHomeOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
+    },
 
     {
         path: "/detail-cabang-owner/:branchid",
@@ -1128,13 +1143,19 @@ const routes = [
         path: "/marketplace-input-whatsapp",
         component: () =>
             import ("pages/marketplace-input-whatsapp.vue"),
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
+    },
+    {
+        path: "/marketplace-owner-input-whatsapp",
+        component: () =>
+            import ("pages/marketplace-owner-input-whatsapp.vue"),
+        beforeEnter: multiguard([auth]),
     },
     {
         path: "/marketplace-input-whatsapp2",
         component: () =>
             import ("pages/marketplace-input-whatsapp2.vue"),
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
     },
     {
         path: "/marketplace-add-product-item",

@@ -63,7 +63,7 @@ const actions = {
     index({ commit }) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/product`)
+                .get(`/api/master/product`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -104,7 +104,7 @@ const actions = {
     show({ commit }, productId) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/product/${productId}`)
+                .get(`/api/master/product/${productId}`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -116,7 +116,7 @@ const actions = {
     getAnotherProducts({ commit }, shopId) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/${shopId}/getproducts`)
+                .get(`/api/master/${shopId}/getproducts`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -128,7 +128,7 @@ const actions = {
     like({ commit }, id) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/product/${id}/like`)
+                .get(`/api/master/product/${id}/like`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -144,7 +144,7 @@ const actions = {
             };
 
             api
-                .get(`/api/slave/product/${id}/dislike`)
+                .get(`/api/master/product/${id}/dislike`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -156,7 +156,7 @@ const actions = {
     deleteImagesTest({ commit }, payload) {
         return new Promise((resolve, reject) => {
             api
-                .post(`/api/slave/deleteimage`, payload)
+                .post(`/api/master/deleteimage`, payload)
                 .then((res) => {
                     resolve(res);
                 })
@@ -168,7 +168,7 @@ const actions = {
     testadd({ commit }, formData) {
         return new Promise((resolve, reject) => {
             api
-                .post(`/api/slave/addimage`, formData)
+                .post(`/api/master/addimage`, formData)
                 .then((res) => {
                     resolve(res);
                 })

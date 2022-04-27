@@ -82,7 +82,11 @@
       <q-separator />
       <!-- TAB BUTTON ROUTER PUSH -->
       <div>
-        <q-item clickable v-ripple @click="$router.push('/marketplace-home')">
+        <q-item
+          clickable
+          v-ripple
+          @click="$router.push('/marketplace-home-owner')"
+        >
           <q-item-section avatar>
             <q-avatar square>
               <img src="~/assets/krjg.png" style="width: 80%; height: 80%" />
@@ -351,19 +355,14 @@
       <br />
 
       <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
-      <div id="app">
-        <BarChart data="halo" />
+      <div v-if="this.sendDataBoolean" id="app">
+        <bar-chart :data="this.array" :dataTop="this.dataTop" />
       </div>
 
-      <!-- <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
-      <div id="app">
-        <BarChart2 />
-      </div> -->
-
-      <!-- <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
-      <div id="app">
-        <LineChart />
-      </div> -->
+      <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
+      <div v-if="this.sendDataBoolean2" id="app">
+        <bar-chart :data="this.array2" :dataTop="this.dataTop2" />
+      </div>
 
       <br />
       <!-- tab jumlah pesanan tiap cabang -->
@@ -391,7 +390,7 @@
                     {{ item.orders_count }} pesanan
                   </q-circular-progress>
                 </div>
-                <div>{{ item.name }}</div>
+                <div>{{ item.shop.name }}</div>
               </div>
             </div>
           </template>
@@ -401,35 +400,42 @@
       <br />
 
       <!-- tab penghasilan tiap cabang -->
+      <!--
+      <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
+      <div id="app">
+        <chartExample></chartExample>
+      </div>
+      -->
       <div>
-        <div class="row q-px-md q-py-md text-weight-bold">
-          Penghasilan Tiap Cabang
-        </div>
-        <div>
-          <q-carousel
-            control-color="blue"
-            height="100%"
-            animated
-            v-model="slide"
-            swipeable
-            navigation
-            infinite
+        <q-carousel
+          v-model="slide"
+          transition-prev="slide-right"
+          transition-next="slide-left"
+          swipeable
+          animated
+          control-color="blue-6"
+          control-size="small"
+          navigation
+          height="100%"
+          class="bg-white text-white q-pb-xl"
+        >
+          <q-carousel-slide
+            v-for="(item, index) in this.arrayRevenueEachShop"
+            :key="index"
+            name="style"
+            class="column no-wrap flex-top q-px-none"
           >
-            <q-carousel-slide
-              v-for="branch in branches"
-              :key="branch.id"
-              :name="branch.id"
-            >
-              <div class="col">
-                <div class="row">
-                  <!-- <q-img src="~/assets/mount.png" class="self-center" /> -->
-                  <!-- <BarChart3 :data=""></BarChart3> -->
-                </div>
-                <div class="row q-py-md q-mb-lg">{{ branch.name }}</div>
-              </div>
-            </q-carousel-slide>
-          </q-carousel>
-        </div>
+            <div class="text-left q-px-md text-weight-bold text-black">
+              Penghasilan Cabang {{ item.shop.name }}
+            </div>
+            <div v-if="item.orders_each_shop" class="text-top full-width">
+              <chartExample
+                :data="item.orders_each_shop"
+                class="text-black"
+              ></chartExample>
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
       </div>
 
       <!-- dialog ganti paket -->
@@ -465,23 +471,29 @@
 </template>
 
 <script>
+import { Bar } from "vue-chartjs";
 import moment from "moment";
 import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { mapState } from "vuex";
-import BarChart from "src/components/BarChartOwnerComponent.vue";
-import BarChart2 from "src/components/BarChartRevenueComponent.vue";
-import BarChart3 from "src/components/BarChartComponent";
-// import LineChart from "src/components/LineChartOwnerComponent.ts";
-// import LineChart  from "src/components/LineChartOwnerComponent.vue";
+import BarChart from "src/components/BarchartComponent.vue";
+import LineChart from "src/components/LinechartComponent.vue";
+import chartExample from "src/components/LinechartComponent.vue";
+import Chartkick from "vue-chartkick";
+import chart from "chart.js";
+
+//setup linechart
+// import { defineComponent, defineAsyncComponent } from "vue";
+// const chartExample = defineAsyncComponent(() => {
+//   import("src/components/LinechartComponent.vue");
+// });
 
 export default {
   // SETUP BARCHART
   name: "App",
   components: {
-    BarChart,
-    BarChart2,
-    BarChart3,
+    "bar-chart": BarChart,
+    chartExample,
   },
 
   computed: {
@@ -489,47 +501,91 @@ export default {
   },
 
   mounted() {
-    // this.getBranches();
+    this.dataAuth = this.Auth.auth;
     this.getTotalOrders();
     this.getTotalOrdersPerShop();
     this.getProfit();
     this.getDataPerkembangan();
-    // this.getDateToday();
     this.checkActivePackageUser();
 
-    //data pesanan bulanan
+    //chart total pesanan
     this.getMonthlyOrder();
-    this.dataAuth = this.Auth.auth;
-    console.log("cek auth", this.Auth.auth);
+    //chart penghasilan
+    this.getMonthlyRevenue();
+    //dsfdf
+    // this.getMonthlyOrderEachBranch();
+
+    this.getMonthlyOrdersEachBranches();
   },
 
   data() {
     return {
       drawerLeft: ref(false),
-      slide: ref(1),
+      slide: ref("style"),
+
       alert: ref(false),
       STORAGE_URL: STORAGE_URL,
       expired_date: null,
       current_date: null,
+
+      lorem:
+        "loreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
 
       // data jumlah seluruh pesanan
       totalOrdersPerShop: null,
       totalOrders: 0,
       Profit: 0,
       totalPerkembangan: null,
-      value: 77,
+      value: 66,
       dataAuth: {},
-      momentToday: null,
-      //data bulanan
 
-      testing: 'halo dunia',
-      //array cabang
+      //chart transaksi
       branches: [],
+      array: [],
+      orderDataNull: {
+        orders: 0,
+      },
+      sendDataBoolean: false,
+      //array counter
+      arrayCounter: [],
+      dataTop: 0,
+
+      //chart penghasilan
+      array2: [],
+      orderDataNull2: {
+        show: 0,
+      },
+      sendDataBoolean2: false,
+      //array counter 2
+      arrayCounter2: [],
+      dataTop2: 0,
+      //chart penghasilan tiap cabnag
+      array3: [],
+      orderDataNull3: {
+        show: 0,
+      },
+      sendDataBoolean3: false,
+      //array conter 3
+      arrayCounter3: [],
+
+      arrayRevenueEachShop: {},
+      allOrdersEachShop: [],
     };
   },
 
   methods: {
     moment,
+    getMonthlyOrderEachBranch() {
+      this.$store
+        .dispatch("MasterOrders/getMonthlyOrderEachBranch")
+        .then((res) => {
+          // console.log("ini res getMonthlyOrderEachBranch", res.data);
+          // this.arrayRevenueEachShop = res.data;
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getMonthlyOrderEachBranch", err);
+        });
+    },
     getProfitEachBranches() {
       this.$store.dispatch("Branch/getBranches").then((res) => {
         this.branches = res.data;
@@ -552,8 +608,8 @@ export default {
       let date = this.Auth.auth.active_package_user.expired_date;
       this.expired_date = moment(date).locale("id").format("LL");
       this.current_date = moment().locale("id").format("LL");
-      console.log("expired_date", this.expired_date);
-      console.log("current_date", this.current_date);
+      // console.log("expired_date", this.expired_date);
+      // console.log("current_date", this.current_date);
     },
     copyToClipboard() {
       let text = this.Auth.auth.affiliate_code;
@@ -578,6 +634,7 @@ export default {
         .dispatch("MasterOrders/getTotalOrdersPerShop")
         .then((res) => {
           this.totalOrdersPerShop = res.data;
+          // console.log("ini total orders per shop", this.totalOrdersPerShop);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getTotalOrdersPerShop");
@@ -595,24 +652,165 @@ export default {
         });
     },
 
-    // get data pesanan bulanan
+    //DATA JUMLAH PESANAN - DATA JUMLAH PESANAN - DATA JUMLAH PESANAN
     getMonthlyOrder() {
       this.$store
         .dispatch("MasterOrders/getMonthlyOrder")
         .then((res) => {
-          // console.log("data bulanan ", res.data);
+          // console.log("ini res getMonthlyOrder", res.data);
+          this.filterMonthGetMonthlyOrder(res.data);
         })
         .catch((err) => {
-          console.log("terjadi kesalahan getMonthlyOrder", err);
+          console.log("terjadi kesalahan getMonthlyOrder barchart", err);
         });
     },
+    filterMonthGetMonthlyOrder(value) {
+      for (let i = 1; i < 13; i++) {
+        let bulan = value.filter((obj) => {
+          return obj.month === i;
+        });
+        if (bulan.length) {
+          bulan[0].show = bulan[0].orders;
 
-    filterMonth(value) {
-      let resBulan = value;
-      let results = resBulan.filter((obj) => {
-        return obj.month === 1;
-      });
-      console.log("data januari", results);
+          let counter = 0;
+          counter = bulan[0].show;
+          this.arrayCounter.push(+counter);
+
+          let zero = bulan[0];
+          this.array.push(zero);
+          this.sendDataBoolean = true;
+          // console.log("iniarrrrrrrrrr", this.array);
+        } else {
+          this.orderDataNull.orders = 0;
+          this.array.push(this.orderDataNull);
+          this.sendDataBoolean = true;
+
+          let counter = 0;
+          this.arrayCounter.push(counter);
+        }
+      }
+      this.topValueCounter();
+    },
+    topValueCounter() {
+      this.dataTop = Math.max(...this.arrayCounter);
+      // console.log("data top", this.dataTop2);
+      // console.log(Math.max(...this.arrayCounter));
+    },
+    //DATA JUMLAH PESANAN - DATA JUMLAH PESANAN - DATA JUMLAH PESANAN
+    //PENGHASILAN - PENGHASILAN - PENGHASILAN - PENGHASILAN
+    getMonthlyRevenue() {
+      this.$store
+        .dispatch("MasterOrders/getMonthlyRevenue")
+        .then((res) => {
+          // console.log("ini res getMonthlyRevenue", res.data);
+          this.filterMonthGetMonthlyRevenue(res.data);
+        })
+        .catch((err) => {
+          console.log("terjdai kesalahan getMonthlyRevenue", err);
+        });
+    },
+    filterMonthGetMonthlyRevenue(value) {
+      // this.array2 = null;
+      // console.log("array sblm", this.array2);
+      for (let i = 1; i < 13; i++) {
+        let bulan2 = value.filter((obj) => {
+          return obj.month === i;
+        });
+        //data menjadi satuan/terpisah
+        if (bulan2.length) {
+          bulan2[0].show = bulan2[0].total;
+
+          let counter = 0;
+          counter = bulan2[0].show;
+          this.arrayCounter2.push(+counter);
+
+          let zero = bulan2[0];
+          this.array2.push(zero);
+          this.sendDataBoolean2 = true;
+
+          // this.topValueCounter();
+        } else {
+          this.orderDataNull2.show = 0;
+          this.array2.push(this.orderDataNull2);
+          this.sendDataBoolean2 = true;
+
+          let counter = 0;
+          this.arrayCounter2.push(counter);
+        }
+      }
+      // console.log("this.array2", this.array2);
+      this.topValueCounter2();
+    },
+    topValueCounter2() {
+      this.dataTop2 = Math.max(...this.arrayCounter2);
+      // console.log("data top", this.dataTop2);
+      // console.log(Math.max(...this.arrayCounter));
+    },
+    getMonthlyOrdersEachBranches() {
+      this.$store
+        .dispatch("MasterOrders/getMonthlyOrdersEachBranches")
+        .then((res) => {
+          this.arrayRevenueEachShop = res.data;
+          console.log(
+            "ini res getMonthlyOrdersEachBranches",
+            this.arrayRevenueEachShop
+          );
+          for (let i = 0; i < this.arrayRevenueEachShop.length; i++) {
+            // console.log("ya allah", this.arrayRevenueEachShop[i]);
+            this.getMonthlyOrders(this.arrayRevenueEachShop[i].shop.id);
+          }
+          // this.getMonthlyOrders(1);
+        })
+        .catch((err) => {
+          console.log("err");
+        });
+    },
+    getMonthlyOrders(branchid) {
+      this.$store
+        .dispatch("MasterBranchOrders/getMonthlyOrders", branchid)
+        .then((res) => {
+          // console.log("tolong baim", res.data);
+          this.filterMonthGetMonthlyRevenue2(res.data);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getMonthlyOrders", err);
+        });
+    },
+    filterMonthGetMonthlyRevenue2(value) {
+      // this.array2 = null;
+      // console.log("array sblm", this.array2);
+      for (let i = 1; i < 13; i++) {
+        let bulan3 = value.filter((obj) => {
+          return obj.month === i;
+        });
+        //data menjadi satuan/terpisah
+        if (bulan3.length) {
+          bulan3[0].show = bulan3[0].total_sum;
+
+          let counter = 0;
+          counter = bulan3[0].show;
+          this.arrayCounter3.push(+counter);
+
+          let zero = bulan3[0];
+          this.array3.push(zero);
+          this.sendDataBoolean3 = true;
+
+          // this.topValueCounter();
+        } else {
+          this.orderDataNull3.show = 0;
+          this.array3.push(this.orderDataNull3);
+          this.sendDataBoolean3 = true;
+
+          let counter = 0;
+          this.arrayCounter3.push(counter);
+        }
+      }
+      console.log("this.array3", this.array3);
+      // this.allOrdersEachShop.push(this.array3);
+
+      this.arrayRevenueEachShop[0].orders_each_shop = this.array3;
+      console.log("this.arrayRevenueEachShop", this.arrayRevenueEachShop);
+      // this.topValueCounter2();
     },
   },
 };

@@ -167,11 +167,12 @@
     + ketika tambah cabang/lainnya diberi keterangan berhasil
     + ketika edit data cabang/lainnya diberi keterangan berhasil
     + tammbah cabang, layanan, karyawan, dan customer
-
-    - halaman home belum bisa menampilkan [line chart]
+    + halaman home belum bisa menampilkan [bar chart]
+    + chart dashboard
+    + halaman home belum bisa menampilkan [line chart]
+    + laporan pemasukan dan pengeluaran tiap cabang
+    
     - tambah postingan, dan produk marketplace
-    - laporan pemasukan dan pengeluaran tiap cabang
-    - chart dashboard
     - waktu register owner, ketika email sudah dipakai diberi keterangan
     - kalau login jika password nya salah diberi keterangan
     - copy code affiliate di halaman web belum berfungsi 
