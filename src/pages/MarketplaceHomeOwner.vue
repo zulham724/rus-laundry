@@ -52,7 +52,7 @@
             <!--Avatar-->
             <div v-if="!dataAuth.avatar" class="self-center">
               <q-avatar
-                @click="$router.push('/marketplace-detail-user')"
+                @click="$router.push('/marketplace-detail-user-owner')"
                 size="50px"
                 style="background-color: #fff"
               >
@@ -61,7 +61,7 @@
             </div>
             <div v-else-if="dataAuth.avatar" class="self-center">
               <q-avatar
-                @click="$router.push('/marketplace-detail-user')"
+                @click="$router.push('/marketplace-detail-user-owner')"
                 size="50px"
                 style="background-color: #fff"
               >

@@ -228,6 +228,7 @@ export default {
 
       if (this.dataBranch.length == limit_branch.limit) {
         this.$q.notify("Maaf, Anda sudah mencapai batas maksimal cabang");
+        // this.$router.push(`/buat-cabang-owner`);
       } else {
         this.$router.push(`/buat-cabang-owner`);
       }

@@ -8,7 +8,7 @@
             style="color: #3a3838"
           >
             <q-btn
-              @click="$router.push('/')"
+              @click="$router.push('/home-owner')"
               no-caps
               dense
               flat
@@ -24,7 +24,7 @@
             <div class="q-pl-sm" style="font-size: larger">Postingan</div>
           </div>
           <div class="col-5 text-center self-center">
-            <q-btn flat dense no-caps @click="$router.push('/make-post')">
+            <q-btn flat dense no-caps @click="$router.push('/make-post-owner')">
               <div
                 class="row justify-center q-px-sm q-py-xs"
                 style="background-color: #f5f7f9; border-radius: 10px"
@@ -56,12 +56,12 @@
           <div v-if="dataAuth" class="col-1 text-center self-center">
             <!--Avatar-->
             <div v-if="!dataAuth.avatar" class="self-center">
-              <q-avatar @click="$router.push('/my-profile')" size="30px">
+              <q-avatar @click="$router.push('/my-profile-owner')" size="30px">
                 <q-img no-spinner src="~/assets/ld.png"></q-img>
               </q-avatar>
             </div>
             <div v-else-if="dataAuth.avatar" class="self-center">
-              <q-avatar @click="$router.push('/my-profile')" size="30px">
+              <q-avatar @click="$router.push('/my-profile-owner')" size="30px">
                 <q-img
                   no-spinner
                   :src="STORAGE_URL + `/` + dataAuth.avatar"
@@ -173,7 +173,7 @@
 
 <script>
 import { mapState } from "vuex";
-import PostCardComponent from "src/components/post/PostCardComponent.vue";
+import PostCardComponent from "src/components/post/PostCardOwnerComponent.vue";
 export default {
   name: "PostPage",
   include: ["PostPage"],
@@ -210,7 +210,7 @@ export default {
       return new Promise((resolve, reject) => {
         (this.isLoad = true),
           this.$store
-            .dispatch("Post/index")
+            .dispatch("MasterPost/index")
             .then((res) => {
               this.posts = res.data;
               // console.log('this post', this.posts)
@@ -242,7 +242,7 @@ export default {
     },
     onLoad(index, done) {
       this.Post.posts.next_page_url
-        ? this.$store.dispatch("Post/next").then((res) => {
+        ? this.$store.dispatch("MasterPost/next").then((res) => {
             done();
           })
         : done();

@@ -14,7 +14,7 @@ const actions = {
     searchProductLiked({ commit }, payload) {
         return new Promise((resolve, reject) => {
             api
-                .post(`/api/slave/search_liked_product_by_user`, payload)
+                .post(`/api/master/search_liked_product_by_user`, payload)
                 .then((res) => {
                     resolve(res);
                 })
@@ -26,7 +26,7 @@ const actions = {
     getLikedProductByUser({ commit }, userid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`api/slave/get_liked_product_by_user/${userid}`)
+                .get(`api/master/get_liked_product_by_user/${userid}`)
                 .then((res) => {
                     // commit('set_product', {products: res.data});
                     resolve(res);
@@ -51,7 +51,7 @@ const actions = {
     store({ commit }, product) {
         return new Promise((resolve, reject) => {
             api
-                .post(`/api/slave/product`, product)
+                .post(`/api/master/product`, product)
                 .then((res) => {
                     resolve(res);
                 })
@@ -76,7 +76,7 @@ const actions = {
     getProductByShop() {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/getproductbyshop`)
+                .get(`/api/master/getproductbyshop`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -92,7 +92,7 @@ const actions = {
         };
         return new Promise((resolve, reject) => {
             api
-                .post(`/api/slave/product/${access.id}`, access)
+                .post(`/api/master/product/${access.id}`, access)
                 .then((res) => {
                     resolve(res);
                 })

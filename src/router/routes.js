@@ -108,6 +108,70 @@ const routes = [
 
     //OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER OWNER
     {
+        path: "/marketplace-add-product-owner",
+        component: () =>
+            import ("pages/MarketplaceAddProductOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/my-profile-owner",
+        component: () =>
+            import ("pages/MyProfileOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/make-post-owner",
+        component: () =>
+            import ("src/pages/MakePostOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/community-owner",
+        component: () =>
+            import ("pages/PostOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+        // beforeEnter: multiguard([auth, checkIfSlave]),
+    },
+
+    {
+        path: "/marketplace-product-liked-owner",
+        component: () =>
+            import ("pages/MarketplaceProductLikedOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/change-no-whatsapp-owner",
+        component: () =>
+            import ("pages/ChangeNoWhatsAppOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/change-no-whatsapp2-owner",
+        component: () =>
+            import ("pages/ChangeNoWhatsapp2Owner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/marketplace-add-product-item-owner",
+        component: () =>
+            import ("pages/MarketplaceAddProductItemOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/marketplace-detail-user-owner",
+        component: () =>
+            import ("src/pages/MarketplaceDetailUserOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
         path: "/home-owner",
         component: () =>
             import ("pages/HomeOwner.vue"),
@@ -344,7 +408,7 @@ const routes = [
         path: "/community",
         component: () =>
             import ("pages/Post.vue"),
-        beforeEnter: multiguard([auth]),
+        beforeEnter: multiguard([auth, checkIfSlave]),
         // beforeEnter: multiguard([auth, checkIfSlave]),
     },
 

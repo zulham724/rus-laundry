@@ -2,7 +2,11 @@
   <q-layout class="mbl">
     <q-header class="text-center shadow-1">
       <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.push('/marketplace-detail-user')">
+        <q-btn
+          flat
+          round
+          @click="$router.push('/marketplace-detail-user-owner')"
+        >
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
           </q-avatar>
         </q-btn>
@@ -25,7 +29,7 @@
         <div class="row q-py-md full-width">
           <!-- Button edit no wa -->
           <q-btn
-            @click="$router.push('/change-no-whatsapp2')"
+            @click="$router.push('/change-no-whatsapp2-owner')"
             no-caps
             class="q-pa-md q-mt-md full-width"
             style="background-color: #9b27f1; border-radius: 10px"

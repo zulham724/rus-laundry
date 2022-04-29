@@ -73,7 +73,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    console.log("ini data line chart", this.data);
+    // console.log("ini data line chart", this.data);
   },
   methods: {},
 });

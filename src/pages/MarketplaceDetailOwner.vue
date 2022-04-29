@@ -377,19 +377,23 @@ export default {
     },
     like() {
       this.product.liked_count = 1;
-      this.$store.dispatch("Product/like", this.product.id).then((res) => {
-        this.product.liked_count = res.data.liked_count;
-        this.product.likes_count = res.data.likes_count;
-        this.$forceUpdate();
-      });
+      this.$store
+        .dispatch("MasterProduct/like", this.product.id)
+        .then((res) => {
+          this.product.liked_count = res.data.liked_count;
+          this.product.likes_count = res.data.likes_count;
+          this.$forceUpdate();
+        });
     },
     dislike() {
       this.product.liked_count = 0;
-      this.$store.dispatch("Product/dislike", this.product.id).then((res) => {
-        this.product.liked_count = res.data.liked_count;
-        this.product.likes_count = res.data.likes_count;
-        this.$forceUpdate();
-      });
+      this.$store
+        .dispatch("MasterProduct/dislike", this.product.id)
+        .then((res) => {
+          this.product.liked_count = res.data.liked_count;
+          this.product.likes_count = res.data.likes_count;
+          this.$forceUpdate();
+        });
     },
   },
 };

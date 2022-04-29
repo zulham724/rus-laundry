@@ -95,7 +95,7 @@
           <q-item-section>Marketplace</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple @click="$router.push(`/community`)">
+        <q-item clickable v-ripple @click="$router.push(`/community-owner`)">
           <q-item-section avatar>
             <q-avatar square>
               <img src="~/assets/hm.png" style="width: 80%; height: 80%" />
@@ -380,7 +380,8 @@
                   <q-circular-progress
                     show-value
                     font-size="12px"
-                    :value="value"
+                    :max="this.dataTopCircular"
+                    :value="item.orders_count"
                     size="150px"
                     :thickness="0.29"
                     color="green"
@@ -422,7 +423,7 @@
           <q-carousel-slide
             v-for="(item, index) in this.arrayRevenueEachShop"
             :key="index"
-            name="style"
+            :name="index"
             class="column no-wrap flex-top q-px-none"
           >
             <div class="text-left q-px-md text-weight-bold text-black">
@@ -521,7 +522,7 @@ export default {
   data() {
     return {
       drawerLeft: ref(false),
-      slide: ref("style"),
+      slide: ref(0),
 
       alert: ref(false),
       STORAGE_URL: STORAGE_URL,
@@ -570,6 +571,8 @@ export default {
 
       arrayRevenueEachShop: {},
       allOrdersEachShop: [],
+      arrayCircularChart: [],
+      dataTopCircular: 0,
     };
   },
 
@@ -585,6 +588,21 @@ export default {
         .catch((err) => {
           console.log("terjadi kesalahan getMonthlyOrderEachBranch", err);
         });
+    },
+    getMaxValueCircularCharts(value) {
+      // console.log("ini value", value);
+      for (let i = 0; i < value.length; i++) {
+        console.log("ini valueee", value[i].orders_count);
+        this.arrayCircularChart.push(value[i].orders_count);
+        // let bulan = value.filter((obj) => {
+        //   return obj[i];
+        // });
+        // console.log("ini bulann", bulan);
+      }
+      // console.log("ini arrayCircularChart", this.arrayCircularChart);
+      var max = Math.max(...this.arrayCircularChart);
+      console.log("toppp", max);
+      this.dataTopCircular = max;
     },
     getProfitEachBranches() {
       this.$store.dispatch("Branch/getBranches").then((res) => {
@@ -634,7 +652,8 @@ export default {
         .dispatch("MasterOrders/getTotalOrdersPerShop")
         .then((res) => {
           this.totalOrdersPerShop = res.data;
-          // console.log("ini total orders per shop", this.totalOrdersPerShop);
+          console.log("ini total orders per shop", this.totalOrdersPerShop);
+          this.getMaxValueCircularCharts(res.data);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getTotalOrdersPerShop");
@@ -751,13 +770,13 @@ export default {
         .dispatch("MasterOrders/getMonthlyOrdersEachBranches")
         .then((res) => {
           this.arrayRevenueEachShop = res.data;
-          console.log(
-            "ini res getMonthlyOrdersEachBranches",
-            this.arrayRevenueEachShop
-          );
+          // console.log(
+          //   "ini res getMonthlyOrdersEachBranches",
+          //   this.arrayRevenueEachShop
+          // );
           for (let i = 0; i < this.arrayRevenueEachShop.length; i++) {
             // console.log("ya allah", this.arrayRevenueEachShop[i]);
-            this.getMonthlyOrders(this.arrayRevenueEachShop[i].shop.id);
+            this.getMonthlyOrders(this.arrayRevenueEachShop[i].shop.id, i);
           }
           // this.getMonthlyOrders(1);
         })
@@ -765,20 +784,27 @@ export default {
           console.log("err");
         });
     },
-    getMonthlyOrders(branchid) {
+    getMonthlyOrders(branchid, indexChecker) {
       this.$store
         .dispatch("MasterBranchOrders/getMonthlyOrders", branchid)
         .then((res) => {
-          // console.log("tolong baim", res.data);
-          this.filterMonthGetMonthlyRevenue2(res.data);
+          // console.log("tolong baim", index);
+          // const indext = index.findIndex((indexChecker, index) => {
+          //   if (indexChecker.id === branchid) {
+          //     console.log("dwadawd", index);
+          //   }
+          // });
+
+          // console.log("uwaw", indext);
+          this.filterMonthGetMonthlyRevenue2(res.data, indexChecker);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getMonthlyOrders", err);
         });
     },
-    filterMonthGetMonthlyRevenue2(value) {
-      // this.array2 = null;
-      // console.log("array sblm", this.array2);
+    filterMonthGetMonthlyRevenue2(value, mergeArray) {
+      this.array3 = [];
+      // console.log("hiraishin", value);
       for (let i = 1; i < 13; i++) {
         let bulan3 = value.filter((obj) => {
           return obj.month === i;
@@ -805,11 +831,15 @@ export default {
           this.arrayCounter3.push(counter);
         }
       }
-      console.log("this.array3", this.array3);
+      // console.log("this.array3", this.array3);
       // this.allOrdersEachShop.push(this.array3);
 
-      this.arrayRevenueEachShop[0].orders_each_shop = this.array3;
-      console.log("this.arrayRevenueEachShop", this.arrayRevenueEachShop);
+      // for (let i = 1; i < 13; i++) {}
+
+      // console.log("ini res mergeArray", mergeArray);
+      //PERLU INDEX YANG BENAR
+      this.arrayRevenueEachShop[mergeArray].orders_each_shop = this.array3;
+      // console.log("this.arrayRevenueEachShop", this.arrayRevenueEachShop);
       // this.topValueCounter2();
     },
   },
