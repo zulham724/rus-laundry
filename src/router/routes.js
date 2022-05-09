@@ -115,6 +115,38 @@ const routes = [
     },
 
     {
+        path: "/marketplace-add-product-edit-owner/:productid",
+        component: () =>
+            import ("pages/MarketplaceAddProductEditOwner.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/profile-other-2-owner/:postauthorid",
+        component: () =>
+            import ("src/pages/ProfileOther2Owner.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/edit-post-owner/:post_id",
+        component: () =>
+            import ("src/pages/EditPostOwner.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: `/post/:postid/comment-of-post-owner`,
+        component: () =>
+            import ("pages/CommentOfPostOwner.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
         path: "/my-profile-owner",
         component: () =>
             import ("pages/MyProfileOwner.vue"),

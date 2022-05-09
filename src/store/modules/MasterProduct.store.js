@@ -39,7 +39,7 @@ const actions = {
     updateProduct({ commit }, product) {
         return new Promise((resolve, reject) => {
             api
-                .post(`/api/slave/updateproducts/${product.id}`, product)
+                .post(`/api/master/updateproducts/${product.id}`, product)
                 .then((res) => {
                     resolve(res);
                 })

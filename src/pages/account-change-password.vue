@@ -83,36 +83,38 @@
 export default {
   data() {
     return {
-      currrentPassword:'',
-      password:"",
-      confirmPassword:"",
-      loading: false
+      currrentPassword: "",
+      password: "",
+      confirmPassword: "",
+      loading: false,
     };
   },
   methods: {
     doChangePassword() {
-      this.$refs.form.validate().then(valid => {
+      this.$refs.form.validate().then((valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('Auth/changePassword', {
-            old_password: this.currentPassword,
-            new_password: this.password,
-          }).then((res) => {
-            this.$q.notify({
-              type: 'success',
-              message: 'Kata sandi berhasil diubah',
+          this.loading = true;
+          this.$store
+            .dispatch("Auth/changePassword", {
+              old_password: this.currentPassword,
+              new_password: this.password,
+            })
+            .then((res) => {
+              this.$q.notify({
+                type: "success",
+                message: "Kata sandi berhasil diubah",
+              });
+              this.$router.push("/profile-account-setting");
+            })
+            .catch((err) => {
+              this.$q.notify({
+                type: "negative",
+                message: "Kata sandi gagal diubah",
+              });
+            })
+            .finally(() => {
+              this.loading = false;
             });
-            this.$router.push('/profile-account-setting');
-          })
-          .catch((err) => {
-            this.$q.notify({
-              type: 'negative',
-              message: 'Kata sandi gagal diubah',
-            });
-          })
-          .finally(()=>{
-            this.loading = false
-          })
         }
       });
     },

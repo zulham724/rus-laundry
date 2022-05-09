@@ -76,7 +76,7 @@ const actions = {
                 ...payload,
             };
             api
-                .put(`api/slave/post/${payload.id}`, access)
+                .put(`api/master/post/${payload.id}`, access)
                 .then((res) => {
                     resolve(res);
                 })
@@ -130,7 +130,7 @@ const actions = {
     getPostByPostId({ commit }, postid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/getpostbypostid/${postid}`)
+                .get(`/api/master/getpostbypostid/${postid}`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -169,7 +169,7 @@ const actions = {
     getProfilePostByUser({ commit }, userid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/get_profile_by_id/${userid}`)
+                .get(`/api/master/get_profile_by_id/${userid}`)
                 .then((res) => {
                     resolve(res);
                 })
@@ -248,7 +248,7 @@ const actions = {
     show({ commit }, postId) {
         return new Promise((resolve, reject) => {
             api
-                .get(`/api/slave/post/${postId}`)
+                .get(`/api/master/post/${postId}`)
                 .then((res) => {
                     resolve(res);
                 })

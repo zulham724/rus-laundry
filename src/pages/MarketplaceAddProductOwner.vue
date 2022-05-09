@@ -99,7 +99,7 @@
               <div style="height: 150px" class="self-center bg-black">
                 <q-img
                   v-if="product.images.length"
-                  class="bg-grey"
+                  class="bg-white"
                   :src="STORAGE_URL + `/` + product.images[0].src"
                   style="height: 150px"
                 >
@@ -158,7 +158,9 @@
                   no-caps
                   label="Edit produk"
                   @click="
-                    $router.push(`/marketplace-add-product-edit/${product.id}`)
+                    $router.push(
+                      `/marketplace-add-product-edit-owner/${product.id}`
+                    )
                   "
                 ></q-btn>
                 <!-- Dialog Hapus Product -->
@@ -196,7 +198,7 @@
                           class="text-white"
                           no-caps
                           flat
-                          @click="deleteProduct(product.id, p)"
+                          @click="deleteProduct()"
                           label="Oke"
                           style="
                             width: 30px;
@@ -220,7 +222,7 @@
                     font-size: 12px;
                   "
                   no-caps
-                  @click="dialog_deleteProduct = true"
+                  @click="deleteFunction(p, product.id)"
                   label="Hapus"
                 ></q-btn>
               </div>
@@ -306,6 +308,9 @@ export default {
       chooseMode: false,
       search: "",
       isLoad: false,
+
+      deleteid: null,
+      deleteindex: null,
     };
   },
   mounted() {
@@ -313,11 +318,24 @@ export default {
     this.getProducts();
   },
   methods: {
-    deleteProduct(id, index) {
-      this.$store.dispatch("MasterProduct/destroy", id).then((res) => {
-        this.products.splice(index, 1);
-        this.$q.notify("Berhasil");
-      });
+    deleteFunction(index, id) {
+      this.deleteid = null;
+      this.deleteindex = null;
+      this.deleteid = id;
+      this.deleteindex = index;
+      console.log("id", id);
+      console.log("index", index);
+      this.dialog_deleteProduct = true;
+    },
+    deleteProduct() {
+      console.log("id", this.deleteid);
+      console.log("index", this.deleteindex);
+      this.$store
+        .dispatch("MasterProduct/destroy", this.deleteid)
+        .then((res) => {
+          this.products.splice(this.deleteindex, 1);
+          this.$q.notify("Berhasil");
+        });
     },
     getProducts() {
       return new Promise((resolve, reject) => {

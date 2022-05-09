@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="mbl">
     <q-header>
       <q-toolbar class="bg-white shadow-1">
         <q-btn
@@ -108,7 +108,7 @@
 
         <!-- Comment balasan -->
         <div v-for="(comment, c) in post.comments" :key="comment.id">
-          <div class="q-pa-md">
+          <div class="q-px-md q-py-sm">
             <div class="row">
               <!-- Profil -->
               <div
@@ -217,7 +217,7 @@
             </div>
 
             <!-- Button reply & jumlah like -->
-            <div class="row col-12 self-center q-mt-md q-mx-xs">
+            <div class="row col-12 self-center q-mt-xs q-mx-xs">
               <div
                 class="text-weight-medium"
                 style="color: #b1b1b1; font-size: 12px"
@@ -432,7 +432,7 @@ export default {
       }
     },
     getPostData() {
-      this.$store.dispatch("Post/show", this.postid).then((res) => {
+      this.$store.dispatch("MasterPost/show", this.postid).then((res) => {
         console.log("get post data", res.data);
         this.post = res.data;
       });
@@ -442,14 +442,14 @@ export default {
         post_id: this.postid,
         value: this.comment,
       };
-      this.$store.dispatch("Comment/store", payload).then((res) => {
+      this.$store.dispatch("MasterComment/store", payload).then((res) => {
         this.post = res.data;
         this.comment = null;
       });
     },
     likeComment(index) {
       this.$store
-        .dispatch("Comment/like", this.post.comments[index].id)
+        .dispatch("MasterComment/like", this.post.comments[index].id)
         .then((res) => {
           this.post.comments[index].liked_count = res.data.liked_count;
           this.post.comments[index].likes_count = res.data.likes_count;
@@ -457,7 +457,7 @@ export default {
     },
     dislikeComment(index) {
       this.$store
-        .dispatch("Comment/dislike", this.post.comments[index].id)
+        .dispatch("MasterComment/dislike", this.post.comments[index].id)
         .then((res) => {
           this.post.comments[index].liked_count = res.data.liked_count;
           this.post.comments[index].likes_count = res.data.likes_count;

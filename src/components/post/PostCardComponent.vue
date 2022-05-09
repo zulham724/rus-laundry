@@ -268,7 +268,13 @@
         </q-card-section>
         <!-- Button Edit -->
         <q-card-actions class="q-pt-xs">
-          <q-btn no-caps class="full-width" dense flat @click="$router.push(`/edit-post/${post.id}`)">
+          <q-btn
+            no-caps
+            class="full-width"
+            dense
+            flat
+            @click="$router.push(`/edit-post/${post.id}`)"
+          >
             <div class="row full-width">
               <div class="col-3">
                 <q-btn dense outline round size="20px">
@@ -524,7 +530,14 @@
               </q-btn> -->
 
               <!-- Button WhatsApp -->
-              <q-btn round size="20px" outline color="green-8" class="q-mx-xs" @click="submitMessage()">
+              <q-btn
+                round
+                size="20px"
+                outline
+                color="green-8"
+                class="q-mx-xs"
+                @click="submitMessage()"
+              >
                 <q-avatar icon="fab fa-whatsapp" size="30px"></q-avatar>
               </q-btn>
 
@@ -587,7 +600,7 @@ export default {
       STORAGE_URL: STORAGE_URL,
       loadingDelete: false,
       statusComment: 1,
-      APP_URL:APP_URL,
+      APP_URL: APP_URL,
       contact: null,
       message: null,
     };
@@ -601,20 +614,19 @@ export default {
     });
     this.$emit("update-height");
 
-    //init link share 
+    //init link share
     this.link = `${this.APP_URL}/shared-post/${this.post.id}`;
     // this.link = `/shared-post/${this.post.id}`;
-    
   },
   methods: {
     submitMessage() {
-      console.log('tesstttt');
+      console.log("tesstttt");
       this.setTextMessage();
       // console.log(this.message);
       let url = `https://api.whatsapp.com/send?text=${encodeURI(this.message)}`;
       window.open(url, "_blank");
 
-      this.$router.push('/community');
+      this.$router.push("/community");
     },
 
     setTextMessage() {
@@ -638,14 +650,13 @@ export default {
       return formatted;
     },
 
-
-    checkingFile(file){
-      console.log('inifile', file);
-      if(file.filetype.includes("image")){
-        console.log('ini foto woy');
+    checkingFile(file) {
+      console.log("inifile", file);
+      if (file.filetype.includes("image")) {
+        console.log("ini foto woy");
         this.dialogPreviewPhoto(file);
-      }else if (file.filetype.includes("video")){
-        console.log('ini video woy');
+      } else if (file.filetype.includes("video")) {
+        console.log("ini video woy");
       }
     },
     moment,

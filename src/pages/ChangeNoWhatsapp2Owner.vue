@@ -29,7 +29,8 @@
             <div class="col-2">
               <q-select
                 dense
-                v-model="model"
+                type="number"
+                v-model="model1"
                 :options="options"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Pilih kode negara',
@@ -39,8 +40,9 @@
             <!-- Phone number -->
             <div class="col-10 q-pl-md">
               <q-input
+                type="number"
                 dense
-                v-model="contact"
+                v-model="contact1"
                 placeholder="Masukan nomor wa lama"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Masukkan No. Hp anda',
@@ -57,7 +59,7 @@
             <div class="col-2">
               <q-select
                 dense
-                v-model="model"
+                v-model="model2"
                 :options="options"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Pilih kode negara',
@@ -68,7 +70,7 @@
             <div class="col-10 q-pl-md">
               <q-input
                 dense
-                v-model="contact"
+                v-model="contact2"
                 placeholder="Masukan nomor wa aktif"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Masukkan No. Hp anda',
@@ -82,6 +84,7 @@
         <div class="row q-pt-xl">
           <q-btn
             no-caps
+            @click="updateContactNumber()"
             class="q-pa-md full-width"
             style="background-color: #9b27f1; border-radius: 10px"
           >
@@ -100,14 +103,51 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
-      model: null,
-      contact: null,
-      options: ["+62"],
+      model1: null,
+      model2: null,
+      contact1: null,
+      contact2: null,
+      options: ["+93", "+355", "+213"],
+      oldContactNumber: null,
     };
+  },
+  methods: {
+    updateContactNumber() {
+      if ((this.model1 != null) & (this.contact1 != null)) {
+        console.log("A1");
+        this.contactNumber = null;
+        this.oldContactNumber = this.model1 + this.contact1;
+        this.checkContactNumber();
+      } else if (this.model1 == null || this.contact1 == null) {
+        console.log("A2");
+        this.$q.notify({
+          position: "top",
+          message: "Isi data dengan benar",
+        });
+      }
+    },
+    checkContactNumber() {
+      if (this.oldContactNumber == this.Auth.auth.contact_number) {
+        console.log("B1");
+      } else {
+        console.log("B2");
+
+        console.log(this.oldContactNumber);
+        console.log(this.Auth.auth.contact_number);
+      }
+    },
+  },
+  mounted() {
+    console.log("ini auth", this.Auth.auth);
+    // console.log("ini cn auth", this.Auth.auth.contact_number);
   },
 };
 </script>
