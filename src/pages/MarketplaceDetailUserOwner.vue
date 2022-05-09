@@ -82,12 +82,7 @@
               >Pengikut</q-item-section
             >
           </q-item>
-          <q-item
-            class="q-pb-md"
-            clickable
-            v-ripple
-            @click="$router.push('/follow-marketplace')"
-          >
+          <q-item class="q-pb-md" clickable v-ripple>
             <q-item-section avatar>
               <img src="~/assets/personlove2.svg" />
             </q-item-section>

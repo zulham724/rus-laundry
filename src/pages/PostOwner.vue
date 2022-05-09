@@ -143,7 +143,7 @@
               <q-intersection
                 class="mbl-child"
                 :ref="`intersection_${post.id}`"
-                v-for="post in Post.posts.data"
+                v-for="post in MasterPost.posts.data"
                 :key="post.id"
                 :style="`min-height:${getItemPostHeight(post)}; `"
               >
@@ -181,7 +181,7 @@ export default {
     "item-post-component": PostCardComponent,
   },
   computed: {
-    ...mapState(["Post", "Auth"]),
+    ...mapState(["Post", "Auth", "MasterPost"]),
   },
   data() {
     return {
@@ -195,7 +195,8 @@ export default {
     };
   },
   mounted() {
-    console.log("post", this.Post);
+    // console.log("ini master post", this.MasterPost);
+    // console.log("post", this.Post);
     // console.log('cekkkkkk', this.Post);
 
     this.dataAuth = this.Auth.auth;
@@ -241,7 +242,7 @@ export default {
       // alert(post.size.height)
     },
     onLoad(index, done) {
-      this.Post.posts.next_page_url
+      this.MasterPost.posts.next_page_url
         ? this.$store.dispatch("MasterPost/next").then((res) => {
             done();
           })

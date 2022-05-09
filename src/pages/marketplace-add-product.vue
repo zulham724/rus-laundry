@@ -4,12 +4,17 @@
       <q-header class="text-center shadow-1">
         <q-toolbar class="bg-white">
           <q-btn flat round @click="$router.back()">
-            <q-avatar size="20px" icon="fas fa-arrow-left" style="color: black"></q-avatar>
+            <q-avatar
+              size="20px"
+              icon="fas fa-arrow-left"
+              style="color: black"
+            ></q-avatar>
           </q-btn>
           <q-toolbar-title
             class="text-left text-weight-medium"
             style="color: #3a3838; font-size: 17px"
-          >Produk Anda</q-toolbar-title>
+            >Produk Anda</q-toolbar-title
+          >
         </q-toolbar>
       </q-header>
     </div>
@@ -27,7 +32,12 @@
           @update:model-value="filterAddProducts(search)"
         >
           <template v-slot:prepend>
-            <q-icon name="search" class="self-center" size="25px" color="grey" />
+            <q-icon
+              name="search"
+              class="self-center"
+              size="25px"
+              color="grey"
+            />
           </template>
         </q-input>
         <div>
@@ -76,9 +86,13 @@
         </div>
 
         <div v-else class="row q-mt-md">
-          <div class="col-6 q-pa-sm" v-for="(product, p) in products" :key="product.id">
+          <div
+            class="col-6 q-pa-sm"
+            v-for="(product, p) in products"
+            :key="product.id"
+          >
             <q-card class="q-pa-md">
-              <div style="height:150px;" class="self-center bg-black">
+              <div style="height: 150px" class="self-center bg-white">
                 <q-img
                   v-if="product.images.length"
                   class="bg-grey"
@@ -88,24 +102,30 @@
                   <template v-slot:error>
                     <div
                       class="absolute-full flex flex-center bg-grey-5 text-white"
-                    >Gagal mendapatkan Gambar</div>
+                    >
+                      Gagal mendapatkan Gambar
+                    </div>
                   </template>
                 </q-img>
 
                 <q-img
                   v-else
                   class="bg-white"
-                  style="height: 50%; width:100%; ;
-"
+                  style="height: 50%; width: 100%"
                   src="~/assets/ld.png"
                 />
               </div>
               <div
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
-              >{{ product.tittle }}</div>
+              >
+                {{ product.tittle }}
+              </div>
 
-              <div class="text-subtitle2 text-weight-medium q-pl-xs" style="color: #161952">
+              <div
+                class="text-subtitle2 text-weight-medium q-pl-xs"
+                style="color: #161952"
+              >
                 {{
                   new Intl.NumberFormat("id-ID", {
                     style: "currency",
@@ -113,11 +133,12 @@
                   }).format(product.price)
                 }}
               </div>
-              <div class="text-caption q-pl-xs" v-if="product.shop.user.home_address">
+              <div
+                class="text-caption q-pl-xs"
+                v-if="product.shop.user.home_address"
+              >
                 <q-icon name="fas fa-map-marker-alt" color="red" />
-                {{
-                  product.shop.user.home_address
-                }}
+                {{ product.shop.user.home_address }}
               </div>
               <div class="text-center q-gutter-y-xs">
                 <q-btn
@@ -140,12 +161,19 @@
                 <q-dialog v-model="dialog_deleteProduct">
                   <q-card>
                     <q-card-section>
-                      <div class="text-weight-bold text-left" style="font-size: 16px">Hapus Produk?</div>
+                      <div
+                        class="text-weight-bold text-left"
+                        style="font-size: 16px"
+                      >
+                        Hapus Produk?
+                      </div>
 
                       <div
                         class="text-weight-light text-left q-mt-none"
                         style="width: 300px; font-size: 12px"
-                      >yakin ingin menghapus produk?</div>
+                      >
+                        yakin ingin menghapus produk?
+                      </div>
                     </q-card-section>
 
                     <q-card-actions class="text-primary" vertical>
@@ -202,13 +230,19 @@
             <!-- Gif Warning -->
             <div class="justify-center">
               <div class="row justify-center q-pt-sm">
-                <q-img no-spinner src="~/assets/animasi-proses-cuci.gif" style="width: 100px"></q-img>
+                <q-img
+                  no-spinner
+                  src="~/assets/animasi-proses-cuci.gif"
+                  style="width: 100px"
+                ></q-img>
               </div>
 
               <div
                 class="row q-px-md text-weight-medium q-pt-md justify-center"
                 style="color: #393939; font-size: 17px"
-              >MASUKAN NOMOR WHATSAPP</div>
+              >
+                MASUKAN NOMOR WHATSAPP
+              </div>
               <div
                 class="row q-px-sm text-weight-medium text-center q-pt-md"
                 style="color: #747474; font-size: 12px"
@@ -222,7 +256,12 @@
             <div class="row justify-end q-pa-md">
               <!-- Button Abaikan -->
               <q-btn dense flat no-caps v-close-popup>
-                <div class="text-weight-bold" style="color: #393939; font-size: 14px">Abaikan</div>
+                <div
+                  class="text-weight-bold"
+                  style="color: #393939; font-size: 14px"
+                >
+                  Abaikan
+                </div>
               </q-btn>
               <!-- Button Input wa -->
               <q-btn
@@ -232,7 +271,12 @@
                 class="q-ml-sm"
                 @click="$router.push('/marketplace-input-whatsapp')"
               >
-                <div class="text-weight-bold" style="color: #393939; font-size: 14px">Lanjutkan</div>
+                <div
+                  class="text-weight-bold"
+                  style="color: #393939; font-size: 14px"
+                >
+                  Lanjutkan
+                </div>
               </q-btn>
             </div>
           </q-card>
@@ -261,6 +305,7 @@ export default {
     };
   },
   mounted() {
+    console.log("ini aurh", this.Auth.auth);
     this.getProducts();
   },
   methods: {
@@ -276,7 +321,7 @@ export default {
         this.$store
           .dispatch("Product/getProductByShop")
           .then((res) => {
-            console.log('product', res.data)
+            console.log("product", res.data);
             this.products = this.products_temp = res.data;
           })
           .catch((err) => {

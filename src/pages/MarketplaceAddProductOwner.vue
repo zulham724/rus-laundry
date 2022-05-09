@@ -309,6 +309,7 @@ export default {
     };
   },
   mounted() {
+    console.log("auth gan", this.Auth.auth);
     this.getProducts();
   },
   methods: {

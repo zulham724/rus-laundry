@@ -181,7 +181,7 @@ export default {
     "item-post-component": PostCardComponent,
   },
   computed: {
-    ...mapState(["Post", "Auth"]),
+    ...mapState(["Post", "Auth", "MasterPost"]),
   },
   data() {
     return {

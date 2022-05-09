@@ -9,6 +9,7 @@ const state = {
 const mutations = {
     set(state, payload) {
         state.posts = payload.posts;
+        console.log("masterpost", state.posts);
     },
     setSize(state, payload) {
         const index = state.posts.data.findIndex((item) => item.id == payload.id);
