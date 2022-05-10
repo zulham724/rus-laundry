@@ -76,7 +76,7 @@
                   disable
                   class="grad"
                   text-color="white"
-                  label="Pemilik"
+                  :label="dataAuth.role_id == 3 ? 'Pemilik' : 'Cabang'"
                 />
               </div>
               <div
@@ -120,19 +120,20 @@
           </div>
 
           <div
-            v-if="dataAuth.description"
+            v-if="dataAuth.shop.description"
             class="q-pt-sm text-weight-medium"
             style="color: #3a3838; font-size: 15px"
           >
             Tentang toko
           </div>
           <div
-            v-if="dataAuth.description"
+            v-if="dataAuth.shop.description"
             class="q-pt-xs text-weight-medium"
             style="color: #898585; font-size: 16px; width: 70vw"
           >
             {{ dataAuth.shop.description }}
           </div>
+
           <!--
           <div
             v-if="dataAuth"
@@ -300,7 +301,7 @@ export default {
 
   mounted() {
     this.dataAuth = this.Auth.auth;
-    // console.log("dataauth", this.dataAuth);
+    console.log("dataauth", this.dataAuth);
     console.log("PostPostPost", this.MasterPost);
     this.getAllPostsUser();
     this.getAllLikedPosts();

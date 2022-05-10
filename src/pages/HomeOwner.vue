@@ -130,6 +130,19 @@
           </q-item-section>
           <q-item-section>Absensi</q-item-section>
         </q-item>
+
+        <q-item
+          clickable
+          v-ripple
+          @click="$router.push(`/payment-history-owner`)"
+        >
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/hm.png" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Pembayaran</q-item-section>
+        </q-item>
       </div>
     </q-drawer>
     <q-page class="mbl-child">
@@ -323,7 +336,10 @@
                   </q-img>
                 </div>
 
-                <div class="col full-width">
+                <div
+                  class="col full-width"
+                  v-if="this.Auth.auth.active_package_user"
+                >
                   <div class="row">
                     <div
                       class="text-weight-bold q-pt-md text-left"
@@ -503,6 +519,8 @@ export default {
 
   mounted() {
     this.dataAuth = this.Auth.auth;
+    console.log("dataAuth", this.dataAuth);
+
     this.getTotalOrders();
     this.getTotalOrdersPerShop();
     this.getProfit();
@@ -623,9 +641,15 @@ export default {
       this.$router.push("paket-owner");
     },
     checkActivePackageUser() {
-      let date = this.Auth.auth.active_package_user.expired_date;
-      this.expired_date = moment(date).locale("id").format("LL");
-      this.current_date = moment().locale("id").format("LL");
+      if (this.Auth.auth.active_package_user != null) {
+        console.log("active package user exist");
+        let date = this.Auth.auth.active_package_user.expired_date;
+        this.expired_date = moment(date).locale("id").format("LL");
+        this.current_date = moment().locale("id").format("LL");
+      } else {
+        console.log("active package user kosong");
+      }
+
       // console.log("expired_date", this.expired_date);
       // console.log("current_date", this.current_date);
     },

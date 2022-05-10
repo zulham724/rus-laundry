@@ -91,6 +91,23 @@
               class="text-weight-bold text-caption q-mb-xs"
               style="color: #646464"
             >
+              Deskripsi
+            </div>
+            <q-input
+              v-model="profile.description"
+              class="q-mb-sm"
+              dense
+              style="background-color: #f6f7f8"
+              outlined
+              placeholder="Isi deskripsi"
+            />
+          </div>
+
+          <div class="q-pt-sm">
+            <div
+              class="text-weight-bold text-caption q-mb-xs"
+              style="color: #646464"
+            >
               Kode affiliate
             </div>
             <div class="column">
@@ -288,6 +305,7 @@
 import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
 import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 import { ref } from "vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -296,6 +314,7 @@ export default {
       profile: {
         name: "",
         email: "",
+        description: "",
         affiliate_code: "",
       },
 
@@ -319,9 +338,13 @@ export default {
       // Avatar
       avatar64: null,
       avatar: null,
+
+      dataAuth: null,
     };
   },
   mounted() {
+    console.log("auht", this.Auth.auth);
+    this.dataAuth = this.Auth.auth;
     //
     this.init();
     // console.log("cek auth", this.auth);
@@ -330,13 +353,17 @@ export default {
     auth() {
       return this.$store.getters["Auth/auth"];
     },
+    ...mapState(["Auth"]),
   },
   methods: {
     //
     init() {
       this.profile.name = this.auth.name;
       this.profile.email = this.auth.email;
+      this.profile.description = this.auth.shop.description;
       this.profile.affiliate_code = this.auth.affiliate_code;
+
+      // console.log("description", this.auth.shop.description);
 
       if (this.auth.avatar) {
         this.avatar64 = this.STORAGE_URL + "/" + this.auth.avatar;
@@ -344,9 +371,13 @@ export default {
     },
     checkUpdateProfile() {
       if (
-        this.profile.name !== this.auth.name ||
-        this.profile.email !== this.auth.email
+        this.profile.name !== this.dataAuth.name ||
+        this.profile.email !== this.dataAuth.email ||
+        this.profile.description !== this.dataAuth.shop.description
       ) {
+        this.dataAuth.name = this.profile.name;
+        this.dataAuth.email = this.profile.email;
+        this.dataAuth.shop.description = this.profile.description;
         this.updateAccount();
       } else {
         this.$router.push(`/home-owner`);
@@ -384,15 +415,17 @@ export default {
       });
     },
     updateAccount() {
+      console.log("update account gan", this.dataAuth);
       const payload = {
         id: this.auth.id,
-        ...this.profile,
+        ...this.dataAuth,
       };
       this.loading = true;
       this.$store
         .dispatch("Auth/updateAccountMaster", payload)
         .then((res) => {
-          this.$store.commit("Auth/update_account_master", res.data);
+          // this.$store.commit("Auth/update_account_master", res.data);
+          console.log("res updateAccount", res.data);
         })
         .catch((err) => {})
         .finally(() => {
@@ -464,6 +497,4 @@ export default {
 .bgHead {
   background-image: linear-gradient(to bottom right, #00c6ff, #0072ff);
 }
-
-
 </style>

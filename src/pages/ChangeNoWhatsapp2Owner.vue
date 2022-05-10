@@ -115,7 +115,7 @@ export default {
       model2: null,
       contact1: null,
       contact2: null,
-      options: ["+93", "+355", "+213"],
+      options: ["+62"],
       oldContactNumber: null,
     };
   },
@@ -140,8 +140,8 @@ export default {
       } else {
         console.log("B2");
 
-        console.log(this.oldContactNumber);
-        console.log(this.Auth.auth.contact_number);
+        // console.log(this.oldContactNumber);
+        // console.log(this.Auth.auth.contact_number);
       }
     },
   },

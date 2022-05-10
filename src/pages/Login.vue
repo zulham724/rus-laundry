@@ -77,7 +77,7 @@
                 no-caps
                 unelevated
                 rounded
-                style="width: 90%; background-color: #49c2c0; color: #ffffff"
+                style="width: 100%; background-color: #49c2c0; color: #ffffff"
                 size="2vh"
               >
                 <div class="ellipsis text-h6 text-weight-reguler">Login</div>

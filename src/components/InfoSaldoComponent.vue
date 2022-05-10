@@ -94,7 +94,7 @@
           </div>
         </q-btn>
       </div>
-      <div class="col-6">
+      <div class="col-6 col-lt-sm-12">
         <q-btn class="btn-scan-2" @click="doScanOrder()" flat no-caps>
           <div class="row self-center">
             <q-img

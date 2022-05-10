@@ -71,8 +71,13 @@
               </q-avatar> -->
             </div>
             <div class="col-8">
-              <div class="text-right q-pb-xs">
-                <q-btn disable class="grad" text-color="white" label="Cabang" />
+              <div v-if="dataAuth" class="text-right q-pb-xs">
+                <q-btn
+                  disable
+                  class="grad"
+                  text-color="white"
+                  :label="dataAuth.role_id == 3 ? 'Pemilik' : 'Cabang'"
+                />
               </div>
               <div
                 class="row col-12 q-px-sm"
@@ -288,7 +293,7 @@ export default {
 
   mounted() {
     this.dataAuth = this.Auth.auth;
-    // console.log('dataauth',this.dataAuth);
+    console.log("dataauth", this.dataAuth);
     this.getAllPostsUser();
     this.getAllLikedPosts();
   },

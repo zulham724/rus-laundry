@@ -32,6 +32,7 @@ const mutations = {
     update_account_master(state, payload) {
         state.auth.name = payload.name;
         state.auth.email = payload.email;
+        state.auth.shop.description = payload.shop.description;
     },
 };
 
@@ -131,6 +132,7 @@ const actions = {
             api
                 .post(`/api/master/update-profile/${payload.id}`, payload)
                 .then((res) => {
+                    console.log("updateacounmaster", res.data);
                     commit("update_account_master", res.data);
                     resolve(res);
                 })

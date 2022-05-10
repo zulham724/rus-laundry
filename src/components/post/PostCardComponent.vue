@@ -34,18 +34,18 @@
         >
           <!-- Nama Profile -->
           <div
-            v-if="post.user.shop"
+            v-if="post.user.role_id == 3"
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.user.shop.name }}
+            {{ post.author.name }}
           </div>
           <div
             v-else
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.author.name }}
+            {{ post.user.shop.name }}
           </div>
           <!-- Waktu posting -->
           <div
@@ -62,18 +62,18 @@
         >
           <!-- Nama Profile -->
           <div
-            v-if="post.user.shop"
+            v-if="post.user.role_id == 3"
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.user.shop.name }}
+            {{ post.author.name }}
           </div>
           <div
             v-else
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.author.name }}
+            {{ post.user.shop.name }}
           </div>
           <!-- Waktu posting -->
           <div
@@ -606,6 +606,7 @@ export default {
     };
   },
   mounted() {
+    console.log("posttt", this.post);
     //   console.log( this.$refs["post_" + this.post.id])
     const height = this.$refs["post_" + this.post.id].clientHeight;
     this.$store.commit("Post/setSize", {
@@ -653,7 +654,6 @@ export default {
     checkingFile(file) {
       console.log("inifile", file);
       if (file.filetype.includes("image")) {
-        console.log("ini foto woy");
         this.dialogPreviewPhoto(file);
       } else if (file.filetype.includes("video")) {
         console.log("ini video woy");

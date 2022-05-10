@@ -86,7 +86,7 @@
         <q-separator class="q-mb-sm"> </q-separator>
         <div class="flex">
           <q-avatar class="q-ml-sm q-mt-sm">
-            <img src="~/assets/Avatar.png" />
+            <img :src="STORAGE_URL + `/` + product.shop.user.avatar" />
           </q-avatar>
           <div class="column q-ml-sm">
             <label
@@ -307,6 +307,8 @@ export default {
       this.order.product_id = this.product.id;
       this.order.quantity = 1;
       this.order.total_price = this.product.price;
+
+      console.log("nomorrr", this.product.shop.user.contact_number);
 
       this.$store.dispatch("Orders/orderProduct", this.order).then((res) => {
         this.setTextMessage();

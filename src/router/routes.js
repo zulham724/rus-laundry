@@ -115,6 +115,13 @@ const routes = [
     },
 
     {
+        path: "/payment-history-owner",
+        component: () =>
+            import ("pages/PaymentHistoryOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
         path: "/marketplace-add-product-edit-owner/:productid",
         component: () =>
             import ("pages/MarketplaceAddProductEditOwner.vue"),

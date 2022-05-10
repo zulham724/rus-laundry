@@ -30,18 +30,18 @@
         <div class="col-8 q-pl-sm self-center">
           <!-- Nama Profile -->
           <div
-            v-if="post.user.shop"
+            v-if="post.user.role_id == 3"
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.user.shop.name }}
+            {{ post.author.name }}
           </div>
           <div
             v-else
             class="text-weight-medium"
             style="color: #3a3838; font-size: 20px"
           >
-            {{ post.author.name }}
+            {{ post.user.shop.name }}
           </div>
           <!-- Waktu posting -->
           <div
@@ -317,10 +317,8 @@
 
             <div class="row justify-center">
               <!-- Button Facebook -->
-              
 
               <!-- Button Instagram -->
-              
 
               <!-- Button WhatsApp -->
               <q-btn round size="20px" outline color="green-8" class="q-mx-xs">
@@ -328,7 +326,6 @@
               </q-btn>
 
               <!-- Button Telegram -->
-              
             </div>
 
             <!-- Link Share -->
@@ -378,7 +375,7 @@ export default {
       dialogOption: false,
       dialogShare: false,
       readMoreActivated: false,
-      link: null, 
+      link: null,
       STORAGE_URL: STORAGE_URL,
     };
   },

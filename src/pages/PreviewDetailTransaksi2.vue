@@ -28,8 +28,10 @@
             <div class="col-2 text-right" style="color: #49c2c0">Diproses</div>
             <div class="col-8 self-center"></div>
             <div class="col-2">
-              <div v-if="detail_order.percentage == 100" style="color: #49c2c0">Selesai</div>
-              <div v-else style="color: #49c2c0" >Selesai</div>
+              <div v-if="detail_order.percentage == 100" style="color: #49c2c0">
+                Selesai
+              </div>
+              <div v-else style="color: #49c2c0">Selesai</div>
             </div>
           </div>
         </div>
@@ -61,15 +63,13 @@
                 </div>
                 <!-- teks Jenis Item-->
                 <div>
-                  <div style="color: #49c2c0; font-size: 20px">
-                    Jenis Item
-                  </div>
+                  <div style="color: #49c2c0; font-size: 20px">Jenis Item</div>
                   <div style="font-size: 24px" class="text-black">
                     {{ service.category }}
                   </div>
                 </div>
                 <!-- teks Estimasi Pesanan-->
-                <div >
+                <div>
                   <div style="color: #49c2c0; font-size: 20px">
                     Estimasi Pesanan
                   </div>

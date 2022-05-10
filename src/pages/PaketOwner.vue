@@ -64,7 +64,7 @@
 
             <q-btn
               no-caps
-              @click="payment1 = true"
+              @click="nextPayment(item)"
               class="full-width bgCardTop"
               style="
                 background-color: #22c7dd;
@@ -97,9 +97,9 @@
                 </div>
                 <div class="q-pl-sm col-10 text-h6 text-grey self-center">
                   <div class="text-black" style="font-size: 16px">
-                    a.n/ Aryoseto Wahyatma Bryan Hisyam
+                    a.n/ Ardian Rizky Rahmawan
                   </div>
-                  <div class="text-black">3047530475036506034</div>
+                  <div class="text-black">0262628673</div>
                 </div>
               </div>
               <q-btn
@@ -115,7 +115,14 @@
 
             <q-card-section class="q-pt-sm">
               <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">Rp 1.000.000</div>
+              <div class="text-h6">
+                {{
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(paymentPackageData.price)
+                }}
+              </div>
               <div>
                 Unggah Bukti Pembayaran Jika Anda Salah Input No.Rekening
               </div>
@@ -161,7 +168,7 @@
             </q-card-section>
             <q-card-section class="q-pt-sm">
               <div>Kode Pembayaran :</div>
-              <div class="text-h6">3047530475036506034</div>
+              <div class="text-h6">0262628673</div>
               <q-btn no-caps style="background-color: #ddca1d">
                 <q-avatar square size="15px">
                   <q-img src="~/assets/cp.png" />
@@ -169,14 +176,21 @@
               </q-btn>
 
               <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">Rp 1.000.000</div>
+              <div class="text-h6">
+                {{
+                  new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(paymentPackageData.price)
+                }}
+              </div>
             </q-card-section>
 
             <q-card-actions align="left">
               <q-btn
-                @click="payment3 = true"
+                @click="payment3 = true & this.addPackage()"
                 flat
-                label="Konfirmasi"
+                label="Konfirmasi2"
                 rounded
                 style="background-color: #6295ff"
                 color="white"
@@ -230,10 +244,10 @@
 
                 <q-item-section>
                   <q-item-label caption class="text-black"
-                    >a.n/Aryoseto Wahyatma Bryan Hisyam</q-item-label
+                    >a.n/Ardian Rizky Rahmawan</q-item-label
                   >
                   <q-item-label class="text-weight-bold"
-                    >3047530475036506034</q-item-label
+                    >0262628673</q-item-label
                   >
                 </q-item-section>
               </q-item>
@@ -258,8 +272,12 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
       payment1: ref(false),
@@ -267,12 +285,32 @@ export default {
       payment3: ref(false),
 
       packageData: null,
+      paymentPackageData: null,
     };
   },
   mounted() {
+    console.log("dataAuth", this.Auth.auth);
     this.getPackages();
   },
   methods: {
+    addPackage() {
+      // console.log("ini formdata", this.paymentPackageData);
+
+      this.$store
+        .dispatch("MasterPayment/store", this.paymentPackageData)
+        .then((res) => {
+          console.log("ini res sudah bayar", res.data);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan addPackage", err);
+        });
+    },
+    nextPayment(data) {
+      this.paymentPackageData = null;
+      this.paymentPackageData = data;
+      console.log("data", data);
+      this.payment1 = true;
+    },
     getPackages() {
       this.$store
         .dispatch("MasterOrders/getPackages")

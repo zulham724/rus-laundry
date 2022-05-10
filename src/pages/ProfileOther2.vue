@@ -43,13 +43,10 @@
       <q-page class="mbl-child">
         <div v-if="profilePost" class="q-pa-md q-mb-sm">
           <div class="row">
-            <div class="col-4 text-left self-center" >
+            <div class="col-4 text-left self-center">
               <!--Avatar-->
               <div v-if="!profilePost.avatar" class="self-center">
-                <q-avatar
-                  size="80px"
-                  style="background-color: #fff"
-                >
+                <q-avatar size="80px" style="background-color: #fff">
                   <q-img no-spinner src="~/assets/ld.png"></q-img>
                 </q-avatar>
               </div>
@@ -149,7 +146,7 @@
             </q-item>
           </div>
           <div class="q-pt-xs col" v-else>
-            <div class="row ">
+            <div class="row">
               <q-btn
                 no-caps
                 label="Ikuti"
@@ -157,16 +154,10 @@
               />
             </div>
             <div class="row" v-if="!profilePost.shop">
-              <q-item
-                class="full-width"
-                clickable
-                v-ripple
-              >
+              <q-item class="full-width" clickable v-ripple>
                 <q-item-section avatar>
                   <q-avatar size="20px">
-                    <img
-                        src="~/assets/dna.svg"
-                    />
+                    <img src="~/assets/dna.svg" />
                   </q-avatar>
                 </q-item-section>
 
@@ -177,9 +168,7 @@
 
                 <q-item-section side>
                   <q-avatar size="20px">
-                    <img
-                        src="~/assets/lbdr.svg"
-                    />
+                    <img src="~/assets/lbdr.svg" />
                   </q-avatar>
                 </q-item-section>
               </q-item>
@@ -196,11 +185,7 @@
           indicator-color="purple-6"
           switch-indicator
         >
-          <q-tab
-            name="post"
-            class="col-4 self-center"
-            no-caps
-          >
+          <q-tab name="post" class="col-4 self-center" no-caps>
             <q-img
               class="q-pa-sm"
               no-spinner
@@ -299,8 +284,6 @@
             </q-intersection>
           </q-infinite-scroll>
         </div> -->
-
-        
       </q-page>
     </q-page-container>
   </q-layout>
@@ -312,7 +295,7 @@ import { mapState } from "vuex";
 import PostCardMyProfileComponent from "src/components/post/PostCardMyProfileComponent.vue";
 
 export default {
-    props: ["postauthorid"],
+  props: ["postauthorid"],
   include: ["MyProfilePage"],
   components: {
     "item-post-component": PostCardMyProfileComponent,
@@ -338,10 +321,8 @@ export default {
   },
 
   mounted() {
-      this.getProfilePostsUser();
-      this.getAllPostsUser();
-
-
+    this.getProfilePostsUser();
+    this.getAllPostsUser();
   },
 
   created() {
@@ -349,12 +330,11 @@ export default {
   },
 
   methods: {
-
     getProfilePostsUser() {
       this.$store
         .dispatch("Post/getProfilePostByUser", +this.postauthorid)
         .then((res) => {
-          console.log(" profile post by user", res);
+          console.log(" profile post by user", res.data);
           this.profilePost = res.data;
         });
     },
