@@ -118,9 +118,20 @@ export default {
     // console.log("iddd", this.paymentid);
     this.toCheckingPaymentStatusOwner();
     // this.getHistory();
+    this.updateAuth();
   },
   methods: {
     moment,
+    updateAuth() {
+      this.$store
+        .dispatch("Auth/reloadAuth")
+        .then((res) => {
+          console.log("succes reload auth");
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan reload auth", err);
+        });
+    },
     toCheckingPaymentStatusOwner() {
       this.$store
         .dispatch("MasterPayment/confirmPaymentPackage", this.paymentid)
