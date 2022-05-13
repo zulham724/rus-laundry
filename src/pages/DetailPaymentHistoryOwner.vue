@@ -4,9 +4,13 @@
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent" elevated>
           <div class="row full-width q-py-sm bg-white justify-center">
-            <div class="col-2 q-px-sm self-center">
-              <!--
-              <q-btn flat round size="10px" @click="$router.back()">
+            <div class="col-3 q-px-sm self-center">
+              <q-btn
+                flat
+                round
+                size="10px"
+                @click="$router.push('/payment-history-owner')"
+              >
                 <q-avatar
                   size="20px"
                   icon="fas fa-arrow-left"
@@ -14,10 +18,9 @@
                 >
                 </q-avatar>
               </q-btn>
-              -->
             </div>
             <div
-              class="col-8 self-center text-weight-medium text-center text-black"
+              class="col-7 self-center text-weight-medium text-center text-black"
               style="font-size: 20px"
               @click="checkPaymentStatus()"
             >

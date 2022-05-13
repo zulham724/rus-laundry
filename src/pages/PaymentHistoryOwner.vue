@@ -50,6 +50,11 @@
                   item.package_user.package.name
                 }}</q-item-label>
                 <q-item-label caption style="color: #0e185f">{{
+                  moment(item.created_at)
+                    .locale("ID")
+                    .format("dddd, DD MMMM YYYY")
+                }}</q-item-label>
+                <q-item-label caption style="color: #0e185f">{{
                   new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
@@ -114,7 +119,7 @@ export default {
     },
   },
   mounted() {
-    // console.log("cek auth", this.auth);
+    console.log("cek auth", this.auth);
     // this.getAttendance();
     this.getHistory();
   },
@@ -124,15 +129,19 @@ export default {
       console.log("checkSelectedPayment", this.selectedPaymentHistory);
     },
     toDetailPaymentHistoryOwner(payment) {
-      console.log("asdfffffsdfasdfasdfa", payment);
+      // console.log("asdfffffsdfasdfasdfa", payment);
       this.$store.commit("MasterPayment/set_payment_history", payment);
-      if ((payment.status = "pending")) {
+      if (payment.status == "pending") {
+        // console.log("statusss1", payment);
+
         this.$router.push("/detail-payment-history-owner");
-      } else if ((payment.status = "success")) {
-        this.router.push(`/sucess-payment-history-owner/${payment.id}`);
+      } else if (payment.status == "success") {
+        // console.log("statusss2", payment);
+        this.$router.push(`/succes-payment-status-owner/${payment.id}`);
       }
       // this.$router.push("/detail-payment-history-owner");
     },
+
     getAttendance() {
       this.$store
         .dispatch("Attendance/getAttendanceOwner", this.auth.id)

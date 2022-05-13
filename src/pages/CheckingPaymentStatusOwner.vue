@@ -118,14 +118,26 @@ export default {
     setTimer() {
       setTimeout(() => {
         if (this.resSelectedPaymentHistory.status == "pending") {
-          console.log("6 dertik");
+          // console.log("6 dertik");
           this.$router.push("/failed-payment-status-owner");
+          this.updateAuth();
         } else if (this.resSelectedPaymentHistory.status == "success") {
           this.$router.push(`/succes-payment-status-owner/${this.paymentid}`);
+          this.updateAuth();
         }
 
         // if(this.){}
-      }, 7000);
+      }, 5000);
+    },
+    updateAuth() {
+      this.$store
+        .dispatch("Auth/reloadAuth")
+        .then((res) => {
+          console.log("succes reload auth");
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan reload auth", err);
+        });
     },
     getHistory() {
       this.$store

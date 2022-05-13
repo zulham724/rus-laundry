@@ -15,6 +15,7 @@ const mutations = {
     },
     set_auth(state, payload) {
         state.auth = payload.auth;
+        console.log("auth update hehe", state.auth);
     },
     update_phone_number(state, payload) {
         state.auth.contact_number = payload.contact_number;
@@ -66,6 +67,19 @@ const actions = {
                     reject(err);
                 });
         });
+    },
+    reloadAuth({ commit }) {
+        api
+            .get(`/api/user`)
+            .then((res) => {
+                console.log("edo tensei auth", res.data);
+                const auth = res.data;
+                commit("set_auth", { auth: auth });
+                // commit("set_auth", { auth: auth });
+            })
+            .catch((err) => {
+                reject(err);
+            });
     },
     logout({ commit }) {
         return new Promise((resolve, reject) => {
