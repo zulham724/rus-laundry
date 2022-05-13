@@ -176,6 +176,7 @@
         </div>
 
         <!-- TAB PROUDUKS -->
+        <!--
         <div class="row">
           <div class="col-6 q-px-sm q-pt-sm">
             <q-card
@@ -202,6 +203,7 @@
           </div>
           <div class="col-6 q-px-sm q-py-sm"></div>
         </div>
+        -->
 
         <!-- TAB CHART DATA JUMLAH PESANAN & PENGHASILAN -->
         <div class="col">

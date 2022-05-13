@@ -115,7 +115,7 @@
 
 <script>
 import { ref } from "vue";
-import moment from "moment";
+import moment from "moment";{{  }}
 import { mapState } from "vuex";
 import Pengeluaran from "src/pages/Pengeluaran.vue";
 import Pendapatan from "src/pages/Pemasukan.vue";

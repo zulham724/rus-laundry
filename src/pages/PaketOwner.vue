@@ -188,7 +188,9 @@
 
             <q-card-actions align="left">
               <q-btn
-                @click="payment3 = true & this.addPackage()"
+                @click="
+                  (payment3 = true) & this.addPackage() & this.getCurrentDate()
+                "
                 flat
                 label="Konfirmasi2"
                 rounded
@@ -219,7 +221,12 @@
               <div class="text-center text-black text-weight-bold">
                 Pembaaran Berhasil
               </div>
-              <div class="text-center text-black">15 Maret 2022 14:44 WIB</div>
+              <div
+                v-if="this.currentDate != null"
+                class="text-center text-black"
+              >
+                {{ currentDate }}
+              </div>
               <q-separator />
               <q-item>
                 <q-item-section top avatar>
@@ -229,8 +236,8 @@
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>Lintangsssss</q-item-label>
-                  <q-item-label caption>No. anggota 1234567</q-item-label>
+                  <q-item-label>{{ this.Auth.auth.name }}</q-item-label>
+                  <!--<q-item-label caption>No. anggota 1234567</q-item-label>-->
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -273,6 +280,7 @@
 <script>
 import { ref } from "vue";
 import { mapState } from "vuex";
+import moment from "moment";
 
 export default {
   computed: {
@@ -286,6 +294,8 @@ export default {
 
       packageData: null,
       paymentPackageData: null,
+
+      currentDate: null,
     };
   },
   mounted() {
@@ -293,6 +303,12 @@ export default {
     this.getPackages();
   },
   methods: {
+    getCurrentDate() {
+      this.currentDate = null;
+      this.currentDate = moment()
+        .locale("ID")
+        .format("dddd, MMMM Do YYYY, h:mm:ss a");
+    },
     addPackage() {
       // console.log("ini formdata", this.paymentPackageData);
 

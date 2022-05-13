@@ -66,6 +66,7 @@
         <div class="text-center justify-center">
           <q-btn
             @click="copyToClipboard()"
+            v-if="this.Auth.auth.affiliate_code != null"
             flat
             no-caps
             text-color="black"
@@ -76,6 +77,20 @@
             "
           >
             <div class="q-px-md">{{ this.Auth.auth.affiliate_code }}</div>
+          </q-btn>
+          <q-btn
+            v-if="this.Auth.auth.affiliate_code == null"
+            disable
+            flat
+            no-caps
+            text-color="black"
+            style="
+              background-color: #f1f1f1;
+              margin-top: -10px;
+              border-radius: 5px;
+            "
+          >
+            <div class="q-px-md">Belum ada kode afiliasi</div>
           </q-btn>
         </div>
       </div>
@@ -113,6 +128,15 @@
           <q-item-section>Cabang</q-item-section>
         </q-item>
 
+        <q-item clickable v-ripple @click="$router.push('/absensi-owner')">
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/absensi.svg" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Absensi</q-item-section>
+        </q-item>
+
         <q-item clickable v-ripple @click="$router.push('/affiliate-owner')">
           <q-item-section avatar>
             <q-avatar square>
@@ -122,26 +146,13 @@
           <q-item-section>Affiliate</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple @click="$router.push('/absensi-owner')">
+        <q-item clickable v-ripple @click="$router.push('/payment-history-owner')">
           <q-item-section avatar>
             <q-avatar square>
-              <img src="~/assets/abs.png" style="width: 80%; height: 80%" />
+              <img src="~/assets/history.svg" style="width: 80%; height: 80%" />
             </q-avatar>
           </q-item-section>
-          <q-item-section>Absensi</q-item-section>
-        </q-item>
-
-        <q-item
-          clickable
-          v-ripple
-          @click="$router.push(`/payment-history-owner`)"
-        >
-          <q-item-section avatar>
-            <q-avatar square>
-              <img src="~/assets/hm.png" style="width: 80%; height: 80%" />
-            </q-avatar>
-          </q-item-section>
-          <q-item-section>Pembayaran</q-item-section>
+          <q-item-section>Riwayat</q-item-section>
         </q-item>
       </div>
     </q-drawer>
@@ -158,7 +169,10 @@
         <div class="col-4 bg-white"></div>
         <div class="col-5 self-center">
           <q-btn
-            v-if="this.expired_date <= this.current_date"
+            v-if="
+              (this.expired_date <= this.current_date) &
+              (this.dataAuth.active_user_package != null)
+            "
             @click="alert = true"
             rounded
             class="bg-white full-width self-center"
@@ -174,7 +188,26 @@
             </div>
           </q-btn>
           <q-btn
-            v-if="this.expired_date >= this.current_date"
+            v-if="
+              (this.expired_date >= this.current_date) &
+              (this.dataAuth.active_user_package != null)
+            "
+            @click="$router.push('/paket-owner')"
+            rounded
+            class="bg-white full-width self-center"
+            style="height: 70%"
+          >
+            <div class="row full-width">
+              <div class="col-4">
+                <q-avatar size="200%">
+                  <img src="~/assets/box.png" />
+                </q-avatar>
+              </div>
+              <div class="col-8 self-center">Beli Paket</div>
+            </div>
+          </q-btn>
+          <q-btn
+            v-if="this.dataAuth.active_user_package == null"
             @click="$router.push('/paket-owner')"
             rounded
             class="bg-white full-width self-center"
@@ -338,7 +371,7 @@
 
                 <div
                   class="col full-width"
-                  v-if="this.Auth.auth.active_package_user"
+                  v-if="this.Auth.auth.active_package_user != null"
                 >
                   <div class="row">
                     <div
@@ -362,6 +395,28 @@
                     </div>
                   </div>
                 </div>
+
+                <div
+                  class="col full-width"
+                  v-if="this.Auth.auth.active_package_user == null"
+                >
+                  <div class="row">
+                    <div
+                      class="text-weight-bold q-pt-md text-left"
+                      style="color: #fff; font-size: small"
+                    >
+                      Tidak Ada Paket
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="text-weight-medium text-left"
+                      style="color: #fff; font-size: small"
+                    >
+                      Paket Kosong
+                    </div>
+                  </div>
+                </div>
               </div>
             </q-btn>
           </div>
@@ -370,19 +425,32 @@
 
       <br />
 
-      <div class="text-left q-px-md text-weight-bold">Data Jumlah Pesanan</div>
-      <div v-if="this.sendDataBoolean" id="app">
+      <div
+        v-if="this.sendDataBoolean & (this.Auth.auth.shop != null)"
+        class="text-left q-px-md text-weight-bold"
+      >
+        Data Jumlah Pesanan
+      </div>
+      <div v-if="this.sendDataBoolean & (this.Auth.auth.shop != null)" id="app">
         <bar-chart :data="this.array" :dataTop="this.dataTop" />
       </div>
 
-      <div class="text-left q-pt-md q-px-md text-weight-bold">Penghasilan</div>
-      <div v-if="this.sendDataBoolean2" id="app">
+      <div
+        v-if="this.sendDataBoolean2 & (this.Auth.auth.shop != null)"
+        class="text-left q-pt-md q-px-md text-weight-bold"
+      >
+        Penghasilan
+      </div>
+      <div
+        v-if="this.sendDataBoolean2 & (this.Auth.auth.shop != null)"
+        id="app"
+      >
         <bar-chart :data="this.array2" :dataTop="this.dataTop2" />
       </div>
 
       <br />
       <!-- tab jumlah pesanan tiap cabang -->
-      <div class="mbl-child">
+      <div class="mbl-child" v-if="this.Auth.auth.shop != null">
         <div class="row q-px-md q-py-md text-weight-bold">
           Jumlah Pesanan Tiap Cabang
         </div>
@@ -423,7 +491,7 @@
         <chartExample></chartExample>
       </div>
       -->
-      <div>
+      <div v-if="this.Auth.auth.shop != null">
         <q-carousel
           v-model="slide"
           transition-prev="slide-right"

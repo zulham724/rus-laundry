@@ -23,7 +23,7 @@ export default store(function( /* { ssrContext } */ ) {
 
         plugins: [
             createPersistedState({
-                paths: ["Auth", "Orders", "Printer"],
+                paths: ["Auth", "Orders", "Printer", "MasterPayment"],
             }),
         ],
     })

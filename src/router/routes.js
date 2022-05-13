@@ -114,10 +114,48 @@ const routes = [
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 
+    // {
+    //     path: "/riwayat-owner",
+    //     component: () =>
+    //         import ("pages/RiwayatOwner.vue"),
+    //     beforeEnter: multiguard([auth, checkIfOwner]),
+    // },
+
     {
         path: "/payment-history-owner",
         component: () =>
             import ("pages/PaymentHistoryOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/detail-payment-history-owner",
+        component: () =>
+            import ("pages/DetailPaymentHistoryOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
+    },
+
+    {
+        path: "/checking-payment-status-owner/:paymentid",
+        component: () =>
+            import ("pages/CheckingPaymentStatusOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
+    },
+
+    {
+        path: "/succes-payment-status-owner/:paymentid",
+        component: () =>
+            import ("pages/SuccesPaymentStatusOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+        props: true,
+    },
+
+    {
+        path: "/failed-payment-status-owner",
+        component: () =>
+            import ("pages/FailedPaymentStatusOwner.vue"),
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 

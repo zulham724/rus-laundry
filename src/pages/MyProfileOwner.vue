@@ -127,7 +127,7 @@
             Tentang toko
           </div>
           <div
-            v-if="dataAuth.shop.description"
+            v-if="dataAuth.shop .description"
             class="q-pt-xs text-weight-medium"
             style="color: #898585; font-size: 16px; width: 70vw"
           >

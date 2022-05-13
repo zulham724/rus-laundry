@@ -86,12 +86,12 @@
             />
           </div>
 
-          <div class="q-pt-sm">
+          <div class="q-pt-sm" v-if="this.Auth.auth.shop != null">
             <div
               class="text-weight-bold text-caption q-mb-xs"
               style="color: #646464"
             >
-              Deskripsi
+              Tentang Toko
             </div>
             <q-input
               v-model="profile.description"

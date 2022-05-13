@@ -22,7 +22,6 @@
             <div
               class="col-4 self-center text-weight-medium text-center text-black"
               style="font-size: 20px"
-              @click="checkSelectedPayment()"
             >
               Riwayat
             </div>
@@ -31,13 +30,8 @@
         </q-header>
       </div>
       <q-page>
-        <q-list class="q-px-sm">
-          <div
-            @click="toDetailPaymentHistoryOwner(item)"
-            class="q-my-sm"
-            v-for="item in history"
-            :key="item.id"
-          >
+        <q-list class="q-px-sm q-py-sm">
+          <div class="q-my-sm" v-for="item in history" :key="item.id">
             <q-item>
               <q-item-section top avatar>
                 <q-avatar rounded>
@@ -58,9 +52,7 @@
               </q-item-section>
 
               <q-item-section side top>
-                <q-item-label caption style="color: #0e185f">{{
-                  item.status
-                }}</q-item-label>
+                <q-item-label caption style="color: #0e185f">{{ item.status }}</q-item-label>
               </q-item-section>
             </q-item>
             <q-separator />
@@ -109,9 +101,6 @@ export default {
     auth() {
       return this.$store.getters["Auth/auth"];
     },
-    selectedPaymentHistory() {
-      return this.$store.getters["MasterPayment/getPaymentHistory"];
-    },
   },
   mounted() {
     // console.log("cek auth", this.auth);
@@ -120,19 +109,6 @@ export default {
   },
   methods: {
     moment,
-    checkSelectedPayment() {
-      console.log("checkSelectedPayment", this.selectedPaymentHistory);
-    },
-    toDetailPaymentHistoryOwner(payment) {
-      console.log("asdfffffsdfasdfasdfa", payment);
-      this.$store.commit("MasterPayment/set_payment_history", payment);
-      if ((payment.status = "pending")) {
-        this.$router.push("/detail-payment-history-owner");
-      } else if ((payment.status = "success")) {
-        this.router.push(`/sucess-payment-history-owner/${payment.id}`);
-      }
-      // this.$router.push("/detail-payment-history-owner");
-    },
     getAttendance() {
       this.$store
         .dispatch("Attendance/getAttendanceOwner", this.auth.id)
@@ -150,7 +126,7 @@ export default {
         .dispatch("MasterPayment/getHistory")
         .then((res) => {
           this.history = res.data;
-          // console.log("res getHistory", res.data);
+          console.log("res getHistory", res.data);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getHistory", err);
