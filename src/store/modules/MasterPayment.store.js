@@ -38,6 +38,7 @@ const actions = {
             api
                 .get(`/api/master/master_payment/${paymentId}`)
                 .then((res) => {
+                    
                     resolve(res);
                 })
                 .catch((err) => {

@@ -31,7 +31,7 @@ const actions = {
     getMonthlyOrders({ commit }, branchid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`api/master/ordercountbranchbymonth/${branchid}`)
+                .get(`api/master/branchpaymentcountbymonth/${branchid}`)
                 .then((res) => {
                     resolve(res);
                 })

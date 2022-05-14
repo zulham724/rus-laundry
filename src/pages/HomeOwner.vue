@@ -146,7 +146,11 @@
           <q-item-section>Affiliate</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple @click="$router.push('/payment-history-owner')">
+        <q-item
+          clickable
+          v-ripple
+          @click="$router.push('/payment-history-owner')"
+        >
           <q-item-section avatar>
             <q-avatar square>
               <img src="~/assets/history.svg" style="width: 80%; height: 80%" />
@@ -426,23 +430,23 @@
       <br />
 
       <div
-        v-if="this.sendDataBoolean & (this.Auth.auth.shop != null)"
+        v-if="this.sendDataBoolean && this.Auth.auth.slaves.length"
         class="text-left q-px-md text-weight-bold"
       >
         Data Jumlah Pesanan
       </div>
-      <div v-if="this.sendDataBoolean & (this.Auth.auth.shop != null)" id="app">
+      <div v-if="this.sendDataBoolean && this.Auth.auth.slaves.length" id="app">
         <bar-chart :data="this.array" :dataTop="this.dataTop" />
       </div>
 
       <div
-        v-if="this.sendDataBoolean2 & (this.Auth.auth.shop != null)"
+        v-if="this.sendDataBoolean2 && this.Auth.auth.slaves.length"
         class="text-left q-pt-md q-px-md text-weight-bold"
       >
         Penghasilan
       </div>
       <div
-        v-if="this.sendDataBoolean2 & (this.Auth.auth.shop != null)"
+        v-if="this.sendDataBoolean2 && this.Auth.auth.slaves.length"
         id="app"
       >
         <bar-chart :data="this.array2" :dataTop="this.dataTop2" />
@@ -450,7 +454,7 @@
 
       <br />
       <!-- tab jumlah pesanan tiap cabang -->
-      <div class="mbl-child" v-if="this.Auth.auth.shop != null">
+      <div class="mbl-child" v-if="this.Auth.auth.slaves.length">
         <div class="row q-px-md q-py-md text-weight-bold">
           Jumlah Pesanan Tiap Cabang
         </div>
@@ -886,7 +890,7 @@ export default {
           //     console.log("dwadawd", index);
           //   }
           // });
-
+          console.log("res dataaaaaaaaaa", res.data);
           // console.log("uwaw", indext);
           this.filterMonthGetMonthlyRevenue2(res.data, indexChecker);
         })
@@ -910,6 +914,7 @@ export default {
           this.arrayCounter3.push(+counter);
 
           let zero = bulan3[0];
+          console.log("berisi", zero);
           this.array3.push(zero);
           this.sendDataBoolean3 = true;
 
