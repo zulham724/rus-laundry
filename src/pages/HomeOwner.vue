@@ -495,7 +495,7 @@
         <chartExample></chartExample>
       </div>
       -->
-      <div v-if="this.Auth.auth.shop != null">
+      <div v-if="this.Auth.auth.slaves.length">
         <q-carousel
           v-model="slide"
           transition-prev="slide-right"
