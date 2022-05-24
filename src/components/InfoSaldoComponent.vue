@@ -89,7 +89,7 @@
               class="text-weight-medium self-center q-pl-sm"
               style="color: white; font-size: 14px"
             >
-              Scan Absen
+              Scan Absen 
             </div>
           </div>
         </q-btn>
@@ -178,7 +178,7 @@ export default {
             this.$store
               .dispatch("Attendance/storeAttendance", parseInt(result.text))
               .then((res) => {
-                this.$q.notify("berhasil absen");
+                console.log("kondisi then ketika berhasil absen");
                 this.$router.push(
                   `/attendance-details/${parseInt(result.text)}`
                   // "/transaction"

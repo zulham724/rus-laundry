@@ -78,9 +78,9 @@
         </div>
       </div>
       <!-- Video/foto -->
-      <div v-if="content.video" style="height: 250px">
-        <vue-plyr>
-          <video :src="STORAGE_URL + `/` + content.video.src"></video>
+      <div v-if="content.video" class="full-width" style="height: 250px">
+        <vue-plyr >
+          <video  :src="STORAGE_URL + `/` + content.video.src"></video>
         </vue-plyr>
       </div>
       <div v-if="content.image_content" class="full-width">

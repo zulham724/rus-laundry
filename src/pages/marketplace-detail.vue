@@ -23,8 +23,8 @@
           @click="$router.back()"
           round
           dense
-          class="absolute-top-left q-mt-md q-ml-md bg-blue-6"
-          style="background-color: RGB(0, 0, 50%)"
+          class="absolute-top-left q-mt-md q-ml-md "
+          style="background-color: rgba(0, 0, 0, 50%)"
           
         >
           <q-icon color="white" name="fas fa-arrow-left" size="20px"/>
@@ -37,7 +37,7 @@
             }).format(product.price)
           }}
         </label>
-        <div class="float-right q-mt-xs">
+        <div class="float-right q-mt-xs ">
           <q-btn
             size="16px"
             dense
@@ -48,9 +48,9 @@
             @click="product.liked_count ? dislike() : like()"
           >
           </q-btn>
-          <q-btn class="q-ml-sm" dense flat
+          <!-- <q-btn class="q-ml-sm" dense flat
             ><Icon style="font-size: 20px; color: #6a6a6a" icon="cil:share"
-          /></q-btn>
+          /></q-btn> -->
         </div>
         <div
           class="q-ml-sm text-subtitle2"
@@ -72,20 +72,18 @@
         >
           {{ product.likes_count }} orang suka
         </div>
-        <q-separator class="q-mb-sm"> </q-separator>
+        <q-separator> </q-separator>
         <div class="flex">
-          <q-avatar class="q-ml-sm q-mt-sm">
-            <img src="~/assets/Avatar.png" />
+          <q-avatar class="q-ma-sm">
+            <img :src="STORAGE_URL + `/` + product.shop.user.avatar" />
           </q-avatar>
-          <div class="column q-ml-sm">
+          <div class="column q-ma-sm  self-center">
             <label
               v-if="product.shop"
-              class=""
               style="font-family: roboto; font-size: 17px; color: #5f5f5f"
-              for=""
               >{{ product.shop.name }}
             </label>
-            <div>
+            <!-- <div>
               <img
                 style="width: 10px; height: 12px"
                 src="~/assets/locate.svg"
@@ -97,8 +95,8 @@
                 style="font-size: 13px; font-family: roboto; color: #c5c5c5"
                 >{{ product.shop.user.home_address }}</label
               >
-            </div>
-            <q-btn
+            </div> -->
+            <!-- <q-btn
               class="q-mb-sm"
               no-caps
               dense
@@ -109,15 +107,15 @@
               "
               size="70%"
               >Ikuti</q-btn
-            >
+            > -->
           </div>
         </div>
         <q-separator></q-separator>
-        <div class="q-ml-sm column">
-          <div class="text-subtitle2" style="color: #5f5f5f; font-size: 20px">
+        <div class="column ">
+          <div class="text-subtitle2 q-ma-sm" style="color: #5f5f5f; font-size: 20px">
             Detail Produk
           </div>
-          <div class="row">
+          <div class="row q-ma-sm">
             <div class="col-3">
               <div class="column">
                 <div style="color: #cdcdcd" class="text-subtitle2">Kondisi</div>
@@ -130,20 +128,20 @@
                 <div
                   v-if="product.is_new"
                   style="color: #cdcdcd"
-                  class="text-subtitle2 text-right q-pr-sm"
+                  class="text-subtitle2 text-right"
                 >
                   Baru
                 </div>
                 <div
                   v-else
                   style="color: #cdcdcd"
-                  class="text-subtitle2 text-right q-pr-sm"
+                  class="text-subtitle2 text-right"
                 >
                   Second
                 </div>
                 <div
                   style="color: #cdcdcd"
-                  class="text-subtitle2 text-right q-pr-sm"
+                  class="text-subtitle2 text-right "
                 >
                   {{ product.weight }} KG
                 </div>
@@ -152,37 +150,39 @@
           </div>
         </div>
         <q-separator></q-separator>
-        <div class="q-ml-sm">
-          <div style="font-size: 20px; color: #5f5f5f; font-family: roboto">
+        <div>
+          <div class="text-subtitle2 q-ma-sm" style="color: #5f5f5f; font-size: 20px">
             Deskripsi Barang
           </div>
-          <div class="q-pb-sm" style="font-size: 10px">
+          <div class="q-ma-sm" style="font-size: 10px; color:#CDCDCD">
             {{ product.description }}
           </div>
         </div>
-        <div class="row">
+        <div class="row" v-if="another_products.length">
           <div
-            class="col-6 q-pl-sm text-weight-bold q-pb-md"
+            class="col-6 q-pl-sm q-py-sm text-weight-bold"
             style="background-color: #f5f7f9; font-size: 12px"
           >
             Produk Lainnya dari toko ini
           </div>
           <div
-            class="col-6 text-right q-pr-sm text-weight-regular q-pb-md"
+            class="col-6 text-right q-pr-sm q-py-sm text-weight-regular "
             style="background-color: #f5f7f9; color: #707070; font-size: 12px"
           >
             Lihat selengkapnya
           </div>
         </div>
 
-        <div class="row" v-if="another_products.length">
+        <div class="row " style="background-color: #f5f7f9;" v-if="another_products.length">
           <div
-            class="col-6"
+            class="col-6 q-pa-md "
             v-for="another_product in another_products"
             :key="another_product.id"
           >
             <q-card
-              class="q-pb-xl q-mx-sm"
+              v-if="another_product.id != product.id"
+              class="q-pb-md"
+              style="border-radius: 8px"
               @click="detailProduct(another_product.id)"
             >
               <q-img
@@ -206,12 +206,12 @@
               >
                 {{ another_product.tittle }}
               </div>
-              <div
+              <!-- <div
                 class="text-caption text-weight-regular q-pl-xs"
                 style="color: #c5c5c5"
               >
                 Rp.15.000
-              </div>
+              </div> -->
               <div
                 class="text-subtitle2 text-weight-medium q-pl-xs"
                 style="color: #161952"
@@ -223,11 +223,11 @@
                   }).format(another_product.price)
                 }}
               </div>
-              <div class="text-caption q-pl-xs">
+              <!-- <div class="text-caption q-pl-xs">
                 <q-icon name="fas fa-map-marker-alt" color="red" />{{
                   another_product.shop.user.home_address
                 }}
-              </div>
+              </div> -->
             </q-card>
           </div>
         </div>
@@ -348,6 +348,7 @@ export default {
     getAnotherProducts(id) {
       this.$store.dispatch("Product/getAnotherProducts", id).then((res) => {
         this.another_products = res.data;
+        // console.log('ini data lain', this.another_products)
         this.$forceUpdate();
       });
     },

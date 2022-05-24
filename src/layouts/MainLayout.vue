@@ -9,27 +9,25 @@
     </q-page-container>
     <!-- Bottom Navigation -->
     <q-footer
-      class="elevated q-pt-sm"
-      style="border-radius: 20px 20px 0px 0px; background-color: white"
+      class="elevated q-py-xs "
+      style=" background-color: white"
     >
       <div class="q-gutter-none" style="max-width: 100%">
         <q-tabs v-model="tab" dense class="text-black" indicator-color="teal-6">
-          <q-tab name="home" no-caps @click="$router.push('/')"
+          <q-tab class="self-center q-px-xs" name="home" no-caps @click="$router.push('/')"
             ><q-img
               no-spinner
               style="width: 20px; height: 20px; "
               :src="
                 tab == 'home'
                   ? require('../assets/bdhrmh.svg')
-                  : require('../assets/hm3.svg')
-              "
-            ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+                  : require('../assets/hm3.svg')"></q-img>
+            <div v-if="tab =='home'" class="text-weight-light q-mt-xs" style="font-size: 8px">
               Beranda
             </div>
           </q-tab>
 
-          <q-tab name="transaksi" no-caps @click="getOrderPush"
+          <q-tab class=" q-px-xs" name="transaksi" no-caps @click="getOrderPush"
             ><q-img
               no-spinner
               style="width: 20px; height: 20px"
@@ -39,12 +37,12 @@
                   : require('../assets/txt.svg')
               "
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+            <div v-if="tab =='transaksi'" class="text-weight-light q-mt-xs" style="font-size: 8px">
               Transaksi
             </div>
           </q-tab>
 
-          <q-tab name="pesanan" no-caps @click="$router.push('/make-an-order')"
+          <q-tab name="pesanan" class="q-px-xs" no-caps @click="$router.push('/make-an-order')"
             ><q-img
               no-spinner
               style="width: 20px; height: 20px"
@@ -54,12 +52,12 @@
                   : require('../assets/lst.svg')
               "
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+            <div v-if="tab =='pesanan'" class="text-weight-light q-mt-xs" style="font-size: 8px">
               Buat Pesanan
             </div>
           </q-tab>
 
-          <q-tab name="penghasilan" no-caps @click="$router.push('/income')"
+          <q-tab class="q-px-xs" name="penghasilan" no-caps @click="$router.push('/income')"
             ><q-img
               no-spinner
               style="width: 20px; height: 20px"
@@ -69,12 +67,12 @@
                   : require('../assets/tg.svg')
               "
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+            <div v-if="tab =='penghasilan'" class="text-weight-light q-mt-xs" style="font-size: 8px">
               Penghasilan
             </div>
           </q-tab>
 
-          <q-tab name="menu" no-caps @click="$router.push('/menu')"
+          <q-tab class="q-px-xs" name="menu" no-caps @click="$router.push('/menu')"
             ><q-img
               no-spinner
               style="width: 20px; height: 20px"
@@ -85,7 +83,7 @@
               "
               :color="tab == 'karyawan' ? 'green-5' : 'grey-5'"
             ></q-img>
-            <div class="text-weight-light q-mt-xs" style="font-size: 8px">
+            <div v-if="tab =='menu'" class="text-weight-light q-mt-xs" style="font-size: 8px">
               Menu
             </div>
           </q-tab>

@@ -87,7 +87,7 @@
                       size="10px"
                       style="color: #5a5656"
                     ></q-icon>
-                    <div class="q-pl-sm">
+                    <div class="q-pl-xs">
                       {{ module.count_content_video }} video
                     </div>
 
@@ -96,9 +96,9 @@
                       name="fas fa-pen"
                       size="10px"
                       style="color: #5a5656"
-                      class="q-pl-md"
+                      class="q-pl-xs "
                     ></q-icon>
-                    <div class="q-pl-sm">
+                    <div class="q-pl-xs">
                       {{ module.count_content_text }} materi
                     </div>
                   </div>

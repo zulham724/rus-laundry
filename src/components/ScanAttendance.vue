@@ -35,9 +35,11 @@ export default {
             .dispatch("Employee/attendanceIn", parseInt(result.text))
             .then((res) => {
               this.$router.push(`/employee`);
-              this.$q.notify("Berhasil Absen");
+              console.log("berhasil absen")
+              // this.$q.notify("Berhasil Absen");
             })
             .catch((err) => {
+              console.log("terjadi kesalahan onDecode")
               this.dialogAttendance = true;
             });
     },

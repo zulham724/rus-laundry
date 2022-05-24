@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Paket</q-toolbar-title
+          >Pilih Layanan</q-toolbar-title
         >
         <q-btn
           class="float-right"
@@ -85,7 +85,8 @@
           </div>
 
           <div v-else-if="isLoad == false && packages.length">
-            <q-list class="q-pt-md q-mb-xl">
+            <q-list bordered  class="q-pt-md q-mb-xl">
+              
               <package-list-first-list
                 class="q-my-sm"
                 v-for="(paket, p) in packages"

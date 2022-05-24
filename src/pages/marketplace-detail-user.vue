@@ -127,7 +127,7 @@
             >
           </q-item>
           
-          <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/shop-location')">
+          <!-- <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/shop-location')">
             <q-item-section avatar>
               <img style="margin-left: 4px" src="~/assets/pinmap1.svg" />
             </q-item-section>
@@ -136,7 +136,7 @@
               style="color: #5f5f5f; margin-left: -15px"
               >Lokasi Bisnis</q-item-section
             >
-          </q-item>
+          </q-item> -->
         </q-list>
       </q-page>
     </q-page-container>

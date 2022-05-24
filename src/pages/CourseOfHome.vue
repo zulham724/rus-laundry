@@ -49,7 +49,7 @@
                 </q-avatar>
               </div>
               <div v-else-if="Auth.auth.avatar" class="self-center">
-                <q-avatar style="background-color: #888888">
+                <q-avatar class="self-center" style="background-color: #888888">
                   <q-img
                     no-spinner
                     :src="storageUrl + `/` + Auth.auth.avatar"
@@ -65,12 +65,12 @@
             </div>
             <div class="col-9 self-center q-pl-sm">
               <div
-                class="row text-weight-medium q-pb-xs"
+                class="row text-weight-medium "
                 style="font-size: 18px; color: white"
               >
                 Kursus Digital
               </div>
-              <div class="row q-gutter-x-sm">
+              <div class="row ">
                 <div
                   class="col-4 q-px-sm self-center"
                   style="
@@ -102,7 +102,7 @@
               @update:model-value="filterModule(search)"
               placeholder="Cari"
             >
-              <template v-slot:prepend>
+              <template  v-slot:prepend>
                 <q-icon
                   name="search"
                   class="self-center"
@@ -111,7 +111,7 @@
                 />
               </template>
 
-              <template v-slot:append>
+              <template v-if="this.search.length" v-slot:append>
                 <q-icon
                   name="close"
                   @click="test()"

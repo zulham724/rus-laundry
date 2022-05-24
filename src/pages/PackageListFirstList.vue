@@ -1,4 +1,5 @@
 <template>
+
   <q-slide-item
     v-if="paket != null"
     :ref="`paket_${paket.id}`"
@@ -182,10 +183,12 @@ export default {
 .q-slide-item__right {
   justify-content: normal;
   width: 100%;
+  /* background-color: blueviolet; */
 }
 
 .q-slide-item__right > div {
   width: 100%;
+  /* background-color:aqua; */
   padding: 0px;
 }
 </style>
