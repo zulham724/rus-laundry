@@ -293,6 +293,7 @@
 import { ref } from "vue";
 import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
 import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -310,7 +311,12 @@ export default {
       arrEncodedImage: [],
     };
   },
-  mounted() {},
+  computed: {
+    ...mapState(["Auth"]),
+  },
+  mounted() {
+    console.log("ini data auth", this.Auth.auth);
+  },
   methods: {
     StatusProduct() {
       this.product.is_new = parseInt(this.is_new);
@@ -331,14 +337,13 @@ export default {
             },
           })
           .onOk((data) => {
-            // console.log("cek hasil crop", data);
             let imageBase64 = data.dataUrl;
             this.images.push(imageBase64);
             let imgTo64 = base64ToFile(imageBase64, "avatar");
+            console.log("cek base64cropped", imgTo64);
             this.product.images.push(imgTo64);
           });
       });
-      
     },
     removeImage(index) {
       this.images.splice(index, 1);
@@ -355,10 +360,12 @@ export default {
               this.product.is_new == 0;
             }
             let formData = this.jsonToFormData(this.product);
+            console.log("semua data terisi sebelum store", this.product);
             this.$store
               .dispatch("Product/store", formData)
               .then((res) => {
-                this.$router.push("/marketplace-add-product");
+                console.log("ini res simpan produk", res.data);
+                // this.$router.push("/marketplace-add-product");
                 this.$q.notify("Berhasil");
                 this.product = {};
                 this.images = [];

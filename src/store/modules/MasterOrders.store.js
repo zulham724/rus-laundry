@@ -35,6 +35,7 @@ const actions = {
                     resolve(res);
                 })
                 .catch((err) => {
+                    console.log("a");
                     reject(err);
                 });
         });
@@ -105,12 +106,14 @@ const actions = {
 
     getMonthlyRevenue({ commit }) {
         return new Promise((resolve, reject) => {
-            api.get('/api/master/paymentcountbymonths')
+            api
+                .get("/api/master/paymentcountbymonths")
                 .then((res) => {
                     resolve(res);
-                }).catch((err) => {
-                    reject(err);
                 })
+                .catch((err) => {
+                    reject(err);
+                });
         });
     },
 

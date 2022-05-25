@@ -63,6 +63,7 @@
               >Produk Anda</q-item-section
             >
           </q-item>
+          <!--
           <q-item
             class="q-pb-md"
             clickable
@@ -81,7 +82,8 @@
               style="color: #5f5f5f; margin-left: -15px"
               >Pengikut</q-item-section
             >
-          </q-item>
+          </q-item> -->
+          <!--
           <q-item class="q-pb-md" clickable v-ripple>
             <q-item-section avatar>
               <img src="~/assets/personlove2.svg" />
@@ -92,6 +94,7 @@
               >Diikuti</q-item-section
             >
           </q-item>
+          -->
 
           <q-item
             class="q-pb-md"
@@ -124,6 +127,7 @@
             >
           </q-item>
 
+          <!--
           <q-item
             class="q-pb-md"
             clickable
@@ -139,6 +143,7 @@
               >Lokasi Bisnis</q-item-section
             >
           </q-item>
+          -->
         </q-list>
       </q-page>
     </q-page-container>

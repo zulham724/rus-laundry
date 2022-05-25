@@ -344,7 +344,7 @@ export default {
       this.$store
         .dispatch("MasterOrders/getPackages")
         .then((res) => {
-          console.log("ini res", res.data);
+          console.log("ini res getPackages", res);
           this.packageData = res.data;
         })
         .catch((err) => {

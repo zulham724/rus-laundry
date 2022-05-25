@@ -17,30 +17,31 @@
               @click="$router.push('/marketplace-home')"
               class="q-px-sm"
               style="background-color: #9b27f1"
-              ><q-icon color="white" name="fas fa-arrow-left" size="20px"/>
+              ><q-icon color="white" name="fas fa-arrow-left" size="20px" />
               <div class="q-pl-sm text-body1 self-center">Toko Anda</div>
             </q-btn>
           </div>
         </q-img>
       </div>
-      <div  class="bg-transparent absolute">
+      <div class="bg-transparent absolute">
         <q-avatar
           v-if="dataAuth"
           class="q-ml-sm"
           style="margin-top: -50px; background-color: #fff"
           size="90px"
-          
         >
-          <q-img v-if="dataAuth.avatar" :src="`${STORAGE_URL}/${dataAuth.avatar}`"/>
-          <q-img v-if="!dataAuth.avatar" src="~/assets/ld.png"/>
+          <q-img
+            v-if="dataAuth.avatar"
+            :src="`${STORAGE_URL}/${dataAuth.avatar}`"
+          />
+          <q-img v-if="!dataAuth.avatar" src="~/assets/ld.png" />
         </q-avatar>
-        
       </div>
       <div
         class="q-py-md text-body1 text-right q-pr-md"
         style="background-color: #9b27f1"
       >
-        {{Auth.auth.shop.name}}
+        {{ Auth.auth.shop.name }}
       </div>
     </q-header>
     <q-page-container>
@@ -61,6 +62,7 @@
               >Produk Anda</q-item-section
             >
           </q-item>
+          <!--
           <q-item
             class="q-pb-md"
             clickable
@@ -80,6 +82,8 @@
               >Pengikut</q-item-section
             >
           </q-item>
+          -->
+          <!--
           <q-item
             class="q-pb-md"
             clickable
@@ -95,7 +99,8 @@
               >Diikuti</q-item-section
             >
           </q-item>
-          
+          -->
+
           <q-item
             class="q-pb-md"
             clickable
@@ -126,7 +131,7 @@
               >No Whatsapp</q-item-section
             >
           </q-item>
-          
+
           <!-- <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/shop-location')">
             <q-item-section avatar>
               <img style="margin-left: 4px" src="~/assets/pinmap1.svg" />
@@ -162,12 +167,9 @@ export default {
   },
   mounted() {
     this.dataAuth = this.Auth.auth;
-    console.log('ini auth',this.dataAuth)
-
+    console.log("ini auth", this.dataAuth);
   },
-  methods: {
-    
-  }
+  methods: {},
 };
 </script>
 
