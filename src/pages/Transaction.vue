@@ -1,7 +1,7 @@
 <template>
   <q-layout class="mbl" style="background-color: #fafafa">
     <q-page-container>
-      <!--Header-->
+      <!--header-->
       <div class="fixed-top shadow-2 bg-white" style="z-index: 999">
         <q-header class="bg-transparent">
           <div
@@ -50,7 +50,7 @@
 
       <q-page>
         <q-pull-to-refresh @refresh="refresh">
-          <!-- Skeleton -->
+          <!-- skeleton -->
           <div v-if="isLoad == true">
             <q-item
               v-for="n in 19"
@@ -86,7 +86,7 @@
             </q-item>
           </div>
 
-          <!-- List Pesanan -->
+          <!--orders list-->
           <div v-else-if="isLoad == false && ordersState">
             <q-infinite-scroll
               @load="ketikaOnLoad"
@@ -176,7 +176,7 @@
             </q-infinite-scroll>
           </div>
 
-          <!--Empty Order-->
+          <!--empty order list-->
           <div
             v-else
             class="text-center self-center full-width window-height"
@@ -196,26 +196,30 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
-import { debounce } from "quasar";
 
 export default {
+  name: "TransactionPage",
+  keepalive: true,
   computed: {
     ...mapState(["Auth", "Orders"]),
   },
 
   data() {
     return {
+      // variable setted for filtering the order list, and used in the search bar
       search: "",
+      // variable setted for store the order data
       orders: {},
+      // variable setted for store the order data
       orders_temp: {},
+      // variable setted for skeleton animnation function
       isLoad: false,
-      d: null,
+      // variable setted for store the order data
       ordersState: null,
+      // variable setted for store the order data
       ordersState_temp: null,
-      searchProduct: null,
     };
   },
 
@@ -225,13 +229,11 @@ export default {
     } else {
       this.ordersState = this.ordersState_temp = this.Orders.data;
     }
-
-    console.log(this.ordersState.data);
-    // this.searchTransaksi = debounce(this.searchTransaksi, 500);
   },
 
   methods: {
     moment,
+    // function for get all the order data in current shop
     getOrders() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
@@ -252,11 +254,13 @@ export default {
           });
       });
     },
+    // function for pull refresh the list
     refresh(done) {
       this.getOrders().then((res) => {
         if (done) done();
       });
     },
+    // function for search the order list
     searchTransaksi() {
       if (this.search.length) {
         this.isLoad = true;
@@ -273,6 +277,7 @@ export default {
         this.getOrders();
       }
     },
+    // function for the order list pagination
     ketikaOnLoad(index, done) {
       if (this.ordersState.next_page_url) {
         this.$store.dispatch("Orders/next").then((res) => {

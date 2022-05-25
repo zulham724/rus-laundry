@@ -2,6 +2,7 @@
   <q-layout view="lHh lpR fFf" class="mbl" style="background-color: #fafafa">
     <q-page-container class="front">
       <q-page>
+        <!-- top background image -->
         <div
           class="text-center"
           style="
@@ -15,6 +16,7 @@
           <q-img no-spinner src="~/assets/header-login.jpg" alt="login-anim" />
         </div>
 
+        <!-- white cardview -->
         <div
           class="front"
           style="
@@ -82,31 +84,6 @@
               >
                 <div class="ellipsis text-h6 text-weight-reguler">Login</div>
               </q-btn>
-
-              <!--
-              <div class="q-py-md text-weight-thin">Atau, lanjutkan dengan</div>
-              <q-btn
-                :disable="loading"
-                :class="`shadow-1`"
-                no-caps
-                unelevated
-                rounded
-                style="width: 90%; background-color: #ffffff; color: #888888"
-                size="2vh"
-              >
-                <div class="q-mr-md">
-                  <q-avatar size="4vh">
-                    <q-img no-spinner src="~/assets/google.png" alt="google" />
-                  </q-avatar>
-                </div>
-                <div
-                  class="ellipsis text-weight-medium q-pr-xs"
-                  style="font-size: 2vh"
-                >
-                  Login Dengan Akun Google
-                </div>
-              </q-btn>
-              -->
             </q-form>
           </div>
         </div>
@@ -116,43 +93,44 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { mapState } from "vuex";
-
 export default {
   name: "LoginPage",
+
   data() {
     return {
+      // login credential or form data
       credential: {
         username: "",
         password: "",
       },
+      // to make the password visible or not
       isPwd: true,
+      // to make the input form disable while loading
       loading: false,
     };
   },
+
   mounted() {},
-  // Untuk fungsi
+
   methods: {
+    // function for login process
     doLogin() {
       this.$refs.form.validate().then((success) => {
         if (success) {
-          // alert("berhasil");
           this.loading = true;
           this.$store
             .dispatch("Auth/login", this.credential)
             .then((res) => {
               let auth = this.$store.getters["Auth/auth"];
-              // console.log('login gan', auth)
-              // this.$router.push("/");
               if (auth.role_id == 4) {
                 this.$router.push("/");
+                window.history.pushState(null, null, window.location.href);
               } else if (auth.role_id == 3) {
                 this.$router.push("/home-owner");
+                window.history.pushState(null, null, window.location.href);
               }
             })
             .catch((err) => {
-              console.log("ini error login", err);
               this.$q.notify("terjadi kesalahan");
             })
             .finally(() => {
@@ -166,6 +144,7 @@ export default {
 </script>
 
 <style scoped>
+/* used for top background image*/
 .login-anim {
   position: fixed;
   height: 100%;

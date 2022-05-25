@@ -54,6 +54,20 @@ export default defineComponent({
       series: [
         {
           name: "series-1",
+          // data: [
+          //   this.data[0].show,
+          //   this.data[1].show,
+          //   this.data[2].show,
+          //   this.data[3].show,
+          //   this.data[4].show,
+          //   this.data[5].show,
+          //   this.data[6].show,
+          //   this.data[7].show,
+          //   this.data[8].show,
+          //   this.data[9].show,
+          //   this.data[10].show,
+          //   this.data[11].show,
+          // ],
           data: [
             this.data[0].show,
             this.data[1].show,

@@ -358,10 +358,15 @@ export default {
   methods: {
     //
     init() {
-      this.profile.name = this.auth.name;
-      this.profile.email = this.auth.email;
-      this.profile.description = this.auth.shop.description;
-      this.profile.affiliate_code = this.auth.affiliate_code;
+      if (!this.auth.shop) {
+        console.log("user belum punya shop");
+        this.profile.name = this.auth.name;
+        this.profile.email = this.auth.email;
+        this.profile.affiliate_code = this.auth.affiliate_code;
+      } else {
+        console.log("user sudah punya shop");
+        this.profile.description = this.auth.shop.description;
+      }
 
       // console.log("description", this.auth.shop.description);
 
@@ -370,18 +375,45 @@ export default {
       }
     },
     checkUpdateProfile() {
-      if (
-        this.profile.name !== this.dataAuth.name ||
-        this.profile.email !== this.dataAuth.email ||
-        this.profile.description !== this.dataAuth.shop.description
-      ) {
-        this.dataAuth.name = this.profile.name;
-        this.dataAuth.email = this.profile.email;
-        this.dataAuth.shop.description = this.profile.description;
-        this.updateAccount();
+      if (this.dataAuth.shop) {
+        console.log("user punya shop");
+        if (
+          this.profile.name !== this.dataAuth.name ||
+          this.profile.email !== this.dataAuth.email ||
+          this.profile.description !== this.dataAuth.shop.description
+        ) {
+          this.dataAuth.name = this.profile.name;
+          this.dataAuth.email = this.profile.email;
+          this.dataAuth.shop.description = this.profile.description;
+          this.updateAccount();
+        } else {
+          this.$router.push(`/home-owner`);
+        }
       } else {
-        this.$router.push(`/home-owner`);
+        console.log("user belum punya shop");
+        if (
+          this.profile.name !== this.dataAuth.name ||
+          this.profile.email !== this.dataAuth.email
+        ) {
+          this.dataAuth.name = this.profile.name;
+          this.dataAuth.email = this.profile.email;
+          this.updateAccount();
+        } else {
+          this.$router.push(`/home-owner`);
+        }
       }
+      // if (
+      //   this.profile.name !== this.dataAuth.name ||
+      //   this.profile.email !== this.dataAuth.email ||
+      //   this.profile.description !== this.dataAuth.shop.description
+      // ) {
+      //   this.dataAuth.name = this.profile.name;
+      //   this.dataAuth.email = this.profile.email;
+      //   this.dataAuth.shop.description = this.profile.description;
+      //   this.updateAccount();
+      // } else {
+      //   this.$router.push(`/home-owner`);
+      // }
     },
     doChangePassword() {
       this.$refs.form.validate().then((valid) => {

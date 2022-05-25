@@ -83,20 +83,19 @@
         >
           {{ product.likes_count }} orang suka
         </div>
-        <q-separator class="q-mb-sm"> </q-separator>
+        <q-separator> </q-separator>
         <div class="flex">
-          <q-avatar class="q-ml-sm q-mt-sm">
+          <q-avatar class="q-ma-sm">
             <img :src="STORAGE_URL + `/` + product.shop.user.avatar" />
           </q-avatar>
-          <div class="column q-ml-sm">
+          <div class="column q-ma-sm self-center">
             <label
               v-if="product.shop"
-              class=""
               style="font-family: roboto; font-size: 17px; color: #5f5f5f"
               for=""
               >{{ product.shop.name }}
             </label>
-            <div>
+            <!-- <div>
               <img
                 style="width: 10px; height: 12px"
                 src="~/assets/locate.svg"
@@ -108,8 +107,8 @@
                 style="font-size: 13px; font-family: roboto; color: #c5c5c5"
                 >{{ product.shop.user.home_address }}</label
               >
-            </div>
-            <q-btn
+            </div> -->
+            <!-- <q-btn
               class="q-mb-sm"
               no-caps
               dense
@@ -120,15 +119,18 @@
               "
               size="70%"
               >Ikuti</q-btn
-            >
+            > -->
           </div>
         </div>
         <q-separator></q-separator>
-        <div class="q-ml-sm column">
-          <div class="text-subtitle2" style="color: #5f5f5f; font-size: 20px">
+        <div class="column">
+          <div
+            class="text-subtitle2 q-ma-sm"
+            style="color: #5f5f5f; font-size: 20px"
+          >
             Detail Produk
           </div>
-          <div class="row">
+          <div class="row q-ma-sm">
             <div class="col-3">
               <div class="column">
                 <div style="color: #cdcdcd" class="text-subtitle2">Kondisi</div>
@@ -163,11 +165,14 @@
           </div>
         </div>
         <q-separator></q-separator>
-        <div class="q-ml-sm">
-          <div style="font-size: 20px; color: #5f5f5f; font-family: roboto">
+        <div>
+          <div
+            class="q-ma-sm"
+            style="font-size: 20px; color: #5f5f5f; font-family: roboto"
+          >
             Deskripsi Barang
           </div>
-          <div class="q-pb-sm" style="font-size: 10px">
+          <div class="q-ma-sm" style="font-size: 10px; color: #cdcdcd">
             {{ product.description }}
           </div>
         </div>

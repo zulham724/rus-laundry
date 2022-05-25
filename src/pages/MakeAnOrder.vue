@@ -2,6 +2,7 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-page-container style="background-color: #fafafa">
       <q-page>
+        <!-- image header -->
         <div class="row order-background-1">
           <q-img
             no-loading
@@ -36,6 +37,7 @@
 
             <q-form ref="form">
               <input type="hidden" v-model="customer.id" />
+              <!-- name input -->
               <q-input
                 readonly
                 dense
@@ -46,7 +48,7 @@
                 label="Nama pelanggan"
                 style="color: #bababa; text-weight-regular"
               />
-
+              <!-- contact number input -->
               <q-input
                 :disable="cek_customer"
                 dense
@@ -56,6 +58,7 @@
                 label="No Telpon"
                 style="color: #bababa; text-weight-regular"
               />
+              <!-- employee name input -->
               <q-input
                 readonly
                 dense
@@ -66,7 +69,7 @@
                 label="Nama karyawan"
                 style="color: #bababa; text-weight-regular"
               />
-
+              <!-- order description input -->
               <div class="q-pa-xs">
                 <q-input
                   dense
@@ -78,6 +81,7 @@
                 />
               </div>
             </q-form>
+            <!-- save order button -->
             <div class="text-center q-mt-md">
               <q-btn
                 @click="saveOrder()"
@@ -95,9 +99,9 @@
           </div>
         </div>
 
-        <!--Dialog Customers-->
+        <!--customer list dialog-->
         <q-dialog v-model="dialogListCustomer">
-          <q-card  class="full-width">
+          <q-card class="full-width">
             <q-card-section v-if="isLoad == false">
               <q-input
                 label="Cari"
@@ -197,6 +201,7 @@
           </q-card>
         </q-dialog>
 
+        <!-- add customer dialog -->
         <q-dialog v-model="dialogAddCustomer" position="right">
           <q-card style="width: 350px">
             <q-card-section class="items-center no-wrap">
@@ -265,7 +270,7 @@
           </q-card>
         </q-dialog>
 
-        <!--Dialog Employees-->
+        <!--employees list dialog-->
         <q-dialog v-model="dialogListEmployee">
           <q-card class="full-width">
             <q-card-section v-if="isLoad2 == false">
@@ -356,52 +361,71 @@
 <script>
 import { mapState } from "vuex";
 import { debounce } from "quasar";
+
 export default {
   computed: {
     ...mapState(["Auth"]),
   },
+
   data() {
     return {
-      tab: "pesanan",
+      // variable setted to store all our order data
       order: {},
+      // variable setted to apply show or hide a component
       dialogListCustomer: false,
+      // variable setted to apply show or hide a component
       dialogListEmployee: false,
+      // variable setted to apply show or hide a component
       dialogAddCustomer: false,
+      // variable setted to filter list by string, used of search bar
       search: "",
+      // variable setted to store all customer list/data
       customers: [],
+      // variable setted to store all customer list/data
       customers_temp: [],
-      customer: {}, // output {}
-      newCustomer: {}, // string text
+      // variable setted for set customer
+      customer: {},
+      // variable setted for add new customer
+      newCustomer: {},
+      // variable setted to store all employees list/data
       employees: [],
+      // variable setted to store all employees list/data
       employees_temp: [],
+      // variable setted for setEmployee function
       employee: {},
+      // variable setted for setCustomer function
       cek_customer: false,
+      // function for loading or skeleton animation
       isLoad: true,
+      // function for loading or skeleton animation
       isLoad2: true,
     };
   },
+
+  mounted() {
+    this.filterCustomer = debounce(this.filterCustomer, 1000);
+    this.getCustomers();
+    this.getEmployees();
+  },
+
   methods: {
+    // function for selected customer
     setCustomer(customer) {
       this.customer = customer;
       this.cek_customer = true;
     },
+    // function for selected employee
     setEmployee(employee) {
       this.employee = employee;
     },
-    cekdata() {
-      // let cekgan = this.jsonToFormData(this.product);
-      if (!this.customer.name || this.customer.contact_number) {
-        console.log("isi dulu gan");
-      } else if (!this.product) {
-        console.log("sip gan");
-      }
-    },
+    // function for save order data
     saveOrder() {
       this.order.customer_id = this.customer.id;
       this.order.employee_id = this.employee.id;
       this.$store.commit("Orders/set_order", { order: this.order });
       this.$router.push("/list-type-of-clothes");
     },
+    // function for get all customers data/list
     getCustomers() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
@@ -421,6 +445,7 @@ export default {
           });
       });
     },
+    // function for filtering customers data/list used for search customer
     updateCustomer(value) {
       if (value === "") {
         this.customers = this.customers_temp;
@@ -434,6 +459,7 @@ export default {
     filterCustomer(val) {
       this.updateCustomer(val);
     },
+    // function for get all employees data/list
     getEmployees() {
       return new Promise((resolve, reject) => {
         this.isLoad2 = true;
@@ -452,6 +478,7 @@ export default {
           });
       });
     },
+    // function for filtering employees data/list used for search employee
     updateEmployee(val) {
       if (val === "") {
         this.employees = this.employees_temp;
@@ -465,6 +492,7 @@ export default {
     filterEmployee(value) {
       this.updateEmployee(value);
     },
+    // function for add new customer
     storeCustomer() {
       this.$store
         .dispatch("Customer/store", this.newCustomer)
@@ -477,15 +505,11 @@ export default {
         });
     },
   },
-  mounted() {
-    this.filterCustomer = debounce(this.filterCustomer, 1000);
-    this.getCustomers();
-    this.getEmployees();
-  },
 };
 </script>
 
 <style>
+/* used for header background */
 .order-background-1 {
   height: 300px;
   width: 100%;

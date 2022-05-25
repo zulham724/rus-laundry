@@ -1,5 +1,6 @@
 <template>
-
+  <div class="bg-white">
+    <div class="q-ml-lg">
   <q-slide-item
     v-if="paket != null"
     :ref="`paket_${paket.id}`"
@@ -54,6 +55,8 @@
       </q-item-section>
     </q-item>
   </q-slide-item>
+  </div>
+  </div>
 </template>
 <script>
 import { debounce } from "quasar";

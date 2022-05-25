@@ -77,7 +77,12 @@
     <!-- Scan Area -->
     <div class="row full-width">
       <div class="col-6">
-        <q-btn @click="ScanAttendance()" class="btn-scan-1" flat no-caps>
+        <q-btn
+          @click="this.$router.push('/attendanceScanPage')"
+          class="btn-scan-1"
+          flat
+          no-caps
+        >
           <div class="row self-center">
             <q-img
               no-spinner
@@ -89,13 +94,18 @@
               class="text-weight-medium self-center q-pl-sm"
               style="color: white; font-size: 14px"
             >
-              Scan Absen 
+              Scan Absen
             </div>
           </div>
         </q-btn>
       </div>
       <div class="col-6 col-lt-sm-12">
-        <q-btn class="btn-scan-2" @click="doScanOrder()" flat no-caps>
+        <q-btn
+          class="btn-scan-2"
+          @click="this.$router.push('/OrderScanPage')"
+          flat
+          no-caps
+        >
           <div class="row self-center">
             <q-img
               no-spinner
@@ -121,6 +131,7 @@ import moment from "moment";
 import ScanAttendance from "src/components/ScanAttendance.vue";
 import ScanOrder from "src/components/ScanOrder.vue";
 import { mapState } from "vuex";
+import { QrcodeStream } from "qrcode-reader-vue3";
 export default {
   data() {
     return {
@@ -134,6 +145,13 @@ export default {
     ...mapState(["Auth", "Orders"]),
   },
   mounted() {
+    document.addEventListener(
+      "backbutton",
+      function (e) {
+        e.preventDefault();
+      },
+      false
+    );
     this.getProfitByDay();
     this.getSpendToday();
   },
@@ -171,14 +189,21 @@ export default {
       });
     },
     ScanAttendance() {
+      window.history.pushState(null, null, window.location.href);
       console.log("test absen");
       if (this.$q.platform.is.android) {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
+            if (result.cancelled == true) {
+              this.$router.push("/transaction");
+              this.$q.notify("Gagal absen");
+              return;
+            }
             this.$store
               .dispatch("Attendance/storeAttendance", parseInt(result.text))
               .then((res) => {
-                console.log("kondisi then ketika berhasil absen");
+                this.$q.notify("berhasil absen");
+                console.log("kondisi then ketika berhasil");
                 this.$router.push(
                   `/attendance-details/${parseInt(result.text)}`
                   // "/transaction"
@@ -211,46 +236,52 @@ export default {
         });
       }
     },
-    doScanOrder() {
-      console.log("scan pesanan");
-      if (this.$q.platform.is.android) {
-        cordova.plugins.barcodeScanner.scan(
-          (result) => {
-            this.$store
-              .dispatch("Orders/show", parseInt(result.text))
-              .then((res) => {
-                // this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
-                this.$router.push(
-                  `/preview-detail-transaksi-2/${parseInt(result.text)}`
-                );
-              });
-          },
-          (error) => {
-            alert("Scanning failed: " + error);
-          },
-          {
-            preferFrontCamera: false, // iOS and Android
-            showFlipCameraButton: true, // iOS and Android
-            showTorchButton: true, // iOS and Android
-            torchOn: false, // Android, launch with the torch switched on (if available)
-            saveHistory: true, // Android, save scan history (default false)
-            prompt: "Place a barcode inside the scan area", // Android
-            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
-            orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
-            disableAnimations: true, // iOS
-            disableSuccessBeep: false, // iOS and Android
-          }
-        );
-      } else {
-        this.$q.notify("Scan Pesanan");
-        this.$q.dialog({
-          component: ScanOrder,
 
-          // props forwarded to your custom component
-        });
-      }
-    },
+    // doScanOrder() {
+    //   window.history.pushState(null, null, window.location.href);
+    //   console.log("scan pesanan");
+    //   if (this.$q.platform.is.android) {
+    //     cordova.plugins.barcodeScanner.scan(
+    //       (result) => {
+    //         if (result.cancelled == true) {
+    //           this.$q.notify("Gagal absen");
+    //           return;
+    //         }
+    //         this.$store
+    //           .dispatch("Orders/show", parseInt(result.text))
+    //           .then((res) => {
+    //             // this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
+    //             this.$router.push(
+    //               `/preview-detail-transaksi-2/${parseInt(result.text)}`
+    //             );
+    //           });
+    //       },
+    //       (error) => {
+    //         alert("Scanning failed: " + error);
+    //       },
+    //       {
+    //         preferFrontCamera: false, // iOS and Android
+    //         showFlipCameraButton: true, // iOS and Android
+    //         showTorchButton: true, // iOS and Android
+    //         torchOn: false, // Android, launch with the torch switched on (if available)
+    //         saveHistory: true, // Android, save scan history (default false)
+    //         prompt: "Place a barcode inside the scan area", // Android
+    //         resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+    //         formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+    //         orientation: "potrait", // Android only (portrait|landscape), default unset so it rotates with the device
+    //         disableAnimations: true, // iOS
+    //         disableSuccessBeep: false, // iOS and Android
+    //       }
+    //     );
+    //   } else {
+    //     this.$q.notify("Scan Pesanan");
+    //     this.$q.dialog({
+    //       component: ScanOrder,
+
+    //       // props forwarded to your custom component
+    //     });
+    //   }
+    // },
   },
 };
 </script>

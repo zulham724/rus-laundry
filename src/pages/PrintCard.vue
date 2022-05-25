@@ -1,5 +1,9 @@
 <template>
-  <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #ffffff">
+  <q-layout
+    class="mbl"
+    view="lHh lpR fFf"
+    style="background-color: #ffffff; height: 100%"
+  >
     <q-header>
       <q-toolbar class="bg-white shadow-3">
         <q-btn no-caps flat style="color: white" @click="$router.back()">
@@ -70,25 +74,34 @@
             Code QR untuk absen
           </div>
           <div class="row col-12 q-mt-sm text-center justify-center">
-            <div style="width: 150px; height: 150px; z-index: 999">
+            <div
+              class="full-width bg-transparent"
+              style="width: 150px; height: 150px; z-index: 999"
+            >
               <vue-qr
-              :text="employee.id.toString()"
-              :callback="getData"
-              :qid="employee.id"
-            ></vue-qr>
+                :text="employee.id.toString()"
+                :callback="getData"
+                :qid="employee.id"
+              ></vue-qr>
             </div>
           </div>
+          
         </q-card>
-        <div class="row">
-          <div
-            class="col-12 text-center absolute-bottom"
-            style="margin-bottom: -50px"
-          >
-            <q-img src="~/assets/bg-card.svg" no-spinner />
-          </div>
+        <div
+          class="col-12 text-center"
+          style="margin-top: 50px"
+        >
+          <q-img src="~/assets/bg-card.svg" no-spinner />
         </div>
+        <!-- <div
+          class="col-12 text-center absolute-bottom"
+          style="margin-bottom: -50px"
+        >
+          <q-img src="~/assets/bg-card.svg" no-spinner />
+        </div> -->
       </q-page>
-      <q-footer class="elevated">
+      
+      <q-footer class="elevated" v-if="false">
         <div style="background-color: #49c2c0; height: 60px">
           <q-btn
             @click="buttonPrintCard()"
@@ -162,7 +175,7 @@ export default {
     getData(dataUrl, id) {
       console.log(dataUrl, id);
     },
-    
+
     buttonPrintCard() {
       this.dialogPrintCard = true;
     },

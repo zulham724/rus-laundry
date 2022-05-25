@@ -79,9 +79,19 @@
       </div>
       <!-- Video/foto -->
       <div v-if="content.video" class="full-width" style="height: 250px">
-        <vue-plyr >
-          <video  :src="STORAGE_URL + `/` + content.video.src"></video>
-        </vue-plyr>
+        <video
+          class="bg-black"
+          :src="STORAGE_URL + `/` + content.video.src"
+          controls
+          style="width: 100%; height: 250px; object-fit: cover"
+        ></video>
+        <!-- <vue-plyr>
+          <video
+            :src="STORAGE_URL + `/` + content.video.src"
+            controls
+            style="object-fit: cover"
+          ></video>
+        </vue-plyr> -->
       </div>
       <div v-if="content.image_content" class="full-width">
         <q-img :src="STORAGE_URL + `/` + content.image_content.src" />
@@ -196,7 +206,7 @@
 
       <!-- Materi berikutnya -->
       <div
-        class="fixed-bottom shadow-up-1"
+        class="fixed-bottom shadow-up-1 bg-white"
         style="border-radius: 14px 14px 0px 0px"
       >
         <div
@@ -305,9 +315,9 @@
             </div>
           </div>
         </div>
-
+        <q-separator />
         <!-- TAB LIKE DAN KOMENTAR -->
-        <div class="row q-pa-sm">
+        <div class="row q-pa-sm bg-white">
           <div class="col-6 self-center text-center justify-center">
             <q-btn
               round

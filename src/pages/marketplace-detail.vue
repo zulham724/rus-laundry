@@ -2,7 +2,14 @@
   <q-layout class="mbl">
     <q-page-container>
       <q-page v-if="product">
-        <q-carousel swipeable  animated v-model="slide" arrows navigation v-if="product.images">
+        <q-carousel
+          swipeable
+          animated
+          v-model="slide"
+          arrows
+          navigation
+          v-if="product.images"
+        >
           <q-carousel-slide
             v-for="(image, i) in product.images"
             :key="image.id"
@@ -10,24 +17,28 @@
             :img-src="`${STORAGE_URL}/${image.src}`"
           />
         </q-carousel>
-        <q-carousel swipeable  animated v-model="slide2" arrows navigation v-else>
-          <q-carousel-slide name="empty"
-          >
-          <div class="q-mt-md text-center" style="color: black">
-           Tidak ada gambar
-          </div>
+        <q-carousel
+          swipeable
+          animated
+          v-model="slide2"
+          arrows
+          navigation
+          v-else
+        >
+          <q-carousel-slide name="empty">
+            <div class="q-mt-md text-center" style="color: black">
+              Tidak ada gambar
+            </div>
           </q-carousel-slide>
-          
         </q-carousel>
         <q-btn
           @click="$router.back()"
           round
           dense
-          class="absolute-top-left q-mt-md q-ml-md "
+          class="absolute-top-left q-mt-md q-ml-md"
           style="background-color: rgba(0, 0, 0, 50%)"
-          
         >
-          <q-icon color="white" name="fas fa-arrow-left" size="20px"/>
+          <q-icon color="white" name="fas fa-arrow-left" size="20px" />
         </q-btn>
         <label style="font-family: roboto; font-size: 23px" class="q-pl-sm">
           {{
@@ -37,7 +48,7 @@
             }).format(product.price)
           }}
         </label>
-        <div class="float-right q-mt-xs ">
+        <div class="float-right q-mt-xs">
           <q-btn
             size="16px"
             dense
@@ -77,7 +88,7 @@
           <q-avatar class="q-ma-sm">
             <img :src="STORAGE_URL + `/` + product.shop.user.avatar" />
           </q-avatar>
-          <div class="column q-ma-sm  self-center">
+          <div class="column q-ma-sm self-center">
             <label
               v-if="product.shop"
               style="font-family: roboto; font-size: 17px; color: #5f5f5f"
@@ -111,8 +122,11 @@
           </div>
         </div>
         <q-separator></q-separator>
-        <div class="column ">
-          <div class="text-subtitle2 q-ma-sm" style="color: #5f5f5f; font-size: 20px">
+        <div class="column">
+          <div
+            class="text-subtitle2 q-ma-sm"
+            style="color: #5f5f5f; font-size: 20px"
+          >
             Detail Produk
           </div>
           <div class="row q-ma-sm">
@@ -139,10 +153,7 @@
                 >
                   Second
                 </div>
-                <div
-                  style="color: #cdcdcd"
-                  class="text-subtitle2 text-right "
-                >
+                <div style="color: #cdcdcd" class="text-subtitle2 text-right">
                   {{ product.weight }} KG
                 </div>
               </div>
@@ -151,10 +162,13 @@
         </div>
         <q-separator></q-separator>
         <div>
-          <div class="text-subtitle2 q-ma-sm" style="color: #5f5f5f; font-size: 20px">
+          <div
+            class="text-subtitle2 q-ma-sm"
+            style="color: #5f5f5f; font-size: 20px"
+          >
             Deskripsi Barang
           </div>
-          <div class="q-ma-sm" style="font-size: 10px; color:#CDCDCD">
+          <div class="q-ma-sm" style="font-size: 10px; color: #cdcdcd">
             {{ product.description }}
           </div>
         </div>
@@ -166,16 +180,20 @@
             Produk Lainnya dari toko ini
           </div>
           <div
-            class="col-6 text-right q-pr-sm q-py-sm text-weight-regular "
+            class="col-6 text-right q-pr-sm q-py-sm text-weight-regular"
             style="background-color: #f5f7f9; color: #707070; font-size: 12px"
           >
             Lihat selengkapnya
           </div>
         </div>
 
-        <div class="row " style="background-color: #f5f7f9;" v-if="another_products.length">
+        <div
+          class="row"
+          style="background-color: #f5f7f9"
+          v-if="another_products.length"
+        >
           <div
-            class="col-6 q-pa-md "
+            class="col-6 q-pa-md"
             v-for="another_product in another_products"
             :key="another_product.id"
           >
@@ -271,7 +289,7 @@ export default {
       STORAGE_URL: STORAGE_URL,
       message: "",
       order: {},
-      APP_URL: APP_URL
+      APP_URL: APP_URL,
     };
   },
   mounted() {
@@ -342,7 +360,7 @@ export default {
       await this.$store.dispatch("Product/show", this.productid).then((res) => {
         this.product = res.data;
         this.getAnotherProducts(res.data.shop.id);
-        console.log('ini data', res.data)
+        console.log("ini data", res.data);
       });
     },
     getAnotherProducts(id) {

@@ -9,7 +9,7 @@
         <q-toolbar-title
           class="text-left text-weight-medium"
           style="color: #888888; font-size: 16px"
-          >Pilih Paket</q-toolbar-title
+          >Pilih Layanan</q-toolbar-title
         >
 
         <!-- <q-btn
@@ -21,12 +21,10 @@
         >
           <div class="text-weight-medium">Selesai</div>
         </q-btn> -->
-
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
       <q-page>
-
         <q-card flat class="q-mt-sm no-shadow">
           <div
             class="q-px-md q-py-sm text-weight-regular"
@@ -43,14 +41,15 @@
                   outlined
                   v-model="search"
                   placeholder="Cari Paket"
+                  @update:model-value="filterPackages(search)"
                 >
-              <q-icon
-                name="search"
-                class="self-center"
-                size="20px"
-                color="grey"
-              />
-            </q-input>
+                  <q-icon
+                    name="search"
+                    class="self-center"
+                    size="20px"
+                    color="grey"
+                  />
+                </q-input>
               </div>
               <div class="col-6">
                 <div class="row justify-end">
@@ -70,8 +69,8 @@
             </div>
           </div>
         </q-card>
-        
-          <!-- <q-card class="no-shadow">
+
+        <!-- <q-card class="no-shadow">
             <q-card-section>
               <div class="row">
                 <div class="col-6">
@@ -98,7 +97,7 @@
           <div>
             <q-list>
               <q-item
-                clickable                
+                clickable
                 v-for="n in 5"
                 :key="n"
                 class="bg-white q-mt-sm"
@@ -107,7 +106,7 @@
                   <q-skeleton size="20px" />
                 </q-item-section>
                 <q-item-section>
-                  <q-skeleton type="text" width="130px"/>
+                  <q-skeleton type="text" width="130px" />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -153,9 +152,14 @@
         </div>
 
         <div class="absolute-bottom" v-if="packages.length">
-          <q-btn no-caps class="full-width q-py-sm" style="background-color:#49C2C0" @click="addPackage()">
-            <div class="text-weight-regular" style="color:white;">
-              Tambah Paket
+          <q-btn
+            no-caps
+            class="full-width q-py-sm"
+            style="background-color: #49c2c0"
+            @click="addPackage()"
+          >
+            <div class="text-weight-regular" style="color: white">
+              Pilih Layanan
             </div>
           </q-btn>
         </div>
@@ -176,24 +180,37 @@ export default {
       dialogAddPackage: false,
       search: null,
       packages: [],
+      packages_temp: [],
       isLoad: false,
     };
   },
   methods: {
+    filterPackages(value) {
+      if (value === "") {
+        console.log("this.packages", this.packages);
+        this.packages = this.packages_temp;
+      }
+
+      const needle = value.toLowerCase();
+      this.packages = this.packages_temp.filter(
+        (v) => v.name.toLowerCase().indexOf(needle) > -1
+      );
+    },
     getPackages() {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
-        this.$store.dispatch("Services/getServicesByCategory", this.categoryid).then((res) => {
-        this.packages = res.data;
-      }).catch((err) => {
+        this.$store
+          .dispatch("Services/getServicesByCategory", this.categoryid)
+          .then((res) => {
+            this.packages = this.packages_temp = res.data;
+          })
+          .catch((err) => {
             reject(err);
-            
           })
           .finally(() => {
             this.isLoad = false;
           });
       });
-      
     },
     choosed(id) {
       this.packages = this.packages.map((item) => {
@@ -207,18 +224,17 @@ export default {
     },
     addPackage() {
       // this.dialogAddPackage = true;
-      
+
       this.packages.forEach((paket) => {
         if (paket.choosed) {
-          
           const payload = {
             id: this.categoryid,
             paket: paket,
           };
 
-          this.$store.commit("Orders/add_paket_in_chart", payload)
+          this.$store.commit("Orders/add_paket_in_chart", payload);
           // console.log(this.Orders.order.charts)
-          this.$router.push("/basket")
+          this.$router.push("/basket");
         }
       });
     },

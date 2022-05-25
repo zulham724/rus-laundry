@@ -14,13 +14,16 @@
           </div>
         </div>
 
-        <div class="q-py-md q-px-xl text-center" >
-          <q-avatar @click="openMedia()"  style="width: 100px; height: 100px">
+        <div class="q-py-md q-px-xl text-center">
+          <q-avatar @click="openMedia()" style="width: 100px; height: 100px">
             <q-img :src="srcAvatar" />
-            
           </q-avatar>
-          <q-avatar @click="openMedia()" square style="margin-left:-30px; margin-top:75px">
-            <q-img src="~/assets/ftg.svg"/>
+          <q-avatar
+            @click="openMedia()"
+            square
+            style="margin-left: -30px; margin-top: 75px"
+          >
+            <q-img src="~/assets/ftg.svg" />
           </q-avatar>
         </div>
 
@@ -50,6 +53,8 @@
               Nama Toko
             </div>
             <q-input
+              maxlength="20"
+              counter
               v-if="dataAccount.shop"
               v-model="dataAccount.shop.name"
               placeholder="Ketik username disini..."
@@ -139,7 +144,6 @@
           ref="addImages"
           @update:model-value="previewImages"
           v-show="false"
-          multiple
         ></q-file>
       </q-page>
     </q-page-container>
@@ -194,33 +198,29 @@ export default {
     openMedia() {
       this.$refs.addImages.pickFiles();
     },
-    async previewImages(files) {
-      if (files.length > 1) {
-        this.$q.notify("Hanya bisa menambahkan 1 foto");
-      } else {
-        console.log("sebelum base 64", files);
-        this.dataAccount.avatar = files[0];
-        let promise = toBase64(files[0]);
-        promise.then((res) => {
-          console.log("setelah base 64", res.src);
-          this.encodedImage = res.src;
-          this.$q
-            .dialog({
-              component: CropPhotoComponent,
+    async previewImages(file) {
+      console.log("sebelum base 64", file);
+      this.dataAccount.avatar = file;
+      let promise = toBase64(file);
+      promise.then((res) => {
+        console.log("setelah base 64", res.src);
+        this.encodedImage = res.src;
+        this.$q
+          .dialog({
+            component: CropPhotoComponent,
 
-              componentProps: {
-                ImgBS64: res.src,
-              },
-            })
-            .onOk((data) => {
-              console.log("gambar ter crop dengan base64 ", data.dataUrl);
-              let file = base64ToFile(data.dataUrl, "avatar");
-              console.log("lalu diubah jadi file, ", file);
-              this.dataAccount.avatar = file;
-              this.updateAvatar();
-            });
-        });
-      }
+            componentProps: {
+              ImgBS64: res.src,
+            },
+          })
+          .onOk((data) => {
+            console.log("gambar ter crop dengan base64 ", data.dataUrl);
+            let file = base64ToFile(data.dataUrl, "avatar");
+            console.log("lalu diubah jadi file, ", file);
+            this.dataAccount.avatar = file;
+            this.updateAvatar();
+          });
+      });
     },
     updateAvatar() {
       this.$q.notify({
@@ -233,7 +233,12 @@ export default {
       console.log("data account avatar", this.dataAccount.avatar);
       formData.append("avatar", this.dataAccount.avatar);
       console.log("ini form data avatar", formData);
-      this.$store.dispatch("Auth/updateAvatar", formData).then((res) => {
+
+      const payload = {
+        id: this.Auth.auth.id,
+        formData: formData,
+      };
+      this.$store.dispatch("Auth/updateAvatar", payload).then((res) => {
         console.log("ini res", res);
         this.srcAvatar = `${this.STORAGE_URL}/${res.data.avatar}`;
         this.$q.notify({

@@ -1,13 +1,14 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <q-page style="background-color: #fafafa">
     <div style="height: 230px">
+      <!-- top background header -->
       <q-img
         class="fixed mbl-child"
         style="width: 100%; height: 230px"
         no-spinner
         src="~/assets/uangterbang.svg"
       >
-        <!-- Container -->
+        <!-- top header container -->
         <div
           class="column full-width bg-transparent q-px-xl"
           style="height: 100%"
@@ -89,13 +90,14 @@
       </q-img>
     </div>
 
-    <!-- List Pesanan -->
+    <!-- orders list -->
     <q-tab-panels
       class="full-width"
       v-model="tabParent"
       animated
       style="margin-top: -9.5px; border-radius: 10px 10px 0px 0px"
     >
+      <!-- data income tab -->
       <q-tab-panel name="pendapatan" class="q-pa-none q-ma-none">
         <pendapatan-transaction
           v-on:save-callback="getTotalProfit"
@@ -103,6 +105,7 @@
           stretch
         ></pendapatan-transaction>
       </q-tab-panel>
+      <!-- data spends tab  -->
       <q-tab-panel name="pengeluaran" class="q-pa-none q-ma-none">
         <pengeluaran-transaction
           v-on:save-callback="getTotalProfit"
@@ -115,7 +118,7 @@
 
 <script>
 import { ref } from "vue";
-import moment from "moment";{{  }}
+import moment from "moment";
 import { mapState } from "vuex";
 import Pengeluaran from "src/pages/Pengeluaran.vue";
 import Pendapatan from "src/pages/Pemasukan.vue";

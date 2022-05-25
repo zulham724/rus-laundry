@@ -18,14 +18,7 @@
                 <img class="mbl-child" :src="url" />
               </div>
               <div
-                class="
-                  fixed-top
-                  mbl-child
-                  row
-                  text-center
-                  q-py-xs q-px-sm
-                  bg-white
-                "
+                class="fixed-top mbl-child row text-center q-py-xs q-px-sm bg-white"
               >
                 <div class="col-2">
                   <q-btn round flat @click="this.$router.back()">
@@ -128,19 +121,10 @@ export default {
       });
     },
     androidSuccess(imageURI) {
-      // var image = cordovaPic;
-      // image.src = imageUrl;
       let blob = this.getBlob(imageURI, ".jpg");
       const url = URL.createObjectURL(blob);
       console.log("url", url);
-      // this.$q.dialog({
-      //   component: PreviewPhotoComponentVue,
-      //   componentProps: {
-      //     src: url,
-      //   },
-      // });
-      // console.log(blob);
-      // let blob;
+
       this.blob = blob;
       this.savePhoto();
     },

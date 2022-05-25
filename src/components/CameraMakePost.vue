@@ -1,5 +1,11 @@
 <template>
-  <q-dialog v-model="dialogDisable" ref="dialog" @hide="onDialogHide" persistent maximized>
+  <q-dialog
+    v-model="dialogDisable"
+    ref="dialog"
+    @hide="onDialogHide"
+    persistent
+    maximized
+  >
     <q-card class="full-width">
       <div style="height: 100vh; width: 100vw">
         <camera
@@ -16,7 +22,9 @@
             <div v-if="cordovaPic" class="text-center fixed-center mbl-child">
               <img class="mbl-child" :src="url" />
             </div>
-            <div class="fixed-top mbl-child row text-center q-py-xs q-px-sm bg-white">
+            <div
+              class="fixed-top mbl-child row text-center q-py-xs q-px-sm bg-white"
+            >
               <div class="col-2">
                 <q-btn round flat @click="this.$router.back()">
                   <q-img src="~/assets/arrow-left-solid.svg" width="24px" />
@@ -40,11 +48,19 @@
               </div>
               <div class="col">
                 <q-btn round @click="takePhoto" class="self-center">
-                  <q-img src="~/assets/Group5172.png" style="height: 60px; width: 60px" />
+                  <q-img
+                    src="~/assets/Group5172.png"
+                    style="height: 60px; width: 60px"
+                  />
                 </q-btn>
               </div>
               <div class="col self-center">
-                <q-btn v-if="url" round @click="confirmClick" class="self-center">
+                <q-btn
+                  v-if="url"
+                  round
+                  @click="confirmClick"
+                  class="self-center"
+                >
                   <q-img v-if="!disableSave" src="~/assets/Group5605.png" />
                 </q-btn>
               </div>
@@ -57,14 +73,16 @@
 </template>
 
 <script>
-import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent.vue";
+// import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent.vue";
 import { mapState } from "vuex";
-import { useDialogPluginComponent } from "quasar";
+// import { useDialogPluginComponent } from "quasar";
 
 export default {
   emits: [
     // REQUIRED; need to specify some events that your
-    'ok', 'hide', 'crop'
+    "ok",
+    "hide",
+    "crop",
   ],
 
   computed: {
@@ -72,7 +90,18 @@ export default {
   },
 
   mounted() {
-
+    if (this.$q.platform.is.mobile) {
+      console.log("mobile");
+      this.cordovaCam();
+    }
+    console.log(!this.$q.platform.is.mobile);
+    if (!this.$q.platform.is.mobile) {
+      console.log("not mobile");
+      // this.$refs.camera.devices(["videoinput"]).then((res) => {
+      //   console.log("devices", res);
+      //   this.devices = res;
+      // });
+    }
   },
 
   data() {
@@ -91,22 +120,21 @@ export default {
   },
 
   methods: {
-    
     async takePhoto() {
       const blob = await this.$refs.camera.snapshot();
       this.blob = blob;
-      console.log('woooooooiiiiiiiii', this.$refs.camera, blob);
+      console.log("woooooooiiiiiiiii", this.$refs.camera, blob);
       // To show the screenshot with an image tag, create a url
       const url = URL.createObjectURL(blob);
       console.log("urllllllllllllllll", url);
       this.url = url;
     },
-    savePhoto() {
-
-      console.log("ini file photo", file);
+    savePhoto(file) {
       this.urlSender = file;
-      console.log('fungsi save photo', this.urlSender);
-
+      console.log("ini file photo", file);
+      console.log("fungsi save photo", this.urlSender);
+      this.onOKClick(this.urlSender);
+      // this.$router.back();
     },
     getBlob(b64Data, contentType, sliceSize = 512) {
       contentType = contentType || "";
@@ -143,21 +171,14 @@ export default {
       });
     },
     androidSuccess(imageURI) {
-      // var image = cordovaPic;
-      // image.src = imageUrl;
-      let blob = this.getBlob(imageURI, ".jpg");
+      console.log("imageURI", imageURI);
+      let blob = this.getBlob(imageURI, "image/png");
       const url = URL.createObjectURL(blob);
-      console.log("url", url);
-      // this.$q.dialog({
-      //   component: PreviewPhotoComponentVue,
-      //   componentProps: {
-      //     src: url,
-      //   },
-      // });
-      // console.log(blob);
-      // let blob;
+      console.log("url setelah centang", url);
+
       this.blob = blob;
-      this.savePhoto();
+      console.log("blob", blob);
+      this.savePhoto(blob);
     },
     androidFail(message) {
       // alert('gagal gan')
@@ -187,7 +208,6 @@ export default {
       }
     },
 
-
     // following method is REQUIRED
     // (don't change its name --> "show")
     show() {
@@ -206,14 +226,17 @@ export default {
       this.$emit("hide");
     },
     blobToFile(theBlob, fileName) {
-      return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type })
+      return new File([theBlob], fileName, {
+        lastModified: new Date().getTime(),
+        type: theBlob.type,
+      });
     },
     confirmClick() {
-      console.log('blobbbbbbb', this.blob)
-      let file = this.blobToFile(this.blob, 'foto_postingan');
-      console.log('blobbb jadi fileee', file)
+      console.log("blobbbbbbb", this.blob);
+      let file = this.blobToFile(this.blob, "foto_postingan");
+      console.log("blobbb jadi fileee", file);
       this.urlSender = file;
-      console.log('file type blob', this.blob)
+      console.log("file type blob", this.blob);
       this.onOKClick(this.urlSender);
     },
     onOKClick(dataUrl) {

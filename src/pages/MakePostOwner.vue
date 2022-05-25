@@ -15,7 +15,7 @@
           >Buat Postingan</q-toolbar-title
         >
         <q-btn
-          no-caps
+          no-capsFpost
           :disable="loading"
           :loading="loading"
           flat
@@ -140,16 +140,16 @@
 
             <q-separator />
             <q-list class="text-weight-medium">
-              <q-item tag="label" v-ripple :disable="loading">
+              <!-- <q-item tag="label" v-ripple :disable="loading">
                 <q-item-section>
                   <q-item-label>Jadwalkan untuk nanti</q-item-label>
                 </q-item-section>
                 <q-item-section avatar>
                   <q-toggle v-model="value1" color="light-green-13" />
                 </q-item-section>
-              </q-item>
+              </q-item> -->
 
-              <q-item
+              <!-- <q-item
                 tag="label"
                 @click="open('bottom')"
                 v-model="value1"
@@ -162,7 +162,7 @@
                 <q-item-section avatar class="q-mr-md">
                   <q-icon size="15px" name="fas fa-chevron-right" />
                 </q-item-section>
-              </q-item>
+              </q-item> -->
             </q-list>
             <q-dialog v-model="dialog" position="bottom">
               <q-card>
@@ -365,7 +365,7 @@ export default {
             this.loading = false;
           });
         } else {
-          this.$q.notify("Gagal");
+          this.$q.notify("Isi postingan terlebih dahulu");
           this.loading = false;
         }
       });

@@ -62,7 +62,7 @@
             />
           </q-form>
         </q-page>
-        <q-footer>
+        <!-- <q-footer>
           <q-btn
             @click="alert = true"
             class="full-width"
@@ -92,7 +92,7 @@
               </q-card-section>
             </q-card>
           </q-dialog>
-        </q-footer>
+        </q-footer> -->
       </q-pull-to-refresh>
     </q-page-container>
   </q-layout>
@@ -119,9 +119,9 @@ export default {
           this.storeSpend();
         } else {
           this.$q.notify({
-          position: "top",
-          message: "Lengkapi data",
-        });
+            position: "top",
+            message: "Lengkapi data",
+          });
         }
       });
     },

@@ -12,7 +12,6 @@
           <!-- Search bar -->
           <div class="row justify-center">
             <q-input
-              @update:model-value="filter(search)"
               dense
               class="q-mx-xs full-width"
               type="search"
@@ -34,26 +33,17 @@
       </div>
 
       <!-- Histori pencarian -->
-      <div
-        class="row text-weight-medium q-px-md q-py-sm"
-        v-if="list_history.length"
-      >
-        <div class="row col-12 justify-between">
-          <div
-            class="col-6 text-left self-center"
-            style="font-size: 15px; color: #3a3838"
-          >
+      <div class="row text-weight-medium q-px-md q-py-sm">
+        <div class="row col-12">
+          <div class="col-6 text-left" style="font-size: #15px; color: #3a3838">
             Histori pencarian
           </div>
-          <q-btn
-            no-caps
-            flat
-            dense
-            class="col-4 text-right self-center"
-            style="font-size: 12px; color: #b1b1b1"
+          <div
+            class="col-6 text-right"
+            style="font-size: #13px; color: #b1b1b1"
           >
             Hapus semua
-          </q-btn>
+          </div>
         </div>
 
         <!-- List histori pencarian -->
@@ -86,35 +76,15 @@
         </q-list>
       </div>
 
-      <!-- =============================================== -->
-      <q-list class="full-width">
-        <q-item
-          clickable
-          v-ripple
-          v-for="n in 3"
-          :key="n"
-          class="row q-gutter-none"
-        >
-          <q-item-section avatar>
-            <q-avatar style="width: 40px; background-color: grey">
-              <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section>
-            <div style="color: #8b8787">laundry_terserah</div>
-          </q-item-section>
-        </q-item>
-      </q-list>
-
       <!-- Postingan terpopuler -->
-      <!-- <div class="text-weight-medium q-pt-lg q-pa-md">
+      <div class="text-weight-medium q-pt-lg q-pa-md">
         <div class="row" style="color: #3a3838; font-size: 15px">
           Postingan terpopuler
         </div>
       </div>
       <div>
         <q-infinite-scroll @load="onLoad" :offset="250">
+          <!-- Postingan -->
           <q-intersection
             :ref="`intersection_${post.id}`"
             v-for="post in posts.data"
@@ -128,10 +98,10 @@
             ></item-post-component>
           </q-intersection>
         </q-infinite-scroll>
-      </div> -->
+      </div>
 
       <!-- tagar terpopuler -->
-      <!-- <div class="q-pt-md q-pa-md">
+      <div class="q-pt-md q-pa-md">
         <div
           class="row text-weight-medium"
           style="color: #3a3838; font-size: 17px"
@@ -148,45 +118,64 @@
             #sabuncucipakaianviral
           </div>
         </div>
-      </div> -->
+      </div>
     </q-page>
   </q-layout>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import PostCardComponent from "src/components/post/PostCardComponent.vue";
+import PostCardComponent from "src/components/post/PostCardOwnerComponent.vue";
 
 export default {
   components: {
     "item-post-component": PostCardComponent,
   },
   computed: {
-    list_history() {
-      return this.$store.getters["HistorySearch/list_history"];
-    },
+    ...mapState(["MasterPost"]),
   },
 
   data() {
     return {
-      search: "",
-      list: [],
+      posts: {},
     };
   },
 
-  mounted() {},
+  mounted() {
+    this.getAllPosts();
+  },
+
+  created() {
+    if (!this.MasterPost.posts.data) this.$store.dispatch("MasterPost/index");
+  },
 
   methods: {
-    filter(value) {
-      console.log(value);
-      // if (value == "") {
-      //   this.posts.data = this.posts_temp.data;
-      // }
-
-      // const needle = value.toLowerCase();
-      // this.posts.data = this.posts_temp.data.filter(
-      //   (v) => v.name.toLowerCase().indexOf(needle) > -1
-      // );
+    getAllPosts() {
+      this.$store.dispatch("MasterPost/index").then((res) => {
+        this.posts = res.data;
+      });
+    },
+    getItemPostHeight(post) {
+      return `${
+        post.size ? `${post.size.height}` : post.files.length ? "30vh" : "30vh"
+      }`;
+    },
+    updateHeight(post) {
+      // this.$refs["intersection_"+post.id].$el.style.minHeight=post.size.height;
+      // console.log(post.size.height);
+      this.$refs["intersection_" + post.id][0].$el.style.minHeight =
+        post.size.height + "px";
+      // let $ref=this.$refs["intersection_"+post.id];
+      // console.log($ref)
+      // console.log(this.$refs["intersection_" + post.id][0].$el.style.minHeight);
+      // alert(post.size.height)
+    },
+    onLoad(index, done) {
+      this.MasterPost.posts.next_page_url
+        ? this.$store.dispatch("MasterPost/next").then((res) => {
+            done();
+          })
+        : done();
     },
   },
 };

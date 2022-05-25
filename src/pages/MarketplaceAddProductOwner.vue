@@ -46,6 +46,7 @@
         </q-input>
         <div>
           <q-btn
+            v-if="this.Auth.auth.shop"
             class="q-ml-md q-mt-md"
             style="
               border-radius: 10px;
@@ -54,6 +55,19 @@
               color: white;
             "
             @click="addProduct()"
+            no-caps
+            label="Tambah Produk"
+          ></q-btn>
+          <q-btn
+            v-if="!this.Auth.auth.shop"
+            class="q-ml-md q-mt-md"
+            style="
+              border-radius: 10px;
+              background-color: #9b27f1;
+              width: 92%;
+              color: white;
+            "
+            @click="mustHaveShop()"
             no-caps
             label="Tambah Produk"
           ></q-btn>
@@ -318,6 +332,12 @@ export default {
     this.getProducts();
   },
   methods: {
+    mustHaveShop() {
+      this.$q.notify({
+        position: "bottom",
+        message: "Pastikan anda memiliki toko terlebih dahulu",
+      });
+    },
     deleteFunction(index, id) {
       this.deleteid = null;
       this.deleteindex = null;

@@ -202,7 +202,7 @@
               style="color: #dc2baa"
               label-position="left"
               class="shadow-1 bg-white"
-              @click="cek()"
+              @click="checkCamera()"
               icon="photo_camera"
               label="Kamera"
             />
@@ -240,14 +240,16 @@ export default {
   computed: {
     ...mapState(["Auth"]),
   },
+  mounted() {
+    // console.log("mounted", this.Auth.auth);
+  },
+
   methods: {
-    cek() {
+    checkCamera() {
+      //open componentCameraMakePost
       this.$q
         .dialog({
           component: CameraMakePost,
-          // componentProps: {
-          //   ImgBS64: res.src,
-          // },
         })
         .onOk((data) => {
           console.log("data on ok halmaan make post", data);
@@ -263,9 +265,10 @@ export default {
               })
               .onOk((data) => {
                 console.log("posttt", this.post);
-                console.log("cek hasil crop", data);
+                console.log("cek hasil crop checkCamera", data);
                 data.type = res.type;
                 let imageBase64 = data;
+                console.log("imageBase64", imageBase64);
                 this.images_videos.push(imageBase64);
                 console.log("image video", this.images_videos);
                 let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");

@@ -28,20 +28,22 @@ export default {
     // ...your custom props
   },
 
+  mounted() {},
+
   methods: {
     onDecode(decodedString) {
-      console.log(decodedString);
+      console.log("decoded", decodedString);
       this.$store
-            .dispatch("Employee/attendanceIn", parseInt(result.text))
-            .then((res) => {
-              this.$router.push(`/employee`);
-              console.log("berhasil absen")
-              // this.$q.notify("Berhasil Absen");
-            })
-            .catch((err) => {
-              console.log("terjadi kesalahan onDecode")
-              this.dialogAttendance = true;
-            });
+        .dispatch("Employee/attendanceIn", parseInt(result.text))
+        .then((res) => {
+          this.$router.push(`/employee`);
+          console.log("berhasil absen");
+          // this.$q.notify("Berhasil Absen");
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan onDecode");
+          // this.dialogAttendance = true;
+        });
     },
     // following method is REQUIRED
     // (don't change its name --> "show")
@@ -60,7 +62,6 @@ export default {
       // when QDialog emits "hide" event
       this.$emit("hide");
     },
-
 
     onOKClick() {
       // on OK, it is REQUIRED to

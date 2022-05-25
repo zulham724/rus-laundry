@@ -176,7 +176,7 @@
             </q-item-label>
           </q-item-section>
         </q-item>-->
-          <q-item
+          <!-- <q-item
             class="q-py-md"
             clickable
             style="background-color: #ffffff"
@@ -201,7 +201,7 @@
                 Kirim pesan massal
               </q-item-label>
             </q-item-section>
-          </q-item>
+          </q-item> -->
 
           <q-item
             class="q-py-md"
