@@ -347,7 +347,7 @@ export default {
     this.dataAuth = this.Auth.auth;
     //
     this.init();
-    // console.log("cek auth", this.auth);
+    console.log("cek auth", this.auth);
   },
   computed: {
     auth() {

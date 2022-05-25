@@ -62,32 +62,51 @@
               </div>
             </div>
 
-            <q-btn
-              v-if="item.id >= this.Auth.auth.active_package_user.package.id"
-              no-caps
-              @click="nextPayment(item)"
-              class="full-width bgCardTop"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
-            >
-              <div class="text-h6 q-py-sm" style="color: #fff">
-                Lanjutkan Ke Pembayaran
-              </div>
-            </q-btn>
-            <q-btn
-              v-if="item.id < this.Auth.auth.active_package_user.package.id"
-              no-caps
-              disable
-              class="full-width bgCardTop"
-              style="
-                background-color: #22c7dd;
-                border-radius: 0px 0px 10px 10px;
-              "
-            >
-              <div class="text-h6 q-py-lg" style="color: #fff"></div>
-            </q-btn>
+            <div v-if="this.Auth.auth.active_package_user">
+              <q-btn
+                v-if="item.id >= this.Auth.auth.active_package_user.package.id"
+                no-caps
+                @click="nextPayment(item)"
+                class="full-width bgCardTop"
+                style="
+                  background-color: #22c7dd;
+                  border-radius: 0px 0px 10px 10px;
+                "
+              >
+                <div class="text-h6 q-py-sm" style="color: #fff">
+                  Lanjutkan Ke Pembayaran
+                </div>
+              </q-btn>
+            </div>
+            <div v-if="this.Auth.auth.active_package_user">
+              <q-btn
+                v-if="item.id < this.Auth.auth.active_package_user.package.id"
+                no-caps
+                disable
+                class="full-width bgCardTop"
+                style="
+                  background-color: #22c7dd;
+                  border-radius: 0px 0px 10px 10px;
+                "
+              >
+                <div class="text-h6 q-py-lg" style="color: #fff"></div>
+              </q-btn>
+            </div>
+            <div v-if="this.Auth.auth.active_package_user == null">
+              <q-btn
+                no-caps
+                @click="nextPayment(item)"
+                class="full-width bgCardTop"
+                style="
+                  background-color: #22c7dd;
+                  border-radius: 0px 0px 10px 10px;
+                "
+              >
+                <div class="text-h6 q-py-sm" style="color: #fff">
+                  Lanjutkan Ke Pembayaran
+                </div>
+              </q-btn>
+            </div>
           </q-card>
         </div>
 

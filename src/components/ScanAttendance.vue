@@ -36,6 +36,7 @@ export default {
       this.$store
         .dispatch("Employee/attendanceIn", parseInt(result.text))
         .then((res) => {
+          console.log("res", res);
           this.$router.push(`/employee`);
           console.log("berhasil absen");
           // this.$q.notify("Berhasil Absen");

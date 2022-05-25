@@ -361,10 +361,11 @@ export default {
             }
             let formData = this.jsonToFormData(this.product);
             console.log("semua data terisi sebelum store", this.product);
+            console.log("formData", formData);
             this.$store
               .dispatch("Product/store", formData)
               .then((res) => {
-                console.log("ini res simpan produk", res.data);
+                // console.log("ini res simpan produk", res.data);
                 // this.$router.push("/marketplace-add-product");
                 this.$q.notify("Berhasil");
                 this.product = {};
