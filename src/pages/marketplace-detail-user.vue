@@ -53,12 +53,12 @@
             v-ripple
             @click="$router.push('/marketplace-add-product')"
           >
-            <q-item-section avatar>
-              <img style="margin-left: -1px" src="~/assets/badge1.svg" />
+            <q-item-section avatar class="justify-center text-center">
+              <img src="~/assets/badge1.svg" />
             </q-item-section>
             <q-item-section
               class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
+              style="color: #5f5f5f"
               >Produk Anda</q-item-section
             >
           </q-item>
@@ -112,7 +112,7 @@
             </q-item-section>
             <q-item-section
               class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
+              style="color: #5f5f5f"
               >Disukai</q-item-section
             >
           </q-item>
@@ -127,7 +127,7 @@
             </q-item-section>
             <q-item-section
               class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
+              style="color: #5f5f5f"
               >No Whatsapp</q-item-section
             >
           </q-item>

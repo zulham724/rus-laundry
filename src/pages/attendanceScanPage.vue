@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import ScanAttendance from "src/components/ScanAttendance.vue";
 export default {
   data() {
     return {};
@@ -26,16 +27,24 @@ export default {
             this.$store
               .dispatch("Attendance/storeAttendance", parseInt(result.text))
               .then((res) => {
-                this.$q.notify("berhasil absen");
-                console.log("kondisi then ketika berhasil");
-                this.$router.push(
-                  `/attendance-details/${parseInt(result.text)}`
-                  // "/transaction"
-                );
+                if (res.data.id != null) {
+                  this.$q.notify("berhasil absen");
+                  this.$router.push(
+                    `/attendance-details/${parseInt(result.text)}`
+                    // "/transaction"
+                  );
+                } else {
+                  this.$router.push("/");
+                  this.$q.notify("gagal absen");
+                }
+                // console.log("summon res ", res.data);
+                // console.log("kondisi then ketika berhasil hehe");
               });
           },
           (error) => {
-            alert("Scanning failed: " + error);
+            this.$router.push("/");
+            this.$q.notify("gagal absen");
+            // alert("Scanning failed: " + error);
           },
           {
             preferFrontCamera: false, // iOS and Android

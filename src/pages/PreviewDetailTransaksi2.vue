@@ -81,6 +81,18 @@
             </q-carousel-slide>
           </q-carousel>
         </div>
+        <div class="row text-center justify-center">
+          <q-btn
+            no-caps
+            flat
+            dense
+            style="border-radius: 5px"
+            class="text-center q-py-xs q-px-sm"
+            @click="$router.push('/')"
+          >
+            Kembali
+          </q-btn>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>

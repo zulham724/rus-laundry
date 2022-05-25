@@ -366,7 +366,7 @@ export default {
               .dispatch("Product/store", formData)
               .then((res) => {
                 // console.log("ini res simpan produk", res.data);
-                // this.$router.push("/marketplace-add-product");
+                this.$router.push("/marketplace-add-product");
                 this.$q.notify("Berhasil");
                 this.product = {};
                 this.images = [];

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import ScanOrder from "src/components/ScanOrder.vue";
 export default {
   data() {
     return {};
@@ -14,7 +15,7 @@ export default {
   },
   methods: {
     doScanOrder() {
-      //   window.history.pushState(null, null, window.location.href);
+      // window.history.pushState(null, null, window.location.href);
       console.log("scan pesanan");
       if (this.$q.platform.is.android) {
         cordova.plugins.barcodeScanner.scan(
@@ -23,17 +24,34 @@ export default {
               this.$q.notify("Gagal absen");
               return;
             }
+            console.log("cek result", result);
             this.$store
               .dispatch("Orders/show", parseInt(result.text))
               .then((res) => {
+                // window.history.pushState(null, null, window.location.href);
+                if (res) {
+                  if (res.data != null) {
+                    this.$q.notify("berhasil scan barang");
+                    this.$router.push(
+                      `/preview-detail-transaksi-2/${parseInt(result.text)}`
+                    );
+                  } else {
+                    this.$q.notify("gagal scan barang");
+                    this.$router.push("/");
+                  }
+                } else {
+                  this.$q.notify("gagal scan barang");
+                  this.$router.push("/");
+                }
+
                 // this.$router.push(`/detail-transaksi/${parseInt(result.text)}`);
-                this.$router.push(
-                  `/preview-detail-transaksi-2/${parseInt(result.text)}`
-                );
               });
           },
           (error) => {
-            alert("Scanning failed: " + error);
+            alert("Gagal scan barang");
+            // console.log("rudi membeli bakso");
+            // this.$q.notify("gagal scan barang");
+            this.$router.push("/");
           },
           {
             preferFrontCamera: false, // iOS and Android

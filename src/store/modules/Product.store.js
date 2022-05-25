@@ -49,9 +49,11 @@ const actions = {
         });
     },
     store({ commit }, product) {
+        console.log("proudct", product);
         return new Promise((resolve, reject) => {
+
             api
-                .post(`/api/slave/product`, product)
+                .post(`/api/slave/storeProduct`, product)
                 .then((res) => {
                     resolve(res);
                 })
