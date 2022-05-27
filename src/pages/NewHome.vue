@@ -451,6 +451,7 @@ export default {
     //   console.log("ini ev", ev);
     // });
     this.dataAuth = this.Auth.auth;
+    console.log("ini data auth", this.dataAuth);
     this.timeChecker();
     this.getProfitByDay();
     this.getSpendToday();

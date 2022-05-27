@@ -368,7 +368,7 @@ export default {
             this.loading = false;
           });
         } else {
-          this.$q.notify("Gagal");
+          this.$q.notify("Pastikan anda sudah mengisi deskripsi postingan");
           this.loading = false;
         }
       });

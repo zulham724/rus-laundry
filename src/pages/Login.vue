@@ -44,17 +44,21 @@
           <div class="q-pa-md text-center">
             <q-form ref="form">
               <q-input
-                :disable="loading"
                 class="q-pb-lg"
+                dense
+                :disable="loading"
                 rounded
                 outlined
                 v-model="credential.username"
                 label="Masukkan Email"
+                type="email"
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
 
               <q-input
+                class="q-pb-lg"
+                dense
                 :disable="loading"
                 rounded
                 outlined
@@ -85,6 +89,19 @@
                 <div class="ellipsis text-h6 text-weight-reguler">Login</div>
               </q-btn>
             </q-form>
+          </div>
+          <div class="full-width q-py-md">
+            <div
+              class="row text-center justify-center"
+              style="font-size: small"
+            >
+              <div class="q-mr-xs" style="color: #313131">
+                Belum punya akun?
+              </div>
+              <div style="color: #49c2c0" @click="$router.push('/register')">
+                Daftar sekarang
+              </div>
+            </div>
           </div>
         </div>
       </q-page>

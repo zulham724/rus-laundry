@@ -210,7 +210,13 @@
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
-          :model-value="product.is_new != undefined ? product.is_new ? 'Baru' : 'Bekas' : null"
+          :model-value="
+            product.is_new != undefined
+              ? product.is_new
+                ? 'Baru'
+                : 'Bekas'
+              : null
+          "
           placeholder="Masukkan kondisi product"
         />
 
@@ -224,7 +230,7 @@
             </div>
             <q-form class="full-width">
               <!-- Kondisi barang baru -->
-              <div class="row full-width q-pa-sm" >
+              <div class="row full-width q-pa-sm">
                 <q-radio
                   @click="StatusProduct()"
                   keep-color
@@ -235,7 +241,7 @@
                 />
               </div>
               <!-- Kondisi barang Bekas -->
-              <div class="row full-width q-pa-sm" >
+              <div class="row full-width q-pa-sm">
                 <q-radio
                   @click="StatusProduct()"
                   keep-color
@@ -255,12 +261,10 @@
                   flat
                   class="full-width"
                   style="background-color: #9b27f1"
-                  
                 >
                   <div
                     class="text-weight-medium q-pa-xs"
                     style="color: #f1f1f1; font-size: 17px"
-                    
                   >
                     Konfirmasi
                   </div>
@@ -305,9 +309,9 @@ export default {
   },
 
   methods: {
-    StatusProduct(){
-      this.product.is_new = parseInt(this.is_new)
-      console.log("test status produk", this.product.is_new)
+    StatusProduct() {
+      this.product.is_new = parseInt(this.is_new);
+      console.log("test status produk", this.product.is_new);
     },
     update() {
       this.Loading = true;
@@ -418,12 +422,13 @@ export default {
 
     deleteImages(photoId, index) {
       this.disableButton = true;
-      this.photoId = photoId
+      this.photoId = photoId;
       this.$store
         .dispatch("Product/deleteImagesTest", { id: photoId })
         .then((res) => {
           this.images.splice(index, 1);
-        }).finally(() => {
+        })
+        .finally(() => {
           this.disableButton = false;
         });
     },

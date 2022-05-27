@@ -3,7 +3,7 @@
     <div class="fixed-top" style="z-index: 999">
       <q-header class="text-center shadow-1">
         <q-toolbar class="bg-white">
-          <q-btn flat round @click="$router.back()">
+          <q-btn flat round @click="$router.push('/marketplace-detail-user')">
             <q-avatar
               size="20px"
               icon="fas fa-arrow-left"
@@ -216,7 +216,7 @@
                     font-size: 12px;
                   "
                   no-caps
-                  @click="dialog_deleteProduct = true"
+                  @click="dialogDeleteProduct(product.id, p)"
                   label="Hapus"
                 ></q-btn>
               </div>
@@ -302,6 +302,8 @@ export default {
       chooseMode: false,
       search: "",
       isLoad: false,
+      product_id_to_delete: null,
+      product_index_to_delete: null,
     };
   },
   mounted() {
@@ -309,11 +311,29 @@ export default {
     this.getProducts();
   },
   methods: {
-    deleteProduct(id, index) {
-      this.$store.dispatch("Product/destroy", id).then((res) => {
-        this.products.splice(index, 1);
-        this.$q.notify("Berhasil");
-      });
+    dialogDeleteProduct(id, index) {
+      this.dialog_deleteProduct = true;
+      //id
+      this.product_id_to_delete = id;
+      //index
+      this.product_index_to_delete = index;
+    },
+    deleteProduct() {
+      let id = this.product_id_to_delete;
+      let index = this.product_index_to_delete;
+      // console.log("ini id", id);
+      // console.log("ini index", index);
+      this.$store
+        .dispatch("Product/destroy", id)
+        .then((res) => {
+          this.products.splice(index, 1);
+          this.$q.notify("Berhasil");
+          this.product_id_to_delete = null;
+          this.product_index_to_delete = null;
+        })
+        .catch((err) => {
+          this.$q.notify("Gagal");
+        });
     },
     getProducts() {
       return new Promise((resolve, reject) => {
