@@ -2,7 +2,7 @@
   <q-layout class="mbl">
     <q-header class="text-center shadow-1">
       <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.push('/change-no-whatsapp')">
+        <q-btn flat round @click="$router.push('/marketplace-detail-user')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
           </q-avatar>
         </q-btn>
@@ -23,25 +23,30 @@
         </div>
 
         <!-- No WhatsApp lama -->
-        <div class="row q-py-md">
+        <div class="row q-py-xs">
           <q-form ref="form" class="row full-width">
             <!-- Phone Code of Country -->
+            <!--
             <div class="col-2">
               <q-select
                 dense
-                v-model="model"
+                type="number"
+                v-model="model1"
                 :options="options"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Pilih kode negara',
                 ]"
               />
             </div>
+            -->
             <!-- Phone number -->
-            <div class="col-10 q-pl-md">
+            <div class="col-12">
               <q-input
+                type="tel"
                 dense
-                v-model="contact"
-                placeholder="Masukan nomor wa lama"
+                disable
+                v-model="oldContactNumber"
+                label="Nomor wa lama"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Masukkan No. Hp anda',
                 ]"
@@ -51,27 +56,17 @@
         </div>
 
         <!-- No WhatsApp Baru -->
-        <div class="row q-py-md">
+        <div class="row q-py-xs">
           <q-form ref="form" class="row full-width">
-            <!-- Phone Code of Country -->
-            <div class="col-2">
-              <q-select
-                dense
-                v-model="model"
-                :options="options"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Pilih kode negara',
-                ]"
-              />
-            </div>
             <!-- Phone number -->
-            <div class="col-10 q-pl-md">
+            <div class="col-12">
               <q-input
                 dense
-                v-model="contact"
-                placeholder="Masukan nomor wa aktif"
+                v-model="newContactNumber"
+                label="Masukan nomor wa aktif"
+                type="number"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Masukkan No. Hp anda',
+                  (val) => (val && val.length > 9) || 'Masukkan No. Hp anda',
                 ]"
               />
             </div>
@@ -79,9 +74,10 @@
         </div>
 
         <!-- Button save -->
-        <div class="row q-pt-xl">
+        <div class="row q-pt-md">
           <q-btn
             no-caps
+            @click="updateContactNumber()"
             class="q-pa-md full-width"
             style="background-color: #9b27f1; border-radius: 10px"
           >
@@ -100,17 +96,60 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
   data() {
     return {
-      model: null,
-      contact: null,
-      options: ["+62"],
+      oldContactNumber: null,
+      newContactNumber: null,
     };
+  },
+  mounted() {
+    this.init();
+  },
+  methods: {
+    init() {
+      console.log("uraa", this.Auth);
+      this.oldContactNumber = this.Auth.auth.contact_number;
+    },
+    updateContactNumber() {
+      let formData = {
+        id: this.Auth.auth.id,
+        contact_number: this.newContactNumber,
+      };
+      if (this.oldContactNumber == this.Auth.auth.contact_number) {
+        if (
+          this.newContactNumber != null &&
+          this.oldContactNumber != this.newContactNumber
+        ) {
+          // this.$q.notify("Gunakan nomor yang berbeda!");
+          this.$store
+            .dispatch("Auth/updateAccount", formData)
+            .then((res) => {
+              this.$q.notify("Berhasil melakukan perubahan nomor WA");
+              this.$router.push("/marketplace-detail-user");
+            })
+            .catch((err) => {
+              this.$q.notify("Gagal melakukan perubahan!");
+            })
+            .finally(() => {
+              this.newContactNumber = null;
+            });
+        } else if (this.oldContactNumber == this.newContactNumber) {
+          this.$q.notify("Gunakan nomor yang berbeda dan tidak kosong!");
+        } else {
+          this.$q.notify("Masukkan nomor dengan benar!");
+        }
+      } else {
+        this.$q.notify("Pastikan nomor sudah benar!");
+      }
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

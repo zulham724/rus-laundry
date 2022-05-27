@@ -46,7 +46,7 @@
                 label="keluar"
                 style="background-color: #9b27f1"
                 color="white"
-                @click="$router.back()"
+                @click="$router.push('/marketplace-add-product')"
               />
               <q-btn
                 flat

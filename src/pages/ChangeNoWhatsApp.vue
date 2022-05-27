@@ -25,7 +25,7 @@
         <div class="row q-py-md full-width">
           <!-- Button edit no wa -->
           <q-btn
-            @click="$router.push('/change-no-whatsapp2')"
+            @click="checkNumber()"
             no-caps
             class="q-pa-md q-mt-md full-width"
             style="background-color: #9b27f1; border-radius: 10px"
@@ -45,10 +45,26 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(["Auth"]),
+  },
+  methods: {
+    checkNumber() {
+      if (this.Auth.auth.contact_number) {
+        this.$router.push("/change-no-whatsapp2");
+      } else {
+        this.$q.notify({
+          position: "top",
+          message: "Anda belum mengisi nomor telepon",
+        });
+      }
+    },
   },
 };
 </script>
