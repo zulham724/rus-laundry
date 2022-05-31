@@ -192,8 +192,16 @@ export default {
           this.disableSave = true;
           dismiss();
           this.$q.notify("Berhasil simpan foto");
-          this.$router.back();
+          
+          const payload = {
+        id: this.order_id.id,
+        order_status_id: 4,
+      };
+      this.$store.dispatch("Orders/updateStatus", payload).then((res) => {
+        this.$router.push(`/invoice-page/${this.order_id}`);
+      });
         });
+      
     },
     getBlob(b64Data, contentType, sliceSize = 512) {
       contentType = contentType || "";

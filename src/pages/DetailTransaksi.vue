@@ -474,7 +474,7 @@
             </q-carousel-slide>
           </q-carousel>
           <q-btn
-            v-if="detail_order.percentage == 100"
+            v-if="detail_order.percentage == 100 && detail_order.photo == null"
             @click="
               order.paid_sum < order.total_sum
                 ? PaymentComponent()
@@ -490,6 +490,19 @@
               {{ order.paid_sum < order.total_sum ? "Bayar" : "Konfirmasi" }}
             </div>
           </q-btn>
+          <q-btn
+            v-if="detail_order.percentage == 100 && detail_order.photo != null"
+            @click="this.$router.push(`/invoice-page/${detail_order.id}`)
+            "
+            no-caps
+            class="fixed-bottom mbl-child"
+            :style="`background-color:#49C2C0 ; color: #fafafa; width: 100%`"
+          >
+            <div class="q-py-sm text-weight-regular">
+               Lihat Invoice
+            </div>
+          </q-btn>
+
 
           <q-dialog v-model="dialogConfirm">
             <q-card>
@@ -501,7 +514,7 @@
                   Konfirmasi pesanan ini?
                 </div>
               </q-card-section>
-
+              <!--
               <q-card-section>
                 <div
                   class="text-weight-light text-center q-mt-none"
@@ -510,6 +523,7 @@
                   Transaksi akan diproses selesai
                 </div>
               </q-card-section>
+              -->
 
               <q-card-actions class="text-primary" vertical>
                 <q-btn
@@ -519,13 +533,13 @@
                   label="Konfirmasi Transaksi"
                   style="background-color: #49c2c0; color: white"
                 />
-                <q-btn
+                <!-- <q-btn
                   @click="$router.push(`/postorderphoto/${order.id}`)"
                   no-caps
                   flat
                   label="Tambahkan Bukti Foto"
                   style="background-color: #49c2c0; color: white"
-                />
+                /> -->
                 <q-btn
                   no-caps
                   flat
@@ -873,6 +887,7 @@ ${url}`;
       console.log("ini service", service);
     },
     confirmService() {
+      console.log("ini detail order", this.detail_order)
       const payload = {
         id: this.detail_order.id,
         order_status_id: 4,

@@ -739,6 +739,14 @@ const routes = [
     },
 
     {
+        path: "/preview-detail-transaksi-3/:orderid",
+        component: () =>
+            import ("pages/PreviewDetailTransaksi3.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfSlave]),
+    },
+
+    {
         path: `/:orderid/status-cucian/:serviceid`,
         component: () =>
             import ("pages/StatusCucian.vue"),

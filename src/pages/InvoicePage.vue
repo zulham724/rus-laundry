@@ -8,7 +8,7 @@
     <!-- tombol back dan judul invoice pesanan -->
       <q-header class="shadow-1">
         <q-toolbar class="bg-white q-py-md">
-          <q-btn flat round size="10px" @click="$router.back()">
+          <q-btn flat round size="10px" @click="$router.push(`/detail-transaksi/${this.orderid}`)">
             <q-avatar
               size="20px"
               icon="fas fa-arrow-left"
