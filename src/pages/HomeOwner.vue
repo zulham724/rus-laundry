@@ -668,6 +668,17 @@ export default {
 
   methods: {
     moment,
+    attendanceCheck(){
+      console.log("ini auth", this.Auth.auth)
+      if(this.Auth.auth.shop){
+        
+      } else {
+        this.$q.notify({
+          position: "top",
+          message: "Pastikan anda sudah memiliki cabang",
+        });
+      }
+    },
     getMonthlyOrderEachBranch() {
       this.$store
         .dispatch("MasterOrders/getMonthlyOrderEachBranch")

@@ -117,7 +117,7 @@
             </div>
           </div>
 
-          <div class="fixed-bottom" v-if="!chooseMode" style="z-index: 1">
+          <div class="fixed-bottom mbl-child" v-if="!chooseMode" style="z-index: 1">
             <q-btn
               no-caps
               class="full-width q-py-sm"

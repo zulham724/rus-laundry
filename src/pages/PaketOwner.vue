@@ -30,7 +30,7 @@
           :key="item.id"
           class="q-px-sm q-py-sm"
         >
-          <q-card class="bgCard" style="border-radius: 10px">
+          <q-card flat class=" no-shadow" style="border-radius: 10px, ">
             <div class="bgCardTop text-h6 text-white text-center q-py-sm">
               {{ item.name }}
             </div>
@@ -70,7 +70,6 @@
                 class="full-width bgCardTop"
                 style="
                   background-color: #22c7dd;
-                  border-radius: 0px 0px 10px 10px;
                 "
               >
                 <div class="text-h6 q-py-sm" style="color: #fff">
@@ -86,7 +85,6 @@
                 class="full-width bgCardTop"
                 style="
                   background-color: #22c7dd;
-                  border-radius: 0px 0px 10px 10px;
                 "
               >
                 <div class="text-h6 q-py-lg" style="color: #fff"></div>

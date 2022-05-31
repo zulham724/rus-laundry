@@ -45,7 +45,6 @@
             <q-form ref="form">
               <q-input
                 class="q-pb-lg"
-                dense
                 :disable="loading"
                 rounded
                 outlined
@@ -58,7 +57,6 @@
 
               <q-input
                 class="q-pb-lg"
-                dense
                 :disable="loading"
                 rounded
                 outlined

@@ -282,6 +282,8 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
+import moment from "moment";
 
 export default {
   props: ["branchid"],
@@ -301,7 +303,25 @@ export default {
     // console.log("branch", this.branchid);
     this.getBranchEmployee();
   },
+  computed: {
+    ...mapState(["Auth"]),
+  },
   methods: {
+    moment,
+    // addEmployee() {
+    //   console.log("ini auth", this.Auth.auth);
+    //   let current_date = moment().locale("id").format("LLL");
+    //   let expired_date = this.Auth.auth.active_package_user.expired_date;
+    //   if (current_date > expired_date) {
+        
+    //     console.log("masih aktif");
+    //   } else {
+    //     console.log("expired");
+    //   }
+      
+    //   // if(this.Auth.auth.active_package_user)
+    //   // 
+    // },
     confirmAlert() {
       // this.removePackage(this.deleteProperties.index);
       this.deleteBranchEmployee(this.deleteProperties.id);

@@ -78,6 +78,7 @@
             </div>
             <q-input
               v-model="profile.email"
+              disable
               class="q-mb-sm"
               dense
               style="background-color: #f6f7f8"
@@ -167,8 +168,9 @@
 
         <!-- Dialog Change Password -->
         <q-dialog v-model="dialogPassword" full-width persistent>
-          <q-card class="column full-width q-pa-sm">
-            <div class="row justify-end">
+          <q-card class="column full-width q-pa-sm ">
+            <!--
+            <div class="row justify-end bg-blue">
               <q-btn
                 v-close-popup
                 icon="close"
@@ -181,9 +183,132 @@
                 style="background-color: rgba(0, 0, 0, 0.5)"
               ></q-btn>
             </div>
+            -->
             <div class="column">
+              <div class="col text-right q-py-sm">
+                <q-btn
+                  v-close-popup
+                  icon="close"
+                  size="small"
+                  round
+                  dense
+                  flat
+                  class="shadow-1"
+                  color="white"
+                  style="background-color: rgba(0, 0, 0, 0.5)"
+                ></q-btn>
+              </div>
+              <div class="col"><div class="column">
               <q-form ref="form" class="column">
-                <div class="q-pt-sm">
+                <div>
+                  <div
+                    class="text-weight-bold text-caption q-mb-xs"
+                    style="color: #646464"
+                  >
+                    Password lama
+                  </div>
+                  <q-input
+                    v-model="password.old"
+                    :type="isPwd1 ? 'password' : 'text'"
+                    class="q-my-sm"
+                    dense
+                    style="background-color: transparent"
+                    outlined
+                    label="Masukkan password lama"
+                    :rules="[(val) => !!val || 'mohon diisi']"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd1 ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd1 = !isPwd1"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+                <div>
+                  <div
+                    class="text-weight-bold text-caption q-mb-xs"
+                    style="color: #646464"
+                  >
+                    Password baru
+                  </div>
+                  <q-input
+                    v-model="password.new"
+                    :type="isPwd2 ? 'password' : 'text'"
+                    class="q-mb-sm"
+                    dense
+                    style="background-color: transparent"
+                    outlined
+                    label="Masukkan password baru"
+                    :rules="[(val) => !!val || 'mohon diisi']"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd2 ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd2 = !isPwd2"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+                <div>
+                  <div
+                    class="text-weight-bold text-caption q-mb-xs"
+                    style="color: #646464"
+                  >
+                    Konfirmasi password baru
+                  </div>
+                  <q-input
+                    v-model="password.confirm"
+                    :type="isPwd3 ? 'password' : 'text'"
+                    class="q-mb-sm"
+                    dense
+                    style="background-color: transparent"
+                    outlined
+                    label="Konfirmasi password baru"
+                    :rules="[
+                      (val) => !!val || 'mohon diisi',
+                      (val) =>
+                        val === password.new ||
+                        'konfirmasi password tidak sama',
+                    ]"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd3 ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd3 = !isPwd3"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+              </q-form>
+              <div class="q-mt-md text-center justify-center">
+                <q-btn
+                  @click="doChangePassword()"
+                  :disabled="loadingPassword"
+                  :loading="loadingPassword"
+                  flat
+                  dense
+                  no-caps
+                  class="q-py-sm"
+                  style="
+                    color: #ffffff;
+                    width: 100%;
+                    background-color: #49c2c0;
+                    border-radius: 5px;
+                  "
+                  label="Ubah"
+                />
+              </div>
+            </div></div>
+            </div>
+
+            <!--
+            <div class="column bg-green">
+              <q-form ref="form" class="column">
+                <div>
                   <div
                     class="text-weight-bold text-caption q-mb-xs"
                     style="color: #646464"
@@ -286,6 +411,7 @@
                 />
               </div>
             </div>
+            -->
           </q-card>
         </q-dialog>
 
@@ -359,13 +485,16 @@ export default {
     //
     init() {
       if (!this.auth.shop) {
-        console.log("user belum punya shop");
-        this.profile.name = this.auth.name;
-        this.profile.email = this.auth.email;
-        this.profile.affiliate_code = this.auth.affiliate_code;
+        console.log("user belum punya shop", this.Auth.auth);
+        this.profile.name = this.Auth.auth.name;
+        this.profile.email = this.Auth.auth.email;
+        this.profile.affiliate_code = this.Auth.auth.affiliate_code;
       } else {
-        console.log("user sudah punya shop");
-        this.profile.description = this.auth.shop.description;
+        console.log("user sudah punya shop", this.Auth.auth);
+        this.profile.name = this.Auth.auth.name;
+        this.profile.email = this.Auth.auth.email;
+        this.profile.affiliate_code = this.Auth.auth.affiliate_code;
+        this.profile.description = this.Auth.auth.shop.description;
       }
 
       // console.log("description", this.auth.shop.description);
@@ -425,9 +554,10 @@ export default {
               new_password: this.password.new,
             })
             .then((res) => {
+              console.log("ini res ganti password", res);
               this.$q.notify({
                 type: "success",
-                message: "Kata sandi berhasil diubah",
+                message: "Kata sandi berhasil diubah tteess",
               });
               this.dialogPassword = false;
             })

@@ -675,6 +675,7 @@ import MakePaymentDialogVue from "src/components/MakePaymentDialog";
 import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent";
 import SubmitPaymentComponentVue from "src/components/DetailFirstPaymentComponent.vue";
 import SecondaryPaymentComponentVue from "src/components/secondaryPaymentComponent.vue";
+import moment from "moment";
 import { useQuasar } from "quasar";
 import { Platform } from "quasar";
 
@@ -701,6 +702,7 @@ export default {
       source: null,
       finalLink: null,
       alert: false,
+      whatsappLoop: "",
     };
   },
 
@@ -719,11 +721,60 @@ export default {
       window.open(url, "_blank");
     },
     setTextMessage() {
+      console.log("this.order", this.order);
       if (this.order) {
         let url = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
+        let customer = this.order.customer.name;
+        let customer_number = this.order.customer.contact_number;
+        let employee = this.order.employee.name;
+        let shop = this.order.shop.name;
+        let current_date = moment().locale("id").format("LLL");
+        let price = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+        }).format(this.order.total_sum);
+        let debt = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+        }).format(this.order.total_sum - this.order.paid_sum);
+        let paymnent_id = this.order.id;
+
+        for (let i = 0; i < this.order.services.length; i++) {
+          console.log("tmp2", this.order.services[i]);
+          let tmp3 = `${this.order.services[i].name}📝 ${
+            this.order.services[i].quantity
+          } ${this.order.services[i].service_unit} x ${new Intl.NumberFormat(
+            "id-ID",
+            {
+              style: "currency",
+              currency: "IDR",
+            }
+          ).format(this.order.services[i].price)}
+Keterangan : ${this.order.services[i].process_time} Jam\n`;
+
+          this.whatsappLoop += tmp3;
+        }
+
         let tmp = `
-          Halo -----. Terimakasih telah melakukan pemesanan di -----. Yuk cek proses pesanan kamu di sini
-          \n Url : ${url}`;
+===== 🧾 NOTA =====\n
+PESAN OTOMATIS\n
+Outlet : ${shop}
+Kasir : ${employee} \n
+Nama Pelanggan : ${customer}
+No Handphone :  ${customer_number}\n
+Kode Nota. ${paymnent_id}
+Tgl. Nota : ${current_date}\n
+Detail
+--------------------------------
+${this.whatsappLoop}
+🕕 Selesai : ${current_date} \n
+=========================
+Total : ${price}
+=========================
+Sisa Tagihan : ${debt}\n
+--------------------------------
+Informasi Nota, Pembayaran Non-tunai dan Virtual Account di
+${url}`;
         this.message = tmp;
       }
     },

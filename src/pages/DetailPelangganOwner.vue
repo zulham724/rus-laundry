@@ -276,6 +276,7 @@
 
 <script>
 import { ref } from "vue";
+import {mapState} from "vuex";
 
 export default {
   props: ["branchid"],
@@ -291,12 +292,21 @@ export default {
       },
     };
   },
+
+  computed: {
+    ...mapState(["Auth"]),
+  },
+
   mounted() {
     console.log("branch", this.branchid);
     this.getBranchCustomers();
     // this.getCustomerById();
   },
   methods: {
+    addCustomer(){
+      console.log("ini auth", this.Auth.auth)
+      this.$router.push(`/buat-pelanggan-owner/${this.branchid}`)
+    },
     popupAlert(id, index) {
       this.alert = true;
       this.deleteProperties.id = id;

@@ -82,7 +82,7 @@
           />
         </q-card>
 
-        <div class="fixed-bottom" style="z-index: 1">
+        <div class="fixed-bottom mbl-child" style="z-index: 1">
           <q-btn
             @click="store()"
             :ripple="{ color: 'orange' }"

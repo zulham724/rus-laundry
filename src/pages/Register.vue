@@ -44,7 +44,7 @@
           <div class="q-pa-md text-center">
             <q-form ref="form">
               <q-input
-                dense
+               class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -54,7 +54,7 @@
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
               <q-input
-                dense
+                 class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -66,7 +66,7 @@
               />
 
               <q-input
-                dense
+                 class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -84,7 +84,7 @@
                 />
               </q-input>
               <q-input
-                dense
+                 class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -110,7 +110,7 @@
                 />
               </div>
               <q-input
-                dense
+                 class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -120,7 +120,7 @@
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
               <q-input
-                dense
+                 class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -129,8 +129,7 @@
                 @update:model-value="
                   checkAffiliateCode(credential.affiliate_code)
                 "
-                lazy-rules
-                :rules="[(val) => (val && val.length > 0) || '']"
+                
               />
               <div
                 class="text-justify"
@@ -230,6 +229,7 @@ export default {
           this.$store
             .dispatch("Auth/register", this.credential)
             .then((res) => {
+              console.log("kondisi then doRegister")
               this.$router.push("/login");
               window.history.pushState(null, null, window.location.href);
             })

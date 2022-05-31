@@ -27,10 +27,22 @@
             </div>
             <div class="col-4 self-center text-right q-px-sm">
               <q-btn
+                v-if="this.Auth.auth.active_package_user != null"
                 class="q-px-sm"
                 no-caps
                 dense
-                @click="alert = true"
+                @click="checkLimitBranch()"
+                color="white"
+                text-color="black"
+                size="small"
+                label="Tambah"
+              />
+              <q-btn
+                v-if="this.Auth.auth.active_package_user == null"
+                class="q-px-sm"
+                no-caps
+                dense
+                @click="addServiceAlert()"
                 color="white"
                 text-color="black"
                 size="small"
@@ -193,6 +205,7 @@
 import { ref } from "vue";
 import { mapState } from "vuex";
 import moment from "moment";
+import { useQuasar } from "quasar";
 
 export default {
   data() {
@@ -211,12 +224,20 @@ export default {
     ...mapState(["Auth"]),
   },
   mounted() {
-    // console.log("auth", this.Auth.auth);
+    console.log("auth", this.Auth.auth);
     this.getMonthlyOrdersEachBranches();
     this.checkActivePackageUser();
   },
   methods: {
     moment,
+    addServiceAlert() {
+      const $q = useQuasar();
+      console.log("active user package null");
+      this.$q.notify({
+        position: "bottom",
+        message: "Maaf tidak bisa tambah cabang, silahkan pilih paket dahulu",
+      });
+    },
     checkLimitBranch() {
       let limit_branch =
         this.Auth.auth.active_package_user.package.package_limits.find(
@@ -261,10 +282,17 @@ export default {
         });
     },
     checkActivePackageUser() {
-      let date = this.Auth.auth.active_package_user.expired_date;
-      this.expired_date = moment(date).locale("id").format("LL");
-      this.current_date = moment().locale("id").format("LL");
-      // console.log("expired_date", this.expired_date);
+      if (this.Auth.auth.active_package_user) {
+        let date = this.Auth.auth.active_package_user.expired_date;
+        this.expired_date = moment(date).locale("id").format("LL");
+        this.current_date = moment().locale("id").format("LL");
+        // console.log("expired_date", this.expired_date);
+      } else {
+        this.$q.notify({
+          position: "bottom",
+          message: "Maaf tidak bisa tambah cabang, silahkan pilih paket dahulu",
+        });
+      }
     },
     getMonthlyOrdersEachBranches() {
       this.$store

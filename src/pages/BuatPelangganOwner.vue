@@ -47,7 +47,7 @@
               color="black"
               v-model="this.addCustomer.contact_number"
               outlined
-              type="search"
+              type="number"
             >
             </q-input>
           </div>
