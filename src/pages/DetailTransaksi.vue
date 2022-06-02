@@ -16,7 +16,7 @@
                 flat
                 round
                 size="sm"
-                @click="$router.back()"
+                @click="$router.push('/transaction')"
               >
                 <q-avatar
                   size="20px"
@@ -892,9 +892,10 @@ ${url}`;
         id: this.detail_order.id,
         order_status_id: 4,
       };
-      this.$store.dispatch("Orders/updateStatus", payload).then((res) => {
-        this.$router.push(`/invoice-page/${this.detail_order.id}`);
-      });
+      // this.$store.dispatch("Orders/updateStatus", payload).then((res) => {
+      //   this.$router.push(`/invoice-page/${this.detail_order.id}`);
+      // });
+      this.$router.push(`/postorderphoto/${this.detail_order.id}`);
     },
     photoProduct() {
       id: this.detail_order.id;
