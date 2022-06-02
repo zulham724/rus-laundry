@@ -194,7 +194,7 @@ export default {
           this.$q.notify("Berhasil simpan foto");
           
           const payload = {
-        id: this.order_id.id,
+        id: this.order_id,
         order_status_id: 4,
       };
       this.$store.dispatch("Orders/updateStatus", payload).then((res) => {

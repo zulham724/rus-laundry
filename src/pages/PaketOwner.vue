@@ -29,8 +29,86 @@
           v-for="item in this.packageData"
           :key="item.id"
           class="q-px-sm q-py-sm"
-        >
-          <q-card flat :class="`no-shadow ${item.id >= this.Auth.auth.active_package_user.package.id?null:'filterBrightness'}`" style="border-radius: 10px; " >
+        > 
+          <q-card flat v-if="this.Auth.auth.active_package_user == null" class="no-shadow" style="border-radius: 10px; " >
+            <div class="bgCardTop text-h6 text-white text-center q-py-sm">
+              {{ item.name }}
+            </div>
+            <div class="q-px-sm bg-white">
+              <div v-for="paket in item.package_contents" :key="paket.id">
+                <div class="row q-py-xs">
+                  <div class="text-center self-center col-2">
+                    <img src="~/assets/dm.png" />
+                  </div>
+                  <div class="q-pl-sm col-10 text-h6 text-black self-center">
+                    <div>{{ paket.value }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row q-py-xs">
+                <div class="text-center self-center col-2">
+                  <img src="~/assets/cs.png" />
+                </div>
+                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
+                  <div>
+                    {{
+                      new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(item.price)
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="this.Auth.auth.active_package_user">
+              <q-btn
+                v-if="item.id >= this.Auth.auth.active_package_user.package.id"
+                no-caps
+                @click="nextPayment(item)"
+                class="full-width bgCardTop"
+                style="
+                  background-color: #22c7dd;
+                "
+              >
+                <div class="text-h6 q-py-sm" style="color: #fff">
+                  Lanjutkan Ke Pembayaran
+                </div>
+              </q-btn>
+            </div>
+            <div v-if="this.Auth.auth.active_package_user">
+              <q-btn
+                v-if="item.id < this.Auth.auth.active_package_user.package.id"
+                no-caps
+                disable
+                class="full-width bgCardTop"
+                style="
+                  background-color: #22c7dd;
+                "
+              >
+                <div class="text-h6 q-py-sm" style="color: #fff">
+                  Lanjutkan Ke Pembayaran
+                </div>
+              </q-btn>
+            </div>
+            <div v-if="this.Auth.auth.active_package_user == null">
+              <q-btn
+                no-caps
+                @click="nextPayment(item)"
+                class="full-width bgCardTop"
+                style="
+                  background-color: #22c7dd;
+                  border-radius: 0px 0px 10px 10px;
+                "
+              >
+                <div class="text-h6 q-py-sm" style="color: #fff">
+                  Lanjutkan Ke Pembayaran
+                </div>
+              </q-btn>
+            </div>
+          </q-card>
+          <q-card v-if="this.Auth.auth.active_package_user != null" flat :class="`no-shadow ${item.id >= this.Auth.auth.active_package_user.package.id?null:'filterBrightness'}`" style="border-radius: 10px; " >
             <div class="bgCardTop text-h6 text-white text-center q-py-sm">
               {{ item.name }}
             </div>
