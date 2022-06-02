@@ -63,9 +63,10 @@ const actions = {
                     const token = resp.data;
                     api.defaults.headers.common.Accept = "application/json";
                     api.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
-                    resolve(res);
+                    resolve(resp);
                 })
                 .catch((err) => {
+                    // console.log("Auth/regiter.err",err);
                     localStorage.clear();
                     reject(err);
                 });
@@ -238,12 +239,12 @@ const actions = {
             api
                 .post(`/api/master/change-password`, payload)
                 .then((res) => {
+                    console.log("then Auth/changePasswordMaster", res.data);
                     resolve(res);
-                    console.log("then Auth/changePasswordMaster", res);
                 })
                 .catch((err) => {
-                    reject(err);
                     console.log("err Auth/changePasswordMaster", err);
+                    reject(err);
                 });
         });
     },

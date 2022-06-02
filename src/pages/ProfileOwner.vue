@@ -550,11 +550,12 @@ export default {
           this.loadingPassword = true;
           this.$store
             .dispatch("Auth/changePasswordMaster", {
-              old_password: this.password.old,
-              new_password: this.password.new,
+              current_password: this.password.old,
+              password: this.password.new,
+              password_confirmation: this.password.confirm,
             })
             .then((res) => {
-              console.log("ini res ganti password", res);
+              // console.log("ini res ganti password", res);
               this.$q.notify({
                 type: "success",
                 message: "Kata sandi berhasil diubah tteess",

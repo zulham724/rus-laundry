@@ -234,7 +234,8 @@ export default {
               window.history.pushState(null, null, window.location.href);
             })
             .catch((err) => {
-              this.$q.notify("terjadi kesalahan");
+              // console.log("terjadi kesalahan doRegister ->", err)
+              this.$q.notify("Akun sudah terdaftar!");
             })
             .finally(() => {
               this.loading = false;

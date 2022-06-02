@@ -161,7 +161,7 @@
             <q-card-actions align="left">
               <q-btn
                 flat
-                label="Konfirmasi"
+                label="Proses Pesanan"
                 @click="payment2 = true"
                 rounded
                 style="background-color: #6295ff"
@@ -222,7 +222,7 @@
                   (payment3 = true) & this.addPackage() & this.getCurrentDate()
                 "
                 flat
-                label="Konfirmasi2"
+                label="Proses Pesanan"
                 rounded
                 style="background-color: #6295ff"
                 color="white"

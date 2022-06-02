@@ -78,7 +78,7 @@
             class="q-mt-sm q-py-md full-width"
             style="background-color: #0180ff; color: #fff"
             no-caps
-            label="Saya sudah transfer"
+            label="Konfirmasi Pembayaran"
         /></q-card>
       </q-page>
     </q-page-container>
