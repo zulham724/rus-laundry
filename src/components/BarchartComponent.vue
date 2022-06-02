@@ -93,6 +93,7 @@ export default {
   },
   mounted() {
     this.setChartData();
+    console.log("this.data", this.data);
     // console.log("nilai terbesar", Math.max(this.data.show));
     // console.log("ini sended data", this.data);
   },

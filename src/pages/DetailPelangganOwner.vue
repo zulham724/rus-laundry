@@ -355,7 +355,7 @@ export default {
       this.$store
         .dispatch("MasterBranchOrders/getBranchCustomers", this.branchid)
         .then((res) => {
-          console.log("res getBranchCustomers", res.data);
+          // console.log("res getBranchCustomers", res.data);
           this.branchCustomers = this.branchCustomersTemp = res.data;
         })
         .catch((err) => {

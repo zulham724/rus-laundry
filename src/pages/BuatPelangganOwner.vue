@@ -105,14 +105,14 @@ export default {
   methods: {
     print() {
       this.addCustomer.shop_id = this.branchid;
-      console.log("ini res print", this.addCustomer);
+      // console.log("ini res print", this.addCustomer);
       this.createBranchCustomer();
     },
     createBranchCustomer() {
       this.$store
         .dispatch("MasterBranchOrders/createBranchCustomer", this.addCustomer)
         .then((res) => {
-          console.log("ini res createBranchCustomer", res);
+          // console.log("ini res createBranchCustomer", res);
           this.$q.notify({
             position: "bottom",
             message: "Berhasil Menambah Pelanggan",
@@ -120,7 +120,7 @@ export default {
           this.$router.back();
         })
         .catch((err) => {
-          console.log("terjadi kesalahan createBranchCustomer", err);
+          // console.log("terjadi kesalahan createBranchCustomer", err);
         });
     },
   },

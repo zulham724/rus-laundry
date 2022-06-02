@@ -207,6 +207,7 @@
 
         <!-- TAB CHART DATA JUMLAH PESANAN & PENGHASILAN -->
         <div class="col">
+          <!--
           <div class="row">
             <div class="col">
               <div class="row q-px-md q-py-md text-weight-bold">
@@ -217,6 +218,7 @@
               </div>
             </div>
           </div>
+          -->
           <div class="row">
             <div class="col">
               <div class="row q-px-md q-py-md text-weight-bold">
@@ -286,7 +288,7 @@ export default {
   },
 
   mounted() {
-    console.log("ini auth", this.Auth.auth);
+    // console.log("ini auth", this.Auth.auth);
     // console.log("branch", this.branchid);
     this.getBranchOrders();
     this.getBranchDevelopment();
@@ -323,7 +325,7 @@ export default {
         });
         //data menjadi satuan/terpisah
         if (bulan2.length) {
-          bulan2[0].show = bulan2[0].total;
+          bulan2[0].show = bulan2[0].total_sum;
 
           let counter = 0;
           counter = bulan2[0].show;
@@ -335,6 +337,7 @@ export default {
 
           // this.topValueCounter();
         } else {
+
           this.orderDataNull2.show = 0;
           this.array2.push(this.orderDataNull2);
           this.sendDataBoolean2 = true;
@@ -348,7 +351,7 @@ export default {
     },
     topValueCounter2() {
       this.dataTop2 = Math.max(...this.arrayCounter2);
-      console.log("data top2", this.dataTop2);
+      // console.log("data top2", this.dataTop2);
       // console.log(Math.max(...this.arrayCounter));
     },
     //PENGHASILAN - PENGHASILAN - PENGHASILAN - PENGHASILAN
@@ -358,7 +361,7 @@ export default {
       this.$store
         .dispatch("MasterBranchOrders/getMonthlyOrders", this.branchid)
         .then((res) => {
-          console.log("ini res getMonthlyOrders", res.data);
+          console.log("PPPPPPPPP", res.data);
           this.filterMonthGetMonthlyOrder(res.data);
         })
         .catch((err) => {

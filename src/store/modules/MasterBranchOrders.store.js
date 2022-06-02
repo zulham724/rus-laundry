@@ -33,6 +33,7 @@ const actions = {
             api
                 .get(`api/master/branchpaymentcountbymonth/${branchid}`)
                 .then((res) => {
+                    console.log('ressi', res)
                     resolve(res);
                 })
                 .catch((err) => {
@@ -47,9 +48,11 @@ const actions = {
                 .post("api/master/branch_customer", payload)
                 .then((res) => {
                     resolve(res);
+                    console.log("createBranchCustomer RES")
                 })
                 .catch((err) => {
                     reject(err);
+                    console.log("createBranchCustomer ERR")
                 });
         });
     },
