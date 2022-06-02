@@ -30,7 +30,7 @@
           :key="item.id"
           class="q-px-sm q-py-sm"
         >
-          <q-card flat class=" no-shadow" style="border-radius: 10px, ">
+          <q-card flat :class="`no-shadow ${item.id >= this.Auth.auth.active_package_user.package.id?null:'filterBrightness'}`" style="border-radius: 10px; " >
             <div class="bgCardTop text-h6 text-white text-center q-py-sm">
               {{ item.name }}
             </div>
@@ -87,7 +87,9 @@
                   background-color: #22c7dd;
                 "
               >
-                <div class="text-h6 q-py-lg" style="color: #fff"></div>
+                <div class="text-h6 q-py-sm" style="color: #fff">
+                  Lanjutkan Ke Pembayaran
+                </div>
               </q-btn>
             </div>
             <div v-if="this.Auth.auth.active_package_user == null">
@@ -375,5 +377,9 @@ export default {
 <style>
 .bgCardTop {
   background-image: linear-gradient(to bottom right, #00c6ff, #0072ff);
+}
+.filterBrightness {
+  filter: brightness(75%);
+
 }
 </style>
