@@ -375,7 +375,7 @@
 
                 <div
                   class="col full-width"
-                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date <= this.current_date2"
+                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date >= this.current_date2"
                 >
                   <div class="row">
                     <div
@@ -403,7 +403,7 @@
                 
                 <div
                   class="col full-width "
-                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date >= this.current_date2"
+                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date <= this.current_date2"
                 >
                   <q-btn flat @click="$router.push('/paket-owner-2')" class="q-my-md bg-white full-width" color="white" text-color="grey-6" no-caps label="Perpanjang paket" />
                 </div>

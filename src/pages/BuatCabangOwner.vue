@@ -125,9 +125,17 @@ export default {
             .dispatch("Branch/addNewBranch", this.newBranch)
             .then((res) => {
               console.log("res", res);
+              this.$q.notify({
+                position: "top",
+                message: "Berhasil tambah cabang",
+              });
             })
             .catch((err) => {
               console.log("err", err);
+              this.$q.notify({
+                position: "top",
+                message: "Gagal tambah cabang",
+              });
             })
             .finally(() => {
               this.$router.push("/cabang-owner");

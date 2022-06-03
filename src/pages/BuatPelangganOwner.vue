@@ -117,7 +117,7 @@ export default {
             position: "bottom",
             message: "Berhasil Menambah Pelanggan",
           });
-          // this.$router.back();
+          this.$router.back();
         })
         .catch((err) => {
           this.$q.notify({

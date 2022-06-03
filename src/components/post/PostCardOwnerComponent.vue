@@ -391,7 +391,7 @@
             class="full-width"
             dense
             flat
-            @click="dialogDelete = true"
+            @click="buttonShare()"
           >
             <div class="row full-width">
               <div class="col-3">

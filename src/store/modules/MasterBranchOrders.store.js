@@ -177,7 +177,7 @@ const actions = {
             api
                 .post("/api/master/branch_service", service)
                 .then((res) => {
-                    resolve(res);
+                    resolve(res.data);
                 })
                 .catch((err) => {
                     reject(err);
