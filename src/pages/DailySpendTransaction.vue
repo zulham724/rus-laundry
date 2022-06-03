@@ -12,7 +12,6 @@
           <q-item-section avatar>
             <q-skeleton size="60px" type="QAvatar" />
           </q-item-section>
-
           <q-item-section class="self-center">
             <q-item-label class="text-weight-medium">
               <q-skeleton type="text" height="20px" />
@@ -21,7 +20,6 @@
               <q-skeleton type="text" width="15vw" />
             </q-item-label>
           </q-item-section>
-
           <q-item-section>
             <q-item-label class="self-center on-right">
               <q-skeleton width="50px" type="text" />
@@ -60,14 +58,15 @@
                       text-color="white"
                     />
                   </q-item-section>
-
                   <q-item-section>
                     {{ order.name }} <br />
                     {{ moment(order.created_at).format("LL") }}
                   </q-item-section>
-
                   <q-item-section side>
-                    <div class="row items-center" style="color: #e82222; font-size: 12px">
+                    <div
+                      class="row items-center"
+                      style="color: #e82222; font-size: 12px"
+                    >
                       -{{
                         new Intl.NumberFormat("id-ID", {
                           style: "currency",
@@ -87,8 +86,6 @@
                   </q-card-section>
                 </q-card>
               </q-expansion-item>
-
-              
             </q-list>
           </q-infinite-scroll>
         </div>

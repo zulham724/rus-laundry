@@ -32,27 +32,7 @@
         </div>
       </q-header>
     </div>
-    <!-- <q-header class="fixed-top">
-      <q-toolbar class="shadow-1" style="background-color: #1c309b">
-        <q-btn
-          @click="$router.back()"
-          no-caps
-          class="q-pa-md"
-          flat
-          style="color: white"
-        >
-          <q-icon size="20px" name="fas fa-arrow-left" style="color: #ffffff">
-          </q-icon>
-        </q-btn>
-
-        <q-toolbar-title
-          v-if="content"
-          class="text-left text-weight-medium text-subtitle2"
-          style="color: white; font-size: 16px"
-          >{{ content.tittle }}</q-toolbar-title
-        >
-      </q-toolbar>
-    </q-header>-->
+    
     <q-page v-if="content">
       <div
         class="row full-width q-py-sm justify-center"
@@ -78,18 +58,14 @@
         </div>
       </div>
       <!-- Video/foto -->
-      <div v-if="content.video" style="height: 250px">
-        <!-- <vue-plyr>
-              <video
-                :src="STORAGE_URL + `/` + content.video.src"
-              ></video>
-            </vue-plyr> -->
+      <div v-if="content.video" class="full-width" style="height: 250px">
         <video
           class="bg-black"
           :src="STORAGE_URL + `/` + content.video.src"
           controls
           style="width: 100%; height: 250px; object-fit: cover"
         ></video>
+        
       </div>
       <div v-if="content.image_content" class="full-width">
         <q-img :src="STORAGE_URL + `/` + content.image_content.src" />
@@ -177,9 +153,6 @@
         <div class="col">
           <!-- TAB LIKE DAN KOMENTAR -->
           <div class="row justify-between">
-            <!-- <div class="col-6 self-center text-center justify-center column" style="width: 25px"></div>
-                           <div class="col-6 self-center text-center justify-center column" style="width: 25px"></div>-->
-            <div></div>
             <q-btn disable dense flat class="q-px-lg" no-caps>
               <div class="col">
                 <div class="row justify-center text-white">
@@ -204,7 +177,7 @@
 
       <!-- Materi berikutnya -->
       <div
-        class="fixed-bottom shadow-up-1"
+        class="fixed-bottom shadow-up-1 bg-white"
         style="border-radius: 14px 14px 0px 0px"
       >
         <div
@@ -313,31 +286,31 @@
             </div>
           </div>
         </div>
-
-        <div class="col">
-          <!-- TAB LIKE DAN KOMENTAR -->
-          <div class="row justify-between">
-            <!-- <div class="col-6 self-center text-center justify-center column" style="width: 25px"></div>
-                           <div class="col-6 self-center text-center justify-center column" style="width: 25px"></div>-->
-            <div></div>
-            <q-btn dense flat class="q-px-lg" no-caps>
-              <div class="col">
-                <div class="row justify-center">
-                  <q-img src="~/assets/lk.png" style="width: 25px" />
-                </div>
-                <div class="row">Suka</div>
-              </div>
+        <q-separator />
+        <!-- TAB LIKE DAN KOMENTAR -->
+        <div class="row q-pa-sm bg-white">
+          <div class="col-6 self-center text-center justify-center">
+            <q-btn
+              round
+              size="md"
+              flat
+              no-caps
+              @click="content.liked_count ? dislike() : like()"
+              :color="content.liked_count ? 'red' : 'black'"
+              :icon="content.liked_count ? 'favorite' : 'favorite_border'"
+            >
             </q-btn>
-            <div></div>
-            <q-btn dense flat class="q-px-xs" no-caps>
-              <div class="col">
-                <div class="row justify-center">
-                  <q-img src="~/assets/kmt.png" style="width: 25px" />
-                </div>
-                <div class="row">Komentar</div>
-              </div>
+          </div>
+          <div class="col-6 self-center text-center justify-center">
+            <q-btn
+              round
+              @click="$router.push(`/comment-of-course/${this.contentid}`)"
+              flat
+              class="q-px-xs"
+              no-caps
+              icon="chat_bubble_outline"
+            >
             </q-btn>
-            <div></div>
           </div>
         </div>
       </div>
@@ -527,6 +500,7 @@ export default {
       this.content.liked_count = 1;
       this.$store.dispatch("ModuleContent/like", this.contentid).then((res) => {
         this.content.liked_count = res.data.liked_count;
+        console.log("cek like", res);
         this.$forceUpdate();
       });
     },

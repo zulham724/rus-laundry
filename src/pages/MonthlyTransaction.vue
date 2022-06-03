@@ -12,7 +12,6 @@
           <q-item-section avatar>
             <q-skeleton size="60px" type="QAvatar" />
           </q-item-section>
-
           <q-item-section class="self-center">
             <q-item-label class="text-weight-medium">
               <q-skeleton type="text" height="20px" />
@@ -21,7 +20,6 @@
               <q-skeleton type="text" width="15vw" />
             </q-item-label>
           </q-item-section>
-
           <q-item-section>
             <q-item-label class="self-center on-right">
               <q-skeleton width="50px" type="text" />
@@ -29,7 +27,6 @@
           </q-item-section>
         </q-item>
       </div>
-
       <div v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
@@ -64,7 +61,6 @@
                     text-color="white"
                   />
                 </q-item-section>
-
                 <q-item-section class="self-center">
                   <q-item-label class="text-weight-medium">
                     {{ order.id }} {{ order.customer }}</q-item-label
@@ -73,7 +69,6 @@
                     {{ moment(order.updated_at).format("LL") }}</q-item-label
                   >
                 </q-item-section>
-
                 <q-item-section
                   class="text-weight-regular"
                   side
@@ -94,17 +89,14 @@
     </q-pull-to-refresh>
   </div>
 </template>
-halaman endi sing ngekek i icon iku mau? iki
 <script>
 import { ref } from "vue";
 import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
-  //q-infinite-scroll
   setup() {
     const items = ref([{}, {}, {}, {}, {}]);
-
     return {
       items,
       onLoad(index, done) {

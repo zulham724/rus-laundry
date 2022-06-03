@@ -12,7 +12,6 @@
           <q-item-section avatar>
             <q-skeleton size="60px" type="QAvatar" />
           </q-item-section>
-
           <q-item-section class="self-center">
             <q-item-label class="text-weight-medium">
               <q-skeleton type="text" height="20px" />
@@ -21,7 +20,6 @@
               <q-skeleton type="text" width="15vw" />
             </q-item-label>
           </q-item-section>
-
           <q-item-section>
             <q-item-label class="self-center on-right">
               <q-skeleton width="50px" type="text" />
@@ -29,7 +27,6 @@
           </q-item-section>
         </q-item>
       </div>
-
       <div v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
@@ -37,7 +34,6 @@
             Belum ada transaksi minggu ini
           </div>
         </div>
-
         <div v-else-if="orders.data.length">
           <q-infinite-scroll
             @load="ketikaOnLoad"
@@ -74,7 +70,6 @@
                     {{ moment(order.updated_at).format("LL") }}</q-item-label
                   >
                 </q-item-section>
-
                 <q-item-section
                   class="text-weight-regular"
                   side
@@ -105,7 +100,6 @@ export default {
   computed: {
     ...mapState(["Auth"]),
   },
-
   data() {
     return {
       date: ref("2022/01/19"),
@@ -135,7 +129,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           })
           .finally(() => {
             this.isLoad = false;

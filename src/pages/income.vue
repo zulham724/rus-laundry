@@ -73,21 +73,17 @@
             }}
           </div>
 
-          <div class="q-px-xl absolute-bottom q-mb-sm">
+          <div class="q-px-xl absolute-bottom q-mb-sm ">
             <q-tabs
-              stretch
               active-color="white"
               v-model="tabParent"
               no-caps
-              inline-label
-              switch-indicator
-              indicator-color="white"
+              indicator-color="transparent"
               class="text-weight-regular bg-light-blue-4"
               style="
                 color: #756a6a;
                 font-size: 8px;
                 border-radius: 10px 10px 0 0;
-                margin-top: 0px;
               "
             >
               <q-tab :ripple="false" name="pendapatan" label="Pendapatan" />

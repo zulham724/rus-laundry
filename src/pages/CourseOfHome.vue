@@ -56,12 +56,6 @@
                   ></q-img>
                 </q-avatar>
               </div>
-              <!-- <q-avatar
-                style="background-color: #888888"
-                @click="$router.push('/profile-of-course')"
-              >
-                <q-img no-spinner src="~/assets/Avatar.png"></q-img>
-              </q-avatar> -->
             </div>
             <div class="col-9 self-center q-pl-sm">
               <div
@@ -86,7 +80,6 @@
               </div>
             </div>
           </div>
-
           <!-- Search bar -->
           <div
             class="row q-px-xl full-width"
@@ -130,11 +123,6 @@
           @click="$router.push(`/${module.id}/list-of-course`)">
           <!-- Thumbnail video -->
           <div class="col-5 text-center self-center">
-            <!-- <q-avatar
-            square
-            style="width: 140px; height: 80px; border-radius: 5px"
-            color="grey"
-          > -->
             <q-img
               v-if="module.banner"
               style="border-radius: 5px"
@@ -155,7 +143,6 @@
               src="~/assets/dfltpht.svg"
             >
             </q-img>
-            <!-- </q-avatar> -->
           </div>
           <div class="col-7 q-px-sm">
             <!-- Judul -->

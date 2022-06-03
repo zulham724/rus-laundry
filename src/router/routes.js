@@ -337,6 +337,14 @@ const routes = [
     },
 
     {
+        path: "/paket-owner-2",
+        component: () =>
+            import ("pages/PaketOwner2.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+
+    {
         path: "/detail-paket-owner/:branchid",
         component: () =>
             import ("pages/DetailPaketOwner.vue"),

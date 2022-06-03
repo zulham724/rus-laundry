@@ -207,7 +207,7 @@
 
         <!-- TAB CHART DATA JUMLAH PESANAN & PENGHASILAN -->
         <div class="col">
-          <!--
+          
           <div class="row">
             <div class="col">
               <div class="row q-px-md q-py-md text-weight-bold">
@@ -218,7 +218,7 @@
               </div>
             </div>
           </div>
-          -->
+         
           <div class="row">
             <div class="col">
               <div class="row q-px-md q-py-md text-weight-bold">

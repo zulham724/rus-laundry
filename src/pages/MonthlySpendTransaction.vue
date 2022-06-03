@@ -12,7 +12,6 @@
           <q-item-section avatar>
             <q-skeleton size="60px" type="QAvatar" />
           </q-item-section>
-
           <q-item-section class="self-center">
             <q-item-label class="text-weight-medium">
               <q-skeleton type="text" height="20px" />
@@ -21,7 +20,6 @@
               <q-skeleton type="text" width="15vw" />
             </q-item-label>
           </q-item-section>
-
           <q-item-section>
             <q-item-label class="self-center on-right">
               <q-skeleton width="50px" type="text" />
@@ -29,7 +27,6 @@
           </q-item-section>
         </q-item>
       </div>
-
       <div v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg">
          <div class="text-subtitle1 text-center q-py-xs">
@@ -37,7 +34,6 @@
             Belum ada transaksi bulan ini
           </div>
         </div>
-
         <div v-else-if="orders.data.length">
           <q-list
             ref="scrollTargetRef"
@@ -101,10 +97,8 @@ import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
-  //q-infinite-scroll
   setup() {
     const items = ref([{}, {}, {}, {}, {}]);
-
     return {
       items,
       onLoad(index, done) {

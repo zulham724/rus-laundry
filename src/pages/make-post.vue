@@ -364,7 +364,7 @@ export default {
           this.$store.dispatch("Post/store", formData).then((res) => {
             console.log("formdata hehe", res);
             this.$router.push("/community");
-            this.$q.notify("Berhasil");
+            this.$q.notify("Berhasil postings");
             this.loading = false;
           });
         } else {

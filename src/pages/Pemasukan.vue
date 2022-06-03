@@ -1,6 +1,6 @@
 <template class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
   <div
-    class="q-pb-lg"
+    class="q-pb-lg bg-white"
     style="
       border-radius: 30px 30px 0 0;
       background-color: #fafafa;
@@ -42,14 +42,7 @@
         label="Bulan ini"
         style="border-radius: 0px 0px 10px 10px"
       />
-      <!--<q-tab
-          name="custom"
-          label=" Custom"
-          style="border-radius: 0px 0px 10px 10px"
-        />-->
     </q-tabs>
-
-
     <!-- List Pesanan -->
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="hari">
@@ -96,7 +89,6 @@
             </q-popup-proxy>
           </q-btn>
         </div>
-
         <!-- Skeleton -->
         <div v-if="isLoad" class="q-mx-md q-my-xs">
           <q-item
@@ -111,7 +103,6 @@
             <q-item-section avatar>
               <q-skeleton size="60px" type="QAvatar" />
             </q-item-section>
-
             <q-item-section class="self-center">
               <q-item-label class="text-weight-medium">
                 <q-skeleton type="text" height="20px" />
@@ -120,7 +111,6 @@
                 <q-skeleton type="text" width="15vw" />
               </q-item-label>
             </q-item-section>
-
             <q-item-section>
               <q-item-label class="self-center on-right">
                 <q-skeleton width="50px" type="text" />
@@ -128,54 +118,6 @@
             </q-item-section>
           </q-item>
         </div>
-
-        <!-- <q-list
-            v-else-if="isLoad == false && orders"
-            bordered
-            separator
-            class="q-mx-md q-my-xs"
-            style="background-color: #fff; border-radius: 20px 20px 20px 20px"
-          >
-            <q-item
-              v-for="order in orders.data"
-              :key="order.id"
-              class="q-my-sm q-mx-md"
-              clickable
-              @click="$router.push(`/detail-transaksi/${order.id}`)"
-            >
-              <q-item-section avatar>
-                <q-avatar
-                  color="primary"
-                  text-color="white"
-                  size="60px"
-                  style="margin-left: -20px"
-                >
-                  <q-img
-                    src="~/assets/avatar-box.png"
-                    alt="avatar-box"
-                    no-spinner
-                  />
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section class="self-center">
-                <q-item-label class="text-weight-medium">
-                  {{ order.customer.name }}</q-item-label
-                >
-                <q-item-label caption lines="1" class="q-mb-sm">
-                  {{ moment(order.updated_at).format("LL") }}</q-item-label
-                >
-              </q-item-section>
-
-              <q-item-section
-                class="text-weight-regular"
-                side
-                style="color: #E82222; font-size: 12px"
-              >
-                -{{ order.total_sum }}
-              </q-item-section>
-            </q-item>
-          </q-list> -->
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -216,11 +158,11 @@ export default {
     moment() {
       return moment();
     },
-    getTotalProfit(){
-      this.total_profit = 0
-      this.$nextTick().then(()=>{
-        this.total_profit
-      })
+    getTotalProfit() {
+      this.total_profit = 0;
+      this.$nextTick().then(() => {
+        this.total_profit;
+      });
     },
     getOrders() {
       return new Promise((resolve, reject) => {
@@ -244,7 +186,7 @@ export default {
         .dispatch("Orders/getBalanceToday", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
-          this.$emit('save-callback', res.data)
+          this.$emit("save-callback", res.data);
         });
     },
     getProfitByWeek() {
@@ -252,7 +194,7 @@ export default {
         .dispatch("Orders/getBalanceWeekly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
-          this.$emit('save-callback', res.data)
+          this.$emit("save-callback", res.data);
         });
     },
     getProfitByMonth() {
@@ -260,7 +202,7 @@ export default {
         .dispatch("Orders/getBalanceMonthly", this.Auth.auth.shop.id)
         .then((res) => {
           this.total_profit = res.data;
-          this.$emit('save-callback', res.data)
+          this.$emit("save-callback", res.data);
         });
     },
     refresh(done) {

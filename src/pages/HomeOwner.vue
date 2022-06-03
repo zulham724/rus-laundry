@@ -375,7 +375,7 @@
 
                 <div
                   class="col full-width"
-                  v-if="this.Auth.auth.active_package_user != null"
+                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date <= this.current_date2"
                 >
                   <div class="row">
                     <div
@@ -399,6 +399,15 @@
                     </div>
                   </div>
                 </div>
+
+                
+                <div
+                  class="col full-width "
+                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date >= this.current_date2"
+                >
+                  <q-btn flat @click="$router.push('/paket-owner-2')" class="q-my-md bg-white full-width" color="white" text-color="grey-6" no-caps label="Perpanjang paket" />
+                </div>
+               
 
                 <div
                   class="col full-width"
@@ -598,6 +607,7 @@ export default {
     this.getProfit();
     this.getDataPerkembangan();
     this.checkActivePackageUser();
+    this.current_date2 = moment().locale("id").format("LL");
 
     //chart total pesanan
     this.getMonthlyOrder();
@@ -613,7 +623,7 @@ export default {
     return {
       drawerLeft: ref(false),
       slide: ref(0),
-
+      current_date2: null,
       alert: ref(false),
       STORAGE_URL: STORAGE_URL,
       expired_date: null,
@@ -783,7 +793,7 @@ export default {
       this.$store
         .dispatch("MasterOrders/getMonthlyOrder")
         .then((res) => {
-          // console.log("ini res getMonthlyOrder", res.data);
+          console.log("ini res getMonthlyOrder", res.data);
           this.filterMonthGetMonthlyOrder(res.data);
         })
         .catch((err) => {

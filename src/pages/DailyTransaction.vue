@@ -29,15 +29,13 @@
           </q-item-section>
         </q-item>
       </div>
-
-      <div v-else-if="!isLoad && orders.data">
+      <div class=" full-height " v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
             <q-img no-spinner src="~/assets/nullicsp.gif" :ratio="1" />
             Belum ada transaksi hari ini
           </div>
         </div>
-
         <div v-else-if="orders.data.length">
           <q-infinite-scroll
             @load="ketikaOnLoad"

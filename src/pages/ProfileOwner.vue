@@ -558,7 +558,7 @@ export default {
               // console.log("ini res ganti password", res);
               this.$q.notify({
                 type: "success",
-                message: "Kata sandi berhasil diubah tteess",
+                message: "Kata sandi berhasil diubah",
               });
               this.dialogPassword = false;
             })

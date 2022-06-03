@@ -12,7 +12,6 @@
           <q-item-section avatar>
             <q-skeleton size="60px" type="QAvatar" />
           </q-item-section>
-
           <q-item-section class="self-center">
             <q-item-label class="text-weight-medium">
               <q-skeleton type="text" height="20px" />
@@ -21,7 +20,6 @@
               <q-skeleton type="text" width="15vw" />
             </q-item-label>
           </q-item-section>
-
           <q-item-section>
             <q-item-label class="self-center on-right">
               <q-skeleton width="50px" type="text" />
@@ -31,7 +29,7 @@
       </div>
 
       <div v-else-if="!isLoad && orders.data">
-        <div v-if="!orders.data.length" class="q-pt-lg"> 
+        <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
             <q-img no-spinner src="~/assets/nullicsp.gif" :ratio="1" />
             Belum ada transaksi minggu ini
@@ -67,7 +65,10 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <div class="row items-center" style="color: #e82222; font-size: 12px">
+                    <div
+                      class="row items-center"
+                      style="color: #e82222; font-size: 12px"
+                    >
                       -{{
                         new Intl.NumberFormat("id-ID", {
                           style: "currency",
@@ -124,7 +125,10 @@ export default {
       return new Promise((resolve, reject) => {
         this.isLoad = true;
         this.$store
-          .dispatch("WeeklySpendTransaction/getOrdersShopByWeek", this.Auth.auth.shop.id)
+          .dispatch(
+            "WeeklySpendTransaction/getOrdersShopByWeek",
+            this.Auth.auth.shop.id
+          )
           .then((res) => {
             this.orders = res.data;
             resolve(res.data);
@@ -159,5 +163,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

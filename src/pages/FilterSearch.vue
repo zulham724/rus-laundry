@@ -31,7 +31,6 @@
             >Berdasarkan Tanggal Masuk
           </q-item-label>
           <q-separator size="5px"></q-separator>
-
           <q-item
             v-ripple
             clickable
@@ -407,12 +406,10 @@ export default {
       });
     },
     getOrderStatus() {
-      // console.log("halo dunia");
       this.$store
         .dispatch("Orders/getOrderStatus")
         .then((res) => {
           this.order_statuses = res.data;
-          // console.log("ini data percobaan", res.data);
         })
         .catch((err) => {
           alert("terjadi kesalahan");

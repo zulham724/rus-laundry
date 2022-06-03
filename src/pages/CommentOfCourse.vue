@@ -52,19 +52,6 @@
             </div>
 
             <div class="col-4 row justify-end ">
-              <!-- Level -->
-              <!-- <div
-                class="q-px-sm self-center justify-end"
-                style="
-                  background-color: #ff843e;
-                  border-radius: 20px;
-                  width: auto;
-                  font-size: 12px;
-                  color: white;
-                "
-              >
-                Lv.20
-              </div> -->
               <!-- button like -->
               <div class="self-center q-pl-xs">
                 <q-btn
@@ -229,7 +216,6 @@ export default {
     };
   },
   mounted() {
-    // console.log("cek contentid", this.contentid);
     console.log('cek auth', this.Auth)
     this.getComments();
   },

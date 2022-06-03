@@ -10,13 +10,13 @@
         <div class="col-2 self-center">
           <!-- Image profile -->
           <!--Avatar-->
-          <div v-if="!post.author.avatar" class="self-center">
-            <q-avatar size="60px">
+          <div v-if="!post.author.avatar" class="self-center text-center">
+            <q-avatar size="40px">
               <q-img no-spinner src="~/assets/ld.png"></q-img>
             </q-avatar>
           </div>
-          <div v-else-if="post.author.avatar" class="self-center">
-            <q-avatar size="60px">
+          <div v-else-if="post.author.avatar" class="self-center text-center ">
+            <q-avatar size="40px">
               <q-img
                 no-spinner
                 :src="STORAGE_URL + `/` + post.author.avatar"
@@ -36,14 +36,14 @@
           <div
             v-if="post.user.role_id == 3"
             class="text-weight-medium"
-            style="color: #3a3838; font-size: 20px"
+            style="color: #3a3838; font-size: 18px"
           >
             {{ post.author.name }}
           </div>
           <div
             v-else
             class="text-weight-medium"
-            style="color: #3a3838; font-size: 20px"
+            style="color: #3a3838; font-size: 18px"
           >
             {{ post.user.shop.name }}
           </div>
@@ -64,14 +64,14 @@
           <div
             v-if="post.user.role_id == 3"
             class="text-weight-medium"
-            style="color: #3a3838; font-size: 20px"
+            style="color: #3a3838; font-size: 18px"
           >
             {{ post.author.name }}
           </div>
           <div
             v-else
             class="text-weight-medium"
-            style="color: #3a3838; font-size: 20px"
+            style="color: #3a3838; font-size: 18px"
           >
             {{ post.user.shop.name }}
           </div>
@@ -391,7 +391,7 @@
             class="full-width"
             dense
             flat
-            @click="dialogDelete = true"
+             @click="buttonShare()"
           >
             <div class="row full-width">
               <div class="col-3">
@@ -519,16 +519,7 @@
             </div>
 
             <div class="row justify-center">
-              <!-- Button Facebook -->
-              <!-- <q-btn round size="20px" outline color="primary" class="q-mx-xs">
-                <q-avatar icon="fab fa-facebook-f" size="30px"></q-avatar>
-              </q-btn> -->
-
-              <!-- Button Instagram -->
-              <!-- <q-btn round size="20px" outline color="pink-9" class="q-mx-xs">
-                <q-avatar icon="fab fa-instagram" size="30px"></q-avatar>
-              </q-btn> -->
-
+             
               <!-- Button WhatsApp -->
               <q-btn
                 round
@@ -541,10 +532,7 @@
                 <q-avatar icon="fab fa-whatsapp" size="30px"></q-avatar>
               </q-btn>
 
-              <!-- Button Telegram -->
-              <!-- <q-btn round size="20px" outline color="blue" class="q-mx-xs">
-                <q-avatar icon="fab fa-telegram-plane" size="30px"></q-avatar>
-              </q-btn> -->
+             
             </div>
 
             <!-- Link Share -->

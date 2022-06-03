@@ -31,9 +31,9 @@ const actions = {
     getMonthlyOrders({ commit }, branchid) {
         return new Promise((resolve, reject) => {
             api
-                .get(`api/master/branchpaymentcountbymonth/${branchid}`)
+                .get(`api/master/ordercountbranchbymonth/${branchid}`)
                 .then((res) => {
-                    console.log('ressi', res)
+                    // console.log('ressi', res)
                     resolve(res);
                 })
                 .catch((err) => {
@@ -43,18 +43,28 @@ const actions = {
     },
     //new customer
     createBranchCustomer({ commit }, payload) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve,reject)=>{
             api
-                .post("api/master/branch_customer", payload)
+                .post('api/master/branch_customer', payload)
                 .then((res) => {
-                    resolve(res);
-                    console.log("createBranchCustomer RES")
+                    resolve(res.data);
                 })
-                .catch((err) => {
+                .catch(err => {
                     reject(err);
-                    console.log("createBranchCustomer ERR")
                 });
-        });
+        })
+        // return new Promise((resolve, reject) => {
+        //     api
+        //         .post("api/master/branch_customer", payload)
+        //         .then((res) => {
+        //             console.log("createBranchCustomer THEN")
+        //             resolve(res.data);
+        //         })
+        //         .catch((err) => {
+        //             console.log("createBranchCustomer CATCH")
+        //             reject(err.response.data);
+        //         });
+        // });
     },
     //delete customer
     deleteBranchCustomer({ commit }, id) {
@@ -107,7 +117,7 @@ const actions = {
             api
                 .post("/api/master/branch_employee", payload)
                 .then((res) => {
-                    resolve(res);
+                    resolve(res.data);
                 })
                 .catch((err) => {
                     reject(err);

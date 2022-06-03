@@ -32,27 +32,7 @@
         </div>
       </q-header>
     </div>
-    <!-- <q-header class="fixed-top">
-      <q-toolbar class="shadow-1" style="background-color: #1c309b">
-        <q-btn
-          @click="$router.back()"
-          no-caps
-          class="q-pa-md"
-          flat
-          style="color: white"
-        >
-          <q-icon size="20px" name="fas fa-arrow-left" style="color: #ffffff">
-          </q-icon>
-        </q-btn>
-
-        <q-toolbar-title
-          v-if="content"
-          class="text-left text-weight-medium text-subtitle2"
-          style="color: white; font-size: 16px"
-          >{{ content.tittle }}</q-toolbar-title
-        >
-      </q-toolbar>
-    </q-header>-->
+    
     <q-page v-if="content">
       <div
         class="row full-width q-py-sm justify-center"
@@ -85,13 +65,7 @@
           controls
           style="width: 100%; height: 250px; object-fit: cover"
         ></video>
-        <!-- <vue-plyr>
-          <video
-            :src="STORAGE_URL + `/` + content.video.src"
-            controls
-            style="object-fit: cover"
-          ></video>
-        </vue-plyr> -->
+        
       </div>
       <div v-if="content.image_content" class="full-width">
         <q-img :src="STORAGE_URL + `/` + content.image_content.src" />
@@ -179,9 +153,6 @@
         <div class="col">
           <!-- TAB LIKE DAN KOMENTAR -->
           <div class="row justify-between">
-            <!-- <div class="col-6 self-center text-center justify-center column" style="width: 25px"></div>
-                           <div class="col-6 self-center text-center justify-center column" style="width: 25px"></div>-->
-            <div></div>
             <q-btn disable dense flat class="q-px-lg" no-caps>
               <div class="col">
                 <div class="row justify-center text-white">

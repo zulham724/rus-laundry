@@ -118,11 +118,11 @@ export default {
           });
         })
         .catch((err) => {
-          console.log("ini err createBranchEmployee", err);
           this.$q.notify({
             position: "bottom",
-            message: "Gagal menambah karyawan",
+            message: "Email sudah digunakan",
           });
+          console.log("terjadi kesalahan createBranchCustomer", err);
         });
     },
   },

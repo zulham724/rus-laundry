@@ -2,37 +2,12 @@
   <q-layout class="mbl" view="lHh lpR fFf" style="background-color: #fafafa">
     <q-page-container style="background-color: #fafafa">
       <q-page style="background-color: #fafafa">
+        <!-- menu list -->
         <q-list
           separator
           style="background-color: #fafafa; position: relative"
           class="q-mt-xs"
         >
-          <!-- <q-item
-          class="q-py-md"
-          clickable
-          style="background-color: #ffffff"
-          @click="$router.push('/add-item')"
-        >
-          <q-item-section avatar class="self-center">
-            <q-avatar square size="40px">
-              <q-img
-                no-spinner
-                src="~/assets/kategori-layanan.svg"
-                width="40px"
-                height="40px"
-              ></q-img>
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section class="self-center">
-            <q-item-label
-              class="text-weight-regular"
-              style="color: #888888; font-size: 16px"
-            >
-              Kategori Layanan
-            </q-item-label>
-          </q-item-section>
-        </q-item> -->
           <q-item
             class="q-py-md"
             clickable
@@ -160,48 +135,6 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-          <!--<q-item class="q-py-md" clickable style="background-color: #ffffff">
-          <q-item-section avatar class="self-center">
-            <q-avatar square size="40px">
-              <q-img no-spinner src="~/assets/pengeluaran.svg" width="40px" height="40px"></q-img>
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section class="self-center">
-            <q-item-label
-              class="text-weight-regular"
-              style="color: #888888; font-size: 16px"
-            >
-              Pengeluaran
-            </q-item-label>
-          </q-item-section>
-        </q-item>-->
-          <!-- <q-item
-            class="q-py-md"
-            clickable
-            style="background-color: #ffffff"
-            @click="$router.push('/bulk-whatsapp')"
-          >
-            <q-item-section avatar class="self-center">
-              <q-avatar square size="40px">
-                <q-img
-                  no-spinner
-                  src="~/assets/pesan-masal.svg"
-                  width="40px"
-                  height="40px"
-                ></q-img>
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section class="self-center">
-              <q-item-label
-                class="text-weight-regular"
-                style="color: #888888; font-size: 16px"
-              >
-                Kirim pesan massal
-              </q-item-label>
-            </q-item-section>
-          </q-item> -->
 
           <q-item
             class="q-py-md"
@@ -248,6 +181,7 @@
           <q-separator></q-separator>
         </q-list>
 
+        <!-- logout dialog -->
         <q-dialog v-model="dialogLogout">
           <q-card style="width: 300px">
             <q-card-section>
@@ -291,7 +225,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -299,13 +232,14 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters(["Printer/get_connected_printer"]),
   },
   mounted() {},
   methods: {
+    // function for popup logout dialog
     buttonLogout() {
       this.dialogLogout = true;
     },
+    // function for logout
     doLogout() {
       let reset_auth_order_data = this.$store.dispatch("Orders/clear");
       let reset_auth_data = this.$store.dispatch("Auth/logout");
