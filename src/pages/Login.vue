@@ -62,7 +62,7 @@
                 outlined
                 v-model="credential.password"
                 :type="isPwd ? 'password' : 'text'"
-                label="Massukkan Password"
+                label="Masukkan Password"
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || '']"
               >

@@ -61,11 +61,10 @@
       <!-- TAB KODE AFFILIATE -->
       <div class="q-pb-md q-px-xs text-center justify-center column">
         <div class="text-center justify-center">
-          <q-img src="~/assets/sgtg.png" style="width: 30%; height: 70px" />
+          <q-img src="~/assets/sgtg.png" style="width: 30%; height: 70px; " />
         </div>
         <div class="text-center justify-center">
           <q-btn
-            @click="copyToClipboard()"
             v-if="this.Auth.auth.affiliate_code != null"
             flat
             no-caps
@@ -749,7 +748,7 @@ export default {
     copyToClipboard() {
       let text = this.Auth.auth.affiliate_code;
       navigator.clipboard.writeText(text);
-      this.$q.notify("Kode Affiliate Anda telah disalin");
+      // this.$q.notify("Kode Affiliate Anda telah disalin");
     },
     // get data jumlah seluruh pesanan
     getDataPerkembangan() {

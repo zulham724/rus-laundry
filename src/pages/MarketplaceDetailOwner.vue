@@ -59,9 +59,6 @@
             @click="product.liked_count ? dislike() : like()"
           >
           </q-btn>
-          <q-btn class="q-ml-sm" dense flat
-            ><Icon style="font-size: 20px; color: #6a6a6a" icon="cil:share"
-          /></q-btn>
         </div>
         <div
           class="q-ml-sm text-subtitle2"

@@ -79,7 +79,7 @@
                   :label="dataAuth.role_id == 3 ? 'Pemilik' : 'Cabang'"
                 />
               </div>
-              <div
+              <!-- <div
                 class="row col-12 q-px-sm"
                 style="
                   border-radius: 20px 0px 20px 0px;
@@ -115,7 +115,7 @@
                     1000
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 

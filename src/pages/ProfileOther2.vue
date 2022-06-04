@@ -75,7 +75,7 @@
                   :label="profilePost.shop ? 'Cabang' : 'Pemilik'"
                 />
               </div>
-              <div
+              <!-- <div
                 class="row col-12 q-px-sm"
                 style="
                   border-radius: 20px 0px 20px 0px;
@@ -111,7 +111,7 @@
                     1000
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -146,13 +146,13 @@
             </q-item>
           </div>
           <div class="q-pt-xs col" v-else>
-            <div class="row">
+            <!-- <div class="row">
               <q-btn
                 no-caps
                 label="Ikuti"
                 style="background-color: #7900ff; color: #fff"
               />
-            </div>
+            </div> -->
             <div class="row" v-if="!profilePost.shop">
               <q-item class="full-width" clickable v-ripple>
                 <q-item-section avatar>

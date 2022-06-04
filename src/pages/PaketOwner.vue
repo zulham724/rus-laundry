@@ -212,13 +212,13 @@
                   <div class="text-black">0262628673</div>
                 </div>
               </div>
-              <q-btn
+              <!-- <q-btn
                 no-caps
                 rounded
                 text-color="white"
                 label="Salin No Rekening"
                 style="background-color: #ddca1d"
-              />
+              /> -->
             </q-card-section>
 
             <q-separator color="grey" class="q-mx-sm" />
@@ -277,13 +277,13 @@
               </div>
             </q-card-section>
             <q-card-section class="q-pt-sm">
-              <div>Kode Pembayaran :</div>
+              <div>Nomor Rekening :</div>
               <div class="text-h6">0262628673</div>
-              <q-btn no-caps style="background-color: #ddca1d">
+              <!-- <q-btn no-caps style="background-color: #ddca1d">
                 <q-avatar square size="15px">
                   <q-img src="~/assets/cp.png" />
                 </q-avatar>
-              </q-btn>
+              </q-btn> -->
 
               <div>Jumlah Yang Harus Dibayarkan :</div>
               <div class="text-h6">
@@ -372,6 +372,7 @@
 
             <q-card-actions align="left">
               <q-btn
+              @click="this.$router.push('payment-history-owner')"
                 flat
                 rounded
                 style="background-color: #6295ff"

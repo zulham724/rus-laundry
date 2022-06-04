@@ -22,6 +22,9 @@ export default defineComponent({
         // },
         chart: {
           id: "apex-line",
+          toolbar: {
+            show: false,
+          },
         },
         colors: [
           getCssVar("primary"),

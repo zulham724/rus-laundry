@@ -44,7 +44,7 @@
           <div class="q-pa-md text-center">
             <q-form ref="form">
               <q-input
-               class="q-pb-lg"
+                class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -54,7 +54,7 @@
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
               <q-input
-                 class="q-pb-lg"
+                class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -66,13 +66,13 @@
               />
 
               <q-input
-                 class="q-pb-lg"
+                class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
                 v-model="credential.password"
                 :type="isPwd ? 'password' : 'text'"
-                label="Massukkan Password"
+                label="Masukkan Password"
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || '']"
               >
@@ -84,7 +84,7 @@
                 />
               </q-input>
               <q-input
-                 class="q-pb-lg"
+                class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -110,7 +110,7 @@
                 />
               </div>
               <q-input
-                 class="q-pb-lg"
+                class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -120,7 +120,7 @@
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
               <q-input
-                 class="q-pb-lg"
+                class="q-pb-lg"
                 :disable="loading"
                 rounded
                 outlined
@@ -129,7 +129,6 @@
                 @update:model-value="
                   checkAffiliateCode(credential.affiliate_code)
                 "
-                
               />
               <div
                 class="text-justify"
@@ -229,13 +228,19 @@ export default {
           this.$store
             .dispatch("Auth/register", this.credential)
             .then((res) => {
-              console.log("kondisi then doRegister")
+              this.$q.notify({
+                position: "top",
+                message: "Akun sudah terdaftar, silahkan login",
+              });
               this.$router.push("/login");
               window.history.pushState(null, null, window.location.href);
             })
             .catch((err) => {
               // console.log("terjadi kesalahan doRegister ->", err)
-              this.$q.notify("Akun sudah terdaftar!");
+              this.$q.notify({
+                position: "top",
+                message: "Email sudah terdaftar!",
+              });
             })
             .finally(() => {
               this.loading = false;

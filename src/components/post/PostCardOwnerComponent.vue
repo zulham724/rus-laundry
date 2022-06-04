@@ -420,7 +420,7 @@
             class="full-width"
             dense
             flat
-            @click="$router.push(`/report-post/${post.id}`)"
+            @click="$router.push(`/report-post-owner/${post.id}`)"
           >
             <div class="row full-width">
               <div class="col-3">

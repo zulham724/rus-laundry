@@ -113,7 +113,7 @@ export default {
   mounted() {
     this.selectedPaymentPackage = this.selectedPaymentHistory;
     this.selectedPaymentPackagePrice = this.selectedPaymentHistory.value;
-    // console.log("aaa", this.selectedPaymentPackage);
+    console.log("aaa", this.selectedPaymentPackage);
     this.timeTest();
   },
   methods: {

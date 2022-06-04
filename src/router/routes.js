@@ -41,6 +41,14 @@ const checkIfOwner = (to, from, next) => {
     return next("/login");
 };
 
+const checkIfOwnerFirst = (to,from, next)=>{
+    let isOwner = store().getters["Auth/auth"];
+    if (isOwner && isOwner.role_id == 3) {
+        return next('/home-owner');
+    }
+    next();
+}
+
 const routes = [
     //LOGIN LOGIN LOGIN LOGIN LOGIN LOGIN LOGIN LOGIN LOGIN LOGIN
     {
@@ -61,7 +69,7 @@ const routes = [
         path: "/",
         component: () =>
             import ("layouts/MainLayout.vue"),
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([ checkIfOwnerFirst,    auth, checkIfSlave]),
         children: [{
                 path: "",
                 name: "home",
@@ -119,6 +127,22 @@ const routes = [
         path: "/marketplace-add-product-owner",
         component: () =>
             import ("pages/MarketplaceAddProductOwner.vue"),
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/report-post-owner/:post_id",
+        component: () =>
+            import ("src/pages/ReportPostOwner.vue"),
+        props: true,
+        beforeEnter: multiguard([auth, checkIfOwner]),
+    },
+
+    {
+        path: "/description-report-post-owner/:post_id",
+        component: () =>
+            import ("src/pages/DescriptionReportPostOwner.vue"),
+        props: true,
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 

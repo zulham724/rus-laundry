@@ -129,7 +129,7 @@ export default {
       console.log("checkSelectedPayment", this.selectedPaymentHistory);
     },
     toDetailPaymentHistoryOwner(payment) {
-      // console.log("asdfffffsdfasdfasdfa", payment);
+      console.log("asdfffffsdfasdfasdfa", payment);
       this.$store.commit("MasterPayment/set_payment_history", payment);
       if (payment.status == "pending") {
         // console.log("statusss1", payment);
