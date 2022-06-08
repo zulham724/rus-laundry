@@ -1,4 +1,5 @@
 const toBase64 = (file) => {
+  console.log('index.js toBase64', file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

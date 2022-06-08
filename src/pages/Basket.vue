@@ -35,7 +35,7 @@
           >
             <q-card class="shadow-1 q-py-sm" style="border-radius: 10px">
               <div class="row">
-                <div class="col-3 text-center self-center">
+                <div class="col-3 text-center self-center ">
                   <q-img src="~/assets/bjmn.png" width="75%" />
                 </div>
                 <div class="col-5 self-center">
@@ -757,13 +757,18 @@ export default {
         btnDisable = false;
       }
     },
+    checkPcs(c){
+      console.log('ini pcs', this.Orders.order.charts[c].quantity)
+    },
     tambahpcs(index) {
-      this.Orders.order.charts[index].quantity += 1;
+      this.Orders.order.charts[index].quantity += 1 ;
       this.getPrice();
+      console.log("index", this.Orders.order.charts[index].quantity);
     },
     kurangpcs(index) {
+
       this.Orders.order.charts[index].quantity -= 1;
-      if (this.Orders.order.charts[index].quantity <= 1) {
+      if (this.Orders.order.charts[index].quantity < 1) {
         this.$store.commit("Orders/remove_order_chart", {
           id: this.Orders.order.charts[index].id,
         });

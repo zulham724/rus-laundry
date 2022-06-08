@@ -47,12 +47,12 @@
     </q-header>
     <q-page-container>
       <q-page class="q-pa-sm" v-if="product">
-        <div class="row q-mx-sm q-mt-md">
+        <div class="row  q-mt-md bg-red">
           <q-virtual-scroll :items="images" virtual-scroll-horizontal>
             <template v-slot:before>
               <div
                 @click="openMedia()"
-                class="col-4 text-white justify-center self-center q-px-md"
+                class="col-4 text-white justify-center self-center q-px-md q-mx-xs"
                 style="
                   height: 150px;
                   background-color: #d0d1dc;
@@ -64,8 +64,9 @@
               </div>
             </template>
             <template v-slot="{ item, index }">
-              <div :key="index" class="q-px-md">
+              <div :key="index" class="q-px-xs">
                 <q-img
+                  style="border-radius: 10px;"
                   :src="STORAGE_URL + '/' + item.src"
                   width="150px"
                   height="150px"
@@ -93,12 +94,12 @@
             </template>
           </q-virtual-scroll>
         </div>
-        <div class="q-ml-lg q-mt-md text-caption text-black">
+        <div class="q-mx-sm q-mt-md text-caption text-black bg-purple">
           Pilih foto utama anda terlebih dahulu <br />
           maks. 10 foto
         </div>
-        <div>
-          <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+        <div class="bg-yellow">
+          <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
             <div class="col-6">Nama produk</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
@@ -109,8 +110,10 @@
           </div>
           <q-input
             :disable="Loading"
-            class="q-ml-md q-mt-sm"
+            class="q-mx-sm q-mt-sm"
             style="width: 95%"
+            counter 
+            maxlength="100"
             outlined
             lazy-rules
             :rules="[
@@ -278,13 +281,14 @@
         ref="addImages"
         @update:model-value="previewImages"
         v-show="false"
-        multiple
       ></q-file>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
+import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
 export default {
   props: ["productid"],
 
@@ -292,6 +296,7 @@ export default {
     return {
       product: null,
       images: [],
+      fileImages: [],
       is_new: null,
       confirm: false,
       //ini untuk men-disable button ketika proses saving data
@@ -350,16 +355,53 @@ export default {
     openMedia() {
       this.$refs.addImages.pickFiles();
     },
-    async previewImages(files) {
-      let payload = {
-        product_id: this.product.id,
-        images: files,
-      };
+    async previewImages(file) {
+      let promise = toBase64(file);
+      promise.then((res) => {
+        console.log("res", res);
+        this.$q
+          .dialog({
+            component: CropPhotoComponent,
+            componentProps: {
+              ImgBS64: res.src,
+            },
+          })
+          .onOk((data) => {
+            this.$q.notify({
+              position: "top",
+              message: "Menambahkan Foto",
+            });
+            let imageBase64 = data.dataUrl;
+            console.log("return crop", imageBase64);
+            let bs64ToFile = base64ToFile(imageBase64, "avatar");
+            console.log("bs64ToFile", bs64ToFile);
+            this.fileImages.push(bs64ToFile);
+            
+            let payload = {
+              product_id: this.product.id,
+              images: this.fileImages,
+            };
 
-      let formData = this.jsonToFormData(payload);
-      this.$store.dispatch("MasterProduct/testadd", formData).then((res) => {
-        this.images = res.data.images;
+            let formData = this.jsonToFormData(payload);
+
+            this.$store.dispatch("MasterProduct/testadd", formData).then((res) => {
+              this.$q.notify({
+                position: "top",
+                message: "Berhasil Menambah Foto",
+              });
+              this.images = res.data.images;
+            });
+          });
       });
+      // let payload = {
+      //   product_id: this.product.id,
+      //   images: file,
+      // };
+
+      // let formData = this.jsonToFormData(payload);
+      // this.$store.dispatch("MasterProduct/testadd", formData).then((res) => {
+      //   this.images = res.data.images;
+      // });
     },
     removeImage(index) {
       this.images.splice(index, 1);

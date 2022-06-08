@@ -49,16 +49,17 @@
                 <q-avatar
                   @click="$router.push('/my-profile')"
                   size="80px"
-                  style="background-color: #888888"
+                  style="background-color: #fff"
+                  class="shadow-2"
                 >
                   <q-img no-spinner src="~/assets/ld.png"></q-img>
                 </q-avatar>
               </div>
               <div v-else-if="dataAuth.avatar" class="self-center">
                 <q-avatar
-                  @click="$router.push('/my-profile')"
                   size="80px"
-                  style="background-color: #888888"
+                  style="background-color: #fff"
+                  class="shadow-2"
                 >
                   <q-img
                     no-spinner
@@ -258,7 +259,7 @@
             external-label
             vertical-actions-align="left"
             direction="up"
-            @click="$router.push('/make-post')"
+            @click="$router.push('/make-post-owner')"
             style="
               background-image: linear-gradient(to right top, #ff9ac5, #7900ff);
               color: white;

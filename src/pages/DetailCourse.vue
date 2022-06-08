@@ -150,7 +150,7 @@
           </div>
         </div>
 
-        <div class="col">
+        <div class="col ">
           <!-- TAB LIKE DAN KOMENTAR -->
           <div class="row justify-between">
             <q-btn disable dense flat class="q-px-lg" no-caps>
@@ -177,7 +177,7 @@
 
       <!-- Materi berikutnya -->
       <div
-        class="fixed-bottom shadow-up-1 bg-white"
+        class="fixed-bottom shadow-up-1  flat"
         style="border-radius: 14px 14px 0px 0px"
       >
         <div

@@ -70,7 +70,7 @@
                   <q-btn
                     round
                     flat
-                    @click="dialogDelete(item.shop.id, item.id)"
+                    @click="dialogDelete(item.shop.id, item.id, item.index)"
                   >
                     <img
                       src="~/assets/trash.png"
@@ -218,6 +218,10 @@ export default {
       user_id: null,
       alertDelete: false,
       loadingDelete: false,
+      deleteProperties: {
+        id: null,
+        index: null,
+      },
     };
   },
   computed: {
@@ -254,9 +258,10 @@ export default {
         this.$router.push(`/buat-cabang-owner`);
       }
     },
-    dialogDelete(shop_id, user_id) {
+    dialogDelete(shop_id, user_id, shop_index) {
       this.shop_id = shop_id;
       this.user_id = user_id;
+      this.shop_index = shop_index;
       // console.log("cek id", this.shop_id);
       this.alertDelete = true;
     },
@@ -265,6 +270,7 @@ export default {
         // shop_id: this.shop_id,
         user_id: this.user_id,
       };
+      
       // console.log("id", payload);
       this.loadingDelete = true;
       this.$store
@@ -278,7 +284,8 @@ export default {
         .finally(() => {
           this.loadingDelete = false;
           this.alertDelete = false;
-          this.$router.go();
+          this.dataBranch.splice(this.shop_index, 1);
+          // this.$router.go();
         });
     },
     checkActivePackageUser() {

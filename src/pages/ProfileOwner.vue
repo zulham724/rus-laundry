@@ -241,7 +241,7 @@
                     style="background-color: transparent"
                     outlined
                     label="Masukkan password baru"
-                    :rules="[(val) => !!val || 'mohon diisi']"
+                     :rules="[(val) => (val && val.length > 7) || 'Isi minimal 8 karakter']"
                   >
                     <template v-slot:append>
                       <q-icon
@@ -565,8 +565,9 @@ export default {
             .catch((err) => {
               this.$q.notify({
                 type: "negative",
-                message: "Kata sandi gagal diubah",
+                message: "Kata sandi gagal diubah, Pastikan kata sandi lama benar",
               });
+              
             })
             .finally(() => {
               this.loadingPassword = false;

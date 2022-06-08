@@ -39,6 +39,7 @@
               <input type="hidden" v-model="customer.id" />
               <!-- name input -->
               <q-input
+                :rules="[(val) => (val && val.length > 0) || '']"
                 readonly
                 dense
                 @click="dialogListCustomer = true"
@@ -50,6 +51,7 @@
               />
               <!-- contact number input -->
               <q-input
+                :rules="[(val) => (val && val.length > 0) || '']"
                 :disable="cek_customer"
                 dense
                 v-model="customer.contact_number"
@@ -60,6 +62,7 @@
               />
               <!-- employee name input -->
               <q-input
+                :rules="[(val) => (val && val.length > 0) || '']"
                 readonly
                 dense
                 @click="dialogListEmployee = true"
@@ -72,6 +75,7 @@
               <!-- order description input -->
               <div class="q-pa-xs">
                 <q-input
+                  :rules="[(val) => (val && val.length > 0) || '']"
                   dense
                   outlined
                   v-model="order.description"
@@ -223,6 +227,7 @@
 
                   <q-input
                     label="Nomor Hp"
+                    type="number"
                     outlined
                     dense
                     v-model="newCustomer.contact_number"
@@ -420,10 +425,19 @@ export default {
     },
     // function for save order data
     saveOrder() {
-      this.order.customer_id = this.customer.id;
-      this.order.employee_id = this.employee.id;
-      this.$store.commit("Orders/set_order", { order: this.order });
-      this.$router.push("/list-type-of-clothes");
+      this.$refs.form.validate().then((success) => {
+        if (success) {
+          this.order.customer_id = this.customer.id;
+          this.order.employee_id = this.employee.id;
+          this.$store.commit("Orders/set_order", { order: this.order });
+          this.$router.push("/list-type-of-clothes");
+        } else {
+          this.$q.notify({
+            position: "top",
+            message: "Pastikan sudah mengisi semua data",
+          });
+        }
+      });
     },
     // function for get all customers data/list
     getCustomers() {

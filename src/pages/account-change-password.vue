@@ -50,16 +50,16 @@
             v-model="confirmPassword"
             type="text"
           />
-          <div class="q-ml-md">
+          <!-- <div class="q-ml-md">
             <q-btn
               @click="$router.push('/account-forget-password')"
               flat
               dense
               no-caps
-              style="color: #10769e"
+              style="color: #10769e; "
               label="Lupa kata sandi ?"
             />
-          </div>
+          </div> -->
           <div class="text-center q-mt-md">
             <q-btn
               @click="doChangePassword()"

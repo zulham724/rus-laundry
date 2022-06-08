@@ -180,12 +180,12 @@
           >
             Produk Lainnya dari toko ini
           </div>
-          <div
+          <!-- <div
             class="col-6 text-right q-pr-sm text-weight-regular q-pb-md"
             style="background-color: #f5f7f9; color: #707070; font-size: 12px"
           >
             Lihat selengkapnya
-          </div>
+          </div> -->
         </div>
 
         <div class="row" v-if="another_products.length">

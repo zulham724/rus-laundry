@@ -74,7 +74,7 @@
                 :type="isPwd ? 'password' : 'text'"
                 label="Masukkan Password"
                 lazy-rules
-                :rules="[(val) => (val && val.length > 0) || '']"
+                :rules="[(val) => (val && val.length > 7) || 'Isi minimal 8 karakter']"
               >
                 <q-icon
                   :name="isPwd ? 'visibility_off' : 'visibility'"

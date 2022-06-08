@@ -64,10 +64,10 @@
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
             </q-form>
-            <div class="row q-px-md">
-              <div v-for="(file, f) in images_videos" :key="f" class="q-pa-sm">
-                <div v-if="file.type.includes('image')">
-                  <q-img :src="file.dataUrl" width="100px" height="100px">
+            <div class="row  ">
+              <div  v-for="(file, f) in images_videos" :key="f" class="col-4 text-center self-center q-pa-sm ">
+                <div  v-if="file.type.includes('image')">
+                  <q-img :src="file.dataUrl" width="100px" height="100px" style="border-radius:10px">
                     <q-btn
                       style="
                         position: absolute;
@@ -85,11 +85,11 @@
                   </q-img>
                 </div>
                 <div
-                  class="row full-width"
+                  class="row col-4 full-width "
+                  style="width:100px; height:100px; border-radius:10px; border-style: dotted"
                   v-else-if="file.type.includes('video')"
                 >
-                  <div class="col-10">
-                    <vue-plyr :options="{ ratio: '1:1' }">
+                  <div class="col-12 " style="height:60px">
                       <video
                         preload="metadata"
                         :src="`${file.src}#t=0.1}`"
@@ -97,9 +97,21 @@
                           margin-left: auto;
                           margin-right: auto;
                           display: block;
+                          width: 100px;
+                          height:100px
                         "
-                      ></video>
-                      <q-btn
+                      >
+                       <q-btn
+                      style="z-index: 1"
+                      color="red"
+                      flat
+                      dense
+                      class="all-pointer-events"
+                      icon="close"
+                      @click="removeImage(f)"
+                    />
+                    </video>
+                      <!-- <q-btn
                         style="
                           position: absolute;
                           bottom: 0;
@@ -112,10 +124,19 @@
                         class="all-pointer-events"
                         icon="close"
                         @click="removeImage(f)"
-                      />
-                    </vue-plyr>
+                      /> -->
+                    
                   </div>
-                  <div class="col-2 bg-grey text-center self-center">
+                  <div class="text-center  full-width" style="height:26px"> <q-btn
+                      style="z-index: 1; opacity: 0.5"
+                      color="red"
+                      flat
+                      dense
+                      class="all-pointer-events bg-white"
+                      icon="close"
+                      @click="removeImage(f)"
+                    /></div>
+                  <!-- <div class="col-2 bg-grey text-center self-center">
                     <q-btn
                       style="z-index: 1"
                       color="red"
@@ -125,7 +146,7 @@
                       icon="close"
                       @click="removeImage(f)"
                     />
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -364,7 +385,7 @@ export default {
           this.$store.dispatch("Post/store", formData).then((res) => {
             console.log("formdata hehe", res);
             this.$router.push("/community");
-            this.$q.notify("Berhasil postings");
+            this.$q.notify("Berhasil posting");
             this.loading = false;
           });
         } else {

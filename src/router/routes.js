@@ -266,12 +266,14 @@ const routes = [
         beforeEnter: multiguard([auth, checkIfOwner]),
     },
 
-    {
+    {   
         path: "/change-no-whatsapp2-owner",
         component: () =>
             import ("pages/ChangeNoWhatsapp2Owner.vue"),
-        beforeEnter: multiguard([auth, checkIfOwner]),
+        // beforeEnter: multiguard([auth, checkIfOwner]),
     },
+
+    
 
     {
         path: "/marketplace-add-product-item-owner",
@@ -759,7 +761,7 @@ const routes = [
         component: () =>
             import ("pages/PreviewDetailTransaksi.vue"),
         props: true,
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
     },
 
     {
@@ -767,7 +769,7 @@ const routes = [
         component: () =>
             import ("pages/PreviewDetailTransaksi2.vue"),
         props: true,
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
     },
 
     {
@@ -775,7 +777,7 @@ const routes = [
         component: () =>
             import ("pages/PreviewDetailTransaksi3.vue"),
         props: true,
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
     },
 
     {
@@ -1202,7 +1204,7 @@ const routes = [
         component: () =>
             import ("src/pages/SinglePostCommunity.vue"),
         props: true,
-        beforeEnter: multiguard([auth, checkIfSlave]),
+        beforeEnter: multiguard([auth]),
     },
 
     {

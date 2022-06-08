@@ -146,7 +146,7 @@ export default {
               }
             })
             .catch((err) => {
-              this.$q.notify("terjadi kesalahan");
+              this.$q.notify("Masukkan data dengan benar!");
             })
             .finally(() => {
               this.loading = false;

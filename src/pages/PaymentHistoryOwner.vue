@@ -159,7 +159,13 @@ export default {
         .dispatch("MasterPayment/getHistory")
         .then((res) => {
           this.history = res.data;
-          // console.log("res getHistory", res.data);
+          console.log("res getHistory", res.data);
+
+          const activeIds = [241]
+          const activeServiceList = this.history.filter((item) => {
+            return activeIds.includes(item.id);
+          });
+          console.log('tes filter history by id',activeServiceList);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getHistory", err);

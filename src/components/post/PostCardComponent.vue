@@ -129,6 +129,7 @@
         <div v-if="post.files.length">
           <q-carousel
             class="q-mx-sm bg-black"
+            style="border-radius: 10px"
             v-model="slide"
             transition-prev="scale"
             transition-next="scale"
@@ -544,11 +545,7 @@
                 bg-color="transparent"
                 v-model="link"
               >
-                <q-btn
-                  class="self-center q-px-xl"
-                  label="Copy"
-                  color="deep-purple-13"
-                />
+                
                 <template v-slot:prepend>
                   <q-icon name="fas fa-link" />
                 </template>

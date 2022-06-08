@@ -137,11 +137,12 @@
           </div>
 
           <div v-else>
-            <div class="text-caption q-py-sm">Untuk kamu hari ini</div>
-            <div class="row">
+            <div class="text-caption q-py-sm q-px-sm ">Untuk kamu hari ini</div>
+            <div class="row ">
               <div class="col-6" v-for="product in products" :key="product.id">
                 <q-card
                   class="q-pb-md q-mx-sm q-my-sm"
+                  style="min-height: 240px"
                   @click="$router.push(`/marketplace-detail/${product.id}`)"
                 >
                   <q-img
@@ -187,7 +188,7 @@
                     class="text-caption text-weight-medium q-pl-xs"
                     style="color: #5f5f5f"
                   >
-                    {{ product.tittle }}
+                    {{ product.tittle.substring(0, 20) }}
                   </div>
                   <div
                     class="text-subtitle2 text-weight-medium q-pl-xs"
@@ -215,7 +216,7 @@
 
           <!-- Dialog Welcome -->
           <q-dialog v-model="dialogWelcome" persistent>
-            <q-card class="full-width">
+            <q-card class="full-width ">
               <!-- Gif Warning -->
               <div class="justify-center full-width">
                 <div class="row justify-center q-pt-sm">

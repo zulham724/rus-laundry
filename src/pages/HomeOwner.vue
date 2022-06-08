@@ -61,7 +61,7 @@
       <!-- TAB KODE AFFILIATE -->
       <div class="q-pb-md q-px-xs text-center justify-center column">
         <div class="text-center justify-center">
-          <q-img src="~/assets/sgtg.png" style="width: 30%; height: 70px; " />
+          <q-img src="~/assets/sgtg.png" style="width: 30%; height: 70px" />
         </div>
         <div class="text-center justify-center">
           <q-btn
@@ -162,15 +162,15 @@
     <q-page class="mbl-child">
       <!-- btn dashboard & beli paket -->
       <div class="row q-pt-sm q-px-sm">
-        <div class="col-3 bg-white">
+        <div class="col-3">
           <q-btn flat @click="drawerLeft = !drawerLeft" round size="70%">
             <q-avatar square>
               <img src="~/assets/dsblg.png" style="width: 50%; height: 50%" />
             </q-avatar>
           </q-btn>
         </div>
-        <div class="col-4 bg-white"></div>
-        <div class="col-5 self-center">
+        <div class="col-3"></div>
+        <div class="col-6 self-center">
           <q-btn
             v-if="
               (this.expired_date <= this.current_date) &
@@ -372,10 +372,7 @@
                   </q-img>
                 </div>
 
-                <div
-                  class="col full-width"
-                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date >= this.current_date2"
-                >
+                <div class="col full-width" v-if="this.Auth.auth.is_expired == false && this.Auth.auth.active_package_user!=null">
                   <div class="row">
                     <div
                       class="text-weight-bold q-pt-md text-left"
@@ -399,14 +396,17 @@
                   </div>
                 </div>
 
-                
-                <div
-                  class="col full-width "
-                  v-if="this.Auth.auth.active_package_user != null && this.Auth.auth.active_package_user.expired_date <= this.current_date2"
-                >
-                  <q-btn flat @click="$router.push('/paket-owner-2')" class="q-my-md bg-white full-width" color="white" text-color="grey-6" no-caps label="Perpanjang paket" />
+                <div class="col full-width" v-if="this.Auth.auth.is_expired">
+                  <q-btn
+                    flat
+                    @click="$router.push('/paket-owner-2')"
+                    class="q-my-md bg-white full-width"
+                    color="white"
+                    text-color="grey-6"
+                    no-caps
+                    label="Perpanjang paket"
+                  />
                 </div>
-               
 
                 <div
                   class="col full-width"
@@ -568,16 +568,11 @@
 </template>
 
 <script>
-import { Bar } from "vue-chartjs";
 import moment from "moment";
 import { ref } from "vue";
-import { useQuasar } from "quasar";
 import { mapState } from "vuex";
 import BarChart from "src/components/BarchartComponent.vue";
-import LineChart from "src/components/LinechartComponent.vue";
 import chartExample from "src/components/LinechartComponent.vue";
-import Chartkick from "vue-chartkick";
-import chart from "chart.js";
 
 //setup linechart
 // import { defineComponent, defineAsyncComponent } from "vue";
@@ -599,7 +594,7 @@ export default {
 
   mounted() {
     this.dataAuth = this.Auth.auth;
-    console.log("dataAuth", this.dataAuth);
+    console.log(this.dataAuth);
 
     this.getTotalOrders();
     this.getTotalOrdersPerShop();
@@ -677,10 +672,9 @@ export default {
 
   methods: {
     moment,
-    attendanceCheck(){
-      console.log("ini auth", this.Auth.auth)
-      if(this.Auth.auth.shop){
-        
+
+    attendanceCheck() {
+      if (this.Auth.auth.shop) {
       } else {
         this.$q.notify({
           position: "top",
@@ -692,7 +686,6 @@ export default {
       this.$store
         .dispatch("MasterOrders/getMonthlyOrderEachBranch")
         .then((res) => {
-          // console.log("ini res getMonthlyOrderEachBranch", res.data);
           // this.arrayRevenueEachShop = res.data;
         })
         .catch((err) => {
@@ -700,9 +693,7 @@ export default {
         });
     },
     getMaxValueCircularCharts(value) {
-      // console.log("ini value", value);
       for (let i = 0; i < value.length; i++) {
-        console.log("ini valueee", value[i].orders_count);
         this.arrayCircularChart.push(value[i].orders_count);
         // let bulan = value.filter((obj) => {
         //   return obj[i];
@@ -711,7 +702,6 @@ export default {
       }
       // console.log("ini arrayCircularChart", this.arrayCircularChart);
       var max = Math.max(...this.arrayCircularChart);
-      console.log("toppp", max);
       this.dataTopCircular = max;
     },
     getProfitEachBranches() {
@@ -734,7 +724,6 @@ export default {
     },
     checkActivePackageUser() {
       if (this.Auth.auth.active_package_user != null) {
-        console.log("active package user exist");
         let date = this.Auth.auth.active_package_user.expired_date;
         this.expired_date = moment(date).locale("id").format("LL");
         this.current_date = moment().locale("id").format("LL");
@@ -792,7 +781,6 @@ export default {
       this.$store
         .dispatch("MasterOrders/getMonthlyOrder")
         .then((res) => {
-          console.log("ini res getMonthlyOrder", res.data);
           this.filterMonthGetMonthlyOrder(res.data);
         })
         .catch((err) => {
@@ -910,7 +898,6 @@ export default {
           //     console.log("dwadawd", index);
           //   }
           // });
-          console.log("res dataaaaaaaaaa", res.data);
           // console.log("uwaw", indext);
           this.filterMonthGetMonthlyRevenue2(res.data, indexChecker);
         })
@@ -934,7 +921,6 @@ export default {
           this.arrayCounter3.push(+counter);
 
           let zero = bulan3[0];
-          console.log("berisi", zero);
           this.array3.push(zero);
           this.sendDataBoolean3 = true;
 

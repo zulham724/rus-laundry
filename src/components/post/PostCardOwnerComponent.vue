@@ -129,6 +129,7 @@
         <div v-if="post.files.length">
           <q-carousel
             class="q-mx-sm bg-black"
+             style="border-radius: 10px"
             v-model="slide"
             transition-prev="scale"
             transition-next="scale"
@@ -347,7 +348,7 @@
             class="full-width"
             dense
             flat
-            @click="$router.push(`/report-post/${post.id}`)"
+            @click="$router.push(`/report-post-owner/${post.id}`)"
           >
             <div class="row full-width">
               <div class="col-3">
@@ -556,11 +557,7 @@
                 bg-color="transparent"
                 v-model="link"
               >
-                <q-btn
-                  class="self-center q-px-xl"
-                  label="Copy"
-                  color="deep-purple-13"
-                />
+                
                 <template v-slot:prepend>
                   <q-icon name="fas fa-link" />
                 </template>
@@ -620,13 +617,12 @@ export default {
   },
   methods: {
     submitMessage() {
-      console.log("tesstttt");
       this.setTextMessage();
       // console.log(this.message);
       let url = `https://api.whatsapp.com/send?text=${encodeURI(this.message)}`;
       window.open(url, "_blank");
 
-      this.$router.push("/community");
+      this.$router.push("/community-owner");
     },
 
     setTextMessage() {

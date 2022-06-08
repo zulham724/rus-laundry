@@ -28,7 +28,7 @@
               color="black"
               v-model="newBranch.email"
               outlined
-              type="text"
+              type="email"
               :rules="[(val) => (val && val.length > 0) || '']"
             >
             </q-input>
@@ -40,7 +40,7 @@
               v-model="newBranch.password"
               outlined
               type="text"
-              :rules="[(val) => (val && val.length > 0) || '']"
+              :rules="[(val) => (val && val.length > 7) || 'Isi minimal 8 karakter']"
             >
             </q-input>
           </div>
@@ -104,6 +104,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -115,6 +117,12 @@ export default {
         shop_desc: "",
       },
     };
+  },
+  computed: {
+    ...mapState(["Auth"]),
+  },
+  mounted() {
+    console.log('auth', this.Auth.auth)
   },
   methods: {
     addNewBranch() {

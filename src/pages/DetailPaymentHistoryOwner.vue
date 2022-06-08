@@ -50,6 +50,12 @@
             <q-input disable filled v-model="selectedPaymentPackagePrice" />
             <q-card
               flat
+              class="q-mt-sm q-px-sm q-py-sm text-white text-center"
+              style="background-color: #F4DE67"
+              ><div>Pastikan nominal sesuai</div></q-card
+            >
+            <q-card
+              flat
               class="q-mt-sm q-px-sm q-py-sm"
               style="background-color: #f7f7f7"
               ><div style="color: #c8c8c8">

@@ -646,7 +646,7 @@
                     v-model="link"
                     ref="copy"
                   >
-                    <q-btn
+                    <!-- <q-btn
                       v-if="$q.platform.is.desktop"
                       class="self-center q-px-xl"
                       label="Copy"
@@ -659,7 +659,7 @@
                       label="Copy"
                       color="deep-purple-13"
                       @click="copyLinkMbl()"
-                    />
+                    /> -->
                     <template v-slot:prepend>
                       <q-icon name="fas fa-link" />
                     </template>
@@ -722,7 +722,7 @@ export default {
 
   mounted() {
     this.getDetailOrder();
-    this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.orderid}`;
+    this.link = `${this.APP_URL}/preview-detail-transaksi-3/${this.orderid}`;
   },
 
   methods: {

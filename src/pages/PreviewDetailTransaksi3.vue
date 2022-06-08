@@ -7,90 +7,60 @@
             Layanan
           </div>
           <div class="full-width q-px-md">
-            <q-btn-dropdown
-              class="full-width"
-              style="background-color: #eaeaea"
-              text-color="grey-7"
-              label="Reguler cuci kering + setrika"
-            >
-              <q-list>
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Photos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Videos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Articles</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
+            <q-select
+              :update:model-value="printSelectedService(model)"
+              filled
+              v-model="model"
+              :options="servicesArr"
+              option-label="name"
+              option-value="id"
+              label="Filled"
+            />
           </div>
         </div>
         <div class="q-px-md q-mt-md">
-          <q-card class="q-pt-md">
-            <div class="q-px-md" style="font-weight: bold; font-size: 20px">
-              Status
-            </div>
-            <div class="q-px-md">
+          <q-card class="q-pt-md" flat>
+            <div style="font-weight: bold; font-size: 20px">Status</div>
+            <div class="bg-red">
               <div class="row">
-                <div class="col" style="width:40%">halo bang</div>
-                <div class="col" style="width:60%">
+                <div class="col bg-red">
                   <q-stepper
+                    v-if="!this.selectedService"
                     flat
                     v-model="step"
                     vertical
-                    color="primary"
+                    done-color="cyan-7"
+                    active-color="cyan-7"
                     animated
                   >
-                    <q-step
-                      :name="1"
-                      title="Pesanan Diproses"
-                      icon="settings"
-                      :done="step > 1"
-                    >
-                      Pesanan kamu sedang di cuci petugas
-
-                      <q-stepper-navigation>
-                        <q-btn
-                          @click="step = 2"
-                          color="primary"
-                          label="Continue"
-                        />
-                      </q-stepper-navigation>
+                    <q-step :name="3" title="Pesanan Diambil" :done="step > 2">
                     </q-step>
 
-                    <q-step
-                      :name="2"
-                      title="Pesanan Selesai"
-                      caption="Optional"
-                      icon="create_new_folder"
-                      :done="step > 2"
-                    >
+                    <q-step :name="2" title="Pesanan Selesai" :done="step > 2">
                       Pesanan kamu sudah siap diambil
+                    </q-step>
 
-                      <q-stepper-navigation>
-                        <q-btn
-                          @click="step = 4"
-                          color="primary"
-                          label="Continue"
-                        />
-                        <q-btn
-                          flat
-                          @click="step = 1"
-                          color="primary"
-                          label="Back"
-                          class="q-ml-sm"
-                        />
-                      </q-stepper-navigation>
+                    <q-step :name="1" title="Pesanan Diproses" :done="step > 1">
+                      Pesanan kamu sedang dicuci petugas
+                    </q-step>
+                  </q-stepper>
+                  <q-stepper
+                    v-if="this.selectedService"
+                    flat
+                    v-model="step"
+                    vertical
+                    done-color="cyan-7"
+                    active-color="cyan-7"
+                    animated
+                  >
+                    <q-step :name="3" title="Pesanan Diambil" :done="step > 3">
+                    </q-step>
+                    <q-step :name="2" title="Pesanan Selesai" :done="step > 2">
+                      Pesanan sudah siap kamu ambil
+                    </q-step>
+
+                    <q-step :name="1" title="Pesanan Diproses" :done="step > 1">
+                      Pesanan kamu sedang dicuci petugas
                     </q-step>
                   </q-stepper>
                 </div>
@@ -102,35 +72,46 @@
         <div class="q-pt-md">
           <q-card bordered class="q-mx-md">
             <q-card-section>
-              <div class="q-px-md" style="font-weight: bold; font-size: 20px">
-                Status
+              <div style="font-weight: bold; font-size: 20px">
+                Detail Pesanan
               </div>
               <div class="column">
                 <div class="row">
-                  <div class="col-5">Layanan</div>
-                  <div class="col-7 text-right">
-                    Reguler cuci kering + setrika
+                  <div class="col-3">Layanan</div>
+                  <div class="col-9 text-right" v-if="this.selectedService">
+                    {{ this.selectedService.name }}
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-5">Item</div>
-                  <div class="col-7 text-right">Pakaian halus</div>
+                  <div class="col-2">Item</div>
+                  <div class="col-10 text-right" v-if="this.selectedService">
+                    {{ this.selectedService.category }}
+                  </div>
                 </div>
                 <div class="row">
-                  <div class="col-5">Estimasi pesanan</div>
-                  <div class="col-7 text-right">1 jam</div>
+                  <div class="col-6">Estimasi pesanan</div>
+                  <div class="col-6 text-right" v-if="this.selectedService">
+                    {{ this.selectedService.process_time }} Jam
+                  </div>
                 </div>
                 <div class="row">
-                  <div class="col-5">Berat</div>
-                  <div class="col-7 text-right">1 Kg</div>
+                  <div class="col-2">Berat</div>
+                  <div class="col-10 text-right" v-if="this.selectedService">
+                    {{ this.selectedService.quantity }}
+                  </div>
                 </div>
               </div>
-              <div class="text-center">
-                - - - - - - - - - - - - - - - - - - - - -
-              </div>
+              <q-separator class="q-my-sm"></q-separator>
               <div class="row">
-                <div class="col-5">Harga</div>
-                <div class="col-7 text-right">1 Kg</div>
+                <div class="col-2">Harga</div>
+                <div class="col-10 text-right" v-if="this.selectedService">
+                  {{
+                    new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(this.selectedService.price)
+                  }}
+                </div>
               </div>
             </q-card-section>
           </q-card>
@@ -138,28 +119,54 @@
 
         <div class="q-pt-md">
           <div class="q-px-md" style="font-weight: bold; font-size: 20px">
-            Informasi Pesanan
+            Informasi Pemesan
           </div>
           <div class="q-px-md column">
             <div class="row">
-              <div class="col-6">dawdwa</div>
-              <div class="col-6 text-right">dawdwa</div>
+              <div class="col-6">Nama</div>
+              <div class="col-6 text-right" v-if="this.detail_order.customer">
+                {{ this.detail_order.customer.name }}
+              </div>
             </div>
             <div class="row">
-              <div class="col-6">dawdwa</div>
-              <div class="col-6 text-right">dawdwa</div>
+              <div class="col-6">No Hp</div>
+              <div class="col-6 text-right" v-if="this.detail_order.customer">
+                {{ this.detail_order.customer.contact_number }}
+              </div>
             </div>
             <div class="row">
-              <div class="col-6">dawdwa</div>
-              <div class="col-6 text-right">dawdwa</div>
+              <div class="col-6">Status pembayaran</div>
+              <div
+                class="col-6 text-right"
+                v-if="
+                  this.detail_order.total_sum - this.detail_order.paid_sum != 0
+                "
+              >
+                Belum lunas
+              </div>
+              <div
+                class="col-6 text-right"
+                v-if="
+                  this.detail_order.total_sum - this.detail_order.paid_sum == 0
+                "
+              >
+                Lunas
+              </div>
             </div>
           </div>
         </div>
-        <div class="q-pt-md">
-          <div class="q-px-md" style="font-weight: bold; font-size: 20px">
+        <div class="q-pt-md row q-px-md">
+          <div class="col-6" style="font-weight: bold; font-size: 20px">
             Total Harga
           </div>
-          <div class="q-px-md">halooooo</div>
+          <div class="col-6 text-right text-bold">
+            {{
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(this.totalPrice)
+            }}
+          </div>
         </div>
       </q-page>
     </q-page-container>
@@ -174,7 +181,13 @@ export default {
 
   data() {
     return {
-      step: ref(1),
+      model: ref(null),
+
+      servicesArr: [],
+      selectedService: null,
+      totalPrice: 0,
+
+      step: ref(0),
       slide: ref("style"),
       detail_order: {},
       slide: null,
@@ -187,6 +200,11 @@ export default {
   },
 
   methods: {
+    printSelectedService(value) {
+      console.log("selectedService", value);
+      this.selectedService = null;
+      this.selectedService = value;
+    },
     getDetailOrder() {
       this.isLoad = true;
       this.$store
@@ -194,17 +212,34 @@ export default {
         .then((res) => {
           this.detail_order = res.data;
           console.log("ini detail_order", this.detail_order);
-
-          if (res.data.services.length) {
-            this.slide = `slide-${res.data.services[0].id}`;
-            this.order = res.data;
-            console.log("Ini order", this.order);
-          } else {
-            this.slide = "slide-0";
+          for (let i = 0; i < this.detail_order.services.length; i++) {
+            let serviceName = this.detail_order.services[i];
+            this.servicesArr.push(serviceName);
+            let servicePrice = this.detail_order.services[i].price;
+            this.totalPrice += servicePrice;
           }
         })
         .finally(() => {
           this.isLoad = false;
+          console.log("this.totalPrice", this.totalPrice);
+          console.log("ini servicesName", this.servicePrice);
+          if (this.detail_order.order_status_id == 1) {
+            this.step = 1;
+            console.log("step 1");
+            console.log("step", this.step);
+          } else if (this.detail_order.order_status_id == 2) {
+            this.step = 2;
+            console.log("step 2");
+            console.log("step", this.step);
+          } else if (this.detail_order.order_status_id == 3) {
+            this.step = 2;
+            console.log("step 2");
+            console.log("step", this.step);
+          } else if (this.detail_order.order_status_id == 4) {
+            this.step = 4;
+            console.log("step 4");
+            console.log("step", this.step);
+          }
         });
     },
   },

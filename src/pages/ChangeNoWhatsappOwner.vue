@@ -2,11 +2,7 @@
   <q-layout class="mbl">
     <q-header class="text-center shadow-1">
       <q-toolbar class="bg-white">
-        <q-btn
-          flat
-          round
-          @click="$router.push('/marketplace-detail-user-owner')"
-        >
+        <q-btn flat round @click="$router.push('/marketplace-detail-user')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
           </q-avatar>
         </q-btn>
@@ -29,7 +25,7 @@
         <div class="row q-py-md full-width">
           <!-- Button edit no wa -->
           <q-btn
-            @click="checkNumber"
+            @click="checkNumber()"
             no-caps
             class="q-pa-md q-mt-md full-width"
             style="background-color: #9b27f1; border-radius: 10px"
@@ -49,21 +45,26 @@
 
 <script>
 import { ref } from "vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
-    return {
-      checkNumber() {
-        if (this.Auth.auth.contact_number != null) {
-          $router.push("/change-no-whatsapp2-owner");
-        } else {
-          this.$q.notify({
-            position: "top",
-            message: "Anda belum mengisi nomor telepon",
-          });
-        }
-      },
-    };
+    return {};
+  },
+  computed: {
+    ...mapState(["Auth"]),
+  },
+  methods: {
+    checkNumber() {
+      if (this.Auth.auth.contact_number) {
+        this.$router.push("/change-no-whatsapp2-owner");
+      } else {
+        this.$q.notify({
+          position: "top",
+          message: "Anda belum mengisi nomor telepon",
+        });
+      }
+    },
   },
 };
 </script>

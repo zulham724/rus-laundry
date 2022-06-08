@@ -2,7 +2,7 @@
   <q-layout class="mbl">
     <q-header class="text-center shadow-1">
       <q-toolbar class="bg-white">
-        <q-btn flat round @click="$router.push('/change-no-whatsapp-owner')">
+        <q-btn flat round @click="$router.push('/marketplace-detail-user-owner')">
           <q-avatar size="25px" icon="fas fa-arrow-left" style="color: black">
           </q-avatar>
         </q-btn>
@@ -46,7 +46,7 @@
                 dense
                 disable
                 v-model="oldContactNumber"
-                label="Masukan nomor wa lama"
+                label="Nomor wa lama"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Masukkan No. Hp anda',
                 ]"
@@ -62,9 +62,9 @@
             <div class="col-12">
               <q-input
                 dense
-                type="number"
                 v-model="newContactNumber"
                 label="Masukan nomor wa aktif"
+                type="number"
                 :rules="[
                   (val) => (val && val.length > 9) || 'Masukkan No. Hp anda',
                 ]"
@@ -95,7 +95,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { mapState } from "vuex";
 
 export default {
@@ -109,12 +108,11 @@ export default {
     };
   },
   mounted() {
-    console.log("ini auth", this.Auth.auth);
     this.init();
-    // console.log("ini cn auth", this.Auth.auth.contact_number);
   },
   methods: {
     init() {
+      console.log("uraa", this.Auth);
       this.oldContactNumber = this.Auth.auth.contact_number;
     },
     updateContactNumber() {
@@ -127,6 +125,7 @@ export default {
           this.newContactNumber != null &&
           this.oldContactNumber != this.newContactNumber
         ) {
+          // this.$q.notify("Gunakan nomor yang berbeda!");
           this.$store
             .dispatch("Auth/updateAccountMaster", formData)
             .then((res) => {
@@ -134,6 +133,7 @@ export default {
               this.$router.push("/marketplace-detail-user-owner");
             })
             .catch((err) => {
+              console.log('gigil', err)
               this.$q.notify("Gagal melakukan perubahan!");
             })
             .finally(() => {

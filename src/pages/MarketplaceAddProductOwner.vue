@@ -109,7 +109,7 @@
             v-for="(product, p) in products"
             :key="product.id"
           >
-            <q-card class="q-pa-md">
+            <q-card class="q-pa-md" style="min-height: 280px">
               <div style="height: 150px" class="self-center bg-black">
                 <q-img
                   v-if="product.images.length"
@@ -137,7 +137,7 @@
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
               >
-                {{ product.tittle }}
+                {{ product.tittle.substring(0, 20) }}
               </div>
 
               <div

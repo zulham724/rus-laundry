@@ -113,7 +113,7 @@
                 @click="dialogPreviewPhoto(file)"
                 v-else-if="file.filetype.includes('image')"
                 :src="STORAGE_URL + `/` + file.src"
-                style="width: 100%; height: 100%"
+                style="width: 100%; height: 100%; border-radius:10px"
               >
                 <template v-slot:error>
                   <div

@@ -27,7 +27,7 @@
               color="black"
               v-model="this.addCustomer.email"
               outlined
-              type="search"
+              type="email"
             >
             </q-input>
           </div>

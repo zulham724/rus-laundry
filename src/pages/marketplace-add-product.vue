@@ -22,8 +22,8 @@
       <q-page>
         <q-input
           dense
-          style="border-radius: 20px; width: 95%"
-          class="q-ml-sm q-mt-md bg-white shadow-1"
+          style="border-radius: 20px"
+          class="q-mx-md q-mt-md bg-white shadow-1"
           type="search"
           rounded
           outlined
@@ -40,15 +40,10 @@
             />
           </template>
         </q-input>
-        <div>
+        <div class="q-mx-md">
           <q-btn
-            class="q-ml-md q-mt-md"
-            style="
-              border-radius: 10px;
-              background-color: #9b27f1;
-              width: 92%;
-              color: white;
-            "
+            class="full-width q-mt-md"
+            style="border-radius: 10px; background-color: #9b27f1; color: white"
             @click="addProduct()"
             no-caps
             label="Tambah Produk"
@@ -85,13 +80,13 @@
           </div>
         </div>
 
-        <div v-else class="row q-mt-md">
+        <div v-else class="row q-mt-md ">
           <div
-            class="col-6 q-pa-sm"
+            class="col-6 q-pa-sm "
             v-for="(product, p) in products"
             :key="product.id"
           >
-            <q-card class="q-pa-md">
+            <q-card class="q-pa-md" style="min-height: 280px">
               <div style="height: 150px" class="self-center bg-white">
                 <q-img
                   v-if="product.images.length"
@@ -119,7 +114,7 @@
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
               >
-                {{ product.tittle }}
+                {{ product.tittle.substring(0, 20) }}
               </div>
 
               <div
@@ -157,53 +152,6 @@
                     $router.push(`/marketplace-add-product-edit/${product.id}`)
                   "
                 ></q-btn>
-                <!-- Dialog Hapus Product -->
-                <q-dialog v-model="dialog_deleteProduct">
-                  <q-card>
-                    <q-card-section>
-                      <div
-                        class="text-weight-bold text-left"
-                        style="font-size: 16px"
-                      >
-                        Hapus Produk?
-                      </div>
-
-                      <div
-                        class="text-weight-light text-left q-mt-none"
-                        style="width: 300px; font-size: 12px"
-                      >
-                        yakin ingin menghapus produk?
-                      </div>
-                    </q-card-section>
-
-                    <q-card-actions class="text-primary" vertical>
-                      <div class="row justify-end q-x-gutter-sm">
-                        <q-btn
-                          v-close-popup
-                          class="text-white"
-                          no-caps
-                          label="Batal"
-                          flat
-                          text-color="grey-8"
-                          style="width: 30px; background-color: white"
-                        />
-                        <q-btn
-                          v-close-popup
-                          class="text-white"
-                          no-caps
-                          flat
-                          @click="deleteProduct(product.id, p)"
-                          label="Oke"
-                          style="
-                            width: 30px;
-                            background-color: #49c2c0;
-                            color: white;
-                          "
-                        />
-                      </div>
-                    </q-card-actions>
-                  </q-card>
-                </q-dialog>
 
                 <q-btn
                   padding="none"
@@ -221,6 +169,53 @@
                 ></q-btn>
               </div>
             </q-card>
+            <!-- Dialog Hapus Product -->
+            <q-dialog class="bg-white" v-model="dialog_deleteProduct">
+              <q-card>
+                <q-card-section>
+                  <div
+                    class="text-weight-bold text-left"
+                    style="font-size: 16px"
+                  >
+                    Hapus Produk?
+                  </div>
+
+                  <div
+                    class="text-weight-light text-left q-mt-none"
+                    style="width: 300px; font-size: 12px"
+                  >
+                    yakin ingin menghapus produk?
+                  </div>
+                </q-card-section>
+
+                <q-card-actions class="text-primary" vertical>
+                  <div class="row justify-end q-x-gutter-sm">
+                    <q-btn
+                      v-close-popup
+                      class="text-white"
+                      no-caps
+                      label="Batal"
+                      flat
+                      text-color="grey-8"
+                      style="width: 30px; background-color: white"
+                    />
+                    <q-btn
+                      v-close-popup
+                      class="text-white"
+                      no-caps
+                      flat
+                      @click="deleteProduct(product.id, p)"
+                      label="Oke"
+                      style="
+                        width: 30px;
+                        background-color: #49c2c0;
+                        color: white;
+                      "
+                    />
+                  </div>
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
           </div>
         </div>
 

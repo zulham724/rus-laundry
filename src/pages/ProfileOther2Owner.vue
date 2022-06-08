@@ -52,7 +52,6 @@
               </div>
               <div v-else-if="profilePost.avatar" class="self-center">
                 <q-avatar
-                  @click="$router.push('/my-profile')"
                   size="80px"
                   style="background-color: #fff"
                 >
@@ -72,7 +71,7 @@
                   disable
                   class="grad"
                   text-color="white"
-                  :label="profilePost.shop ? 'Cabang' : 'Pemilik'"
+                  :label="profilePost.role_id == 3 ? 'Pemilik' : 'Cabang'"
                 />
               </div>
               <!-- <div

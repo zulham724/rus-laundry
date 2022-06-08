@@ -134,7 +134,7 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["Orders"]),
+    ...mapState(["Orders", "Auth"]),
   },
   data() {
     return {
@@ -148,6 +148,7 @@ export default {
     };
   },
   mounted() {
+    console.log('this.auth', this.Auth.auth)
     this.getCategory();
   },
   methods: {

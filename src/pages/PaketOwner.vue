@@ -29,290 +29,141 @@
           v-for="item in this.packageData"
           :key="item.id"
           class="q-px-sm q-py-sm"
-        > 
-          <q-card flat v-if="this.Auth.auth.active_package_user == null" class="no-shadow" style="border-radius: 10px; " >
-            <div class="bgCardTop text-h6 text-white text-center q-py-sm">
-              {{ item.name }}
-            </div>
-            <div class="q-px-sm bg-white">
-              <div v-for="paket in item.package_contents" :key="paket.id">
-                <div class="row q-py-xs">
-                  <div class="text-center self-center col-2">
-                    <img src="~/assets/dm.png" />
-                  </div>
-                  <div class="q-pl-sm col-10 text-h6 text-black self-center">
-                    <div>{{ paket.value }}</div>
-                  </div>
+        >
+          <q-card
+            flat
+            @click="nextPayment2(item)"
+            v-if="this.Auth.auth.active_package_user == null"
+            class="no-shadow"
+            style="border-radius: 10px; background-color: #017dff"
+          >
+            <div class="row q-px-md q-py-sm">
+              <div class="col">
+                <div class="text-white">{{ item.name }}</div>
+                <div class="text-white" v-if="item.price != 0">
+                  {{
+                    new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(item.price)
+                  }}
                 </div>
+                <div class="text-white" v-else>-</div>
               </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/cs.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>
-                    {{
-                      new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      }).format(item.price)
-                    }}
-                  </div>
-                </div>
+              <div class="col text-white text-right self-center">
+                {{ item.package_contents[0].value }}
               </div>
-            </div>
-
-            <div v-if="this.Auth.auth.active_package_user">
-              <q-btn
-                v-if="item.id >= this.Auth.auth.active_package_user.package.id"
-                no-caps
-                @click="nextPayment(item)"
-                class="full-width bgCardTop"
-                style="
-                  background-color: #22c7dd;
-                "
-              >
-                <div class="text-h6 q-py-sm" style="color: #fff">
-                  Lanjutkan Ke Pembayaran
-                </div>
-              </q-btn>
-            </div>
-            <div v-if="this.Auth.auth.active_package_user">
-              <q-btn
-                v-if="item.id < this.Auth.auth.active_package_user.package.id"
-                no-caps
-                disable
-                class="full-width bgCardTop"
-                style="
-                  background-color: #22c7dd;
-                "
-              >
-                <div class="text-h6 q-py-sm" style="color: #fff">
-                  Lanjutkan Ke Pembayaran
-                </div>
-              </q-btn>
-            </div>
-            <div v-if="this.Auth.auth.active_package_user == null">
-              <q-btn
-                no-caps
-                @click="nextPayment(item)"
-                class="full-width bgCardTop"
-                style="
-                  background-color: #22c7dd;
-                  border-radius: 0px 0px 10px 10px;
-                "
-              >
-                <div class="text-h6 q-py-sm" style="color: #fff">
-                  Lanjutkan Ke Pembayaran
-                </div>
-              </q-btn>
             </div>
           </q-card>
-          <q-card v-if="this.Auth.auth.active_package_user != null" flat :class="`no-shadow ${item.id >= this.Auth.auth.active_package_user.package.id?null:'filterBrightness'}`" style="border-radius: 10px; " >
-            <div class="bgCardTop text-h6 text-white text-center q-py-sm">
-              {{ item.name }}
-            </div>
-            <div class="q-px-sm bg-white">
-              <div v-for="paket in item.package_contents" :key="paket.id">
-                <div class="row q-py-xs">
-                  <div class="text-center self-center col-2">
-                    <img src="~/assets/dm.png" />
-                  </div>
-                  <div class="q-pl-sm col-10 text-h6 text-black self-center">
-                    <div>{{ paket.value }}</div>
-                  </div>
+          <q-card
+            @click="nextPayment(item)"
+            v-if="this.Auth.auth.active_package_user != null"
+            flat
+            :class="`no-shadow ${
+              item.id > this.Auth.auth.active_package_user.package.id
+                ? null
+                : 'filterBrightness '
+            }`"
+            style="border-radius: 10px; background-color: #017dff"
+          >
+            <div class="row q-px-md q-py-sm">
+              <div class="col">
+                <div class="text-white">{{ item.name }}</div>
+                <div class="text-white" v-if="item.price != 0">
+                  {{
+                    new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(item.price)
+                  }}
                 </div>
+                <div class="text-white" v-else>-</div>
               </div>
-              <div class="row q-py-xs">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/cs.png" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div>
-                    {{
-                      new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      }).format(item.price)
-                    }}
-                  </div>
-                </div>
+              <div class="col text-white text-right self-center">
+                {{ item.package_contents[0].value }}
               </div>
-            </div>
-
-            <div v-if="this.Auth.auth.active_package_user">
-              <q-btn
-                v-if="item.id >= this.Auth.auth.active_package_user.package.id"
-                no-caps
-                @click="nextPayment(item)"
-                class="full-width bgCardTop"
-                style="
-                  background-color: #22c7dd;
-                "
-              >
-                <div class="text-h6 q-py-sm" style="color: #fff">
-                  Lanjutkan Ke Pembayaran
-                </div>
-              </q-btn>
-            </div>
-            <div v-if="this.Auth.auth.active_package_user">
-              <q-btn
-                v-if="item.id < this.Auth.auth.active_package_user.package.id"
-                no-caps
-                disable
-                class="full-width bgCardTop"
-                style="
-                  background-color: #22c7dd;
-                "
-              >
-                <div class="text-h6 q-py-sm" style="color: #fff">
-                  Lanjutkan Ke Pembayaran
-                </div>
-              </q-btn>
-            </div>
-            <div v-if="this.Auth.auth.active_package_user == null">
-              <q-btn
-                no-caps
-                @click="nextPayment(item)"
-                class="full-width bgCardTop"
-                style="
-                  background-color: #22c7dd;
-                  border-radius: 0px 0px 10px 10px;
-                "
-              >
-                <div class="text-h6 q-py-sm" style="color: #fff">
-                  Lanjutkan Ke Pembayaran
-                </div>
-              </q-btn>
             </div>
           </q-card>
         </div>
 
-        <q-dialog v-model="payment1" persistent position="bottom">
-          <q-card>
-            <q-card-section
-              class="text-center"
-              style="background-color: #b43f3f"
-            >
-              <div class="text-white">
-                Sesuaikan nominal pembayaran sesuai yang ditujukan, jika ada
-                kesalahan silahkan hubungi kami
+        <q-dialog v-model="payment1" position="bottom">
+          <q-card style="border-radius: 20px 20px 0px 0px">
+            <q-card-section class="text-center q-py-none">
+              <img src="./../assets/pon.png" style="height: 20%; width: 15%" />
+            </q-card-section>
+            <q-card-section class="text-center q-py-sm">
+              <div class="text-black text-bold" style="font-size: 16px">
+                {{ paymentPackageData.name }}
               </div>
             </q-card-section>
-            <q-card-section class="q-pt-sm">
-              <div>Transfer Pembayaran Ke No.Rekening :</div>
-              <div class="row">
-                <div class="text-center self-center col-2">
-                  <img src="~/assets/bni.png" style="width: 100%" />
-                </div>
-                <div class="q-pl-sm col-10 text-h6 text-grey self-center">
-                  <div class="text-black" style="font-size: 16px">
-                    a.n/ Ardian Rizky Rahmawan
-                  </div>
-                  <div class="text-black">0262628673</div>
-                </div>
+
+            <q-card-section class="q-py-none">
+              <div
+                v-for="item in paymentPackageData.package_contents"
+                :key="item.id"
+              >
+                <q-item>
+                  <q-item-section avatar>
+                    <q-avatar rounded>
+                      <img
+                        src="./../assets/cebir.png"
+                        style="width: 70%; height: 70%"
+                      />
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>{{ item.value }}</q-item-section>
+                </q-item>
               </div>
-              <!-- <q-btn
-                no-caps
-                rounded
-                text-color="white"
-                label="Salin No Rekening"
-                style="background-color: #ddca1d"
-              /> -->
             </q-card-section>
-
-            <q-separator color="grey" class="q-mx-sm" />
-
-            <q-card-section class="q-pt-sm">
-              <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(paymentPackageData.price)
-                }}
-              </div>
+            <q-card-section class="q-py-sm" style="background-color: #017dff">
               <div>
-                Unggah Bukti Pembayaran Jika Anda Salah Input No.Rekening
+                <div class="row">
+                  <div class="col self-center text-white">
+                    {{
+                      new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(paymentPackageData.price)
+                    }}
+                  </div>
+                  <div class="col text-right self-center">
+                    <q-btn
+                      @click="payment2 = true"
+                      flat
+                      dense
+                      label="Beli paket"
+                      style="color: #fff"
+                    />
+                  </div>
+                </div>
               </div>
             </q-card-section>
-
-            <q-card-actions align="left">
-              <q-btn
-                flat
-                label="Proses Pesanan"
-                @click="payment2 = true"
-                rounded
-                style="background-color: #6295ff"
-                color="white"
-                v-close-popup
-              />
-              <q-btn
-                flat
-                label="Batal"
-                rounded
-                style="background-color: #7e8385"
-                color="white"
-                v-close-popup
-              />
-            </q-card-actions>
           </q-card>
         </q-dialog>
 
-        <q-dialog v-model="payment2" persistent position="bottom">
+        <q-dialog v-model="payment2" persistent>
           <q-card>
             <q-card-section class="text-center">
-              <div class="text-black">
-                Segera lakukan pembayaran dalam waktu :
-              </div>
-            </q-card-section>
-            <q-card-section
-              class="text-center"
-              style="background-color: #b43f3f"
-            >
-              <div class="text-white">
-                Layanan pembayaran Anda akan berakhir dalam : 24 Jam <br />
-                Jika melebihi 24 Jam Maka akan EXPIRED!
-              </div>
-            </q-card-section>
-            <q-card-section class="q-pt-sm">
-              <div>Nomor Rekening :</div>
-              <div class="text-h6">0262628673</div>
-              <!-- <q-btn no-caps style="background-color: #ddca1d">
-                <q-avatar square size="15px">
-                  <q-img src="~/assets/cp.png" />
-                </q-avatar>
-              </q-btn> -->
-
-              <div>Jumlah Yang Harus Dibayarkan :</div>
-              <div class="text-h6">
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(paymentPackageData.price)
-                }}
-              </div>
+              <img class="q-py-sm" src="./../assets/dngr.png" style="height: 40%; width: 40%" />
+              <div>Apakah anda yakin ingin membeli paket ini?</div>
             </q-card-section>
 
-            <q-card-actions align="left">
+            <q-card-actions align="right">
+              
               <q-btn
-                @click="
-                  (payment3 = true) & this.addPackage() & this.getCurrentDate()
-                "
                 flat
-                label="Proses Pesanan"
-                rounded
-                style="background-color: #6295ff"
+                dense
+                label="tidak"
+                style="background-color: #7e8385"
                 color="white"
                 v-close-popup
               />
               <q-btn
+                @click="this.addPackage() & this.getCurrentDate()"
                 flat
-                label="Batal"
-                rounded
-                style="background-color: #7e8385"
+                dense
+                label="yakin"
+                style="background-color: #c81b1b"
                 color="white"
                 v-close-popup
               />
@@ -347,7 +198,6 @@
 
                 <q-item-section>
                   <q-item-label>{{ this.Auth.auth.name }}</q-item-label>
-                  <!--<q-item-label caption>No. anggota 1234567</q-item-label>-->
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -372,7 +222,7 @@
 
             <q-card-actions align="left">
               <q-btn
-              @click="this.$router.push('payment-history-owner')"
+                @click="getHistory()"
                 flat
                 rounded
                 style="background-color: #6295ff"
@@ -407,6 +257,9 @@ export default {
       paymentPackageData: null,
 
       currentDate: null,
+
+      confirmationId: null,
+      history: null,
     };
   },
   mounted() {
@@ -427,16 +280,28 @@ export default {
         .dispatch("MasterPayment/store", this.paymentPackageData)
         .then((res) => {
           console.log("ini res sudah bayar", res.data);
+          this.confirmationId = res.data.id;
+          this.getHistory();
         })
         .catch((err) => {
           console.log("terjadi kesalahan addPackage", err);
         });
     },
     nextPayment(data) {
+      if (data.id > this.Auth.auth.active_package_user.package.id) {
+        this.paymentPackageData = null;
+        this.paymentPackageData = data;
+        console.log("data", data);
+        this.payment1 = true;
+      } else {
+        console.log("gagal");
+      }
+    },
+    nextPayment2(data){
       this.paymentPackageData = null;
-      this.paymentPackageData = data;
-      console.log("data", data);
-      this.payment1 = true;
+        this.paymentPackageData = data;
+        console.log("data", data);
+        this.payment1 = true;
     },
     getPackages() {
       this.$store
@@ -449,6 +314,32 @@ export default {
           console.log("terjadi kesalahan getPackages", err);
         });
     },
+    getHistory() {
+      this.$store
+        .dispatch("MasterPayment/getHistory")
+        .then((res) => {
+          this.history = res.data;
+          const activeIds = [this.confirmationId];
+          const activeServiceList = this.history.filter((item) => {
+            return activeIds.includes(item.id);
+          });
+          console.log("activeServiceList", activeServiceList[0]);
+
+          this.toDetailPaymentHistoryOwner(activeServiceList[0]);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getHistory", err);
+        });
+    },
+    toDetailPaymentHistoryOwner(payment) {
+      console.log("asdfffffsdfasdfasdfa", payment);
+      this.$store.commit("MasterPayment/set_payment_history", payment);
+      if (payment.status == "pending") {
+        this.$router.push("/detail-payment-history-owner");
+      } else if (payment.status == "success") {
+        this.$router.push(`/succes-payment-status-owner/${payment.id}`);
+      }
+    },
   },
 };
 </script>
@@ -458,7 +349,6 @@ export default {
   background-image: linear-gradient(to bottom right, #00c6ff, #0072ff);
 }
 .filterBrightness {
-  filter: brightness(75%);
-
+  filter: brightness(70%);
 }
 </style>
