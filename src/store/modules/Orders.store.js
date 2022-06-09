@@ -275,6 +275,18 @@ const actions = {
         });
     });
   },
+  show2({ commit }, orderId) {
+    return new Promise((resolve, reject) => {
+      api
+        .get(`/api/order/${orderId}`)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   update({ commit }, payload) {
     return new Promise((resolve, reject) => {
       const acces = {

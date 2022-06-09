@@ -207,7 +207,7 @@ export default {
     getDetailOrder() {
       this.isLoad = true;
       this.$store
-        .dispatch("Orders/show", this.orderid)
+        .dispatch("Orders/show2", this.orderid)
         .then((res) => {
           this.detail_order = res.data;
           console.log("ini detail_order", this.detail_order);
