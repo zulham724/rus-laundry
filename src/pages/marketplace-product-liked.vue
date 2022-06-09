@@ -171,7 +171,10 @@ export default {
             this.productLiked = res.data;
           })
           .catch((err) => {
-            this.$q.notify("Pencarian Gagal");
+            this.$q.notify({
+                type: "negative",
+                message: "Data tidak ditemukan!",
+              });
           });
       } else {
         this.getLikedProductByUser();
@@ -186,6 +189,7 @@ export default {
           .dispatch("Product/getLikedProductByUser", user_id)
           .then((res) => {
             this.productLiked = res.data;
+            console.log('this.productLiked', this.productLiked)
             resolve(res);
           })
           .catch((err) => {

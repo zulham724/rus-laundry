@@ -761,7 +761,7 @@ const routes = [
         component: () =>
             import ("pages/PreviewDetailTransaksi.vue"),
         props: true,
-        beforeEnter: multiguard([auth]),
+        // beforeEnter: multiguard([auth]),
     },
 
     {
@@ -769,7 +769,7 @@ const routes = [
         component: () =>
             import ("pages/PreviewDetailTransaksi2.vue"),
         props: true,
-        beforeEnter: multiguard([auth]),
+        // beforeEnter: multiguard([auth]),
     },
 
     {
@@ -777,7 +777,7 @@ const routes = [
         component: () =>
             import ("pages/PreviewDetailTransaksi3.vue"),
         props: true,
-        beforeEnter: multiguard([auth]),
+        // beforeEnter: multiguard([auth]),
     },
 
     {

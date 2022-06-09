@@ -31,6 +31,7 @@ const mutations = {
         state.auth.shop.description = payload.shop.description;
     },
     update_account_master(state, payload) {
+        console.log('payload', payload)
         state.auth.name = payload.name;
         state.auth.email = payload.email;
         state.auth.contact_number = payload.contact_number;

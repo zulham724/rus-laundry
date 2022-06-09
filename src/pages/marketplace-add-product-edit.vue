@@ -47,7 +47,7 @@
     </q-header>
     <q-page-container>
       <q-page class="q-pa-sm" v-if="product">
-        <div class="row q-mx-sm q-mt-md">
+        <div class="row q-mt-md">
           <q-virtual-scroll :items="images" virtual-scroll-horizontal>
             <template v-slot:before>
               <div
@@ -94,26 +94,25 @@
             </template>
           </q-virtual-scroll>
         </div>
-        <div class="q-ml-lg q-mt-md text-caption text-black">
+        <div class="q-mx-sm q-mt-md text-caption text-black">
           Pilih foto utama anda terlebih dahulu <br />
           maks. 10 foto
         </div>
         <div>
-          <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+          <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
             <div class="col-6">Nama produk</div>
             <div
               class="col-6 q-pr-md text-right text-weight-light"
               style="color: #d0d1dc"
             >
-              100
+              70
             </div>
           </div>
           <q-input
             :disable="Loading"
-            class="q-ml-md q-mt-sm"
-            style="width: 95%"
-            counter 
-            maxlength="100"
+            class="q-mx-sm q-mt-sm"
+            counter
+            maxlength="70"
             outlined
             lazy-rules
             :rules="[
@@ -136,8 +135,7 @@
           <q-input
             :disable="Loading"
             type="number"
-            class="q-ml-md q-mt-sm"
-            style="width: 95%"
+            class="q-mx-sm q-mt-sm"
             outlined
             lazy-rules
             :rules="[
@@ -160,8 +158,8 @@
           <q-input
             :disable="Loading"
             autogrow
-            class="q-ml-md q-mt-sm"
-            style="width: 95%"
+            class="q-mx-sm q-mt-sm"
+            maxlength="200"
             outlined
             lazy-rules
             :rules="[
@@ -187,8 +185,7 @@
           <q-input
             :disable="Loading"
             type="number"
-            class="q-ml-md q-mt-sm"
-            style="width: 95%"
+            class="q-mx-sm q-mt-sm"
             outlined
             lazy-rules
             :rules="[
@@ -204,12 +201,12 @@
           </div>
         </div>
         <q-input
+        class="q-mx-sm"
           readonly
           :disable="Loading"
           type="text"
           @click="dialogKondisiBarang = true"
-          class="q-ml-md q-mt-sm"
-          style="width: 95%"
+           style="width: 95%"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
           outlined
@@ -333,6 +330,7 @@ export default {
         })
         .finally(() => {
           this.Loading = false;
+          this.$router.push('/marketplace-add-product');
           this.$q.notify({
             position: "top",
             message: "Perubahan disimpan",

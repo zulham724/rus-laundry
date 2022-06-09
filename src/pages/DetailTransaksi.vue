@@ -374,7 +374,7 @@
                     </q-avatar>
                   </q-item-section>
                 </q-item>
-                <q-item class="q-my-sm">
+                <q-item class="q-my-xs self-center">
                   <q-item-section class="self-center">
                     <q-item-label
                       @click="percobaanService(service)"
@@ -386,7 +386,7 @@
                     >
                   </q-item-section>
 
-                  <q-item-section>
+                  <q-item-section class="self-center">
                     <q-linear-progress
                       stripe
                       style="
@@ -414,7 +414,7 @@
                     </q-linear-progress>
                   </q-item-section>
 
-                  <q-item-section avatar>
+                  <q-item-section class="self-center " avatar>
                     <q-btn
                       round
                       flat
@@ -737,7 +737,7 @@ export default {
     setTextMessage() {
       console.log("this.order", this.order);
       if (this.order) {
-        let url = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
+        let url = `${this.APP_URL}/preview-detail-transaksi-3/${this.order.id}`;
         let customer = this.order.customer.name;
         let customer_number = this.order.customer.contact_number;
         let employee = this.order.employee.name;

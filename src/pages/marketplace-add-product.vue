@@ -23,7 +23,7 @@
         <q-input
           dense
           style="border-radius: 20px"
-          class="q-mx-md q-mt-md bg-white shadow-1"
+          class="q-mx-sm q-mt-sm bg-white shadow-1"
           type="search"
           rounded
           outlined
@@ -40,9 +40,9 @@
             />
           </template>
         </q-input>
-        <div class="q-mx-md">
+        <div class="q-mx-sm ">
           <q-btn
-            class="full-width q-mt-md"
+            class="full-width q-mt-sm"
             style="border-radius: 10px; background-color: #9b27f1; color: white"
             @click="addProduct()"
             no-caps
@@ -52,7 +52,7 @@
 
         <!-- Skeleton -->
         <div v-if="isLoad">
-          <div v-for="n in 4" :key="n" class="row q-mt-md">
+          <div v-for="n in 4" :key="n" class="row q-my-sm">
             <div class="col-6 q-pa-sm">
               <q-card class="full-width q-pa-md">
                 <!--Image -->
@@ -80,7 +80,7 @@
           </div>
         </div>
 
-        <div v-else class="row q-mt-md ">
+        <div v-else class="row q-my-sm  ">
           <div
             class="col-6 q-pa-sm "
             v-for="(product, p) in products"
@@ -114,7 +114,7 @@
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
               >
-                {{ product.tittle.substring(0, 20) }}
+                {{ product.tittle.substring(0, 15) }} . . 
               </div>
 
               <div

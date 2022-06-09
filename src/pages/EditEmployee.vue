@@ -66,6 +66,7 @@
             input-style="color: #888888; background-color: #F1F3FD; border-radius: 10px; font-size: medium"
             placeholder="Alamat Email"
             v-model="employee.email"
+            type="email"
           />
         </div>
 

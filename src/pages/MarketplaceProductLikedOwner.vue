@@ -165,13 +165,18 @@ export default {
           value: value,
         };
         this.$store
-          .dispatch("Product/searchProductLiked", payload)
+          .dispatch("MasterProduct/searchProductLiked", payload)
           .then((res) => {
             // console.log("hasil search", res.data);
             this.productLiked = res.data;
+            console.log('this.productLiked', this.productLiked)
+            
           })
           .catch((err) => {
-            this.$q.notify("Pencarian Gagal");
+            this.$q.notify({
+                type: "negative",
+                message: "Data tidak ditemukan!",
+              });
           });
       } else {
         this.getLikedProductByUser();

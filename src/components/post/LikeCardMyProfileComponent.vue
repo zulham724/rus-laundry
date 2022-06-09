@@ -235,7 +235,7 @@
 
         <!-- Button Report -->
         <q-card-actions>
-          <q-btn no-caps class="full-width" dense flat>
+          <q-btn no-caps class="full-width" dense flat @click="$router.push(`/report-post/${post.id}`)">
             <div class="row full-width q-py-sm">
               <div class="col-3">
                 <q-btn dense outline round size="25px">
@@ -257,7 +257,7 @@
         </q-card-actions>
 
         <!-- Button Hide Post -->
-        <q-card-actions>
+        <!-- <q-card-actions>
           <q-btn no-caps class="full-width" dense flat>
             <div class="row full-width q-py-sm">
               <div class="col-3">
@@ -277,7 +277,7 @@
               </div>
             </div>
           </q-btn>
-        </q-card-actions>
+        </q-card-actions> -->
       </q-card>
     </q-dialog>
 

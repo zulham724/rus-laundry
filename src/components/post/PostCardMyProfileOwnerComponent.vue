@@ -87,7 +87,7 @@
       <div class="full-width full-height mbl-child">
         <div v-if="post.files.length">
           <q-carousel
-            class="q-mx-sm"
+            class="q-mx-sm bg-black"
             style="border-radius: 10px"
             v-model="slide"
             transition-prev="scale"
@@ -389,6 +389,46 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="dialogDelete">
+      <q-card class="justify-center full-width q-px-sm q-py-sm">
+        <div class="col">
+          <div class="row text-h6 text-weight-bold q-pb-md">
+            Yakin Hapus Postingan?
+          </div>
+          <div class="row q-pb-md">
+            Dengan menghapus postingan, anda tidak akan bisa mengakses foto anda
+            lagi.
+          </div>
+        </div>
+        <div class="text-right row justify-end q-gutter-x-sm">
+          <div>
+            <q-btn
+              style="border: 1px solid #49c2c0"
+              no-caps
+              flat
+              color="white"
+              text-color="black"
+              label="Tidak"
+              v-close-popup
+              :disable="loadingDelete"
+            />
+          </div>
+          <div>
+            <q-btn
+              :loading="loadingDelete"
+              :disable="loadingDelete"
+              no-caps
+              flat
+              style="background-color: #49c2c0"
+              text-color="white"
+              label="Ya"
+              @click="deletePost()"
+            />
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -434,6 +474,26 @@ export default {
     moment,
     buttonOption() {
       this.dialogOption = true;
+    },
+
+    buttonDelete() {
+      this.dialogDelete = true;
+    },
+
+    deletePost() {
+      // console.log("cek post id", this.post.id);
+      this.loadingDelete = true;
+      this.$store
+        .dispatch("MasterPost/deletePost", this.post.id)
+        .then((res) => {
+          this.$store.commit("MasterPost/delete_post_by_id", this.post.id);
+          // console.log("cek hasil hapus post", res);
+        })
+        .catch((err) => {})
+        .finally(() => {
+          this.loadingDelete = false;
+          this.dialogDelete = false;
+        });
     },
 
     dialogPreviewPhoto(value) {

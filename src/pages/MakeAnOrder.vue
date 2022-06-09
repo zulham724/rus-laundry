@@ -22,20 +22,20 @@
         <div
           class="front q-pb-lg"
           style="
-            border-radius: 30px 0 0 0;
+            border-radius: 30px 30px 0 0;
             background-color: #fafafa;
             margin-top: -130px;
             position: relative;
           "
         >
           <div class="q-pa-lg">
-            <div class="col-12">
-              <div class="text-h6 text-bold" style="color: #888888">
+            <div class="col-12 ">
+              <div class="text-h6 text-bold q-mx-xs" style="color: #888888">
                 Buat Pesanan
               </div>
             </div>
 
-            <q-form ref="form">
+            <q-form ref="form" >
               <input type="hidden" v-model="customer.id" />
               <!-- name input -->
               <q-input

@@ -188,7 +188,7 @@
                     class="text-caption text-weight-medium q-pl-xs"
                     style="color: #5f5f5f"
                   >
-                    {{ product.tittle.substring(0, 20) }}
+                    {{ product.tittle.substring(0, 15) }}
                   </div>
                   <div
                     class="text-subtitle2 text-weight-medium q-pl-xs"

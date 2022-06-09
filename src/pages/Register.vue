@@ -38,7 +38,7 @@
 
           <div class="q-mx-lg q-mb-sm">
             <div class="text-bold text-h4">Register</div>
-            Halo Selamat Datang. .
+            Halo Selamat Datang . . .
           </div>
 
           <div class="q-pa-md text-center">

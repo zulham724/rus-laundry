@@ -110,32 +110,33 @@
               </template>
             </q-virtual-scroll>
           </div>
-          <div class="q-ml-lg q-mt-md text-caption text-black">
+          <div class="q-mx-sm q-mt-md text-caption text-black">
             Pilih foto utama anda terlebih dahulu
             <br />maks. 10 foto
           </div>
           <div>
-            <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+            <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
               <div class="col-6">Nama Produk</div>
               <div
                 class="col-6 q-pr-md text-right text-weight-light"
                 style="color: #d0d1dc"
               >
-                200
+                70
               </div>
             </div>
             <q-input
-              class="q-ml-md q-mt-sm"
-              style="width: 95%"
+              class="q-mx-sm q-mt-sm"
               outlined
               lazy-rules
+              maxlength="70"
+              counter
               :rules="[(val) => (val && val.length > 0) || '']"
               v-model="product.tittle"
               placeholder="Masukkan nama produk"
             />
           </div>
           <div>
-            <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+            <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
               <div class="col-6">Harga Produk</div>
               <div
                 class="col-6 q-pr-md text-right text-weight-light"
@@ -146,17 +147,17 @@
             </div>
             <q-input
               type="number"
-              class="q-ml-md q-mt-sm"
-              style="width: 95%"
+              class="q-mx-sm q-mt-sm"
               outlined
               lazy-rules
-              :rules="[(val) => val || '']"
+              :rules="[(val) => val || ''] "
               v-model.number="product.price"
+              maxlength="8"
               placeholder="Masukkan harga produk"
             />
           </div>
           <div>
-            <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+            <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
               <div class="col-6">Deskripsi Produk</div>
               <div
                 class="col-6 q-pr-md text-right text-weight-light"
@@ -167,18 +168,19 @@
             </div>
             <q-input
               autogrow
-              class="q-ml-md q-mt-sm"
-              style="width: 95%"
+              class="q-mx-sm q-mt-sm"
               outlined
+              maxlength="200"
+              counter
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || '']"
               v-model="product.description"
               placeholder="Masukkan Deskripsi produk"
             />
           </div>
-          <div class="q-ml-lg q-mt-lg text-weight-medium">Detail Produk</div>
+          <div class="q-mx-sm q-mt-lg text-weight-medium">Detail Produk</div>
           <div>
-            <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+            <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
               <div class="col-6 text-caption" style="color: #d0d1dc">
                 Berat Produk
               </div>
@@ -191,8 +193,7 @@
             </div>
             <q-input
               type="number"
-              class="q-ml-md q-mt-sm"
-              style="width: 95%"
+              class="q-mx-sm q-mt-sm"
               outlined
               lazy-rules
               :rules="[(val) => val || '']"
@@ -200,7 +201,7 @@
               placeholder="Masukkan berat produk"
             />
           </div>
-          <div class="text-body2 text-weight-medium q-ml-lg q-mt-md row">
+          <div class="text-body2 text-weight-medium q-mx-sm q-mt-md row">
             <div class="col-6 text-caption" style="color: #d0d1dc">
               kondisi Produk
             </div>
@@ -209,8 +210,7 @@
             readonly
             type="text"
             @click="dialogKondisiBarang = true"
-            class="q-ml-md q-mt-sm"
-            style="width: 95%"
+            class="q-mx-sm q-mt-sm"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || '']"
             outlined

@@ -26,8 +26,8 @@
       <q-page>
         <q-input
           dense
-          style="border-radius: 20px; width: 95%"
-          class="q-ml-sm q-mt-md bg-white shadow-1"
+          style="border-radius: 20px; "
+          class="q-mx-sm q-mt-sm bg-white shadow-1"
           type="search"
           rounded
           outlined
@@ -44,14 +44,13 @@
             />
           </template>
         </q-input>
-        <div>
+        <div class="q-mx-sm ">
           <q-btn
             v-if="this.Auth.auth.shop"
-            class="q-ml-md q-mt-md"
+            class="full-width q-mt-sm"
             style="
               border-radius: 10px;
               background-color: #9b27f1;
-              width: 92%;
               color: white;
             "
             @click="addProduct()"
@@ -60,11 +59,10 @@
           ></q-btn>
           <q-btn
             v-if="!this.Auth.auth.shop"
-            class="q-ml-md q-mt-md"
+            class="full-width q-mt-sm"
             style="
               border-radius: 10px;
               background-color: #9b27f1;
-              width: 92%;
               color: white;
             "
             @click="mustHaveShop()"
@@ -75,7 +73,7 @@
 
         <!-- Skeleton -->
         <div v-if="isLoad">
-          <div v-for="n in 4" :key="n" class="row q-mt-md">
+          <div v-for="n in 4" :key="n" class="row q-my-sm">
             <div class="col-6 q-pa-sm">
               <q-card class="full-width q-pa-md">
                 <!--Image -->
@@ -103,7 +101,7 @@
           </div>
         </div>
 
-        <div v-else class="row q-mt-md">
+        <div v-else class="row q-my-sm ">
           <div
             class="col-6 q-pa-sm"
             v-for="(product, p) in products"
@@ -137,7 +135,7 @@
                 class="text-caption text-weight-medium q-pl-xs"
                 style="color: #5f5f5f"
               >
-                {{ product.tittle.substring(0, 20) }}
+                {{ product.tittle.substring(0, 15) }}..
               </div>
 
               <div
@@ -151,13 +149,13 @@
                   }).format(product.price)
                 }}
               </div>
-              <div
+              <!-- <div
                 class="text-caption q-pl-xs"
                 v-if="product.shop.user.home_address"
               >
                 <q-icon name="fas fa-map-marker-alt" color="red" />
                 {{ product.shop.user.home_address }}
-              </div>
+              </div> -->
               <div class="text-center q-gutter-y-xs">
                 <q-btn
                   padding="none"

@@ -9,7 +9,7 @@
             style="background-image: linear-gradient(to top, #29a2f4, #7f5fed)"
           >
             <div
-              class="col-6 text-weight-bold text-left"
+              class="col-6 text-weight-bold text-left self-center"
               style="color: #f5f5f5; font-size: 20px"
             >
               Transaksi

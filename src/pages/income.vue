@@ -26,7 +26,7 @@
               class="col-6 text-weight-regular text-left q-pt-lg"
               style="color: white; font-size: 18px"
             >
-              Total Pengeluaran
+              Total Saldo
             </div>
             <div class="col-6 text-right self-end">
               <q-btn

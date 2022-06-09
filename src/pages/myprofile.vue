@@ -223,7 +223,6 @@
                 <q-item-section style="color: #2196f3"
                   >Postingan yang saya sukai</q-item-section
                 >
-                <q-item-section side>Hanya saya</q-item-section>
               </q-item>
 
               <q-infinite-scroll @load="onLoad2">

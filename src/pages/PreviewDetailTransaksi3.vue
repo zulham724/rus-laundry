@@ -14,7 +14,6 @@
               :options="servicesArr"
               option-label="name"
               option-value="id"
-              label="Filled"
             />
           </div>
         </div>

@@ -141,6 +141,9 @@ export default {
   data() {
     return {
       tab: this.$route.name,
+      tabs:[
+        'home','transaksi', 'penghasilan', 'pesanan', 'menu'
+      ],
       include: [
         "HomePage",
         "AddItemPage",
@@ -151,7 +154,16 @@ export default {
     };
   },
   mounted() {},
-
+  watch:{
+    $route (to, from){
+        // this.show = false;
+        console.log(to,from)
+        if(this.tabs.filter(tab=>tab==to.name).length>0){
+          this.tab = to.name
+        }
+    }
+  }
+,
   computed: {
     ...mapState(["Auth", "Orders"]),
   },
