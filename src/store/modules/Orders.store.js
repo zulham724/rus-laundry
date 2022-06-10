@@ -28,14 +28,16 @@ const mutations = {
       }
     });
   },
-  add_pre_order_photo(state, payload) { 
-    let index = state.order.charts.findIndex(item => item.id == payload.service_id);
-    console.log(state.order,payload)
+  add_pre_order_photo(state, payload) {
+    let index = state.order.charts.findIndex(
+      (item) => item.id == payload.service_id
+    );
+    console.log(state.order, payload);
     if (index > -1) {
       state.order.charts[index].pre_order_photo = payload.photo;
-      console.log('foto dimasukan ke ',state.order)
+      console.log("foto dimasukan ke ", state.order);
     } else {
-      console.log('ga nemu')
+      console.log("ga nemu");
     }
   },
   remove_order_chart(state, payload) {
@@ -275,10 +277,11 @@ const actions = {
         });
     });
   },
-  show2({ commit }, orderId) {
+  show2({ commit }, payload) {
+    console.log(payload, "cek payload");
     return new Promise((resolve, reject) => {
       api
-        .get(`/api/order/${orderId}`)
+        .get(`/api/order/${payload.shopId}/${payload.orderId}`)
         .then((res) => {
           resolve(res);
         })
@@ -357,10 +360,10 @@ const actions = {
         });
     });
   },
-  getOrder({ commit }) {
+  getOrder({ commit }, orderid) {
     return new Promise((resolve, reject) => {
       api
-        .get(`/api/slave/getorder`)
+        .get(`/api/slave/getorder/${orderid}`)
         .then((res) => {
           resolve(res);
         })

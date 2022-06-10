@@ -17,7 +17,7 @@ export default {
     doScanOrder() {
       // window.history.pushState(null, null, window.location.href);
       console.log("scan pesanan");
-      if (this.$q.platform.is.android) {
+      if (this.$q.platform.is.nativeMobile) {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
             if (result.cancelled == true) {

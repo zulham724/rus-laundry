@@ -254,7 +254,7 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none text-center">
-              Jika Yakin tekan Yakin, Jika tidak maka tekan Tidak
+              Jika anda hapus, maka semua data pelanggan beserta data transaksi pelanggan akan hilang!
             </q-card-section>
 
             <q-card-actions align="right">

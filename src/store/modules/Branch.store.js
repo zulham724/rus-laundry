@@ -26,9 +26,11 @@ const actions = {
             api
                 .post(`api/master/branch/`, access)
                 .then((res) => {
-                    resolve(res);
+                    console.log('THEN')
+                    resolve(res.data);
                 })
                 .catch((err) => {
+                    console.log('CATCH')
                     reject(err);
                 });
         });

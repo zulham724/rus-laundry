@@ -126,7 +126,7 @@
                   </q-item-section>
 
                   <q-item-section class="self-center">
-                    <q-item-label class="text-weight-medium">{{
+                    <q-item-label  class="text-weight-medium">{{
                       order.customer.name
                     }}</q-item-label>
                     <q-item-label caption>

@@ -8,6 +8,7 @@
           </div>
           <div class="full-width q-px-md">
             <q-select
+            label="Pilih layanan"
               :update:model-value="printSelectedService(model)"
               filled
               v-model="model"
@@ -176,7 +177,7 @@
 import { ref } from "vue";
 
 export default {
-  props: ["orderid"],
+  props: ["orderid", "shopid"],
 
   data() {
     return {
@@ -195,6 +196,8 @@ export default {
   },
 
   mounted() {
+    console.log('orderid', this.orderid)
+    console.log('shopid', this.shopid)
     this.getDetailOrder();
   },
 
@@ -206,8 +209,14 @@ export default {
     },
     getDetailOrder() {
       this.isLoad = true;
+      
+      const payload = {
+        shopId: this.shopid,
+        orderId: this.orderid,
+      };
+      console.log("payload", payload);
       this.$store
-        .dispatch("Orders/show2", this.orderid)
+        .dispatch("Orders/show2", payload)
         .then((res) => {
           this.detail_order = res.data;
           console.log("ini detail_order", this.detail_order);

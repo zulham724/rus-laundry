@@ -222,6 +222,7 @@ export default {
       });
     },
     addCart(item) {
+      console.log('additem',item)
       this.$store.commit("Orders/add_order_cart", { data: item });
       this.notif = true;
       this.categories = this.categories.map((category) => {

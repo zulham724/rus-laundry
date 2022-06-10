@@ -21,10 +21,10 @@
               >
               </q-icon>
             </q-btn>
-            <div class="q-pl-sm" style="font-size: larger">Postingan</div>
+            <div class="q-pl-sm q-py-xs" style="font-size: larger">Postingan</div>
           </div>
           <div class="col-5 text-center self-center">
-            <q-btn flat dense no-caps @click="$router.push('/make-post')">
+            <!-- <q-btn flat dense no-caps @click="notify()">
               <div
                 class="row justify-center q-px-sm q-py-xs"
                 style="background-color: #f5f7f9; border-radius: 10px"
@@ -42,7 +42,7 @@
                   Buat postingan
                 </div>
               </div>
-            </q-btn>
+            </q-btn> -->
           </div>
           <div class="col-1 text-center self-center">
             <!-- <q-btn dense round flat @click="$router.push('/notification')">
@@ -55,13 +55,14 @@
           </div>
           <div v-if="dataAuth" class="col-1 text-center self-center">
             <!--Avatar-->
+            <!-- @click="$router.push('/my-profile')" -->
             <div v-if="!dataAuth.avatar" class="self-center">
-              <q-avatar @click="$router.push('/my-profile')" size="30px">
+              <q-avatar  size="30px">
                 <q-img no-spinner src="~/assets/ld.png"></q-img>
               </q-avatar>
             </div>
             <div v-else-if="dataAuth.avatar" class="self-center">
-              <q-avatar @click="$router.push('/my-profile')" size="30px">
+              <q-avatar  size="30px">
                 <q-img
                   no-spinner
                   :src="STORAGE_URL + `/` + dataAuth.avatar"
@@ -206,6 +207,12 @@ export default {
     // if (!this.Post.posts.data) this.$store.dispatch("Post/index");
   },
   methods: {
+    notify() {
+      this.$q.notify({
+          position: "bottom",
+          message: "Pastikan anda menggunakan akun owner",
+        });
+    },
     getAllPosts() {
       return new Promise((resolve, reject) => {
         (this.isLoad = true),

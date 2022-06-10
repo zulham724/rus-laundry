@@ -87,7 +87,7 @@
                       no-caps
                       dense
                       flat
-                      @click="$router.push('/order-code')"
+                      @click="$router.push(`/order-code/${detail_order.id}`)"
                     >
                       <div
                         class="text-weight-regular text-center q-px-xs"
@@ -414,7 +414,7 @@
                     </q-linear-progress>
                   </q-item-section>
 
-                  <q-item-section class="self-center " avatar>
+                  <q-item-section class="self-center" avatar>
                     <q-btn
                       round
                       flat
@@ -492,17 +492,13 @@
           </q-btn>
           <q-btn
             v-if="detail_order.percentage == 100 && detail_order.photo != null"
-            @click="this.$router.push(`/invoice-page/${detail_order.id}`)
-            "
+            @click="this.$router.push(`/invoice-page/${detail_order.id}`)"
             no-caps
             class="fixed-bottom mbl-child"
             :style="`background-color:#49C2C0 ; color: #fafafa; width: 100%`"
           >
-            <div class="q-py-sm text-weight-regular">
-               Lihat Invoice
-            </div>
+            <div class="q-py-sm text-weight-regular">Lihat Invoice</div>
           </q-btn>
-
 
           <q-dialog v-model="dialogConfirm">
             <q-card>
@@ -690,10 +686,15 @@ import PreviewPhotoComponentVue from "src/components/PreviewPhotoComponent";
 import SubmitPaymentComponentVue from "src/components/DetailFirstPaymentComponent.vue";
 import SecondaryPaymentComponentVue from "src/components/secondaryPaymentComponent.vue";
 import moment from "moment";
+import { mapState } from "vuex";
 import { useQuasar } from "quasar";
 import { Platform } from "quasar";
 
 export default {
+  computed: {
+    ...mapState(["Auth"]),
+  },
+
   props: ["orderid"],
   components: {
     SkeletonDetailTransactionComponent: SkeletonDetailTransactionComponent,
@@ -717,12 +718,15 @@ export default {
       finalLink: null,
       alert: false,
       whatsappLoop: "",
+      bankAccount: [],
+      bankAccountLoop: "",
     };
   },
 
   mounted() {
     this.getDetailOrder();
-    this.link = `${this.APP_URL}/preview-detail-transaksi-3/${this.orderid}`;
+    this.getBankInformation();
+    this.link = `${this.APP_URL}/preview-detail-transaksi-3/${this.Auth.auth.shop.id}/${this.orderid}`;
   },
 
   methods: {
@@ -788,7 +792,10 @@ Total : ${price}
 Sisa Tagihan : ${debt}\n
 --------------------------------
 Informasi Nota, Pembayaran Non-tunai dan Virtual Account di
-${url}`;
+${url}
+--------------------------------
+Jika kamu belum membayar pesanan, kamu bisa transfer melalui nomor rekening di bawah ini
+${this.bankAccountLoop}`;
         this.message = tmp;
       }
     },
@@ -836,6 +843,26 @@ ${url}`;
             console.log("OK", res);
           });
       }
+    },
+    getBankInformation() {
+      this.$store
+        .dispatch("Bank/getAccountBank", this.Auth.auth.shop.id)
+        .then((res) => {
+          this.bankAccount = res.data;
+          for (let i = 0; i < this.bankAccount.length; i++) {
+            console.log("this.bankaccount[i]", this.bankAccount[i]);
+            let tmp4 = `
+${this.bankAccount[i].name} : ${this.bankAccount[i].account_name} 
+No Rekening : ${this.bankAccount[i].account_number} 
+--------------------------------`;
+            this.bankAccountLoop += tmp4;
+          }
+          console.log("this.bankAccountLoop", this.bankAccountLoop);
+          console.log("res", res.data);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
     },
     testPreviewPhoto1(sendedLink) {
       console.log("ini link preorder", sendedLink);
@@ -887,7 +914,7 @@ ${url}`;
       console.log("ini service", service);
     },
     confirmService() {
-      console.log("ini detail order", this.detail_order)
+      console.log("ini detail order", this.detail_order);
       const payload = {
         id: this.detail_order.id,
         order_status_id: 4,

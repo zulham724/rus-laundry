@@ -28,6 +28,10 @@ export default {
     // ...your custom props
   },
 
+  mounted() {
+    
+    console.log('halo bang')
+  },
   methods: {
     onDecode(decodedString) {
       console.log(decodedString);

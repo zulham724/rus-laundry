@@ -47,7 +47,7 @@
     <q-page-container>
       <q-page>
         <q-list class="q-mt-md">
-          <q-item
+          <!-- <q-item
             class="q-pb-md"
             clickable
             v-ripple
@@ -61,7 +61,7 @@
               style="color: #5f5f5f"
               >Produk Anda</q-item-section
             >
-          </q-item>
+          </q-item> -->
           <!--
           <q-item
             class="q-pb-md"

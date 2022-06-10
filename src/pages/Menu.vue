@@ -164,6 +164,33 @@
           </q-item>
 
           <q-item
+            class="q-py-md"
+            clickable
+            style="background-color: #ffffff"
+            @click="$router.push('/rekening-bank')"
+          >
+            <q-item-section avatar class="self-center">
+              <q-avatar square size="40px">
+                <q-img
+                  no-spinner
+                  src="~/assets/creditcard.png"
+                  width="40px"
+                  height="40px"
+                ></q-img>
+              </q-avatar>
+            </q-item-section>
+
+            <q-item-section class="self-center">
+              <q-item-label
+                class="text-weight-regular"
+                style="color: #888888; font-size: 16px"
+              >
+                Rekening Bank
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
             @click="buttonLogout()"
             class="q-py-md q-mt-md"
             clickable

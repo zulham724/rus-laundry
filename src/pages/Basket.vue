@@ -35,7 +35,7 @@
           >
             <q-card class="shadow-1 q-py-sm" style="border-radius: 10px">
               <div class="row">
-                <div class="col-3 text-center self-center ">
+                <div class="col-3 text-center self-center">
                   <q-img src="~/assets/bjmn.png" width="75%" />
                 </div>
                 <div class="col-5 self-center">
@@ -46,7 +46,7 @@
                     Jumlah ({{ category.service_unit.name }})
                   </div>
                   <div class="row self-center">
-                    <div class="row" v-if="category.service_unit.name == 'Kg'">
+                    <div class="row">
                       <div class="col q-pr-xs text-weight-bold self-center">
                         <q-btn
                           @click="kurangkg(c)"
@@ -86,49 +86,6 @@
                             style="height: 5px; width: 5px"
                           ></q-icon
                         ></q-btn>
-                      </div>
-                    </div>
-                    <div class="row self-center">
-                      <div
-                        class="row"
-                        v-if="category.service_unit.name == 'Pcs'"
-                      >
-                        <div class="col q-pr-xs text-weight-bold self-center">
-                          <q-btn
-                            @click="kurangpcs(c)"
-                            size="sm"
-                            round
-                            flat
-                            style="background-color: #fafafa"
-                            text-color="black"
-                          >
-                            <q-icon
-                              name="fas fa-minus"
-                              style="height: 5px; width: 5px"
-                            ></q-icon>
-                          </q-btn>
-                        </div>
-                        <div
-                          class="col q-px-xs self-center text-center text-h6 text-weight-bold"
-                        >
-                          {{ category.quantity }}
-                        </div>
-                        <div class="col q-pl-xs self-center">
-                          <q-btn
-                            @click="tambahpcs(c)"
-                            size="sm"
-                            flat
-                            class="text-weight-bold"
-                            round
-                            style="background-color: #49c2c0"
-                            text-color="white"
-                          >
-                            <q-icon
-                              name="fas fa-plus"
-                              style="height: 5px; width: 5px"
-                            ></q-icon
-                          ></q-btn>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -757,35 +714,37 @@ export default {
         btnDisable = false;
       }
     },
-    checkPcs(c){
-      console.log('ini pcs', this.Orders.order.charts[c].quantity)
+    checkPcs(c) {
+      console.log("ini pcs", this.Orders.order.charts[c].quantity);
     },
-    tambahpcs(index) {
-      this.Orders.order.charts[index].quantity += 1 ;
-      this.getPrice();
-      console.log("index", this.Orders.order.charts[index].quantity);
-    },
-    kurangpcs(index) {
-
-      this.Orders.order.charts[index].quantity -= 1;
-      if (this.Orders.order.charts[index].quantity < 1) {
-        this.$store.commit("Orders/remove_order_chart", {
-          id: this.Orders.order.charts[index].id,
-        });
-      }
-      this.getPrice();
-    },
+    // tambahpcs(index) {
+    //   this.Orders.order.charts[index].quantity += 1;
+    //   this.getPrice();
+    //   console.log("index", this.Orders.order.charts[index].quantity);
+    // },
+    // kurangpcs(index) {
+    //   this.Orders.order.charts[index].quantity -= 1;
+    //   if (this.Orders.order.charts[index].quantity < 1) {
+    //     this.$store.commit("Orders/remove_order_chart", {
+    //       id: this.Orders.order.charts[index].id,
+    //     });
+    //   }
+    //   this.getPrice();
+    // },
     tambahkg(index) {
-      this.Orders.order.charts[index].quantity += 0.1;
+      this.Orders.order.charts[index].quantity +=
+        this.Orders.order.charts[index].service_unit.input;
       this.getPrice();
     },
     kurangkg(index) {
-      this.Orders.order.charts[index].quantity -= 0.1;
-      if (this.Orders.order.charts[index].quantity <= 0.1) {
+      
+      this.Orders.order.charts[index].quantity -= this.Orders.order.charts[index].service_unit.input;
+      if (this.Orders.order.charts[index].quantity < this.Orders.order.charts[index].service_unit.input) {
         this.$store.commit("Orders/remove_order_chart", {
           id: this.Orders.order.charts[index].id,
         });
       }
+      console.log('quantity', this.Orders.order.charts[index].quantity, 'service_unit', this.Orders.order.charts[index].service_unit.input)
       this.getPrice();
     },
     getOrderServiceCategory() {

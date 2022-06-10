@@ -137,17 +137,16 @@ export default {
                 position: "top",
                 message: "Berhasil tambah cabang",
               });
+              this.$router.push("/cabang-owner");
             })
             .catch((err) => {
               console.log("err", err);
               this.$q.notify({
                 position: "top",
-                message: "Gagal tambah cabang",
+                message: "Gagal tambah cabang, email sudah terdaftar",
               });
             })
-            .finally(() => {
-              this.$router.push("/cabang-owner");
-            });
+            
         } else {
           this.$q.notify("Silahkan isi form yang ada dengan benar");
         }

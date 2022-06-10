@@ -17,7 +17,7 @@ export default {
     ScanAttendance() {
       // window.history.pushState(null, null, window.location.href);
       console.log("test absen");
-      if (this.$q.platform.is.android) {
+      if (this.$q.platform.is.nativeMovile) {
         cordova.plugins.barcodeScanner.scan(
           (result) => {
             if (result.cancelled == true) {
@@ -64,7 +64,6 @@ export default {
         this.$q.notify("Scan Absensi");
         this.$q.dialog({
           component: ScanAttendance,
-
           // props forwarded to your custom component
         });
       }

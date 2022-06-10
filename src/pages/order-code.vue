@@ -80,10 +80,10 @@
 
           <div class="row">
             <div class="col q-py-md">
-              <div class="text-center text-grey">
+              <div class="text-center text-grey  q-px-sm">
                 Cek status pesanan anda melalui link dibawah
               </div>
-              <div class="text-center text-weight-medium">
+              <div class="text-center text-weight-medium q-px-sm">
                 {{link}}
               </div>
             </div>
@@ -111,10 +111,11 @@
 import moment from "moment";
 import vueQr from "vue-qr/src/packages/vue-qr.vue";
 import * as htmlToImage from "html-to-image";
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 import MustConnectPrinterComponentVue from "src/components/MustConnectPrinterComponent.vue";
 
 export default {
+  props: ["orderid"],
   components: {
     vueQr,
   },
@@ -126,15 +127,21 @@ export default {
       APP_URL: APP_URL,
     };
   },
+  mounted() {
+    this.getOrder(this.orderid);
+    console.log('order-code-orderid',this.orderid);
+  },
   methods: {
     moment() {
       return moment();
     },
-    getOrder() {
-      this.$store.dispatch("Orders/getOrder").then((res) => {
+    getOrder(orderid) {
+      console.log('getOrder',orderid);
+      this.$store.dispatch("Orders/getOrder", orderid).then((res) => {
         this.order = res.data;
+        console.log('sadfadsf', res.data)
         console.log('asd',this.order);
-        this.link = `${this.APP_URL}/preview-detail-transaksi-2/${this.order.id}`;
+        this.link = `${this.APP_URL}/preview-detail-transaksi-3/${this.order.id}`;
       });
     },
     getData(dataUrl, id) {
@@ -207,10 +214,7 @@ export default {
       return canvas.toDataURL();
     },
   },
-  mounted() {
-    this.getOrder();
-    
-  },
+  
 };
 </script>
 
