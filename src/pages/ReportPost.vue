@@ -116,7 +116,7 @@ export default {
       let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
         this.contact
       )}&text=${encodeURI(this.message)}`;
-      window.open(url, "_blank");
+      window.open(url, "_system");
 
       this.$router.push('/community');
     },

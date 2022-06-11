@@ -736,7 +736,7 @@ export default {
       let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
         this.order.customer.contact_number
       )}&text=${encodeURI(this.message)}`;
-      window.open(url, "_blank");
+      window.open(url, "_system");
     },
     setTextMessage() {
       console.log("this.order", this.order);

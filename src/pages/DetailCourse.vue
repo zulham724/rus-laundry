@@ -177,7 +177,7 @@
 
       <!-- Materi berikutnya -->
       <div
-        class="fixed-bottom shadow-up-1  flat"
+        class="fixed-bottom shadow-up-1  flat bg-white"
         style="border-radius: 14px 14px 0px 0px"
       >
         <div

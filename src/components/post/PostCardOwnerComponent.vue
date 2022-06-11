@@ -620,7 +620,7 @@ export default {
       this.setTextMessage();
       // console.log(this.message);
       let url = `https://api.whatsapp.com/send?text=${encodeURI(this.message)}`;
-      window.open(url, "_blank");
+      window.open(url, "_system");
 
       this.$router.push("/community-owner");
     },
