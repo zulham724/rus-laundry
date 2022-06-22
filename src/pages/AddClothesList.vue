@@ -1,48 +1,14 @@
 <template>
   <div class="bg-white">
-    <div class="q-ml-lg">
-      <q-slide-item
+    <div >
+      <q-item
         v-if="category != null"
         :ref="`category_${category.id}`"
         @right="onRight"
         right-color="white"
         center-color="black"
       >
-        <template v-slot:right class="full-width">
-          <div class="row full-width">
-            <div class="col-9">
-              <q-input
-                :disable="Loading"
-                v-model="text"
-                label="Ubah nama pakaian"
-                dense
-              >
-                <template v-slot:append>
-                  <q-btn
-                    flat
-                    round
-                    color="black"
-                    icon="close"
-                    @click="buttonBack"
-                    size="40%"
-                  />
-                  <!-- <q-icon name="close"  @click="text = '' && buttonBack" size="80%" /> -->
-                </template>
-              </q-input>
-            </div>
-            <div class="col-3 text-center self-center">
-              <q-btn
-              dense
-                :disable="Loading"
-                @click="updateName"
-                flat
-                label="simpan"
-                color="white"
-                text-color="black"
-              />
-            </div>
-          </div>
-        </template>
+        
 
         <q-item>
           <q-item-section>
@@ -55,7 +21,7 @@
             <q-checkbox v-model="category.checkCategory" />
           </q-item-section>
         </q-item>
-      </q-slide-item>
+      </q-item>
     </div>
   </div>
 </template>

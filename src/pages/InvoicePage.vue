@@ -25,6 +25,7 @@
         </q-toolbar>
       </q-header>
       <q-page class="q-pt-lg">
+        
         <q-card class="q-mx-md" v-if="order" id="printpage" ref="printpage">
           <div class="row q-py-md">
             <div
@@ -179,7 +180,7 @@
             </div>
           </div>
         </q-card>
-        <div class="row q-mt-lg absolute-bottom">
+        <div class="row q-mt-lg bg-red">
           <q-btn
             @click="buttonConfirm()"
             flat
@@ -189,6 +190,16 @@
             style="color: #fafafa; background-color: #49c2c0; font-size: 16px"
           ></q-btn>
         </div>
+        <!-- <div class="row q-mt-lg absolute-bottom">
+          <q-btn
+            @click="buttonConfirm()"
+            flat
+            no-caps
+            class="full-width q-py-sm text-weight-regular"
+            label="Cetak Invoice"
+            style="color: #fafafa; background-color: #49c2c0; font-size: 16px"
+          ></q-btn>
+        </div> -->
 
         <q-dialog v-model="dialogConfirm">
           <q-card style="width: 300px">

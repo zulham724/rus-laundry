@@ -24,7 +24,7 @@
           <div class="row">
             <div>
               <q-avatar size="80px">
-                <q-img src="~/assets/Avatar.png" no-spinner />
+                <q-img :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
               </q-avatar>
             </div>
             <div class="q-px-md">

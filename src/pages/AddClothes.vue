@@ -11,13 +11,13 @@
           style="color: #888888; font-size: 16px"
           >Pilih Item</q-toolbar-title
         >
-        <q-btn
+        <!-- <q-btn
           class="float-right"
           text-color="grey-8"
           :label="chooseMode ? 'Batal' : 'Pilih'"
           flat
           @click="chooseMode = !chooseMode"
-        />
+        /> -->
       </q-toolbar>
     </q-header>
     <q-page-container style="background-color: #fafafa">
@@ -117,7 +117,7 @@
             </div>
           </div>
 
-          <div class="fixed-bottom mbl-child" v-if="!chooseMode" style="z-index: 1">
+          <!-- <div class="fixed-bottom mbl-child" v-if="!chooseMode" style="z-index: 1">
             <q-btn
               no-caps
               class="full-width q-py-sm"
@@ -128,8 +128,8 @@
                 Tambah Item
               </div>
             </q-btn>
-          </div>
-          <div class="fixed-bottom" v-else>
+          </div> -->
+          <!-- <div class="fixed-bottom" v-else>
             <q-btn
               no-caps
               class="full-width q-py-sm"
@@ -140,7 +140,7 @@
                 Hapus Item
               </div>
             </q-btn>
-          </div>
+          </div> -->
 
           <q-dialog v-model="dialogTambahPakaian">
             <q-card>

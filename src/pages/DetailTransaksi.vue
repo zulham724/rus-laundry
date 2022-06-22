@@ -191,7 +191,7 @@
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ service.process_time }} Jam</q-item-label
+                      >{{ service.process_time }} Hari</q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
