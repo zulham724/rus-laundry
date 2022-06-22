@@ -52,7 +52,7 @@
                 :key="order.id"
                 class="q-my-sm"
                 clickable
-                @click="$router.push(`/detail-transaksi/${order.id}`)"
+                @click="$router.push(`/detail-transaksi/${order.payment_id}`)"
               >
                 <q-item-section avatar>
                   <q-avatar

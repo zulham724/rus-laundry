@@ -308,6 +308,7 @@ export default {
       return location.origin + props.href;
     },
     submitMessage() {
+      // console.log("cek no hp", this.product.shop.user.contact_number);
       // return console.log(encodeURI(this.message))
       this.order.shop_id = this.product.shop.id;
       this.order.customer_id = this.Auth.auth.id;

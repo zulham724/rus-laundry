@@ -1,6 +1,6 @@
 {
     "name": "rus-laundry",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "By CV Ardata Media",
     "productName": "Laundry Digital",
     "author": "Zulham Azwar Achmad",
@@ -25,6 +25,7 @@
         "node-thermal-printer": "^4.1.2",
         "qr-scanner": "^1.4.0",
         "qrcode-reader-vue3": "^3.1.2",
+        "qrcode-vue3": "^1.4.17",
         "quasar": "^2.0.0",
         "simple-vue-camera": "^1.0.2",
         "vue": "^3.2.31",

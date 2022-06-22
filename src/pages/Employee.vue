@@ -106,9 +106,9 @@
 
         <!-- Skeleton -->
         <div v-if="isLoad" class="row q-mt-md">
-          <div class="col-6 text-center q-mt-lg" v-for="n in 4" :key="n">
+          <div class="col-6 text-center q-pa-md" v-for="n in 4" :key="n">
             <div
-              class="q-mx-lg bg-white text-center q-pa-md shadow-3"
+              class="bg-white text-center q-pa-md shadow-3"
               style="border-radius: 5px 5px 5px 5px"
             >
               <q-avatar size="60px">
@@ -146,13 +146,13 @@
           class="row q-mt-md"
         >
           <div
-            class="col-6 text-center q-mt-lg"
+            class="col-6 text-center q-pa-md"
             v-for="employee in employees"
             :key="employee.id"
           >
             <div
               @click="$router.push(`/detail-employee/${employee.id}`)"
-              class="q-mx-lg bg-white text-center q-pa-md shadow-3"
+              class="bg-white text-center q-pa-md shadow-3"
               style="border-radius: 5px 5px 5px 5px"
             >
               <q-avatar size="60px">

@@ -21,10 +21,14 @@
             no-caps
             dense
             flat
-            @click="$router.push('/order-code')"
+            @click="$router.push(`/order-code/${this.id}`)"
             label="Cetak kode pesanan"
-            class=" text-weight-regular q-py-xs q-px-sm"
-            style="font-size: 18px; border-radius: 6px; background-color: #fafafa"
+            class="text-weight-regular q-py-xs q-px-sm"
+            style="
+              font-size: 18px;
+              border-radius: 6px;
+              background-color: #fafafa;
+            "
           />
           <br />
           <q-btn
@@ -42,7 +46,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    id: null,
+  },
+};
 </script>
 
 <style></style>

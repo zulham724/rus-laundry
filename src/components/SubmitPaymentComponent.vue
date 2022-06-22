@@ -1,5 +1,10 @@
 <template>
-  <q-dialog v-model="dialogDisable" ref="dialog" @hide="onDialogHide" persistent>
+  <q-dialog
+    v-model="dialogDisable"
+    ref="dialog"
+    @hide="onDialogHide"
+    persistent
+  >
     <q-card class="full-width" style="border-radius: 20px">
       <q-card-section>
         <div class="row text-center">
@@ -44,7 +49,10 @@
 
       <!-- Img ketika inputan lunas -->
       <div
-        v-if="this.payment == this.Orders.order.total_price || this.payment > this.Orders.order.total_price"
+        v-if="
+          this.payment == this.Orders.order.total_price ||
+          this.payment > this.Orders.order.total_price
+        "
         class="text-center"
       >
         <q-img
@@ -61,7 +69,11 @@
 
       <!-- Img ketika inputan tidak lunas -->
       <div
-        v-if="this.payment != this.Orders.order.total_price && this.payment > 0 && this.payment < this.Orders.order.total_price"
+        v-if="
+          this.payment != this.Orders.order.total_price &&
+          this.payment > 0 &&
+          this.payment < this.Orders.order.total_price
+        "
         class="text-center"
       >
         <q-img
@@ -93,10 +105,8 @@
         :disable="btnDisable == true"
         :loading="btnDisable"
       >
-        <div>
-          Lanjutkan
-        </div>
-        
+        <div>Lanjutkan</div>
+
         <q-spinner v-if="btnDisable" color="black" :thickness="2" />
       </q-btn>
     </q-card>
@@ -115,7 +125,7 @@ export default {
       payment: null,
       dialog: false,
       btnDisable: false,
-      dialogDisable:true,
+      dialogDisable: true,
     };
   },
 
@@ -134,7 +144,7 @@ export default {
       }
     },
     submitPayment() {
-      console.log('click')
+      console.log("click");
       this.btnDisable = true;
       if (this.payment > this.Orders.order.total_price) {
         this.btnDisable = true;
@@ -165,24 +175,25 @@ export default {
       }
     },
     store() {
-      this.btnDisable = true
-      this.dialogDisable = true
+      this.btnDisable = true;
+      this.dialogDisable = true;
       let order = this.Orders.order;
       this.$store
         .dispatch("Orders/store", order)
         .then((res) => {
+          console.log("cek res hasil store", res.data);
+
           this.btnDisable = true;
-          this.dialogDisable = true
+          this.dialogDisable = true;
           this.$q.notify({
-          position: "top",
-          message: "Berhasil",
-        });
+            position: "top",
+            message: "Berhasil",
+          });
+          this.$router.push(`/confirm-order/${res.data.id}`);
         })
         .finally(() => {
-          this.dialogDisable = false
-          this.$router.push("/confirm-order");
+          this.dialogDisable = false;
           this.btnDisable = false;
-          
         });
     },
     // following method is REQUIRED

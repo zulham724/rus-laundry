@@ -454,9 +454,10 @@ const routes = [
   },
 
   {
-    path: "/confirm-order",
+    path: "/confirm-order/:id",
     component: () => import("src/pages/ConfirmPackage2.vue"),
     beforeEnter: multiguard([auth, checkIfSlave]),
+    props: true,
   },
 
   {

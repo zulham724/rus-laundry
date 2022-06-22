@@ -29,7 +29,7 @@
           </q-item-section>
         </q-item>
       </div>
-      <div class=" full-height " v-else-if="!isLoad && orders.data">
+      <div class="full-height" v-else-if="!isLoad && orders.data">
         <div v-if="!orders.data.length" class="q-pt-lg">
           <div class="text-subtitle1 text-center q-py-xs">
             <q-img no-spinner src="~/assets/nullicsp.gif" :ratio="1" />
@@ -54,7 +54,7 @@
                 :key="order.id"
                 class="q-my-sm"
                 clickable
-                @click="$router.push(`/detail-transaksi/${order.id}`)"
+                @click="$router.push(`/detail-transaksi/${order.payment_id}`)"
               >
                 <q-item-section avatar>
                   <q-avatar

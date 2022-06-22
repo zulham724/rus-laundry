@@ -27,7 +27,7 @@
               v-model="this.addPackage.service_category_id"
               :options="this.serviceCategories"
               option-label="name"
-              label="Hitungan menurut"
+              label="Kategori item"
             />
           </div>
           <div class="q-py-sm">

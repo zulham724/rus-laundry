@@ -32,7 +32,7 @@
         </div>
       </q-header>
     </div>
-    
+
     <q-page v-if="content">
       <div
         class="row full-width q-py-sm justify-center"
@@ -60,12 +60,12 @@
       <!-- Video/foto -->
       <div v-if="content.video" class="full-width" style="height: 250px">
         <video
+          controlsList="nodownload"
           class="bg-black"
           :src="STORAGE_URL + `/` + content.video.src"
           controls
           style="width: 100%; height: 250px; object-fit: cover"
         ></video>
-        
       </div>
       <div v-if="content.image_content" class="full-width">
         <q-img :src="STORAGE_URL + `/` + content.image_content.src" />
@@ -80,7 +80,7 @@
         </div>
         <!-- isi deskripsi -->
         <div
-          class="text-weight-medium text-justify q-px-sm"
+          class="text-weight-medium text-justify q-px-sm q-pb-md"
           style="color: #aca9a9; font-size: 12px"
           v-html="content.description"
         ></div>
@@ -150,7 +150,7 @@
           </div>
         </div>
 
-        <div class="col ">
+        <div class="col">
           <!-- TAB LIKE DAN KOMENTAR -->
           <div class="row justify-between">
             <q-btn disable dense flat class="q-px-lg" no-caps>
@@ -177,7 +177,7 @@
 
       <!-- Materi berikutnya -->
       <div
-        class="fixed-bottom shadow-up-1  flat bg-white"
+        class="fixed-bottom shadow-up-1 flat bg-white"
         style="border-radius: 14px 14px 0px 0px"
       >
         <div

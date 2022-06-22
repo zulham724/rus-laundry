@@ -19,7 +19,7 @@
         </q-toolbar>
       </q-header>
       <q-page class="q-mt-md" style="background-color: #fafafa">
-        <q-list
+        <!-- <q-list
           separator
           dense
           class="q-mx-xs q-mt-md shadow-1"
@@ -163,9 +163,9 @@
               </q-card>
             </q-expansion-item>
           </q-item>
-        </q-list>
+        </q-list> -->
 
-        <q-list
+        <!-- <q-list
           separator
           dense
           class="q-mx-xs q-mt-md shadow-1"
@@ -309,7 +309,7 @@
               </q-card>
             </q-expansion-item>
           </q-item>
-        </q-list>
+        </q-list> -->
 
         <q-list
           separator

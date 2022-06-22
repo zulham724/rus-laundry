@@ -58,7 +58,7 @@
                   </div>
                 </div>
                 <!-- Progress -->
-                <div class="col-2 q-pr-xs">
+                <!-- <div class="col-2 q-pr-xs">
                   <q-circular-progress
                     style="color: #0c1e7f"
                     show-value
@@ -72,34 +72,40 @@
                       module.count_contents
                     }}
                   </q-circular-progress>
-                </div>
-                <div class="col-4">
+                </div> -->
+                <div class="col-6">
                   <div
                     style="color: #fdfdfe; font-size: 10px"
                     class="text-left q-pb-xs"
                   >
                     Materi
                   </div>
-                  <div class="row" style="color: #5a5656; font-size: 7px">
+                  <div
+                    class="row q-gutter-x-sm"
+                    style="color: #5a5656; font-size: 7px"
+                  >
                     <!-- video -->
-                    <q-icon
-                      name="fas fa-video"
-                      size="10px"
-                      style="color: #5a5656"
-                    ></q-icon>
-                    <div class="q-pl-xs">
-                      {{ module.count_content_video }} video
+                    <div class="row q-gutter-x-xs self-center">
+                      <q-icon
+                        name="fas fa-video"
+                        size="10px"
+                        style="color: #5a5656"
+                      ></q-icon>
+                      <div class="q-pl-xs">
+                        {{ module.count_content_video }} video
+                      </div>
                     </div>
 
                     <!-- Text/materi -->
-                    <q-icon
-                      name="fas fa-pen"
-                      size="10px"
-                      style="color: #5a5656"
-                      class="q-pl-xs "
-                    ></q-icon>
-                    <div class="q-pl-xs">
-                      {{ module.count_content_text }} materi
+                    <div class="row q-gutter-x-xs self-center">
+                      <q-icon
+                        name="fas fa-pen"
+                        size="10px"
+                        style="color: #5a5656"
+                      ></q-icon>
+                      <div class="q-pl-xs">
+                        {{ module.count_content_text }} materi
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -166,7 +172,7 @@
               <!-- Deskripsi -->
               <div
                 class="text-weight-regular"
-                style="color: #5a5656; font-size: 9px; "
+                style="color: #5a5656; font-size: 9px"
               >
                 <VueReadMoreSmooth :lines="3">
                   <p>
@@ -264,7 +270,8 @@ export default {
   },
   data() {
     return {
-      lorem: "Lorem fistrum adipisicing apetecan elit diodeno torpedo al ataquerl incididunt quietooor fistro. Cillum consequat ese que llega aliqua esse veniam de la pradera. Aliquip aliquip qué dise usteer al ataquerl hasta luego Lucas. Benemeritaar ese hombree condemor ullamco veniam ese hombree fistro no puedor quietooor dolor apetecan. Pupita te voy a borrar el cerito diodenoo te va a hasé pupitaa fistro tempor duis caballo blanco caballo negroorl. Hasta luego Lucas no te digo trigo por no llamarte Rodrigor a wan commodo enim et et nisi nisi. Eiusmod voluptate nostrud exercitation ullamco. Magna incididunt la caidita pupita elit sit amet tiene musho peligro.",
+      lorem:
+        "Lorem fistrum adipisicing apetecan elit diodeno torpedo al ataquerl incididunt quietooor fistro. Cillum consequat ese que llega aliqua esse veniam de la pradera. Aliquip aliquip qué dise usteer al ataquerl hasta luego Lucas. Benemeritaar ese hombree condemor ullamco veniam ese hombree fistro no puedor quietooor dolor apetecan. Pupita te voy a borrar el cerito diodenoo te va a hasé pupitaa fistro tempor duis caballo blanco caballo negroorl. Hasta luego Lucas no te digo trigo por no llamarte Rodrigor a wan commodo enim et et nisi nisi. Eiusmod voluptate nostrud exercitation ullamco. Magna incididunt la caidita pupita elit sit amet tiene musho peligro.",
       value: 1,
       lockDuration: false,
       dialogLock: false,

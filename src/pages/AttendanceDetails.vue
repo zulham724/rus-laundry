@@ -124,7 +124,9 @@
                       v-if="dates.filter((date) => !date.status).length"
                     >
                       {{
-                        (dates.filter((date) => !date.status).length /dates.length) *100
+                        (dates.filter((date) => !date.status).length /
+                          dates.length) *
+                        100
                       }}%
                     </div>
                     <div v-else>0%</div>
@@ -169,7 +171,7 @@
             </div>
           </div>
 
-          <q-btn no-caps flat class="full-width bg-white">
+          <!-- <q-btn no-caps flat class="full-width bg-white">
             <div
               class="col-10 text-left text-weight-medium q-pl-md"
               style="color: #888888"
@@ -179,7 +181,7 @@
             <div class="col-2 text-right">
               <q-icon name="fas fa-chevron-right" size="15px"></q-icon>
             </div>
-          </q-btn>
+          </q-btn> -->
 
           <div
             class="row bg-white q-pl-lg q-mt-sm q-py-sm"
@@ -271,8 +273,8 @@ export default {
     this.init();
   },
   methods: {
-    toFixedHadir(){
-      console.log('value', value)
+    toFixedHadir() {
+      console.log("value", value);
     },
     init(done) {
       this.getAttendances()

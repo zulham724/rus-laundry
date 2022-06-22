@@ -30,7 +30,7 @@
 
         <q-dialog v-model="dialogDelete">
           <q-card style="width: 300px">
-            *<q-card-section>
+            <q-card-section>
               <div class="text-weight-bold text-left" style="font-size: 15px">
                 Hapus data
               </div>
@@ -71,9 +71,21 @@
       <q-page v-if="employee">
         <div class="text-center q-py-md" style="background-color: #49c2c0">
           <q-avatar size="150px" color="grey-4">
-            <q-img v-if="!employee.avatar" no-spinner src="~/assets/ld.png"></q-img>
-            <q-img v-if="employee.avatar == 'users/default.png'" no-spinner src="~/assets/ld.png"></q-img>
-            <q-img v-else :src="`${$storageUrl}/${employee.avatar}`" no-spinner />
+            <q-img
+              v-if="!employee.avatar"
+              no-spinner
+              src="~/assets/ld.png"
+            ></q-img>
+            <q-img
+              v-if="employee.avatar == 'users/default.png'"
+              no-spinner
+              src="~/assets/ld.png"
+            ></q-img>
+            <q-img
+              v-else
+              :src="`${$storageUrl}/${employee.avatar}`"
+              no-spinner
+            />
           </q-avatar>
         </div>
 
@@ -158,10 +170,10 @@
 
           <!-- Button cetak kartu -->
           <q-btn
-          class="shadow-2 q-mb-sm"
+            class="shadow-2 q-mb-sm"
             dense
             flat
-             @click="$router.push(`/${employee.id}/print-card`)"
+            @click="$router.push(`/${employee.id}/print-card`)"
             no-caps
             style="
               width: 100%;
@@ -173,11 +185,7 @@
             <div class="q-py-sm" style="font-size: medium">Cetak Kartu</div>
           </q-btn>
         </div>
-
-        
       </q-page>
-
-      
     </q-page-container>
   </q-layout>
 </template>

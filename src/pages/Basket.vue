@@ -737,14 +737,22 @@ export default {
       this.getPrice();
     },
     kurangkg(index) {
-      
-      this.Orders.order.charts[index].quantity -= this.Orders.order.charts[index].service_unit.input;
-      if (this.Orders.order.charts[index].quantity < this.Orders.order.charts[index].service_unit.input) {
+      this.Orders.order.charts[index].quantity -=
+        this.Orders.order.charts[index].service_unit.input;
+      if (
+        this.Orders.order.charts[index].quantity <
+        this.Orders.order.charts[index].service_unit.input
+      ) {
         this.$store.commit("Orders/remove_order_chart", {
           id: this.Orders.order.charts[index].id,
         });
       }
-      console.log('quantity', this.Orders.order.charts[index].quantity, 'service_unit', this.Orders.order.charts[index].service_unit.input)
+      console.log(
+        "quantity",
+        this.Orders.order.charts[index].quantity,
+        "service_unit",
+        this.Orders.order.charts[index].service_unit.input
+      );
       this.getPrice();
     },
     getOrderServiceCategory() {
@@ -787,7 +795,7 @@ export default {
             position: "top",
             message: "Berhasil membuat pesanan",
           });
-          this.$router.push("/confirm-order");
+          this.$router.push(`/confirm-order/${res.data.id}`);
         })
         .finally(() => {
           this.btnDisable = false;

@@ -15,7 +15,7 @@
               <q-img no-spinner src="~/assets/ld.png"></q-img>
             </q-avatar>
           </div>
-          <div v-else-if="post.author.avatar" class="self-center text-center ">
+          <div v-else-if="post.author.avatar" class="self-center text-center">
             <q-avatar size="40px">
               <q-img
                 no-spinner
@@ -296,7 +296,7 @@
           </q-btn>
         </q-card-actions>
         <!-- Button Share -->
-        <q-card-actions v-close-popup>
+        <!-- <q-card-actions v-close-popup>
           <q-btn no-caps class="full-width" dense flat @click="buttonShare()">
             <div class="row full-width">
               <div class="col-3">
@@ -316,7 +316,7 @@
               </div>
             </div>
           </q-btn>
-        </q-card-actions>
+        </q-card-actions> -->
 
         <!-- Button Delete -->
         <q-card-actions v-close-popup>
@@ -386,14 +386,8 @@
           </div>
         </q-card-section>
         <!-- Button Share -->
-        <q-card-actions v-close-popup>
-          <q-btn
-            no-caps
-            class="full-width"
-            dense
-            flat
-             @click="buttonShare()"
-          >
+        <!-- <q-card-actions v-close-popup>
+          <q-btn no-caps class="full-width" dense flat @click="buttonShare()">
             <div class="row full-width">
               <div class="col-3">
                 <q-btn dense outline round size="20px">
@@ -412,7 +406,7 @@
               </div>
             </div>
           </q-btn>
-        </q-card-actions>
+        </q-card-actions> -->
 
         <!-- Button Report -->
         <q-card-actions>
@@ -520,7 +514,6 @@
             </div>
 
             <div class="row justify-center">
-             
               <!-- Button WhatsApp -->
               <q-btn
                 round
@@ -532,8 +525,6 @@
               >
                 <q-avatar icon="fab fa-whatsapp" size="30px"></q-avatar>
               </q-btn>
-
-             
             </div>
 
             <!-- Link Share -->
@@ -545,7 +536,6 @@
                 bg-color="transparent"
                 v-model="link"
               >
-                
                 <template v-slot:prepend>
                   <q-icon name="fas fa-link" />
                 </template>

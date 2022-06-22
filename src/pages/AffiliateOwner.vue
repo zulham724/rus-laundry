@@ -30,11 +30,15 @@
         </q-header>
       </div>
       <q-page>
-        <div class="q-px-sm q-py-sm">
+        <div v-if="isLoad"></div>
+        <div
+          v-else-if="!isLoad && affiliate_list.length"
+          class="q-px-sm q-py-sm"
+        >
           <q-card
             class="q-py-xs q-my-sm"
             style="border-radius: 10px"
-            v-for="(affiliate, i) in affiliate_list"
+            v-for="affiliate in affiliate_list"
             :key="affiliate.id"
           >
             <div class="q-px-sm">
@@ -104,6 +108,16 @@
             </div>
           </q-card>
         </div>
+        <div class="text-center fixed-center" v-else>
+          <q-img
+            no-spinner
+            src="~/assets/not-found-affiliate.gif"
+            style="width: 150px; height: 150px"
+          ></q-img>
+          <div class="text-grey text-weight-medium" style="font-size: medium">
+            Belum ada affiliate
+          </div>
+        </div>
 
         <q-dialog v-model="alert">
           <q-card>
@@ -139,6 +153,7 @@ export default {
     return {
       alert: ref(false),
       affiliate_list: [],
+      isLoad: false,
     };
   },
   computed: {
@@ -152,12 +167,22 @@ export default {
   },
   methods: {
     getAffiliateList() {
-      this.$store
-        .dispatch("Affiliate/getAffiliateList", this.auth.id)
-        .then((res) => {
-          this.affiliate_list = res.data;
-          console.log("cek affiliate", this.affiliate_list);
-        });
+      return new Promise((resolve, reject) => {
+        this.isLoad = true;
+        this.$store
+          .dispatch("Affiliate/getAffiliateList", this.auth.id)
+          .then((res) => {
+            this.affiliate_list = res.data;
+            console.log("cek affiliate", this.affiliate_list);
+            resolve(res.data);
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {
+            this.isLoad = false;
+          });
+      });
     },
   },
 };

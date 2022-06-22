@@ -1,18 +1,13 @@
 <template>
   <div>
-    <q-dialog ref="dialog" @hide="onDialogHide">
-      <q-card class="q-dialog-plugin">
+    <q-dialog
+      v-model="dialogDisable"
+      ref="dialog"
+      @hide="onDialogHide"
+      maximized
+    >
+      <q-card class="full-width">
         <qrcode-stream @decode="onDecode"></qrcode-stream>
-        <!--
-        ...content
-        ... use q-card-section for it?
-      -->
-
-        <!-- buttons example -->
-        <q-card-actions align="right">
-          <!--<q-btn color="primary" label="OK" @click="onOKClick" />-->
-          <q-btn color="primary" label="Cancel" @click="onCancelClick" />
-        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -22,7 +17,12 @@
 import { QrcodeStream } from "qrcode-reader-vue3";
 export default {
   components: {
-    QrcodeStream,
+    "qrcode-stream": QrcodeStream,
+  },
+  data() {
+    return {
+      dialogDisable: true,
+    };
   },
   props: {
     // ...your custom props
@@ -32,9 +32,9 @@ export default {
 
   methods: {
     onDecode(decodedString) {
-      console.log("decoded", decodedString);
+      console.log("decoded bisa", decodedString);
       this.$store
-        .dispatch("Employee/attendanceIn", parseInt(result.text))
+        .dispatch("Employee/attendanceIn", parseInt(decodedString))
         .then((res) => {
           console.log("res", res);
           this.$router.push(`/employee`);
@@ -46,8 +46,6 @@ export default {
           // this.dialogAttendance = true;
         });
     },
-    // following method is REQUIRED
-    // (don't change its name --> "show")
     show() {
       this.$refs.dialog.show();
     },
@@ -76,7 +74,7 @@ export default {
     },
 
     onCancelClick() {
-      // we just need to hide dialog
+      // we just need to hide the dialog
       this.hide();
     },
   },

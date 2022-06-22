@@ -73,7 +73,7 @@
             }}
           </div>
 
-          <div class="q-px-xl absolute-bottom q-mb-sm ">
+          <div class="q-px-xl absolute-bottom q-mb-sm">
             <q-tabs
               active-color="white"
               v-model="tabParent"
@@ -173,6 +173,7 @@ export default {
         this.$store
           .dispatch("Orders/getOrdersByShop", this.Auth.auth.shop.id)
           .then((res) => {
+            console.log("cekkk orderss", res.data);
             this.orders = res.data;
             resolve(res.data);
           })

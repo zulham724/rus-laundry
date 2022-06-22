@@ -46,8 +46,6 @@
                     {{ dataAuth.shop.name }}
                   </div>
                   <div
-                    {{
-                    }}
                     v-if="!dataAuth.name"
                     class="text-weight-medium"
                     style="color: #313131; font-size: 13px"
