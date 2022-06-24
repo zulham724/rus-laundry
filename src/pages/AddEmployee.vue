@@ -143,6 +143,7 @@
 
 <script>
 import { toBase64, jsonToFormData } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue"
 export default {
   data() {
     return {

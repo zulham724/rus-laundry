@@ -280,6 +280,7 @@ export default {
           this.pairingAttendacesDates();
         })
         .finally(() => {
+          // console.log('ini dates bulan ini', this.dates)
           if (done) done();
         });
     },
@@ -298,11 +299,14 @@ export default {
     },
     //berfungsi untuk mencocokkan tanggal absen dengan list tanggal (dates)
     pairingAttendacesDates() {
+      // console.log('ini this date', this.dates)
       this.dates.forEach((date) => {
         this.attendances.forEach((attendance) => {
           let date1 = moment(date.date).format("DD-MM-YYYY");
           let date2 = moment(attendance.in_at).format("DD-MM-YYYY");
-          if (date1 == date2) {
+          let date3 = moment(attendance.out_at).format("DD-MM-YYYY");
+          console.log('let date3', date1)
+          if (date1 == date2 == date3) {
             date.status = true;
           }
         });
@@ -315,7 +319,7 @@ export default {
           .dispatch("Attendance/getEmployeeAttendances", this.employeeid)
           .then((res) => {
             this.attendances = res.data;
-            console.log('data kehadiran', this.attendances)
+            console.log('this.attendances', this.attendances)
             resolve(res);
           })
           .catch((err) => {

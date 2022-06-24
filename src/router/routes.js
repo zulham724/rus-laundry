@@ -120,6 +120,8 @@ const routes = [
     beforeEnter: multiguard([auth, checkIfOwner]),
   },
 
+  
+
   {
     path: "/report-post-owner/:post_id",
     component: () => import("src/pages/ReportPostOwner.vue"),
@@ -348,6 +350,13 @@ const routes = [
   },
 
   {
+    path: "/detail-item-owner/:branchid",
+    component: () => import("pages/DetailItemOwner.vue"),
+    beforeEnter: multiguard([auth, checkIfOwner]),
+    props: true,
+  },
+
+  {
     path: "/buat-paket-owner/:branchid",
     component: () => import("src/pages/BuatPaketOwner.vue"),
     beforeEnter: multiguard([auth, checkIfOwner]),
@@ -389,8 +398,22 @@ const routes = [
   },
 
   {
+    path: "/buat-item-owner/:branchid",
+    component: () => import("src/pages/BuatItemOwner.vue"),
+    beforeEnter: multiguard([auth, checkIfOwner]),
+    props: true,
+  },
+
+  {
     path: "/edit-pelanggan-owner/:customerid",
     component: () => import("src/pages/EditPelangganOwner.vue"),
+    beforeEnter: multiguard([auth, checkIfOwner]),
+    props: true,
+  },
+
+  {
+    path: "/edit-item-owner/:itemid",
+    component: () => import("src/pages/EditItemOwner.vue"),
     beforeEnter: multiguard([auth, checkIfOwner]),
     props: true,
   },

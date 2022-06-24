@@ -74,15 +74,13 @@
             </div>
             <div class="col-6 q-pr-xs text-right">
               <div class="q-pr-xs self text-right" style="font-size: 15px">
-                Total Harga
+                Status Bayar
               </div>
-              <div class="q-pl-xs self text-right" style="font-size: 12px">
-                {{
-                  new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(order.total_sum)
-                }}
+              <div v-if="order.total_sum == order.paid_sum" class="q-pl-xs self text-right" style="font-size: 12px">
+                Lunas
+              </div>
+              <div v-else class="q-pl-xs self text-right" style="font-size: 12px">
+                Belum Lunas
               </div>
             </div>
           </div>

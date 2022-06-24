@@ -8,7 +8,7 @@
           </div>
           <div class="full-width q-px-md">
             <q-select
-            label="Pilih layanan"
+              label="Pilih layanan"
               :update:model-value="printSelectedService(model)"
               filled
               v-model="model"
@@ -168,6 +168,23 @@
             }}
           </div>
         </div>
+        <div class="q-pt-md">
+          <div class="q-px-md" style="font-weight: bold; font-size: 20px">
+            Rekening Bank
+          </div>
+          <div
+            v-for="item in this.bankAccount"
+            :key="item.id"
+            class="q-px-md column"
+          >
+            <div class="row">
+              <div class="col-6">{{item.name}}</div>
+              <div class="col-6 text-right" v-if="this.detail_order.customer">
+                {{ item.account_number }}
+              </div>
+            </div>
+          </div>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -192,13 +209,15 @@ export default {
       detail_order: {},
       slide: null,
       order: null,
+      bankAccount: [],
     };
   },
 
   mounted() {
-    console.log('orderid', this.orderid)
-    console.log('shopid', this.shopid)
+    console.log("orderid", this.orderid);
+    console.log("shopid", this.shopid);
     this.getDetailOrder();
+    this.getBankInformation();
   },
 
   methods: {
@@ -207,9 +226,20 @@ export default {
       this.selectedService = null;
       this.selectedService = value;
     },
+    getBankInformation() {
+      this.$store
+        .dispatch("Bank/getAccountBank", this.shopid)
+        .then((res) => {
+          this.bankAccount = res.data;
+          console.log("then getBankInformation", res.data);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getBankInformation", err);
+        });
+    },
     getDetailOrder() {
       this.isLoad = true;
-      
+
       const payload = {
         shopId: this.shopid,
         orderId: this.orderid,

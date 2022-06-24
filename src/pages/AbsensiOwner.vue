@@ -107,7 +107,41 @@
                     class="text-grey text-weight-bold"
                     style="font-size: medium"
                   >
-                    Waktu Absen
+                    Absen Berangkat
+                  </div>
+                  <div
+                    v-if="employee.attendances.length"
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    {{
+                      moment(employee.attendances[0].created_at)
+                        .locale("id")
+                        .format("LT")
+                    }}
+                  </div>
+                  <!-- Belum Absen -->
+                  <div
+                    v-else
+                    class="text-black text-weight-medium"
+                    style="font-size: medium"
+                  >
+                    Belum Absen
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="text-center self-center col-2">
+                  <q-avatar>
+                    <img src="~/assets/tm.png" />
+                  </q-avatar>
+                </div>
+                <div class="q-pl-sm col-10 self-center">
+                  <div
+                    class="text-grey text-weight-bold"
+                    style="font-size: medium"
+                  >
+                    Absen Pulang
                   </div>
                   <div
                     v-if="employee.attendances.length"

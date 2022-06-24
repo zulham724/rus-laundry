@@ -302,18 +302,7 @@ export default {
     openMedia() {
       this.$refs.selectfiles.pickFiles();
     },
-    // async previewImages(files) {
-    //   // 1. convert masing2 files jadi base64
-    //   this.files = files;
-    //   let array = [];
-    //   await files.forEach((file, f) => {
-    //     array[f] = this.toBase64(file);
-    //   });
-
-    //   Promise.all(array).then((res) => {
-    //     this.images_videos = res;
-    //   });
-    // },
+    
     async previewImages(file) {
       // console.log("cek file", file);
       if (file.type.includes("image")) {

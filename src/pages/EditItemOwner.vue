@@ -3,10 +3,10 @@
     <q-page class="mbl-child">
       <div class="q-px-sm q-py-xl text-center">
         <q-avatar size="100px">
-          <q-img src="~/assets/klgcmr.png" />
+          <q-img src="~/assets/boxy.svg" />
         </q-avatar>
         <div class="text-weight-medium q-mt-sm" style="font-size: 24px">
-          Edit Pelanggan
+          Edit Item
         </div>
       </div>
       <div class="bg-white" style="border-radius: 5px">
@@ -21,36 +21,16 @@
             >
             </q-input>
           </div>
+
           <div class="q-py-sm">
-            <q-input
-              label="Email"
-              color="black"
-              v-model="this.updateCustomer.email"
+            <q-select
               outlined
-              type="search"
-            >
-            </q-input>
+              v-model="model"
+              :options="this.serviceUnits"
+              label="Hitungan Menurut"
+            />
           </div>
-          <div class="q-py-sm">
-            <q-input
-              label="Alamat"
-              color="black"
-              v-model="this.updateCustomer.home_address"
-              outlined
-              type="search"
-            >
-            </q-input>
-          </div>
-          <div class="q-py-sm">
-            <q-input
-              label="No. Telp"
-              color="black"
-              v-model="this.updateCustomer.contact_number"
-              outlined
-              type="number"
-            >
-            </q-input>
-          </div>
+
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
               <q-btn
@@ -89,10 +69,13 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
-  props: ["customerid"],
+  props: ["itemid"],
   data() {
     return {
+      model: ref(null),
       currentCustomer: null,
       updateCustomer: {
         name: "",
@@ -100,10 +83,12 @@ export default {
         home_address: "",
         contact_number: "",
       },
+      serviceUnits: [],
     };
   },
   mounted() {
-    this.getCustomerById();
+    this.getItemById();
+    this.getServiceUnit();
   },
   methods: {
     print() {
@@ -116,16 +101,28 @@ export default {
       this.updateCustomer.home_address = init.home_address;
       this.updateCustomer.contact_number = init.contact_number;
     },
-    getCustomerById() {
+
+    getServiceUnit() {
       this.$store
-        .dispatch("MasterBranchOrders/getCustomerById", this.customerid)
+        .dispatch("MasterBranchOrders/getServiceUnits")
         .then((res) => {
-          console.log("res getCustomerById", res.data);
-          this.currentCustomer = res.data;
-          this.init(res.data);
+          for (let i = 0; i < res.data.length; i++) {
+            this.serviceUnits.push(res.data[i].name);
+          }
+          console.log("thsi.serviceunit", this.serviceUnits);
         })
         .catch((err) => {
-          console.log("err getCustomerById", err);
+          console.log("err");
+        });
+    },
+    getItemById() {
+      this.$store
+        .dispatch("MasterBranchOrders/getItemById", this.itemid)
+        .then((res) => {
+          console.log("then getitembyid", res.data);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getItemById");
         });
     },
     updateCustomerSave() {

@@ -69,6 +69,7 @@
 <script>
 import moment from "moment";
 export default {
+  props: ["currentShopId"],
   data() {
     return {
       isLoad: false,
@@ -82,18 +83,27 @@ export default {
     },
   },
   mounted() {
-    this.getShopId();
-    this.getIncome();
+    this.getIncomeActivatior();
+    console.log('this.currentshopid', this.currentShopId)
+    // this.getIncome();
   },
   methods: {
     moment,
+    getIncomeActivatior(){
+      if (this.currentShopId != null){
+        this.getIncome();
+        console.log('getIncomeActivator')
+      } else {
+        console.log('getIncomeActivator inactive')
+      }
+    },
     getIncome() {
       return new Promise((resolve, reject) => {
-        let shopId = this.shopsId;
         this.isLoad = true;
         this.$store
-          .dispatch("Payment/getIncome", shopId)
+          .dispatch("Payment/getIncome", this.currentShopId)
           .then((res) => {
+            console.log('ini incomedata', res.data)
             this.incomeData = res.data;
             let total = res.data.forEach((item) => {
               return item.value;
@@ -108,16 +118,7 @@ export default {
           });
       });
     },
-    getShopId() {
-      return new Promise((resolve, reject) => {
-        let shopsId = [];
-        this.auth.slaves.forEach((slave) => {
-          shopsId.push(slave.shop.id);
-        });
-        this.shopsId = shopsId;
-        // console.log("ini shopsId", shopsId);
-      });
-    },
+    
   },
 };
 </script>

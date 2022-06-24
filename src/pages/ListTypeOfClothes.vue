@@ -201,6 +201,7 @@ export default {
         this.$store
           .dispatch("ServiceCategories/index")
           .then((res) => {
+            console.log('ini res data', res.data)
             this.categories = this.categories_temp = res.data.map(
               (category) => {
                 this.Orders.order.charts.forEach((item2) => {

@@ -46,8 +46,8 @@
         </q-item-section>
 
         <q-item-section side>
-          <q-item-label caption style="color: #00ff38"
-            >+{{
+          <q-item-label caption style="color: #DD2222"
+            >-{{
               new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
@@ -69,6 +69,9 @@
 <script>
 import moment from "moment";
 export default {
+  props: [
+    "currentShopId"
+  ],
   data() {
     return {
       isLoad: false,
@@ -92,7 +95,7 @@ export default {
         let shopId = this.shopsId;
         this.isLoad = true;
         this.$store
-          .dispatch("Payment/getSpend", shopId)
+          .dispatch("Payment/getSpend", this.currentShopId)
           .then((res) => {
             this.spendingData = res.data;
             let total = res.data.forEach((item) => {

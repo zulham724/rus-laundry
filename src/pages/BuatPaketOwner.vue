@@ -52,7 +52,7 @@
               type="number"
             >
               <template v-slot:append>
-                <div style="font-size: 12px">Jam</div>
+                <div style="font-size: 12px">Hari</div>
               </template>
             </q-input>
           </div>

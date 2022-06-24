@@ -30,8 +30,8 @@
         </q-header>
       </div>
       <q-page>
-        <div class="q-px-sm q-py-sm text-h6 text-weight-bold text-center">
-          Laundry RUS
+        <div v-if="this.currentShop != null" class="q-px-sm q-py-sm text-h6 text-weight-bold text-center">
+          {{this.currentShop[0].shop.name}}
         </div>
         <!-- TAB PEMASUKAN DAN PENGELUARAN -->
         <div class="row">
@@ -98,15 +98,12 @@
                     <q-img src="~/assets/yen.png" />
                   </div>
                   <div class="col-7 q-px-xs self-center">
-                    <div
-                      class="text-whit</div>e self-center"
-                      style="font-size: 12px"
-                    >
-                      Pemasukan
+                    <div class="text-white self-center" style="font-size: 12px">
+                      Total Saldo
                     </div>
-                    <div class="text-white self-center" style="font-size: 10px">
+                    <!-- <div class="text-white self-center" style="font-size: 10px">
                       Tren Keseimbangan
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -126,14 +123,14 @@
                         }).format(totalSum)
                       }}
                     </div>
-                    <div
+                    <!-- <div
                       class="text-white self-center row"
                       style="font-size: 10px"
                     >
                       <div class="text-green col-2">+4.3%</div>
                       <div class="col-1"></div>
                       <div class="col-9">Tren Keseimbangan</div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -141,7 +138,7 @@
           </q-card>
         </div>
         <!-- TAB SELECT -->
-        <div class="q-mt-sm row">
+        <!-- <div class="q-mt-sm row">
           <div class="col-3"></div>
           <div class="col-3"></div>
           <div class="col-6 q-px-sm">
@@ -153,7 +150,7 @@
               :options="options"
             />
           </div>
-        </div>
+        </div> -->
         <!-- TAB LIST -->
         <!-- ITEM SURPLUS -->
         <!-- <div class="q-mt-sm q-px-sm" v-for="a in 2" :key="a">
@@ -184,10 +181,10 @@
         </div> -->
 
         <!-- Pemasukan -->
-        <income-component v-if="incomeComponent"></income-component>
+        <income-component :currentShopId="this.currentShopId" v-if="incomeComponent && this.currentShopId != null"></income-component>
 
         <!-- Pengeluaran -->
-        <spend-component v-if="spendComponent"> </spend-component>
+        <spend-component :currentShopId="this.currentShopId" v-if="spendComponent && this.currentShopId != null"> </spend-component>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -222,6 +219,10 @@ export default {
 
       incomeComponent: true,
       spendComponent: false,
+
+      shopNameFilter: [],
+      currentShop: null,
+      currnetShopId: null,
     };
   },
   computed: {
@@ -230,9 +231,11 @@ export default {
     },
   },
   mounted() {
-    // console.log("ini auth", this.auth);
+    console.log("ini auth", this.auth);
     this.getShopId();
     this.getTotalSum();
+    this.getTotalSpend();
+    this.getShopName();
   },
   methods: {
     moment,
@@ -266,6 +269,16 @@ export default {
         })
         .catch((err) => {});
     },
+    getTotalSpend() {
+      this.$store
+        .dispatch("Payment/getSpend", this.shopsId)
+        .then((res) => {
+          console.log("ini total spend", res.data);
+        })
+        .catch((err) => {
+          console.log('terjadi kesalahan')
+        });
+    },
     getShopId() {
       return new Promise((resolve, reject) => {
         let shopsId = [];
@@ -275,6 +288,27 @@ export default {
         this.shopsId = shopsId;
         // console.log("ini shopsId", shopsId);
       });
+    },
+    getShopName() {
+      this.$store
+        .dispatch("MasterOrders/getTotalOrdersPerShop")
+        .then((res) => {
+          this.shopNameFilter = res.data;
+          // console.log("shopName", this.shopName);
+
+          var creatures = res.data;
+          var id = +this.branchid;
+          var aquaticCreatures = creatures.filter(function (creature) {
+            return creature.shop.id == id;
+          });
+          this.currentShop = aquaticCreatures;
+          this.currentShopId = this.currentShop[0].shop.id
+          // console.log('this.currentshopid', this.currentShopId)
+          console.log("shopName", aquaticCreatures);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getTotalOrdersPerShop", err);
+        });
     },
   },
 };

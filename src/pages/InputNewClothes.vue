@@ -109,12 +109,14 @@ export default {
   methods: {
     getUnitsCategories() {
       this.$store.dispatch("ServiceUnits/index").then((res) => {
+        
         this.service_units = res.data.map((item) => {
           return {
             name: item.name,
             id: item.id,
           };
         });
+        console.log('this.service_unit', this.service_units)
       });
     },
     inputClothesType() {
