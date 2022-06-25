@@ -135,7 +135,6 @@
         ref="addImages"
         @update:model-value="previewImages"
         v-show="false"
-        multiple
       ></q-file>
     </q-page-container>
   </q-layout>
@@ -143,7 +142,8 @@
 
 <script>
 import { toBase64, jsonToFormData } from "./../helpers";
-import CropPhotoComponent from "src/components/CropPhotoComponent.vue"
+import { base64ToFile } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 export default {
   data() {
     return {
@@ -154,6 +154,8 @@ export default {
       encodedImage: null,
       dialogAdd: false,
       employee: {},
+      images_videos: [],
+      files: [],
     };
   },
 
@@ -162,6 +164,7 @@ export default {
       this.$refs.addImages.pickFiles();
     },
     store() {
+      console.log('this.employee', this.employee)
       this.$refs.form.validate().then((success) => {
         if (success) {
           let res = jsonToFormData(this.employee);
@@ -177,19 +180,67 @@ export default {
         }
       });
     },
-    async previewImages(files) {
-      if (files.length > 1) {
-        this.$q.notify("Hanya bisa menambahkan 1 foto");
-      } else {
-        console.log("sebelum base 64", files);
-        this.employee.avatar = files[0];
-        let promise = toBase64(files[0]);
+    async previewImages(file) {
+      console.log("ini file sebelum apa apa", file);
+      if (file.type.includes("image")) {
+        let promise = this.toBase64(file);
         promise.then((res) => {
-          console.log("setelah base 64", res.src);
-          this.encodedImage = res.src;
+          console.log("ini res", res);
+          this.$q
+            .dialog({
+              component: CropPhotoComponent,
+              componentProps: {
+                ImgBS64: res.src,
+              },
+            })
+            .onOk((data) => {
+              console.log("cek hasil crop", data);
+              data.type = res.type;
+              let imageBase64 = data;
+              console.log("ini foto yang sudah jadi base 64", imageBase64);
+              this.images_videos.push(imageBase64);
+              console.log("image video", this.images_videos);
+              
+              this.encodedImage = this.images_videos[0].dataUrl;
+              let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
+              this.files.push(imgTo64);
+              this.employee.avatar = this.files[0];
+            });
+        });
+      } else {
+        console.log("bismillah ini bukan foto gan");
+        this.$q.notify({
+          position: "top",
+          message: "Pastikan file berupa gambar",
         });
       }
     },
+    toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () =>
+          resolve({
+            src: reader.result,
+            type: file.type,
+          });
+        reader.onerror = (error) => reject(error);
+      });
+    },
+    // async previewImages(files) {
+    //   console.log('ini files sebelum apa apa ', files)
+    //   if (files.length > 1) {
+    //     this.$q.notify("Hanya bisa menambahkan 1 foto");
+    //   } else {
+    //     console.log("sebelum base 64", files);
+    //     this.employee.avatar = files[0];
+    //     let promise = toBase64(files[0]);
+    //     promise.then((res) => {
+    //       console.log("setelah base 64", res.src);
+    //       this.encodedImage = res.src;
+    //     });
+    //   }
+    // },
   },
 };
 </script>

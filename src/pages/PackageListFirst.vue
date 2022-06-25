@@ -217,11 +217,11 @@ export default {
   },
   methods: {
     doFilter(val) {
-      if (val == "Terbaru") {
+      if (val == "Terlama") {
         this.packages.sort((a, b) => {
           return new Date(a.created_at) - new Date(b.created_at);
         });
-      } else if (val == "Terlama") {
+      } else if (val == "Terbaru") {
         this.packages.sort((a, b) => {
           return new Date(b.created_at) - new Date(a.created_at);
         });
