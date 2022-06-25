@@ -24,7 +24,7 @@
           </div>
           <div class="column q-gutter-y-sm q-mt-sm">
             <div class="text-weight-medium " style="color: #313131">Nomer Telepon</div>
-            <q-input dense rounded outlined v-model="customer.contact_number" input-style="color: #888888">
+            <q-input type="number" dense rounded outlined v-model="customer.contact_number" input-style="color: #888888">
               <template v-slot:append>
                 <div class="text-caption" @click="update()">ubah</div>
               </template>

@@ -15,7 +15,7 @@
             <q-input
               label="Nama"
               color="black"
-              v-model="this.updateCustomer.name"
+              v-model="this.updateItem.name"
               outlined
               type="search"
             >
@@ -25,9 +25,12 @@
           <div class="q-py-sm">
             <q-select
               outlined
-              v-model="model"
+              v-model="this.updateItem.service_unit"
               :options="this.serviceUnits"
+              :option-value="(item) => item.id"
+              :option-label="(item) => item.name"
               label="Hitungan Menurut"
+              @update:model-value="(item) => this.updateItem.service_unit_id = item.id"
             />
           </div>
 
@@ -38,7 +41,7 @@
                 style="background-color: #6295ff; border-radius: 10px"
                 text-color="white"
                 label="Simpan"
-                @click="updateCustomerSave()"
+                @click="updateItemSave()"
               />
             </div>
             <div class="col text-left q-pl-sm">
@@ -76,14 +79,11 @@ export default {
   data() {
     return {
       model: ref(null),
-      currentCustomer: null,
-      updateCustomer: {
-        name: "",
-        email: "",
-        home_address: "",
-        contact_number: "",
+      currentItem: null,
+      updateItem: { 
       },
       serviceUnits: [],
+      itemById: null,
     };
   },
   mounted() {
@@ -94,53 +94,54 @@ export default {
     print() {
       console.log("ini res print", this.updateCustomer);
     },
-    init(init) {
-      // console.log("ini res init", init);
-      this.updateCustomer.name = init.name;
-      this.updateCustomer.email = init.email;
-      this.updateCustomer.home_address = init.home_address;
-      this.updateCustomer.contact_number = init.contact_number;
+    init() {
+      this.updateItem = {
+        ...this.itemById,
+        service_unit: {
+          ...this.itemById.service_unit,
+        },
+      };
     },
 
     getServiceUnit() {
       this.$store
         .dispatch("MasterBranchOrders/getServiceUnits")
         .then((res) => {
-          for (let i = 0; i < res.data.length; i++) {
-            this.serviceUnits.push(res.data[i].name);
-          }
-          console.log("thsi.serviceunit", this.serviceUnits);
+          const { data } = res;
+          data.forEach((item) => {
+            this.serviceUnits.push(item);
+          });
         })
         .catch((err) => {
-          console.log("err");
+          console.log("err ini");
         });
     },
     getItemById() {
       this.$store
         .dispatch("MasterBranchOrders/getItemById", this.itemid)
         .then((res) => {
+          this.itemById = res.data;
           console.log("then getitembyid", res.data);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getItemById");
+        })
+        .finally(() => {
+          this.init();
         });
     },
-    updateCustomerSave() {
-      this.currentCustomer.name = this.updateCustomer.name;
-      this.currentCustomer.email = this.updateCustomer.email;
-      this.currentCustomer.home_address = this.updateCustomer.home_address;
-      this.currentCustomer.contact_number = this.updateCustomer.contact_number;
-      console.log("ini res updateCustomer", this.currentCustomer);
-      const payload = this.currentCustomer;
+    updateItemSave() { 
+      const payload = this.updateItem;
+      console.log('iini payload', payload)
       this.$store
-        .dispatch(`MasterBranchOrders/updateCustomer`, payload)
+        .dispatch(`MasterBranchOrders/updateItem`, payload)
         .then((res) => {
-          console.log("ini res updateCustomer", res);
+          console.log("ini res updateCustomer", res.data);
           this.$q.notify({
             position: "bottom",
             message: "Berhasil mengubah data",
           });
-          this.$router.back();
+          // this.$router.back();
         })
         .catch((err) => {
           this.$q.notify({

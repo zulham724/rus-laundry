@@ -254,15 +254,21 @@
                     <q-item-label
                       class="text-weight-regular"
                       style="color: #c9c9c9; font-size: 12px"
-                      >Berat</q-item-label
+                      >Berat/Hitungan</q-item-label
                     >
                     <q-item-label
                       caption
                       lines="1"
                       class="text-weight-bold"
                       style="font-size: 14px"
-                      >{{ detail_order.services[0].quantity }}
-                      {{ detail_order.services[0].service_unit }}</q-item-label
+                      >
+                      <!-- {{ detail_order.services[0].quantity }}
+                      {{ detail_order.services[0].service_unit }} -->
+
+                      {{ service.quantity }}
+                      {{ service.service_unit }}
+
+                      </q-item-label
                     >
                   </q-item-section>
                   <q-space></q-space>
@@ -939,6 +945,7 @@ No Rekening : ${this.bankAccount[i].account_number}
         .dispatch("Orders/show", this.orderid)
         .then((res) => {
           this.detail_order = res.data;
+          console.log('ini detail order', this.detail_order)
           if (res.data.services.length) {
             this.slide = `slide-${res.data.services[0].id}`;
             this.order = res.data;

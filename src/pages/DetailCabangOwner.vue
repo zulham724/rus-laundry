@@ -105,7 +105,9 @@
                   <q-item-label class="text-white text-weight-medium"
                     >Item</q-item-label
                   >
-                  <q-item-label class="text-white" caption> fake data</q-item-label>
+                  <q-item-label class="text-white" caption>
+                    {{this.totalItem}}</q-item-label
+                  >
                 </q-item-section>
               </q-item>
             </q-card>
@@ -386,6 +388,8 @@ export default {
       //array counter 2
       arrayCounter2: [],
       dataTop2: 0,
+
+      totalItem: 0,
     };
   },
 
@@ -407,6 +411,8 @@ export default {
 
     this.getMonthlyOrders();
     this.getMonthlyRevenue();
+
+    this.getTotalItem();
   },
 
   methods: {
@@ -603,6 +609,18 @@ export default {
         })
         .catch((err) => {
           console.log("terjadi kesalahan getTotalOrdersPerShop", err);
+        });
+    },
+
+    getTotalItem() {
+      this.$store
+        .dispatch("MasterOrders/getTotalItem", this.branchid)
+        .then((res) => {
+          this.totalItem = res.data;
+          console.log("ini then getTotalItem", res.data);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan getTotalItem", err);
         });
     },
   },

@@ -43,7 +43,7 @@
           <q-input
             dense
             color="black"
-            label="Cari Pelanggan"
+            label="Cari Item"
             rounded
             outlined
             v-model="search"
@@ -172,11 +172,11 @@
                   <div class="q-pl-sm col-10 text-h6 text-grey self-center">
                     <div style="font-size: 16px">Tanggal Pembuatan</div>
                     <div style="font-size: 16px" class="text-black">
-                       {{ moment(item.created_at).format("LL") }}
+                      {{ moment(item.created_at).format("LL") }}
                     </div>
                   </div>
                 </div>
-               
+
                 <div class="row">
                   <div class="text-center self-center col-2">
                     <q-avatar square>
@@ -230,13 +230,12 @@
             </q-card-section>
             <q-card-section class="text-center">
               <div class="text-weight-bold" style="font-size: 18px">
-                Apakah anda benar- benar yakin untuk menghapus Pelanggan?
+                Apakah anda benar- benar yakin untuk menghapus Item?
               </div>
             </q-card-section>
 
             <q-card-section class="q-pt-none text-center">
-              Jika anda hapus, maka semua data pelanggan beserta data transaksi
-              pelanggan akan hilang!
+              Jika anda hapus, maka semua data Item akan hilang
             </q-card-section>
 
             <q-card-actions align="right">
@@ -268,7 +267,7 @@ export default {
       alert: ref(false),
       branchCustomers: [],
       branchCustomersTemp: [],
-      itemCustomers:[],
+      itemCustomers: [],
       itemCustomersTemp: [],
       search: "",
       deleteProperties: {
@@ -299,40 +298,59 @@ export default {
       this.deleteProperties.index = index;
     },
     confirmAlert() {
+      this.deleteBranchItem(this.deleteProperties.id);
       // this.removePackage(this.deleteProperties.index);
-      this.deleteBranchCustomer(this.deleteProperties.id);
+      // this.deleteBranchCustomer(this.deleteProperties.id);
       // this.deleteProperties.index = null;
-      this.deleteProperties.id = null;
+      // this.deleteProperties.id = null;
     },
     removeCustomer(index) {
       this.branchCustomers.splice(index, 1);
     },
-    deleteBranchCustomer(id) {
+    deleteBranchItem(id) {
       this.$store
-        .dispatch("MasterBranchOrders/deleteBranchCustomer", id)
+        .dispatch("MasterBranchOrders/deleteBranchItem", id)
         .then((res) => {
-          this.removeCustomer(this.deleteProperties.index);
+          console.log("then deleteBranchItems", res.data);
           this.$q.notify({
             position: "bottom",
-            message: "Berhasil menghapus pelanggan",
+            message: "Berhasil menghapus Item",
           });
-          console.log("res deleteBranchCustomer", res);
         })
         .catch((err) => {
+          console.log("terjadi kesalahan deleteBranchItem", err);
           this.$q.notify({
             position: "bottom",
-            message: "Gagal menghapus pelanggan",
+            message: "Gagal menghapus Item",
           });
-          console.log("terjadi kesalahan deleteBranchCustomer", err);
         });
     },
+    // deleteBranchCustomer(id) {
+    //   this.$store
+    //     .dispatch("MasterBranchOrders/deleteBranchCustomer", id)
+    //     .then((res) => {
+    //       this.removeCustomer(this.deleteProperties.index);
+    //       this.$q.notify({
+    //         position: "bottom",
+    //         message: "Berhasil menghapus pelanggan",
+    //       });
+    //       console.log("res deleteBranchCustomer", res);
+    //     })
+    //     .catch((err) => {
+    //       this.$q.notify({
+    //         position: "bottom",
+    //         message: "Gagal menghapus pelanggan",
+    //       });
+    //       console.log("terjadi kesalahan deleteBranchCustomer", err);
+    //     });
+    // },
     searchCustomer(value) {
       if (value == "") {
-        this.branchCustomers = this.branchCustomersTemp;
+        this.itemCustomers = this.itemCustomersTemp;
       }
 
       const needle = value.toLowerCase();
-      this.branchCustomers = this.branchCustomersTemp.filter(
+      this.itemCustomers = this.itemCustomersTemp.filter(
         (v) => v.name.toLowerCase().indexOf(needle) > -1
       );
     },
@@ -352,7 +370,7 @@ export default {
       this.$store
         .dispatch("MasterBranchOrders/getBranchItems", this.branchid)
         .then((res) => {
-          this.itemCustomers = this.itemCustomersTemp = res.data
+          this.itemCustomers = this.itemCustomersTemp = res.data;
           console.log("res.data", res.data);
         })
         .catch((err) => {

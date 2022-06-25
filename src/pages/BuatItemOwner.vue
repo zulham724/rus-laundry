@@ -15,19 +15,22 @@
             <q-input
               label="Masukkan Nama Item"
               color="black"
-              v-model="this.addCustomer.name"
+              v-model="this.addItem.name"
               outlined
               type="search"
             >
             </q-input>
           </div>
+
           <div class="q-py-sm">
-             <q-select outlined v-model="model" :options="options" label="Pilih Layanan" />
+            <q-select
+              outlined
+              v-model="this.addItem.service_unit"
+              :options="this.serviceUnits"
+              label="Hitungan Menurut"
+            />
           </div>
-          <div class="q-py-sm">
-            <q-select outlined v-model="model" :options="options" label="Hitungan Menurut" />
-          </div>
-         
+
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
               <q-btn
@@ -69,21 +72,38 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   props: ["branchid"],
   data() {
     return {
-      addCustomer: {},
+      model: ref(null),
+      addItem: {},
+      serviceUnits: [],
     };
   },
   mounted() {
-    // console.log("ini", this.branchid);
+    this.getServiceUnit();
   },
   methods: {
     print() {
-      this.addCustomer.shop_id = this.branchid;
-      console.log("ini data customer", this.addCustomer);
-      this.createBranchCustomer();
+      this.addItem.shop_id = this.branchid;
+      console.log("ini data customer", this.addItem);
+      // this.createBranchCustomer();
+    },
+    getServiceUnit() {
+      this.$store
+        .dispatch("MasterBranchOrders/getServiceUnits")
+        .then((res) => {
+          for (let i = 0; i < res.data.length; i++) {
+            this.serviceUnits.push(res.data[i].name);
+          }
+          console.log("thsi.serviceunit", this.serviceUnits);
+        })
+        .catch((err) => {
+          console.log("err");
+        });
     },
     createBranchCustomer() {
       this.$store

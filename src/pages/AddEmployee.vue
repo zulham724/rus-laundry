@@ -132,6 +132,7 @@
         </q-card>
       </q-dialog>
       <q-file
+      accept="image/*"
         ref="addImages"
         @update:model-value="previewImages"
         v-show="false"
@@ -171,7 +172,12 @@ export default {
           this.$store.dispatch("Employee/store", res).then((res) => {
             this.$router.push("/employee");
             this.$q.notify("Berhasil");
+          }).catch((err)=>{
+            this.$q.notify({
+            position: "top",
+            message: "Alamat Email Sudah Terpakai!",
           });
+          })
         } else {
           this.$q.notify({
             position: "top",
@@ -203,6 +209,7 @@ export default {
               
               this.encodedImage = this.images_videos[0].dataUrl;
               let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
+              console.log('ini image sudah kembali menjadi file', imgTo64)
               this.files.push(imgTo64);
               this.employee.avatar = this.files[0];
             });

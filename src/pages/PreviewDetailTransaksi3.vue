@@ -91,13 +91,13 @@
                 <div class="row">
                   <div class="col-6">Estimasi pesanan</div>
                   <div class="col-6 text-right" v-if="this.selectedService">
-                    {{ this.selectedService.process_time }} Jam
+                    {{ this.selectedService.process_time }} Hari
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-2">Berat</div>
+                  <div class="col-2">Berat/Hitungan</div>
                   <div class="col-10 text-right" v-if="this.selectedService">
-                    {{ this.selectedService.quantity }}
+                    {{ this.selectedService.quantity }}{{this.selectedService.service_unit}}
                   </div>
                 </div>
               </div>
@@ -178,8 +178,8 @@
             class="q-px-md column"
           >
             <div class="row">
-              <div class="col-6">{{item.name}}</div>
-              <div class="col-6 text-right" v-if="this.detail_order.customer">
+              <div class="col-6">{{item.name}}/{{item.account_name}}</div>
+              <div class="col-6 text-right" >
                 {{ item.account_number }}
               </div>
             </div>

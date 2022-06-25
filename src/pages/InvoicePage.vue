@@ -58,7 +58,7 @@
               <div class="q-pr-xs self text-right" style="font-size: 15px">
                 Tanggal pemesanan
               </div>
-              <div class="q-pl-xs self text-right" style="font-size: 12px">
+              <div class="q-pl-xs q-pr-xs self text-right" style="font-size: 12px">
                 {{ moment(order.created_at).format("ll") }}
               </div>
             </div>
@@ -76,7 +76,7 @@
               <div class="q-pr-xs self text-right" style="font-size: 15px">
                 Status Bayar
               </div>
-              <div v-if="order.total_sum == order.paid_sum" class="q-pl-xs self text-right" style="font-size: 12px">
+              <div v-if="order.total_sum == order.paid_sum" class="q-pl-xs q-pr-xs self text-right" style="font-size: 12px">
                 Lunas
               </div>
               <div v-else class="q-pl-xs self text-right" style="font-size: 12px">

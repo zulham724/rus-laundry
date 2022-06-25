@@ -205,8 +205,9 @@
           </div>
         </div>
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
+          <!-- @click="attendanceInEmployee()" -->
           <q-btn
-            @click="attendanceInEmployee()"
+            @click="$router.push('/attendanceScanPage')"
             class="q-pa-sm"
             fab
             style="

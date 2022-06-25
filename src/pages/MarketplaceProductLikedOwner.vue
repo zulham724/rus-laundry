@@ -76,7 +76,7 @@
               <q-card
                 class="q-pb-sm"
                 style="border-radius: 5px"
-                @click="$router.push(`/marketplace-detail/${product.id}`)"
+                @click="$router.push(`/marketplace-detail-owner/${product.id}`)"
               >
                 <q-img
                   no-spinner

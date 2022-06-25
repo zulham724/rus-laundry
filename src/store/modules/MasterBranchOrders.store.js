@@ -123,6 +123,16 @@ const actions = {
         });
     });
   },
+  updateItem({commit}, payload){
+    console.log('state', payload)
+    return new Promise ((resolve, reject)=>{
+      api.post(`/api/master/servicecategories/${payload.id}/update`).then((res)=>{
+        resolve(res)
+      }).catch((err)=>{
+        reject(err)
+      })
+    })
+  },
   //new employee
   createBranchEmployee({ commit }, payload) {
     return new Promise((resolve, reject) => {
@@ -130,6 +140,18 @@ const actions = {
         .post("/api/master/branch_employee", payload)
         .then((res) => {
           resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  deleteBranchItem({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      api
+        .post(`api/master/servicecategories/${id}/destroy`)
+        .then((res) => {
+          resolve(res);
         })
         .catch((err) => {
           reject(err);
@@ -154,22 +176,22 @@ const actions = {
     });
   },
   //delete employee
-  deleteBranchEmployee({ commit }, id) {
-    let access = {
-      _method: "delete",
-      // ...service,
-    };
-    return new Promise((resolve, reject) => {
-      api
-        .post(`/api/master/branch_employee/${id}`, access)
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  },
+  // deleteBranchEmployee({ commit }, id) {
+  //   let access = {
+  //     _method: "delete",
+  //     // ...service,
+  //   };
+  //   return new Promise((resolve, reject) => {
+  //     api
+  //       .post(`/api/master/branch_employee/${id}`, access)
+  //       .then((res) => {
+  //         resolve(res);
+  //       })
+  //       .catch((err) => {
+  //         reject(err);
+  //       });
+  //   });
+  // },
   //get employee by id
   getEmployeeById({ commit }, id) {
     return new Promise((resolve, reject) => {
