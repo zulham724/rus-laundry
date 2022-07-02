@@ -8,7 +8,7 @@
           ripple="false"
           flat
           style="color: white"
-          @click="$router.push('/attendance-menu')"
+          @click="$router.push('/attendance')"
         >
           <q-icon size="20px" name="fas fa-arrow-left" style="color: #888888">
           </q-icon>
@@ -187,7 +187,9 @@
             class="row bg-white q-pl-lg q-mt-sm q-py-sm"
             style="color: #c9c9c9"
           >
-            Data Absen
+            <div class="col-6">Data Absen</div>
+            <div class="col-3">Masuk</div>
+            <div class="col-3">Keluar</div>
           </div>
           <!-- Skeleton -->
           <div v-if="isLoad" class="row full-width">
@@ -213,22 +215,17 @@
           <div v-else>
             <q-list separator class="q-mt-xs bg-white q-pl-md q-pr-xs">
               <q-item dense v-for="date in dates" :key="date.date">
-                <div class="col-9" style="color: #c9c9c9">
+                <div
+                  class="col-6"
+                  :style="`color: ${date.status ? '#35c07e' : '#df4141'}`"
+                >
                   {{ date.date.format("D MMMM YYYY") }}
                 </div>
-                <div
-                  v-if="date.status"
-                  class="col-3 text-center text-weight-medium"
-                  style="color: #35c07e"
-                >
-                  Berhasil Absen
+                <div class="col-3 text-center text-weight-medium">
+                  {{ date.in_at }}
                 </div>
-                <div
-                  v-else
-                  class="col-3 text-center text-weight-medium"
-                  style="color: #df4141"
-                >
-                  Tidak Absen
+                <div class="col-3 text-center text-weight-medium">
+                  {{ date.out_at ? date.out_at : "-" }}
                 </div>
               </q-item>
             </q-list>
@@ -273,6 +270,9 @@ export default {
     this.init();
   },
   methods: {
+    toFixedHadir() {
+      console.log("value", value);
+    },
     init(done) {
       this.getAttendances()
         .then((res) => {
@@ -280,7 +280,6 @@ export default {
           this.pairingAttendacesDates();
         })
         .finally(() => {
-          // console.log('ini dates bulan ini', this.dates)
           if (done) done();
         });
     },
@@ -299,18 +298,22 @@ export default {
     },
     //berfungsi untuk mencocokkan tanggal absen dengan list tanggal (dates)
     pairingAttendacesDates() {
-      // console.log('ini this date', this.dates)
       this.dates.forEach((date) => {
         this.attendances.forEach((attendance) => {
           let date1 = moment(date.date).format("DD-MM-YYYY");
-          let date2 = moment(attendance.in_at).format("DD-MM-YYYY");
-          let date3 = moment(attendance.out_at).format("DD-MM-YYYY");
-          console.log('let date3', date1)
-          if (date1 == date2 == date3) {
-            date.status = true;
+          let date2 = moment(attendance.created_at).format("DD-MM-YYYY");
+          if (date1 == date2) {
+            date.in_at = attendance.in_at
+              ? moment(attendance.in_at).format("HH:mm")
+              : null;
+            date.out_at = attendance.out_at
+              ? moment(attendance.out_at).format("HH:mm")
+              : null;
+            date.status = date.in_at && date.out_at ? true : false;
           }
         });
       });
+      console.log("dates", this.dates);
     },
     getAttendances() {
       return new Promise((resolve, reject) => {
@@ -319,7 +322,7 @@ export default {
           .dispatch("Attendance/getEmployeeAttendances", this.employeeid)
           .then((res) => {
             this.attendances = res.data;
-            console.log('this.attendances', this.attendances)
+            console.log("data kehadiran", this.attendances);
             resolve(res);
           })
           .catch((err) => {

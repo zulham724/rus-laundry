@@ -47,60 +47,6 @@
     <q-page-container>
       <q-page>
         <q-list class="q-mt-md">
-          <!-- <q-item
-            class="q-pb-md"
-            clickable
-            v-ripple
-            @click="$router.push('/marketplace-add-product')"
-          >
-            <q-item-section avatar class="justify-center text-center">
-              <img src="~/assets/badge1.svg" />
-            </q-item-section>
-            <q-item-section
-              class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f"
-              >Produk Anda</q-item-section
-            >
-          </q-item> -->
-          <!--
-          <q-item
-            class="q-pb-md"
-            clickable
-            v-ripple
-            @click="$router.push('/followers-marketplace')"
-          >
-            <q-item-section avatar>
-              <q-icon
-                style="margin-left: -2px"
-                color="black"
-                name="far fa-user"
-              />
-            </q-item-section>
-            <q-item-section
-              class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
-              >Pengikut</q-item-section
-            >
-          </q-item>
-          -->
-          <!--
-          <q-item
-            class="q-pb-md"
-            clickable
-            v-ripple
-            @click="$router.push('/follow-marketplace')"
-          >
-            <q-item-section avatar>
-              <img  src="~/assets/personlove2.svg" />
-            </q-item-section>
-            <q-item-section
-              class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
-              >Diikuti</q-item-section
-            >
-          </q-item>
-          -->
-
           <q-item
             class="q-pb-md"
             clickable
@@ -117,6 +63,7 @@
             >
           </q-item>
           <q-item
+            v-if="Auth.auth.contact_number"
             class="q-pb-md"
             clickable
             v-ripple
@@ -132,16 +79,23 @@
             >
           </q-item>
 
-          <!-- <q-item class="q-pb-md" clickable v-ripple @click="$router.push('/shop-location')">
+          <q-item
+            v-else
+            class="q-pb-md"
+            clickable
+            v-ripple
+            @click="$router.push('/marketplace-input-whatsapp')"
+          >
             <q-item-section avatar>
-              <img style="margin-left: 4px" src="~/assets/pinmap1.svg" />
+              <img style="margin-left: 4px" src="~/assets/padnumber1.svg" />
             </q-item-section>
             <q-item-section
               class="text-weight-medium text-subtitle1"
-              style="color: #5f5f5f; margin-left: -15px"
-              >Lokasi Bisnis</q-item-section
+              style="color: #5f5f5f"
+              >No Whatsapp</q-item-section
             >
-          </q-item> -->
+          </q-item>
+
         </q-list>
       </q-page>
     </q-page-container>

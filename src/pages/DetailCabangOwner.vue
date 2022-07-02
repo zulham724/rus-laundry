@@ -195,7 +195,7 @@
                       new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR",
-                      }).format(this.branchProfit)
+                      }).format(this.totalSum)
                     }}
                   </q-item-label>
                 </q-item-section>
@@ -254,7 +254,7 @@ export default {
       branchServices: 0,
       branchEmployee: 0,
       branchCustomers: 0,
-
+      totalSum: 0,
       shopNameFilter: [],
       currentShop: null,
 
@@ -290,6 +290,7 @@ export default {
   mounted() {
     // console.log("ini auth", this.Auth.auth);
     // console.log("branch", this.branchid);
+    this.getTotalSum()
     this.getBranchOrders();
     this.getBranchDevelopment();
     this.getBranchProfit();
@@ -317,6 +318,14 @@ export default {
         .catch((err) => {
           console.log("terjadi kesalahan getMonthlyRevenue", err);
         });
+    },
+    getTotalSum() {
+      this.$store
+        .dispatch("Payment/getTotalSum", this.branchid)
+        .then((res) => {
+          this.totalSum = res.data;
+        })
+        .catch((err) => {});
     },
     filterMonthGetMonthlyRevenue(value) {
       // this.array2 = null;

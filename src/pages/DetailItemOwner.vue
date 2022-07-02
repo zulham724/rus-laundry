@@ -308,10 +308,12 @@ export default {
       this.branchCustomers.splice(index, 1);
     },
     deleteBranchItem(id) {
+      let index = this.itemCustomers.findIndex(item => item.id == id);
       this.$store
         .dispatch("MasterBranchOrders/deleteBranchItem", id)
         .then((res) => {
           console.log("then deleteBranchItems", res.data);
+          this.itemCustomers.splice(index, 1);
           this.$q.notify({
             position: "bottom",
             message: "Berhasil menghapus Item",

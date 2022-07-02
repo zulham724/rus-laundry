@@ -152,7 +152,7 @@ const actions = {
   deleteBranchItem({ commit }, id) {
     return new Promise((resolve, reject) => {
       api
-        .post(`api/master/servicecategories/${id}/destroy`)
+        .get(`api/master/servicecategories/${id}/destroy`)
         .then((res) => {
           resolve(res);
         })
@@ -177,22 +177,22 @@ const actions = {
     });
   },
   //delete employee
-  // deleteBranchEmployee({ commit }, id) {
-  //   let access = {
-  //     _method: "delete",
-  //     // ...service,
-  //   };
-  //   return new Promise((resolve, reject) => {
-  //     api
-  //       .post(`/api/master/branch_employee/${id}`, access)
-  //       .then((res) => {
-  //         resolve(res);
-  //       })
-  //       .catch((err) => {
-  //         reject(err);
-  //       });
-  //   });
-  // },
+  deleteBranchEmployee({ commit }, id) {
+    let access = {
+      _method: "delete",
+      // ...service,
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .post(`/api/master/branch_employee/${id}`, access)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   //get employee by id
   getEmployeeById({ commit }, id) {
     return new Promise((resolve, reject) => {
