@@ -30,7 +30,7 @@ const actions = {
   getTotalItem({ commit }, shopid) {
     return new Promise((resolve, reject) => {
       api
-        .get(`/api/master/slave/${shopid}/servicecategories/count`)
+        .get(`/api/master/slave/${shopid}/servicecategories`)
         .then((res) => {
           resolve(res);
         })

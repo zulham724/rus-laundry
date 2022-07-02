@@ -2,7 +2,7 @@
   <q-layout class="mbl">
     <q-page-container>
       <q-page>
-        <div class="row q-px-md " v-if="this.post">
+        <div class="row q-px-md" v-if="this.post">
           <div v-if="this.post.user" class="row q-py-sm">
             <q-avatar v-if="!this.post.user.avatar" size="40px">
               <!-- <img :src="`${STORAGE_URL}/${Auth.auth.avatar}`" /> -->
@@ -91,41 +91,29 @@
 
             <q-separator />
             <div class="row q-mx-md q-mt-sm">
-            <!--
-              <div class="row">
-                <div
-                  class="row text-weight-medium q-px-xs"
-                  style="color: #b1b1b1; font-size: smaller"
-                >
-                  {{ this.post.likes_count }} disukai
-                </div>
-                <div
-                  class="row text-weight-medium q-px-xs"
-                  style="color: #b1b1b1; font-size: smaller"
-                >
-                  {{ this.post.comments_count }} komentar
-                </div>
-              </div>
-              -->
-
               <div
                 class="row q-px-xs full-width text-weight-bold q-py-sm"
                 style="color: black; font-size: small"
               >
                 <div class="q-pr-xs">{{ this.name }}</div>
-                <div @click="$router.push(`/post/${this.post.id}/comment-of-post`)" class="text-weight-medium">{{ this.updatePost.body }}</div>
+                <div
+                  @click="$router.push(`/post/${this.post.id}/comment-of-post`)"
+                  class="text-weight-medium"
+                >
+                  {{ this.updatePost.body }}
+                </div>
               </div>
 
               <div
-                  class="row text-weight-medium q-px-xs q-py-xs "
-                  style="color: #b1b1b1; font-size: smaller"
-                  @click="$router.push(`/post/${this.post.id}/comment-of-post`)"
-                >
-                  {{ this.post.comments_count }} komentar
-                </div>
+                class="row text-weight-medium q-px-xs q-py-xs"
+                style="color: #b1b1b1; font-size: smaller"
+                @click="$router.push(`/post/${this.post.id}/comment-of-post`)"
+              >
+                {{ this.post.comments_count }} komentar
+              </div>
 
               <div
-                class="row text-weight-medium full-width q-px-xs q-py-sm "
+                class="row text-weight-medium full-width q-px-xs q-py-sm"
                 style="color: #b1b1b1; font-size: x-small"
               >
                 {{

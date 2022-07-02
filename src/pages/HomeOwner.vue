@@ -31,7 +31,7 @@
           </div>
 
           <div>
-            <q-item>
+            <q-item clickable @click="$router.push('/profile-owner')">
               <q-item-section top avatar>
                 <q-avatar size="50px" class="shadow-2">
                   <q-img
@@ -134,6 +134,15 @@
             </q-avatar>
           </q-item-section>
           <q-item-section>Absensi</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple @click="$router.push('/course-of-home')">
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="~/assets/hm.svg" style="width: 80%; height: 80%" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Kursus</q-item-section>
         </q-item>
 
         <q-item clickable v-ripple @click="$router.push('/affiliate-owner')">
@@ -372,7 +381,13 @@
                   </q-img>
                 </div>
 
-                <div class="col full-width" v-if="this.Auth.auth.is_expired == false && this.Auth.auth.active_package_user!=null">
+                <div
+                  class="col full-width"
+                  v-if="
+                    this.Auth.auth.is_expired == false &&
+                    this.Auth.auth.active_package_user != null
+                  "
+                >
                   <div class="row">
                     <div
                       class="text-weight-bold q-pt-md text-left"
@@ -503,7 +518,7 @@
         <chartExample></chartExample>
       </div>
       -->
-      <div v-if="this.Auth.auth.slaves.length">
+      <!-- <div v-if="this.Auth.auth.slaves.length">
         <q-carousel
           v-model="slide"
           transition-prev="slide-right"
@@ -533,7 +548,7 @@
             </div>
           </q-carousel-slide>
         </q-carousel>
-      </div>
+      </div> -->
 
       <!-- dialog ganti paket -->
       <q-dialog v-model="alert">

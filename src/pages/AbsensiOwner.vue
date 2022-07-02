@@ -115,9 +115,11 @@
                     style="font-size: medium"
                   >
                     {{
-                      moment(employee.attendances[0].created_at)
-                        .locale("id")
-                        .format("LT")
+                      employee.attendances[0].in_at
+                        ? moment(employee.attendances[0].in_at)
+                            .locale("id")
+                            .format("LT")
+                        : null
                     }}
                   </div>
                   <!-- Belum Absen -->
@@ -149,9 +151,11 @@
                     style="font-size: medium"
                   >
                     {{
-                      moment(employee.attendances[0].created_at)
-                        .locale("id")
-                        .format("LT")
+                      employee.attendances[0].out_at
+                        ? moment(employee.attendances[0].out_at)
+                            .locale("id")
+                            .format("LT")
+                        : null
                     }}
                   </div>
                   <!-- Belum Absen -->

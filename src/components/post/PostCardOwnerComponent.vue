@@ -129,7 +129,7 @@
         <div v-if="post.files.length">
           <q-carousel
             class="q-mx-sm bg-black"
-             style="border-radius: 10px"
+            style="border-radius: 10px"
             v-model="slide"
             transition-prev="scale"
             transition-next="scale"
@@ -224,7 +224,7 @@
       <div
         v-show="statusComment"
         v-if="post.comments_count > 0 && statusComment == 1"
-        @click="$router.push(`/post/${post.id}/comment-of-post`)"
+        @click="$router.push(`/post/${post.id}/comment-of-post-owner`)"
         class="text-weight-regular q-px-md q-py-xs"
         style="color: #b1b1b1; font-size: 10px"
       >
@@ -291,28 +291,6 @@
                 style="color: #3a3838; font-size: larger"
               >
                 Edit postingan
-              </div>
-            </div>
-          </q-btn>
-        </q-card-actions>
-        <!-- Button Share -->
-        <q-card-actions v-close-popup>
-          <q-btn no-caps class="full-width" dense flat @click="buttonShare()">
-            <div class="row full-width">
-              <div class="col-3">
-                <q-btn dense outline round size="20px">
-                  <q-icon
-                    name="fas fa-share-alt"
-                    style="color: #787878"
-                    size="20px"
-                  ></q-icon>
-                </q-btn>
-              </div>
-              <div
-                class="col-8 text-weight-medium self-center text-left"
-                style="color: #3a3838; font-size: larger"
-              >
-                Bagikan postingan
               </div>
             </div>
           </q-btn>
@@ -385,34 +363,6 @@
             ></q-separator>
           </div>
         </q-card-section>
-        <!-- Button Share -->
-        <q-card-actions v-close-popup>
-          <q-btn
-            no-caps
-            class="full-width"
-            dense
-            flat
-            @click="buttonShare()"
-          >
-            <div class="row full-width">
-              <div class="col-3">
-                <q-btn dense outline round size="20px">
-                  <q-icon
-                    name="fas fa-share-alt"
-                    style="color: #787878"
-                    size="20px"
-                  ></q-icon>
-                </q-btn>
-              </div>
-              <div
-                class="col-8 text-weight-medium self-center text-left"
-                style="color: #3a3838; font-size: larger"
-              >
-                Bagikan postingan
-              </div>
-            </div>
-          </q-btn>
-        </q-card-actions>
 
         <!-- Button Report -->
         <q-card-actions>
@@ -557,7 +507,6 @@
                 bg-color="transparent"
                 v-model="link"
               >
-                
                 <template v-slot:prepend>
                   <q-icon name="fas fa-link" />
                 </template>

@@ -193,6 +193,18 @@ const actions = {
         });
     });
   },
+  ownerOrderProduct({ commit }, formData) {
+    return new Promise((resolve, reject) => {
+      api
+        .post(`/api/master/orderproduct`, formData)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   orderProduct({ commit }, formData) {
     return new Promise((resolve, reject) => {
       api

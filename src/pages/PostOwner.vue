@@ -44,15 +44,7 @@
               </div>
             </q-btn>
           </div>
-          <div class="col-1 text-center self-center">
-            <!-- <q-btn dense round flat @click="$router.push('/notification')">
-              <q-icon
-                name="far fa-bell"
-                sizes="18px"
-                style="color: #888888"
-              ></q-icon>
-            </q-btn> -->
-          </div>
+          <div class="col-1 text-center self-center"></div>
           <div v-if="dataAuth" class="col-1 text-center self-center">
             <!--Avatar-->
             <div v-if="!dataAuth.avatar" class="self-center">
@@ -68,13 +60,6 @@
                 ></q-img>
               </q-avatar>
             </div>
-            <!-- <q-avatar
-              size="30px"
-              style="background-color: #888888"
-              @click="$router.push('/my-profile')"
-            >
-              <q-img no-spinner :src="STORAGE_URL + `/` + dataAuth.avatar"></q-img>
-            </q-avatar> -->
           </div>
         </div>
         <div class="row q-px-md">

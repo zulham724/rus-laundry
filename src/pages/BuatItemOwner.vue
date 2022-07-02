@@ -10,12 +10,13 @@
         </div>
       </div>
       <div class="q-px-sm bg-white" style="border-radius: 5px">
-        <q-form>
+        <q-form ref="form">
           <div class="q-py-sm">
             <q-input
               label="Masukkan Nama Item"
               color="black"
               v-model="this.addItem.name"
+              :rules="[(val) => (val && val.length > 0) || 'Harus diisi']"
               outlined
               type="search"
             >
@@ -25,20 +26,25 @@
           <div class="q-py-sm">
             <q-select
               outlined
-              v-model="this.addItem.service_unit"
-              :options="this.serviceUnits"
+              v-model="selectedServiceUnit"
+              :options="serviceUnits"
+              :rules="[(val) => val || 'Harus diisi']"
               label="Hitungan Menurut"
+              color="black"
+              placeholder="Pilih Hitungan"
             />
           </div>
 
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
               <q-btn
+                :loading="loading"
+                :disable="loading"
                 class="q-px-sm"
                 style="background-color: #6295ff; border-radius: 10px"
                 text-color="white"
                 label="Tambahkan"
-                @click="print()"
+                @click="submit()"
               />
             </div>
             <div class="col text-left q-pl-sm">
@@ -79,49 +85,50 @@ export default {
   data() {
     return {
       model: ref(null),
+      loading: false,
       addItem: {},
       serviceUnits: [],
+      selectedServiceUnit: null,
     };
   },
   mounted() {
     this.getServiceUnit();
   },
   methods: {
-    print() {
-      this.addItem.shop_id = this.branchid;
-      console.log("ini data customer", this.addItem);
-      // this.createBranchCustomer();
+    submit() {
+      this.$refs.form.validate().then((success) => {
+        if (success) {
+          this.loading = true;
+          const payload = {
+            name: this.addItem.name,
+            service_unit_id: this.selectedServiceUnit.value,
+            shop_id: this.branchid,
+          };
+          this.$store
+            .dispatch("MasterBranchServiceCategory/store", payload)
+            .then((res) => {
+              this.$router.push(`/detail-item-owner/${this.branchid}`);
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        }
+      });
     },
     getServiceUnit() {
       this.$store
         .dispatch("MasterBranchOrders/getServiceUnits")
         .then((res) => {
-          for (let i = 0; i < res.data.length; i++) {
-            this.serviceUnits.push(res.data[i].name);
-          }
+          this.serviceUnits = res.data.map((item) => {
+            return {
+              label: item.name,
+              value: item.id,
+            };
+          });
           console.log("thsi.serviceunit", this.serviceUnits);
         })
         .catch((err) => {
           console.log("err");
-        });
-    },
-    createBranchCustomer() {
-      this.$store
-        .dispatch("MasterBranchOrders/createBranchCustomer", this.addCustomer)
-        .then((res) => {
-          console.log("ini res createBranchCustomer", res);
-          this.$q.notify({
-            position: "bottom",
-            message: "Berhasil Menambah Pelanggan",
-          });
-          this.$router.back();
-        })
-        .catch((err) => {
-          this.$q.notify({
-            position: "bottom",
-            message: "Email sudah digunakan",
-          });
-          console.log("terjadi kesalahan createBranchCustomer", err);
         });
     },
   },

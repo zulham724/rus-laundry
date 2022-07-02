@@ -95,6 +95,12 @@
               </div>
               <div>
                 <div>
+                  <div>Email Cabang</div>
+                  <div class="text-white text-h6">{{ item.email }}</div>
+                </div>
+              </div>
+              <div>
+                <div>
                   <div>Status</div>
                   <!-- cabang aktif -->
                   <div class="row" v-if="this.Auth.auth.apiStatus == 'Hidup'">
@@ -270,7 +276,7 @@ export default {
         // shop_id: this.shop_id,
         user_id: this.user_id,
       };
-      
+
       // console.log("id", payload);
       this.loadingDelete = true;
       this.$store

@@ -144,12 +144,15 @@
         <q-dialog v-model="payment2" persistent>
           <q-card>
             <q-card-section class="text-center">
-              <img class="q-py-sm" src="./../assets/dngr.png" style="height: 40%; width: 40%" />
+              <img
+                class="q-py-sm"
+                src="./../assets/dngr.png"
+                style="height: 40%; width: 40%"
+              />
               <div>Apakah anda yakin ingin membeli paket ini?</div>
             </q-card-section>
 
             <q-card-actions align="right">
-              
               <q-btn
                 flat
                 dense
@@ -275,9 +278,11 @@ export default {
     },
     addPackage() {
       // console.log("ini formdata", this.paymentPackageData);
-
+      const payload = {
+        package_id: this.paymentPackageData.id,
+      };
       this.$store
-        .dispatch("MasterPayment/store", this.paymentPackageData)
+        .dispatch("MasterPayment/store", payload)
         .then((res) => {
           console.log("ini res sudah bayar", res.data);
           this.confirmationId = res.data.id;
@@ -297,11 +302,11 @@ export default {
         console.log("gagal");
       }
     },
-    nextPayment2(data){
+    nextPayment2(data) {
       this.paymentPackageData = null;
-        this.paymentPackageData = data;
-        console.log("data", data);
-        this.payment1 = true;
+      this.paymentPackageData = data;
+      console.log("data", data);
+      this.payment1 = true;
     },
     getPackages() {
       this.$store

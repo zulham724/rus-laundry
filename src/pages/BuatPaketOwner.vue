@@ -24,9 +24,8 @@
           <div class="q-py-sm">
             <q-select
               outlined
-              v-model="this.addPackage.service_category_id"
-              :options="this.serviceCategories"
-              option-label="name"
+              v-model="selectedCategory"
+              :options="serviceCategories"
               label="Kategori item"
             />
           </div>
@@ -59,11 +58,13 @@
           <div class="row q-pt-lg q-pb-sm">
             <div class="col text-right q-pr-sm">
               <q-btn
+                :loading="loading"
+                :disable="loading"
                 class="q-px-sm"
                 style="background-color: #6295ff; border-radius: 10px"
                 text-color="white"
                 label="Tambahkan"
-                @click="print()"
+                @click="submit()"
                 no-caps
               />
             </div>
@@ -101,7 +102,9 @@ export default {
   props: ["branchid"],
   data() {
     return {
+      loading: false,
       serviceCategories: [],
+      selectedCategory: null,
       addPackage: {
         description: "",
         name: null,
@@ -117,14 +120,13 @@ export default {
     this.getServiceCategory();
   },
   methods: {
-    print() {
+    submit() {
       this.addPackage.shop_id = this.branchid;
-      this.addPackage.service_category_id =
-        this.addPackage.service_category_id.id;
-      console.log("ini res print", this.addPackage);
+      this.addPackage.service_category_id = this.selectedCategory.value;
       this.createService();
     },
     createService() {
+      this.loading = true;
       this.$store
         .dispatch("MasterBranchOrders/createBranchServices", this.addPackage)
         .then((res) => {
@@ -137,13 +139,21 @@ export default {
         })
         .catch((err) => {
           console.log("terjadi kesalahan createService", err);
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     getServiceCategory() {
       this.$store
-        .dispatch("MasterBranchOrders/getServiceCategory")
+        .dispatch("MasterBranchServiceCategory/index", this.branchid)
         .then((res) => {
-          this.serviceCategories = res.data;
+          this.serviceCategories = res.map((item) => {
+            return {
+              label: item.name,
+              value: item.id,
+            };
+          });
           console.log("ini res getServiceCategory", this.serviceCategories);
         })
         .catch((err) => {

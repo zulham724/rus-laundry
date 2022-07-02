@@ -123,15 +123,18 @@ const actions = {
         });
     });
   },
-  updateItem({commit}, payload){
-    console.log('state', payload)
-    return new Promise ((resolve, reject)=>{
-      api.post(`/api/master/servicecategories/${payload.id}/update`).then((res)=>{
-        resolve(res)
-      }).catch((err)=>{
-        reject(err)
-      })
-    })
+  updateItem({ commit }, payload) {
+    // console.log("state", payload);
+    return new Promise((resolve, reject) => {
+      api
+        .post(`/api/master/servicecategories/${payload.id}/update`, payload)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   },
   //new employee
   createBranchEmployee({ commit }, payload) {
@@ -159,14 +162,12 @@ const actions = {
     });
   },
   //update employee
-  updateEmployee({ commit }, employee) {
-    let access = {
-      _method: "PUT",
-      ...employee,
-    };
+  updateEmployee({ commit }, { id, formData }) {
+    formData.append("_method", "PUT");
+    // console.log(access, formData);
     return new Promise((resolve, reject) => {
       api
-        .post(`/api/master/branch_employee/${employee.id}`, access)
+        .post(`/api/master/branch_employee/${id}`, formData)
         .then((res) => {
           resolve(res);
         })

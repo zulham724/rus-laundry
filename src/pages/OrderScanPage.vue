@@ -33,7 +33,7 @@ export default {
                   if (res.data != null) {
                     this.$q.notify("berhasil scan barang");
                     this.$router.push(
-                      `/preview-detail-transaksi-3/${parseInt(result.text)}`
+                      `/detail-transaksi/${parseInt(result.text)}`
                     );
                   } else {
                     this.$q.notify("gagal scan barang");

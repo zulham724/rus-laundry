@@ -1,16 +1,23 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page class="mbl-child">
-      <div class="q-px-sm q-py-xl text-center">
-        <q-avatar size="100px">
-          <q-img src="~/assets/klgcmr.png" />
-        </q-avatar>
-        <div class="text-weight-medium q-mt-sm" style="font-size: 24px">
-          Edit Karyawan
-        </div>
-      </div>
       <div class="q-px-sm bg-white" style="border-radius: 5px">
         <q-form>
+          <div class="text-center q-py-md">
+            <q-avatar @click="openMedia()" size="150px" color="grey-4">
+              <q-img
+                v-if="updateEmployee.avatar"
+                no-spinner
+                :src="avatar64"
+              ></q-img>
+            </q-avatar>
+            <q-file
+              accept="image/*"
+              ref="addImages"
+              @update:model-value="previewImages"
+              v-show="false"
+            ></q-file>
+          </div>
           <div class="q-py-sm">
             <q-input
               label="Nama"
@@ -90,6 +97,8 @@
 </template>
 
 <script>
+import { toBase64, jsonToFormData, base64ToFile } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 export default {
   props: ["employeeid"],
   data() {
@@ -100,7 +109,10 @@ export default {
         home_address: "",
         contact_number: "",
       },
+      avatar64: null,
       currentBranch: {},
+      STORAGE_URL: STORAGE_URL,
+      previewImage: null,
     };
   },
   mounted() {
@@ -108,11 +120,40 @@ export default {
     this.getEmployeeById();
   },
   methods: {
+    openMedia() {
+      this.$refs.addImages.pickFiles();
+    },
+    async previewImages(file) {
+      let promise = toBase64(file);
+      promise.then((res) => {
+        this.$q
+          .dialog({
+            component: CropPhotoComponent,
+            componentProps: {
+              ImgBS64: res.src,
+              aspectRatio: 1 / 1,
+            },
+          })
+          .onOk((data) => {
+            // console.log("cek data", data);
+            this.avatar64 = data.dataUrl;
+            let file = base64ToFile(data.dataUrl, "avatar");
+            this.currentBranch.avatar = file;
+            // this.avatar = file;
+            // console.log("avatar file", this.avatar);
+            // this.updateImages(file);
+          });
+      });
+    },
     print() {
       console.log("res print", this.updateEmployee);
     },
     init(init) {
+      if (init.avatar) {
+        this.avatar64 = this.STORAGE_URL + "/" + init.avatar;
+      }
       this.updateEmployee.name = init.name;
+      this.updateEmployee.avatar = init.avatar;
       this.updateEmployee.email = init.email;
       this.updateEmployee.home_address = init.home_address;
       this.updateEmployee.contact_number = init.contact_number;
@@ -136,8 +177,13 @@ export default {
       this.currentBranch.contact_number = this.updateEmployee.contact_number;
       console.log("ini currentBranch", this.currentBranch);
       const payload = this.currentBranch;
+      let formData = jsonToFormData(payload);
+      console.log("ce", payload, formData);
       this.$store
-        .dispatch(`MasterBranchOrders/updateEmployee`, payload)
+        .dispatch(`MasterBranchOrders/updateEmployee`, {
+          id: payload.id,
+          formData: formData,
+        })
         .then((res) => {
           console.log("ini res update", res);
           this.$q.notify({

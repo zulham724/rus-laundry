@@ -312,14 +312,16 @@ export default {
 
       console.log("nomorrr", this.product.shop.user.contact_number);
 
-      this.$store.dispatch("Orders/orderProduct", this.order).then((res) => {
-        this.setTextMessage();
+      this.$store
+        .dispatch("Orders/ownerOrderProduct", this.order)
+        .then((res) => {
+          this.setTextMessage();
 
-        let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
-          this.product.shop.user.contact_number
-        )}&text=${encodeURI(this.message)}`;
-        window.open(url, "_system");
-      });
+          let url = `https://api.whatsapp.com/send?phone=${this.formatPhoneNumber(
+            this.product.shop.user.contact_number
+          )}&text=${encodeURI(this.message)}`;
+          window.open(url, "_system");
+        });
     },
     money(number) {
       return new Intl.NumberFormat("id-ID", {

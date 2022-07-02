@@ -106,7 +106,7 @@
                     >Item</q-item-label
                   >
                   <q-item-label class="text-white" caption>
-                    {{this.totalItem}}</q-item-label
+                    {{ this.totalItem }}</q-item-label
                   >
                 </q-item-section>
               </q-item>
@@ -118,29 +118,31 @@
         <div class="row">
           <div class="col-6 q-px-sm q-py-xs">
             <q-card
-              @click="this.$router.push(`/detail-paket-owner/${this.branchid}`)"
               class="text-center q-py-sm"
-              style="background-color: #a1ff75; border-radius: 14px"
+              style="background-color: #8ca8ff; border-radius: 14px"
+              @click="
+                this.$router.push(`/detail-pelanggan-owner/${this.branchid}`)
+              "
             >
               <q-item>
                 <q-item-section top avatar>
                   <q-avatar>
-                    <img src="~/assets/headset2.svg" />
+                    <img src="~/assets/orgct.svg" />
                   </q-avatar>
                 </q-item-section>
 
                 <q-item-section class="text-left">
                   <q-item-label class="text-white text-weight-medium"
-                    >Absensi</q-item-label
+                    >Pelanggan</q-item-label
                   >
-                  <q-item-label class="text-white" caption>
-                    <!-- {{ this.branchServices }} -->
-                    fake data
-                  </q-item-label>
+                  <q-item-label class="text-white" caption>{{
+                    this.branchCustomers
+                  }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-card>
           </div>
+
           <div class="col-6 q-px-sm q-py-xs">
             <q-card
               @click="
@@ -171,37 +173,11 @@
 
         <!-- TAB LAYANAN & TRANSAKSI -->
         <div class="row">
-          <div class="col-6 q-px-sm q-py-xs">
-            <q-card
-              class="text-center q-py-sm"
-              style="background-color: #8ca8ff; border-radius: 14px"
-              @click="
-                this.$router.push(`/detail-pelanggan-owner/${this.branchid}`)
-              "
-            >
-              <q-item>
-                <q-item-section top avatar>
-                  <q-avatar>
-                    <img src="~/assets/orgct.svg" />
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section class="text-left">
-                  <q-item-label class="text-white text-weight-medium"
-                    >Pelanggan</q-item-label
-                  >
-                  <q-item-label class="text-white" caption>{{
-                    this.branchCustomers
-                  }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-card>
-          </div>
-          <div class="col-6 q-px-sm q-py-xs">
+          <div class="col-12 q-px-sm q-py-xs">
             <q-card
               @click="$router.push(`/detail-transaksi-owner/${this.branchid}`)"
               class="text-center q-py-sm"
-              style="background-color: #64f4ff; border-radius: 14px"
+              style="background-color: #64d1a5; border-radius: 14px"
             >
               <q-item>
                 <q-item-section top avatar>
@@ -227,92 +203,6 @@
             </q-card>
           </div>
         </div>
-
-        <!-- TAB PELANGGAN & KARYAWAN -->
-        <!-- <div class="row">
-          <div class="col-6 q-px-sm q-py-xs">
-            <q-card
-              class="text-center q-py-sm"
-              style="background-color: #8ca8ff; border-radius: 14px"
-              @click="
-                this.$router.push(`/detail-pelanggan-owner/${this.branchid}`)
-              "
-            >
-              <q-item>
-                <q-item-section top avatar>
-                  <q-avatar>
-                    <img src="~/assets/orgct.svg" />
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section class="text-left">
-                  <q-item-label class="text-white text-weight-medium"
-                    >Pelanggan</q-item-label
-                  >
-                  <q-item-label class="text-white" caption>{{
-                    this.branchCustomers
-                  }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-card>
-          </div>
-          <div class="col-6 q-px-sm q-py-xs">
-            <q-card
-              @click="
-                this.$router.push(`/detail-karyawan-owner/${this.branchid}`)
-              "
-              class="text-center q-py-sm"
-              style="background-color: #fcc4e8; border-radius: 14px"
-            >
-              <q-item>
-                <q-item-section top avatar>
-                  <q-avatar>
-                    <img src="~/assets/tow.svg" />
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section class="text-left">
-                  <q-item-label class="text-white text-weight-medium"
-                    >Karyawan</q-item-label
-                  >
-                  <q-item-label class="text-white" caption
-                    >{{ this.branchEmployee }} karyawan</q-item-label
-                  >
-                </q-item-section>
-              </q-item>
-            </q-card>
-          </div>
-        </div> -->
-
-        <!-- TAB PROUDUKS -->
-        <!--
-        <div class="row">
-          <div class="col-6 q-px-sm q-pt-sm">
-            <q-card
-              class="text-center q-py-sm"
-              style="background-color: #ffc377; border-radius: 14px"
-            >
-              <q-item>
-                <q-item-section top avatar>
-                  <q-avatar>
-                    <img src="~/assets/ppnpkt.svg" />
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section class="text-left">
-                  <q-item-label class="text-white text-weight-medium"
-                    >Produk</q-item-label
-                  >
-                  <q-item-label class="text-white" caption
-                    >Ini data palsu</q-item-label
-                  >
-                </q-item-section>
-              </q-item>
-            </q-card>
-          </div>
-          <div class="col-6 q-px-sm q-py-sm"></div>
-        </div>
-        -->
 
         <!-- TAB CHART DATA JUMLAH PESANAN & PENGHASILAN -->
         <div class="col">
@@ -616,7 +506,7 @@ export default {
       this.$store
         .dispatch("MasterOrders/getTotalItem", this.branchid)
         .then((res) => {
-          this.totalItem = res.data;
+          this.totalItem = res.data.length;
           console.log("ini then getTotalItem", res.data);
         })
         .catch((err) => {

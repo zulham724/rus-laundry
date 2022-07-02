@@ -30,8 +30,11 @@
         </q-header>
       </div>
       <q-page>
-        <div v-if="this.currentShop != null" class="q-px-sm q-py-sm text-h6 text-weight-bold text-center">
-          {{this.currentShop[0].shop.name}}
+        <div
+          v-if="this.currentShop != null"
+          class="q-px-sm q-py-sm text-h6 text-weight-bold text-center"
+        >
+          {{ this.currentShop[0].shop.name }}
         </div>
         <!-- TAB PEMASUKAN DAN PENGELUARAN -->
         <div class="row">
@@ -181,10 +184,17 @@
         </div> -->
 
         <!-- Pemasukan -->
-        <income-component :currentShopId="this.currentShopId" v-if="incomeComponent && this.currentShopId != null"></income-component>
+        <income-component
+          :currentShopId="this.currentShopId"
+          v-if="incomeComponent && this.currentShopId != null"
+        ></income-component>
 
         <!-- Pengeluaran -->
-        <spend-component :currentShopId="this.currentShopId" v-if="spendComponent && this.currentShopId != null"> </spend-component>
+        <spend-component
+          :currentShopId="this.currentShopId"
+          v-if="spendComponent && this.currentShopId != null"
+        >
+        </spend-component>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -231,10 +241,9 @@ export default {
     },
   },
   mounted() {
-    console.log("ini auth", this.auth);
-    this.getShopId();
+    // this.getShopId();
     this.getTotalSum();
-    this.getTotalSpend();
+    this.getSpendSum();
     this.getShopName();
   },
   methods: {
@@ -260,23 +269,21 @@ export default {
       this.incomeComponent = true;
     },
     getTotalSum() {
-      let shopId = this.shopsId;
       this.$store
-        .dispatch("Payment/getTotalSum", shopId)
+        .dispatch("Payment/getTotalSum", this.branchid)
         .then((res) => {
           this.totalSum = res.data;
-          // console.log("cek totalSum", this.totalSum);
         })
         .catch((err) => {});
     },
-    getTotalSpend() {
+    getSpendSum() {
       this.$store
-        .dispatch("Payment/getSpend", this.shopsId)
+        .dispatch("Payment/getSpendSum", this.branchid)
         .then((res) => {
           console.log("ini total spend", res.data);
         })
         .catch((err) => {
-          console.log('terjadi kesalahan')
+          console.log("terjadi kesalahan");
         });
     },
     getShopId() {
@@ -302,7 +309,7 @@ export default {
             return creature.shop.id == id;
           });
           this.currentShop = aquaticCreatures;
-          this.currentShopId = this.currentShop[0].shop.id
+          this.currentShopId = this.currentShop[0].shop.id;
           // console.log('this.currentshopid', this.currentShopId)
           console.log("shopName", aquaticCreatures);
         })

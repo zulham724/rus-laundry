@@ -82,7 +82,7 @@
           </q-btn>
         </div>
         <q-file
-        accept="image/*"
+          accept="image/*"
           ref="addImages"
           @update:model-value="previewImages"
           v-show="false"

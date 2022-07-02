@@ -25,12 +25,9 @@
           <div class="q-py-sm">
             <q-select
               outlined
-              v-model="this.updateItem.service_unit"
-              :options="this.serviceUnits"
-              :option-value="(item) => item.id"
-              :option-label="(item) => item.name"
+              v-model="selectedServiceUnit"
+              :options="serviceUnits"
               label="Hitungan Menurut"
-              @update:model-value="(item) => this.updateItem.service_unit_id = item.id"
             />
           </div>
 
@@ -80,15 +77,16 @@ export default {
     return {
       model: ref(null),
       currentItem: null,
-      updateItem: { 
-      },
+      updateItem: {},
       serviceUnits: [],
+      selectedServiceUnit: null,
       itemById: null,
     };
   },
   mounted() {
-    this.getItemById();
-    this.getServiceUnit();
+    this.getServiceUnit().then((res) => {
+      this.getItemById();
+    });
   },
   methods: {
     print() {
@@ -104,24 +102,39 @@ export default {
     },
 
     getServiceUnit() {
-      this.$store
-        .dispatch("MasterBranchOrders/getServiceUnits")
-        .then((res) => {
-          const { data } = res;
-          data.forEach((item) => {
-            this.serviceUnits.push(item);
+      return new Promise((resolve, reject) => {
+        this.$store
+          .dispatch("MasterBranchOrders/getServiceUnits")
+          .then((res) => {
+            const { data } = res;
+            this.serviceUnits = data.map((item) => {
+              return {
+                label: item.name,
+                value: item.id,
+              };
+            });
+            resolve(this.serviceUnits);
+          })
+          .catch((err) => {
+            console.log("err ini");
+            reject(err);
           });
-        })
-        .catch((err) => {
-          console.log("err ini");
-        });
+      });
     },
     getItemById() {
       this.$store
         .dispatch("MasterBranchOrders/getItemById", this.itemid)
         .then((res) => {
           this.itemById = res.data;
-          console.log("then getitembyid", res.data);
+          this.selectedServiceUnit = this.serviceUnits.find(
+            (item) => item.value === this.itemById.service_unit_id
+          );
+          console.log(
+            "then getitembyid",
+            res.data,
+            "dan",
+            this.selectedServiceUnit
+          );
         })
         .catch((err) => {
           console.log("terjadi kesalahan getItemById");
@@ -130,9 +143,10 @@ export default {
           this.init();
         });
     },
-    updateItemSave() { 
+    updateItemSave() {
       const payload = this.updateItem;
-      console.log('iini payload', payload)
+      payload.service_unit_id = this.selectedServiceUnit.value;
+      // console.log("iini payload", payload);
       this.$store
         .dispatch(`MasterBranchOrders/updateItem`, payload)
         .then((res) => {
@@ -141,7 +155,7 @@ export default {
             position: "bottom",
             message: "Berhasil mengubah data",
           });
-          // this.$router.back();
+          this.$router.back();
         })
         .catch((err) => {
           this.$q.notify({

@@ -378,7 +378,7 @@
 
             <q-card-actions align="left">
               <q-btn
-              @click="getHistory()"
+                @click="getHistory()"
                 flat
                 rounded
                 style="background-color: #6295ff"
@@ -431,9 +431,11 @@ export default {
     },
     addPackage() {
       // console.log("ini formdata", this.paymentPackageData);
-
+      const payload = {
+        package_id: this.paymentPackageData.id,
+      };
       this.$store
-        .dispatch("MasterPayment/store", this.paymentPackageData)
+        .dispatch("MasterPayment/store", payload)
         .then((res) => {
           console.log("ini res sudah bayar", res.data);
           this.confirmationId = res.data.id;
@@ -468,9 +470,9 @@ export default {
           const activeServiceList = this.history.filter((item) => {
             return activeIds.includes(item.id);
           });
-          console.log('activeServiceList', activeServiceList[0])
+          console.log("activeServiceList", activeServiceList[0]);
 
-          this.toDetailPaymentHistoryOwner(activeServiceList[0]);          
+          this.toDetailPaymentHistoryOwner(activeServiceList[0]);
         })
         .catch((err) => {
           console.log("terjadi kesalahan getHistory", err);
@@ -480,7 +482,6 @@ export default {
       console.log("asdfffffsdfasdfasdfa", payment);
       this.$store.commit("MasterPayment/set_payment_history", payment);
       if (payment.status == "pending") {
-
         this.$router.push("/detail-payment-history-owner");
       } else if (payment.status == "success") {
         this.$router.push(`/succes-payment-status-owner/${payment.id}`);

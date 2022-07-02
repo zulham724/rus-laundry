@@ -120,8 +120,6 @@ const routes = [
     beforeEnter: multiguard([auth, checkIfOwner]),
   },
 
-  
-
   {
     path: "/report-post-owner/:post_id",
     component: () => import("src/pages/ReportPostOwner.vue"),
@@ -598,19 +596,19 @@ const routes = [
   {
     path: "/like-of-course",
     component: () => import("pages/LikeOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/history-of-course",
     component: () => import("pages/HistoryOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/course-of-home",
     component: () => import("pages/CourseOfHome.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
@@ -622,41 +620,41 @@ const routes = [
   {
     path: "/profile-of-course",
     component: () => import("pages/ProfileOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/search-of-course",
     component: () => import("pages/SearchOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/comment-of-course/:contentid",
     component: () => import("pages/CommentOfCourse.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/:contentid/detail-course",
     component: () => import("pages/DetailCourse.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/:contentid/detail-course2",
     component: () => import("pages/DetailCourse2.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/:moduleid/list-of-course",
     component: () => import("pages/ListOfCourse.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
@@ -786,7 +784,7 @@ const routes = [
   {
     path: "/history-of-course",
     component: () => import("pages/HistoryOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
@@ -798,41 +796,41 @@ const routes = [
   {
     path: "/profile-of-course",
     component: () => import("pages/ProfileOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/search-of-course",
     component: () => import("pages/SearchOfCourse.vue"),
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/comment-of-course/:contentid",
     component: () => import("pages/CommentOfCourse.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/:contentid/detail-course",
     component: () => import("pages/DetailCourse.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/:contentid/detail-course2",
     component: () => import("pages/DetailCourse2.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {
     path: "/:moduleid/list-of-course",
     component: () => import("pages/ListOfCourse.vue"),
     props: true,
-    beforeEnter: multiguard([auth, checkIfSlave]),
+    beforeEnter: multiguard([auth]),
   },
 
   {

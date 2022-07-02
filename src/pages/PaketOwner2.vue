@@ -144,12 +144,15 @@
         <q-dialog v-model="payment2" persistent>
           <q-card>
             <q-card-section class="text-center">
-              <img class="q-py-sm" src="./../assets/dngr.png" style="height: 40%; width: 40%" />
+              <img
+                class="q-py-sm"
+                src="./../assets/dngr.png"
+                style="height: 40%; width: 40%"
+              />
               <div>Apakah anda yakin ingin membeli paket ini?</div>
             </q-card-section>
 
             <q-card-actions align="right">
-              
               <q-btn
                 flat
                 dense
@@ -274,11 +277,10 @@ export default {
     },
     addPackage() {
       // console.log("ini formdata", this.paymentPackageData);
-
       this.$store
         .dispatch("MasterPayment/store", this.paymentPackageData)
         .then((res) => {
-          console.log("ini res sudah bayar", res.data);
+          // console.log("ini res sudah bayar", res.data);
           this.confirmationId = res.data.id;
           this.getHistory();
         })
@@ -286,17 +288,18 @@ export default {
           console.log("terjadi kesalahan addPackage", err);
         });
     },
-    extendPackage(){
-        const extendPackage = {
+    extendPackage() {
+      const extendPackage = {
         created_at: this.Auth.auth.active_package_user.package.created_at,
         description: this.Auth.auth.active_package_user.package.description,
         id: this.Auth.auth.active_package_user.package.id,
         name: this.Auth.auth.active_package_user.package.name,
-        package_contents: this.Auth.auth.active_package_user.package.package_contents,
+        package_contents:
+          this.Auth.auth.active_package_user.package.package_contents,
         price: this.Auth.auth.active_package_user.package.price,
         updateted_at: this.Auth.auth.active_package_user.package.updated_at,
       };
-      console.log('extendpackage', extendPackage)
+      console.log("extendpackage", extendPackage);
       this.paymentPackageData = extendPackage;
       this.payment1 = true;
     },
@@ -309,18 +312,17 @@ export default {
       } else {
         console.log("gagal");
       }
-      
-      
+
       // this.paymentPackageData = null;
       // this.paymentPackageData = data;
       // console.log("data", this.paymentPackageData);
       // this.payment1 = true;
     },
-    nextPayment2(data){
+    nextPayment2(data) {
       this.paymentPackageData = null;
-        this.paymentPackageData = data;
-        console.log("data", data);
-        this.payment1 = true;
+      this.paymentPackageData = data;
+      console.log("data", data);
+      this.payment1 = true;
     },
     getPackages() {
       this.$store
@@ -338,7 +340,7 @@ export default {
         .dispatch("MasterPayment/getHistory")
         .then((res) => {
           this.history = res.data;
-          console.log('this.history', this.history)
+          console.log("this.history", this.history);
           const activeIds = [this.confirmationId];
           const activeServiceList = this.history.filter((item) => {
             return activeIds.includes(item.id);

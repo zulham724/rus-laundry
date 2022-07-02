@@ -174,11 +174,10 @@
                 class="text-weight-regular"
                 style="color: #5a5656; font-size: 9px"
               >
-                <VueReadMoreSmooth :lines="3">
-                  <p>
-                    {{ content.description }}
-                  </p>
-                </VueReadMoreSmooth>
+                {{ moment(content.created_at).format("DD MMMM YYYY") }}
+                <!-- <VueReadMoreSmooth :lines="3">
+                  <div v-html="content.description"></div>
+                </VueReadMoreSmooth> -->
               </div>
             </div>
           </div>
@@ -258,6 +257,7 @@
 <script>
 import { mapGetters } from "vuex";
 import VueReadMoreSmooth from "./ReadMore";
+import moment from "moment";
 
 export default {
   //setup read more smooth
@@ -283,6 +283,7 @@ export default {
     this.getModuleContents();
   },
   methods: {
+    moment,
     buttonLock() {
       this.dialogLock = true;
     },

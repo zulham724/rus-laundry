@@ -22,10 +22,12 @@ export default boot(({ app, router, store }) => {
   //       so you can easily perform requests against your app's API
 
   // membuat default header pada axios setiap baru buka aplikasi
+
   const token = store.getters["Auth/token"];
   if (token.access_token) {
     api.defaults.headers.common.Accept = "application/json";
     api.defaults.headers.common.Authorization = `${token.token_type} ${token.access_token}`;
+    store.dispatch("Auth/reloadAuth");
   }
   //-------------------------------------------------------------
 
@@ -43,7 +45,7 @@ export default boot(({ app, router, store }) => {
       return config;
     },
     (error) => {
-      // console.log("interceptor is running", error.response);
+      console.log("interceptor is running", error.response.status);
       if (error.response.status == 401) {
         store.dispatch("Auth/logout").then((res) => {
           Notify.create("Silahkan login kembali");

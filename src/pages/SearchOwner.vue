@@ -16,7 +16,7 @@
           <div class="col-10">
             <div class="row justify-center">
               <q-input
-                @update:model-value="filter(search)"
+                @update:model-value="(value) => searchUserPost(value)"
                 dense
                 class="q-mx-xs full-width"
                 type="search"
@@ -98,11 +98,11 @@
         <!-- =============================================== -->
         <q-list class="full-width" v-if="list.length && search.length">
           <q-item
-            @click="clickToProfile(user)"
+            @click="clickToPost(post.id)"
             clickable
             v-ripple
-            v-for="user in list"
-            :key="user.id"
+            v-for="post in list"
+            :key="post.id"
             class="row q-gutter-none"
           >
             <q-item-section avatar>
@@ -111,15 +111,18 @@
                 class="shadow-2"
               >
                 <q-img
-                  v-if="user.avatar"
+                  v-if="post.author.avatar"
                   no-spinner
-                  :src="`${STORAGE_URL}/${user.avatar}`"
+                  :src="`${STORAGE_URL}/${post.author.avatar}`"
                 ></q-img>
               </q-avatar>
             </q-item-section>
 
             <q-item-section>
-              <div style="color: #8b8787">{{ user.name }}</div>
+              <div style="color: #8b8787">{{ post.author.name }}</div>
+            </q-item-section>
+            <q-item-section caption>
+              <div style="color: #8b8787">{{ post.body }}</div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -129,6 +132,8 @@
 </template>
 
 <script>
+// import debounce quasar
+import { debounce } from "quasar";
 export default {
   computed: {
     list_history() {
@@ -150,7 +155,7 @@ export default {
 
   mounted() {
     console.log("ini dari state", this.list_history);
-    this.getAllUser();
+    this.searchUserPost = debounce(this.searchUserPost, 500);
   },
 
   methods: {
@@ -178,19 +183,24 @@ export default {
         (v) => v.name.toLowerCase().indexOf(needle) > -1
       );
     },
-    getAllUser() {
-      return new Promise((resolve, reject) => {
+    clickToPost(postId) {
+      this.$router.push(`/post/${postId}/comment-of-post-owner`);
+    },
+    searchUserPost(key) {
+      if (key.length) {
         this.$store
-          .dispatch("HistorySearchOwner/getAllUser")
+          .dispatch("HistorySearchOwner/searchUserPost", { key: key })
           .then((res) => {
-            this.list = this.list_temp = res.data;
+            this.list = this.list_temp = res;
             // console.log(res.data);
             resolve(res);
           })
           .catch((err) => {
             reject(err);
           });
-      });
+      } else {
+        this.list = this.list_temp = [];
+      }
     },
   },
 };

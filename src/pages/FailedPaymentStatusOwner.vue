@@ -63,6 +63,14 @@
             color="primary"
             label="Kembali"
           />
+          <q-btn
+            @click="contactUs()"
+            class="q-mt-sm q-mx-sm q-py-sm text-center"
+            style="width: 96%; font-size: 18px"
+            no-caps
+            color="primary"
+            label="Hubungi Kami"
+          />
         </div>
       </q-page>
     </q-page-container>
@@ -105,6 +113,9 @@ export default {
     //     })
     //     .finally(() => {});
     // },
+    contactUs() {
+      window.open("https://laundrydigital.co.id/konfirmasi", "_system");
+    },
     getHistory() {
       this.$store
         .dispatch("MasterPayment/getHistory")

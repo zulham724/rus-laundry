@@ -1,16 +1,30 @@
 <template>
   <q-layout class="mbl" view="lHh lpR fFf">
     <q-page class="mbl-child">
-      <div class="q-px-sm q-py-xl text-center">
-        <q-avatar size="100px">
-          <q-img src="~/assets/klgcmr.png" />
-        </q-avatar>
-        <div class="text-weight-medium q-mt-sm" style="font-size: 24px">
-          Tambah Karyawan
-        </div>
-      </div>
       <div class="q-px-sm bg-white" style="border-radius: 5px">
         <q-form>
+          <div class="text-center">
+            <q-avatar @click="openMedia()" class="q-ma-xl" size="150px">
+              <q-img
+                v-if="!encodedImage"
+                no-spinner
+                src="~/assets/empty-avatar.svg"
+              />
+              <q-img v-else no-spinner :src="encodedImage" />
+            </q-avatar>
+            <q-file
+              accept="image/*"
+              ref="addImages"
+              @update:model-value="previewImages"
+              v-show="false"
+            ></q-file>
+            <!-- <q-avatar class="q-ma-xl" size="150px">
+              <q-img  no-spinner v-for="pict in encodedImage" :key="pict.id" :src="encodedImage.src" />
+            </q-avatar> -->
+            <!-- <q-avatar class="q-ma-xl" size="150px">
+              <q-img  no-spinner :src="encodedImage" />
+            </q-avatar> -->
+          </div>
           <div class="q-py-sm">
             <q-input
               label="Nama Karyawan"
@@ -90,10 +104,14 @@
 </template>
 
 <script>
+import { toBase64, jsonToFormData } from "./../helpers";
+import { base64ToFile } from "./../helpers";
+import CropPhotoComponent from "src/components/CropPhotoComponent.vue";
 export default {
   props: ["branchid"],
   data() {
     return {
+      encodedImage: null,
       addKaryawan: {},
     };
   },
@@ -101,14 +119,62 @@ export default {
     console.log("bid", this.branchid);
   },
   methods: {
+    openMedia() {
+      this.$refs.addImages.pickFiles();
+    },
+    async previewImages(file) {
+      console.log("ini file sebelum apa apa", file);
+      if (file.type.includes("image")) {
+        let promise = this.toBase64(file);
+        promise.then((res) => {
+          console.log("ini res", res);
+          this.$q
+            .dialog({
+              component: CropPhotoComponent,
+              componentProps: {
+                ImgBS64: res.src,
+              },
+            })
+            .onOk((data) => {
+              // console.log("cek hasil crop", data);
+              data.type = res.type;
+              let imageBase64 = data;
+              // console.log("ini foto yang sudah jadi base 64", imageBase64);
+              this.encodedImage = imageBase64.dataUrl;
+              let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
+              // console.log("ini image sudah kembali menjadi file", imgTo64);
+              this.addKaryawan.avatar = imgTo64;
+            });
+        });
+      } else {
+        console.log("bismillah ini bukan foto gan");
+        this.$q.notify({
+          position: "top",
+          message: "Pastikan file berupa gambar",
+        });
+      }
+    },
+    toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () =>
+          resolve({
+            src: reader.result,
+            type: file.type,
+          });
+        reader.onerror = (error) => reject(error);
+      });
+    },
     print() {
       this.addKaryawan.shop_id = this.branchid;
       console.log("ini res print", this.addKaryawan);
       this.createBranchEmployee();
     },
     createBranchEmployee() {
+      let formData = jsonToFormData(this.addKaryawan);
       this.$store
-        .dispatch("MasterBranchOrders/createBranchEmployee", this.addKaryawan)
+        .dispatch("MasterBranchOrders/createBranchEmployee", formData)
         .then(() => {
           console.log("ini res createBranchEmployee", this.addKaryawan);
           this.$router.push(`/detail-karyawan-owner/${this.branchid}`);
