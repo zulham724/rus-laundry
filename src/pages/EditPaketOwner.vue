@@ -28,7 +28,7 @@
               :options="serviceCategories"
               option-label="name"
               option-value="id"
-              label="Hitungan menurut"
+              label="Jenis Item"
             />
           </div>
           <div class="q-py-sm">

@@ -109,6 +109,7 @@
             <div class="row col-12">
               <div class="col-9 text-right q-pr-sm">
                 <q-btn
+                  :disable="loading"
                   class="shadow-1"
                   no-caps
                   flat
@@ -119,6 +120,7 @@
               </div>
               <div class="col-3 text-left q-pr-sm">
                 <q-btn
+                  :disable="loading"
                   @click="store()"
                   class="shadow-1"
                   no-caps
@@ -132,7 +134,7 @@
         </q-card>
       </q-dialog>
       <q-file
-      accept="image/*"
+        accept="image/*"
         ref="addImages"
         @update:model-value="previewImages"
         v-show="false"
@@ -157,6 +159,7 @@ export default {
       employee: {},
       images_videos: [],
       files: [],
+      loading: false,
     };
   },
 
@@ -165,19 +168,25 @@ export default {
       this.$refs.addImages.pickFiles();
     },
     store() {
-      console.log('this.employee', this.employee)
+      console.log("this.employee", this.employee);
       this.$refs.form.validate().then((success) => {
         if (success) {
+          this.loading = true
           let res = jsonToFormData(this.employee);
-          this.$store.dispatch("Employee/store", res).then((res) => {
-            this.$router.push("/employee");
-            this.$q.notify("Berhasil");
-          }).catch((err)=>{
-            this.$q.notify({
-            position: "top",
-            message: "Alamat Email Sudah Terpakai!",
-          });
-          })
+          this.$store
+            .dispatch("Employee/store", res)
+            .then((res) => {
+              this.$router.push("/employee");
+              this.$q.notify("Berhasil");
+            })
+            .catch((err) => {
+              this.$q.notify({
+                position: "top",
+                message: "Alamat Email Sudah Terpakai!",
+              });
+            }).finally(() => {
+              this.loading = false
+            })
         } else {
           this.$q.notify({
             position: "top",
@@ -206,10 +215,10 @@ export default {
               console.log("ini foto yang sudah jadi base 64", imageBase64);
               this.images_videos.push(imageBase64);
               console.log("image video", this.images_videos);
-              
+
               this.encodedImage = this.images_videos[0].dataUrl;
               let imgTo64 = base64ToFile(imageBase64.dataUrl, "avatar");
-              console.log('ini image sudah kembali menjadi file', imgTo64)
+              console.log("ini image sudah kembali menjadi file", imgTo64);
               this.files.push(imgTo64);
               this.employee.avatar = this.files[0];
             });
