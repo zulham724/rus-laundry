@@ -21,7 +21,7 @@
             >
             </q-input>
           </div>
-          <div class="q-py-sm">
+          <!-- <div class="q-py-sm">
             <q-input
               label="Email"
               color="black"
@@ -30,7 +30,7 @@
               type="email"
             >
             </q-input>
-          </div>
+          </div> -->
           <div class="q-py-sm">
             <q-input
               label="Alamat"

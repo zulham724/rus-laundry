@@ -74,7 +74,9 @@
                 :type="isPwd ? 'password' : 'text'"
                 label="Masukkan Password"
                 lazy-rules
-                :rules="[(val) => (val && val.length > 7) || 'Isi minimal 8 karakter']"
+                :rules="[
+                  (val) => (val && val.length > 7) || 'Isi minimal 8 karakter',
+                ]"
               >
                 <q-icon
                   :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -119,7 +121,7 @@
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || '']"
               />
-              <q-input
+              <!-- <q-input
                 class="q-pb-lg"
                 :disable="loading"
                 rounded
@@ -129,7 +131,7 @@
                 @update:model-value="
                   checkAffiliateCode(credential.affiliate_code)
                 "
-              />
+              /> -->
               <div
                 class="text-justify"
                 style="font-size: smaller; margin-top: -10px"
